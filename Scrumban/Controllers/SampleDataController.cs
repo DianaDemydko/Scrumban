@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Scrumban.Models;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        ScrumbanContext db;
+        public SampleDataController(ScrumbanContext context)
+        {
+            db = context;
+            db.Tasks.Add(new Models.Task { Name = "Name1" });
+            db.SaveChanges();
+        }
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
