@@ -14,8 +14,6 @@ namespace Scrumban.Controllers
         public SampleDataController(ScrumbanContext context)
         {
             db = context;
-            db.Tasks.Add(new Models.Task { Name = "Name1" });
-            db.SaveChanges();
         }
 
         private static string[] Summaries = new[]
@@ -48,6 +46,21 @@ namespace Scrumban.Controllers
                     return 32 + (int)(TemperatureC / 0.5556);
                 }
             }
+        }
+
+        [HttpGet]
+        public IEnumerable<Models.Task> Tasks()
+        {
+            //db.Tasks.AddRange(new List<Models.Task>
+            //{
+            //    new Models.Task{Name = "Task1"},
+            //    new Models.Task{Name = "Task2"},
+            //    new Models.Task{Name = "Task3"}
+            //});
+
+            //db.SaveChanges();
+
+            return db.Tasks.ToList();
         }
     }
 }
