@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Scrumban.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Scrumban.Controllers
 {
@@ -51,16 +52,29 @@ namespace Scrumban.Controllers
         [HttpGet]
         public IEnumerable<Models.Task> Tasks()
         {
-            //db.Tasks.AddRange(new List<Models.Task>
-            //{
-            //    new Models.Task{Name = "Task1"},
-            //    new Models.Task{Name = "Task2"},
-            //    new Models.Task{Name = "Task3"}
-            //});
+            return db.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
+        }
 
-            //db.SaveChanges();
+        [HttpPost]
+        public IActionResult AddTask([FromBody]Models.Task task)
+        {
+            Models.Task t = new Models.Task { Name = task.Name, Description = task.Description };
+            db.Add(t);
+            db.SaveChanges();
+            return Ok(task);
+        }
 
-            return db.Tasks.ToList();
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Models.Task task = db.Tasks.FirstOrDefault(x => x.Id == id);
+            if(task == null)
+            {
+                return NotFound();
+            }
+            db.Tasks.Remove(task);
+            db.SaveChanges();
+            return Ok(task);
         }
     }
 }
