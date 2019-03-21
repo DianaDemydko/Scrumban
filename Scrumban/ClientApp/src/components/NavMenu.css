@@ -15,12 +15,15 @@
     /* On large screens, convert the nav menu to a vertical sidebar */
     .navbar {
         height: 100%;
+        margin-top: 50px;
+
         width: calc(25% - 20px);
     }
     .navbar {
         border-radius: 0;
         border-width: 0;
         height: 100%;
+        margin-top: 50px;
     }
     .navbar-header {
         float: none;

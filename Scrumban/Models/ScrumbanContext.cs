@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Scrumban.Models
 {
@@ -12,6 +13,7 @@ namespace Scrumban.Models
         {
             Database.EnsureCreated();
         }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<TaskState> TaskStates { get; set; }
