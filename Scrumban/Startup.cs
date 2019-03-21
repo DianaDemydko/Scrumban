@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Scrumban.Models;
 using CustomIdentityApp.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNet.Identity.EntityFramework;
-//using Scrumban.Models;
 
 namespace Scrumban
 {
@@ -24,13 +25,14 @@ namespace Scrumban
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             //        services.AddDbContext<ScrumbanContext>(options =>
             //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //        services.AddIdentity<User, ScrumbanRole>()
             //            .AddEntityFrameworkStores<ScrumbanContext>();
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            // ��������� �������� MobileContext � �������� ������� � ����������
+            // äîáàâëÿåì êîíòåêñò MobileContext â êà÷åñòâå ñåðâèñà â ïðèëîæåíèå
             services.AddDbContext<ScrumbanContext>(options =>
                 options.UseSqlServer(connection));
 
@@ -41,6 +43,14 @@ namespace Scrumban
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            // äîáàâëÿåì êîíòåêñò MobileContext â êà÷åñòâå ñåðâèñà â ïðèëîæåíèå
+            services.AddDbContext<ScrumbanContext>(options =>
+                options.UseSqlServer(connection));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
