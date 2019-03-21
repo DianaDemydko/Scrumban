@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CustomIdentityApp.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNet.Identity.EntityFramework;
+//using Scrumban.Models;
 
 namespace Scrumban
 {
@@ -20,6 +24,16 @@ namespace Scrumban
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //        services.AddDbContext<ScrumbanContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //        services.AddIdentity<User, ScrumbanRole>()
+            //            .AddEntityFrameworkStores<ScrumbanContext>();
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            // добавляем контекст MobileContext в качестве сервиса в приложение
+            services.AddDbContext<ScrumbanContext>(options =>
+                options.UseSqlServer(connection));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
