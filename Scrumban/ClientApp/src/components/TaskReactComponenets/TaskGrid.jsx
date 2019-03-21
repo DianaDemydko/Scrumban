@@ -1,32 +1,45 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-var apiUrl = "/api/SampleData";
+import { TaskPrint } from './TaskPrint';
+import { TaskEdit } from './TaskEdit';
+//import '../../index.css';
+
+// const
+const apiUrlGet = "/api/SampleData/getTasks";
+const apiUrlDelete = "/api/SampleData";
+
+const styleObj = {
+    //border: '1px solid red'
+}
 
 class Task extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { data: props.task };
+        // state : true - print
+        // state : false - edit 
+        this.state = { data: props.task, states: true };
 
         this.onRemoveTask = this.onRemoveTask.bind(this);
+        this.onEditTask = this.onEditTask.bind(this);
     }
 
     onRemoveTask() {
         this.props.onRemove(this.state.data.id);
     }
 
+    onEditTask() {
+        this.setState({ states: this.state.states === true ? false : true });
+    }
+
     render() {
-        return <tr>
-            <td>{this.state.data.id}</td>     
-            <td>{this.state.data.name}</td>
-            <td>{this.state.data.description}</td>
-            <td>{this.state.data.priority.name}</td>
-            <td>{this.state.data.taskState.name}</td>
-            <td>
-                <button type="submit" className="btn btn-primary">Edit</button>
-                <button type="submit" onClick={this.onRemoveTask} className="btn btn-danger">Delete</button>
-            </td>
-        </tr>;
+        const isEdit = this.state.states;
+        return <tbody>
+            {isEdit ?
+                (<TaskPrint item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} />)
+                : (<TaskEdit item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} />)
+            }
+        </tbody>;
     }
 }
 
@@ -37,12 +50,13 @@ export class TaskGrid extends React.Component {
         this.state = { tasks: [] };
 
         this.onRemoveTask = this.onRemoveTask.bind(this);
+        this.onAdded = this.onAdded.bind(this);
     }
 
     // Load data
     loadData() {
         var xhr = new XMLHttpRequest();
-        xhr.open("get", apiUrl, true);
+        xhr.open("get", apiUrlGet, true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
             this.setState({ tasks: data });
@@ -54,8 +68,12 @@ export class TaskGrid extends React.Component {
         this.loadData();
     }
 
+    onAdded(item) {
+        this.setState({tasks : this.state.tasks.push(item)});
+    }
+
     onRemoveTask(id) {
-        var url = apiUrl + "/" + id;
+        var url = apiUrlDelete + "/" + id;
 
         var xhr = new XMLHttpRequest();
         xhr.open("delete", url, true);
@@ -69,26 +87,22 @@ export class TaskGrid extends React.Component {
     }
 
     render() {
-
         var remove = this.onRemoveTask;
         return <div>
             <h2>Tasks</h2>
             <div>
-                <table className="table table-hover">
+                <table className="table table-fixed">
                     <thead className="bg-light">
-                        <th>Id</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Priority</th>
                         <th>State</th>
                         <th></th>
                     </thead>
-                    <tbody>
-                        {this.state.tasks.map(function (task) { return <Task key={task.id} task={task} onRemove={remove} /> })}
-                    </tbody>
+                    {this.state.tasks.map(function (task) { return <Task key={task.id} task={task} onRemove={remove}/> })}
                 </table>
                 <div>
-                    <Link to='/add'><button className="btn btn-primary">Add</button></Link>
+                    <Link to='/add'><button className="btn btn-primary button-fixed">Add</button></Link>
                 </div>
                 
             </div>

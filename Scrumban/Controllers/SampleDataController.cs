@@ -50,21 +50,39 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
+        [Route("/api/[controller]/getTasks")]
         public IEnumerable<Models.Task> Tasks()
         {
             return db.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
         }
 
         [HttpPost]
-        public IActionResult AddTask([FromBody]Models.Task task)
+        [Route("/api/[controller]/addTask")]
+        public IActionResult Add([FromBody]Models.Task task)
         {
-            Models.Task t = new Models.Task { Name = task.Name, Description = task.Description };
-            db.Add(t);
+            Models.Task added = new Models.Task { Name = task.Name, Description = task.Description, PriorityId = task.PriorityId, TaskStateId = task.TaskStateId };
+            db.Add(added);
             db.SaveChanges();
             return Ok(task);
         }
 
+        [HttpPost]
+        [Route("/api/[controller]/editTask")]
+        public IActionResult Edit([FromBody]Models.Task task)
+        {
+            Models.Task edited = db.Tasks.FirstOrDefault(x => x.Id == task.Id);
+
+            edited.Name = task.Name;
+            edited.Description = task.Description;
+            edited.PriorityId = task.PriorityId;
+            edited.TaskStateId = task.TaskStateId;
+            db.SaveChanges();
+
+            return Ok(task);
+        }
+
         [HttpDelete("{id}")]
+        //[Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int id)
         {
             Models.Task task = db.Tasks.FirstOrDefault(x => x.Id == id);

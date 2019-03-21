@@ -22,18 +22,18 @@ namespace Scrumban.Models
             modelBuilder.Entity<TaskState>().HasData(
                 new TaskState[]
                 {
-                    new TaskState{Id = 1, Name = "To do"},
-                    new TaskState{Id = 2, Name = "In progress"},
+                    new TaskState{Id = 1, Name = "To Do"},
+                    new TaskState{Id = 2, Name = "In Progress"},
                     new TaskState{Id = 3, Name = "Completed"}
                 }
             );
             modelBuilder.Entity<State>().HasData(
                 new State[]
                 {
-                    new State{Id = 1, Name = "Ready to start"},
-                    new State{Id = 2, Name = "In progress"},
-                    new State{Id = 3, Name = "Development complete"},
-                    new State{Id = 4, Name = "Test complete"},
+                    new State{Id = 1, Name = "Ready To Start"},
+                    new State{Id = 2, Name = "In Progress"},
+                    new State{Id = 3, Name = "Development Complete"},
+                    new State{Id = 4, Name = "Test Complete"},
                     new State{Id = 5, Name = "Accepted"}
                 }
             );

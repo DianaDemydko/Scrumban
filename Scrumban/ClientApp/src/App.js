@@ -5,7 +5,7 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { TaskGrid } from './components/TaskReactComponenets/TaskGrid';
-import { TaskAdd }  from './components/TaskReactComponenets/TaskAdd';
+import { TaskAdd } from './components/TaskReactComponenets/TaskAdd';
 
 export default class App extends Component {
   displayName = App.name
