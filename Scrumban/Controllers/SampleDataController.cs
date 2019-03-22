@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Scrumban.Controllers
 {
+
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
