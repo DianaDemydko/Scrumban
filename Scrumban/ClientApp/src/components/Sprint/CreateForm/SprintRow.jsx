@@ -29,6 +29,7 @@ export class SprintRow extends React.Component {
     onUpdatingSprintElement(sprint)
     {
         this.props.onUpdatingSprintElement(sprint)
+        this.setState({ sprint: sprint })
     }
 
     onDeletingSprintElement(event)

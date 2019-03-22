@@ -23,11 +23,11 @@ export class FetchSprintData extends React.Component
             })
     }
 
-    onUpdatingSprintElement(sprint) {
+    onUpdatingSprintElement(sprintToUpdate) {
         fetch('api/Sprint/Edit',
         {
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sprint),
+            body: JSON.stringify(sprintToUpdate),
             method: 'put'
         })
         .then(function (response) {
@@ -37,9 +37,12 @@ export class FetchSprintData extends React.Component
                     alert("Editing element went wrong!")
                     break
                 case 200:
+                    let index = this.state.sprints.findIndex(sprint => sprint.sprint_id == sprintToUpdate.sprint_id)
+                    var tempArray = this.state.sprints
+                    tempArray[index] = sprintToUpdate
                     this.setState(
                         {
-                            sprints: this.state.sprints.map(item => item.sprint_id == sprint.sprint_id ? sprint : item)
+                            sprints: tempArray
                         })
                     break
             }
