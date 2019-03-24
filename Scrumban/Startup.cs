@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Scrumban.Models;
 using Microsoft.EntityFrameworkCore;
+
+using Scrumban.DataAccessLayer;
+using Scrumban.Extensions;
 
 
 namespace Scrumban
@@ -24,7 +26,9 @@ namespace Scrumban
         public void ConfigureServices(IServiceCollection services)
         {
             // Register context
-            services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(Configuration["ConnectionStringNotebook:ScrumbanDB"]));
+            services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(Configuration["ConnectionStringDesktop:ScrumbanDB"]));
+
+            services.ConfigureUnitOfWork();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

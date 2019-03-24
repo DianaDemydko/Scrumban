@@ -6,17 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Scrumban.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Scrumban.DataAccessLayer;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
     public class SprintController : Controller
     {
-        SprintDataAccessLayer _sprintDataAccessLayer;
+        private IUnitOfWork _unitOfWork;
+
 
         public SprintController(DbContextOptions<ScrumbanContext> options)
         {
-            _sprintDataAccessLayer = new SprintDataAccessLayer(options);
+            _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
         }
 
         //Get all sprints
@@ -28,7 +30,7 @@ namespace Scrumban.Controllers
         {
             try
             {
-                IEnumerable<Sprint> sprints = _sprintDataAccessLayer.GetAllSprints();
+                IEnumerable<Sprint> sprints = _unitOfWork.SprintRepository.GetAll();
                 return Ok(sprints);
             }
             catch
@@ -47,7 +49,8 @@ namespace Scrumban.Controllers
         {
             try
             {
-                _sprintDataAccessLayer.AddSprint(sprint);
+                _unitOfWork.SprintRepository.Create(sprint);
+                _unitOfWork.Save();
                 return Ok();
             }
             catch
@@ -65,7 +68,8 @@ namespace Scrumban.Controllers
         {
             try
             {
-                _sprintDataAccessLayer.DeleteSprint(id);
+                _unitOfWork.SprintRepository.Delete(id);
+                _unitOfWork.Save();
                 return Ok();
             }
             catch
@@ -84,7 +88,16 @@ namespace Scrumban.Controllers
         {
             try
             {
-                _sprintDataAccessLayer.UpdateSprint(sprint);
+                Sprint sprintToUpdate = _unitOfWork.SprintRepository.GetByID(sprint.Sprint_id);
+
+                sprintToUpdate.Name = sprint.Name;
+                sprintToUpdate.Description = sprint.Description;
+                sprintToUpdate.StartDate = sprint.StartDate;
+                sprintToUpdate.EndDate = sprint.EndDate;
+                sprintToUpdate.Status = sprint.Status;
+
+                _unitOfWork.Save();
+
                 return Ok();
             }
             catch
