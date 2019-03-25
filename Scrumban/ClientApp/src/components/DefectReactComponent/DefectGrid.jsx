@@ -53,7 +53,7 @@ export class DefectGrid extends React.Component {
         //    .then(data => {
         //        this.setState({ defects: data, loading: false });
         //    });
-
+        this.loadData = this.loadData.bind(this);
         this.onRemoveDefect = this.onRemoveDefect.bind(this);
     }
 
@@ -92,7 +92,7 @@ export class DefectGrid extends React.Component {
         return (<div>
 
             <h2>Defects</h2>
-            <Link to='/defect_add' ><button className="btn btn-primary">Add defect</button></Link>
+            <Link to={{ pathname: '/defect_add', state: {loadData: this.loadData() }}} ><button className="btn btn-primary">Add defect</button></Link>
 
             <table className="table table-hover">
                 <thead className="bg-light">

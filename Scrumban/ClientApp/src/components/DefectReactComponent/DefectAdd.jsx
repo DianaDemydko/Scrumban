@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { DefectGrid } from './DefectGrid.jsx';
 const apiAddUrl = "/api/DefectData";
 
 
@@ -156,7 +157,7 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Add</button>
-                            <Link to={"/defects"}>
+                            <Link to={{ pathname: "/defects" }}>
                                 <button type="submit" className="btn btn-primary">Cancel</button>
                             </Link>
                         </div>
