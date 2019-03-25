@@ -24,58 +24,21 @@ export class FetchSprintData extends React.Component
     }
 
     onUpdatingSprintElement(sprintToUpdate) {
-        fetch('api/Sprint/Edit',
-        {
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(sprintToUpdate),
-            method: 'put'
-        })
-        .then(function (response) {
-            let responseStatus = response.status
-            switch (responseStatus) {
-                case 400:
-                    alert("Editing element went wrong!")
-                    break
-                case 200:
-                    let index = this.state.sprints.findIndex(sprint => sprint.sprint_id == sprintToUpdate.sprint_id)
-                    var tempArray = this.state.sprints
-                    tempArray[index] = sprintToUpdate
-                    this.setState(
-                        {
-                            sprints: tempArray
-                        })
-                    break
-            }
-        }.bind(this))
-        .catch(() => alert("Unexpected error occured"))
+        let index = this.state.sprints.findIndex(sprint => sprint.sprint_id == sprintToUpdate.sprint_id)
+        var tempArray = this.state.sprints
+        tempArray[index] = sprintToUpdate
+        this.setState(
+            {
+                sprints: tempArray
+            })
     }
 
-    onDeletingSprintElement(event) {
-        let sprint_id = event.target.id
-        
-        fetch('api/Sprint/Delete',
+    onDeletingSprintElement(sprintToDelete_id) {
+        let sprint_id = sprintToDelete_id
+        this.setState(
             {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(sprint_id),
-                method: 'delete'
+                sprints: this.state.sprints.filter(item => { return item.sprint_id != sprint_id })
             })
-            .then(function (response) {
-                let responseStatus = response.status
-                switch (responseStatus) {
-                    case 400:
-                        alert("De400leting element went wrong!")
-                        break
-                    case 200:
-                        this.setState(
-                            {
-                                sprints: this.state.sprints.filter(item => { return item.sprint_id != sprint_id })
-                            })
-                        break
-                }
-            }.bind(this))
-            .catch(() => alert("Unexpected error occured"))
     }
 
     renderSprintsTable(sprints) {
@@ -94,7 +57,7 @@ export class FetchSprintData extends React.Component
                 </thead>
                 <tbody>
                     {sprints.map(sprint =>
-                        <SprintRow sprint={sprint} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
+                        <SprintRow key={sprint.sprint_id} sprint={sprint} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
                         )
                     }
                 </tbody>

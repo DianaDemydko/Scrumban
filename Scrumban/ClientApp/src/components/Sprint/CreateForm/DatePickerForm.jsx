@@ -31,12 +31,12 @@ export class DatePickerForm extends Component {
 
     onStartDateChanged(startDate) {
         this.setState({ startDate: startDate });
-        this.props.onStartDateChanged(startDate);
+        this.props.onStartDateChanged(startDate.toISOString());
     }
 
     onEndDateChanged(endDate) {
         this.setState({ endDate: endDate });
-        this.props.onEndDateChanged(endDate);
+        this.props.onEndDateChanged(endDate.toISOString());
     }
 
 

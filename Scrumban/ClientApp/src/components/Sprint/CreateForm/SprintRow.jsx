@@ -34,7 +34,28 @@ export class SprintRow extends React.Component {
 
     onDeletingSprintElement(event)
     {
-        this.props.onDeletingSprintElement(event)
+        let sprint_id = event.target.id
+
+        fetch('api/Sprint/Delete',
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(sprint_id),
+                method: 'delete'
+            })
+            .then(function (response) {
+                let responseStatus = response.status
+                switch (responseStatus) {
+                    case 400:
+                        alert("Deleting element went wrong!")
+                        break
+                    case 200:
+                        this.props.onDeletingSprintElement(sprint_id)
+                        break
+                }
+            }.bind(this))
+            .catch(() => alert("Unexpected error occured."))
     }
 
     render()

@@ -49,7 +49,27 @@ export class EditSprint extends React.Component {
 
     onUpdatingSprint()
     {
-        this.props.onUpdatingSprintElement(this.state.sprint)
+        fetch('api/Sprint/Edit',
+            {
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(this.state.sprint),
+                method: 'put'
+            })
+            .then(function (response) {
+                let responseStatus = response.status
+                switch (responseStatus) {
+                    case 400:
+                        alert("Updaiting element went wrong!")
+                        break
+                    case 200:
+                        let temp = { ...this.state.sprint }
+                        temp.startDate = temp.startDate
+                        temp.endDate = temp.endDate
+                        this.props.onUpdatingSprintElement(temp)
+                        break
+                }
+            }.bind(this))
+            .catch(() => alert("Unexpected error occured."))
     }
 
     render() {
