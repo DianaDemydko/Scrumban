@@ -1,0 +1,58 @@
+{
+  "state": [
+    {
+      "id": "1",
+      "name": "To Do"
+    },
+    {
+      "id": "2",
+      "name": "In progress"
+    },
+    {
+      "id": "3",
+      "name": "Done"
+    }
+  ],
+  "priority": [
+    {
+      "id": "1",
+      "name": "Low"
+    },
+    {
+      "id": "2",
+      "name": "Medium"
+    },
+    {
+      "id": "3",
+      "name": "High"
+    }
+  ],
+  "severity": [
+    {
+      "id": "1",
+      "name": "Critical"
+    },
+    {
+      "id": "2",
+      "name": "Major"
+    },
+    {
+      "id": "3",
+      "name": "Medium"
+    },
+    {
+      "id": "4",
+      "name": "Low"
+    }
+  ],
+  "status": [
+    {
+      "id": "1",
+      "name": "Open"
+    },
+    {
+      "id": "2",
+      "name": "Close"
+    }
+  ]
+}
