@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 // consts of urls
-const addTaskUri = "/api/sampleData/addTask";
+const addTaskUri = "/api/TaskGrid/addTask";
 const cancelUrl = "/tasks";
 // consts of stable tables
 const priorityTable = data.priority;
@@ -65,7 +65,7 @@ export class TaskAdd extends React.Component {
         let task = { name: taskName, description: taskDescription, priority : taskPriorityId, taskState : taskStateId };
         this.onAdd(task);
         this.setState({ name: "", description: "", priorityId: 2, taskStateId: 1 });
-        this.props.history.push('/tasks');
+        window.location.replace("/tasks");
     }
 
     render() {
@@ -101,7 +101,9 @@ export class TaskAdd extends React.Component {
                             </select>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary  button-fixed">Submit</button>
+                    
+                        <button type="submit" className="btn btn-primary button-fixed">Submit</button>
+                    
                     <Link to={cancelUrl}>
                         <button type="submit" className="btn btn-danger  button-fixed">Cancel</button>
                     </Link>

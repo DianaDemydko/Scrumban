@@ -15,7 +15,7 @@
     /* On large screens, convert the nav menu to a vertical sidebar */
     .navbar {
         height: 100%;
-        margin-top: 50px;
+       margin-top: 50px;
 
         width: calc(25% - 20px);
     }

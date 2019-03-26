@@ -11,92 +11,130 @@ import "./Register.css";
 import { RouteComponentProps } from 'react-router';
 
 
-export class UserData {
-    userId: number = 0;
-    firstname: string = "";
-    surname: string = "";
-    email: string = "";
-    password: string = "";
-    confirmpassword: string = "";
-}
+//export class UserData {
+//    userId: number = 0;
+//    firstname: string = "";
+//    surname: string = "";
+//    email: string = "";
+//    password: string = "";
+//    confirmpassword: string = "";
+//}
 
 
 export class Register extends React.Component {
+    state = {
+
+        title: "",
+        loading: true,
+        firstname: "",
+        surname: "",
+        email: "",
+        password: "",
+        confirmpassword: "",
+    };
     constructor(props) {
         super(props);
 
-        this.state = {
-
-            title: "", loading: true, firstname: "",
-            surname:  "",
-            email:  "",
-            password: "",
-            confirmpassword: "",
-            newUser: new UserData
-        };
-
-        var userid = this.props.match.params["userid"];
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.firstnameChanged = this.firstnameChanged.bind(this);
+        this.surnameChanged = this.surnameChanged.bind(this);
+        this.emailChanged = this.emailChanged.bind(this);
+        this.passwordChanged = this.passwordChanged.bind(this);
+        this.confirmpasswordChanged = this.confirmpasswordChanged.bind(this);
+        //var userid = this.props.match.params["userid"];
 
         // This will set state for Edit employee
-        if (userid > 0) {
-            fetch('Details/' + userid)
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({ title: "Edit", loading: false, userData: data });
-                });
-        }
+        //if (userid > 0) {
+        //    fetch('Details/' + userid)
+        //        .then(response => response.json())
+        //        .then(data => {
+        //            this.setState({ title: "Edit", loading: false, userData: data });
+        //        });
+        //}
 
-        // This will set state for Add employee
-        else {
-            this.state = { title: "Create", loading: false, userData: new UserData };
-        }
+        //// This will set state for Add employee
+        //else {
+        //    this.state = { title: "Create", loading: false, userData: new UserData };
+        //}
 
         // This binding is necessary to make "this" work in the callback
         //this.handleSave = this.handleSave.bind(this);
         //this.handleCancel = this.handleCancel.bind(this);
     }
 
-    validateForm() {
-        return (
-            this.state.email.length > 0 &&
-            this.state.password.length > 0 &&
-            this.state.password === this.state.confirmPassword
-        );
+    //validateForm() {
+    //    return (
+    //        this.state.email.length > 0 &&
+    //        this.state.password.length > 0 &&
+    //        this.state.password === this.state.confirmpassword
+    //    );
+    //}
+
+
+
+    //handleChange = event => {
+    //    this.setState({
+    //        [event.target.id]: event.target.value
+    //    });
+    //}
+
+    firstnameChanged(e) {
+        this.setState({ firstname: e.target.value });
+    }
+    surnameChanged(e) {
+        this.setState({ surname: e.target.value });
+    }
+    emailChanged(e) {
+        this.setState({ email: e.target.value });
+    }
+    passwordChanged(e) {
+        this.setState({ password: e.target.value });
+    }
+    confirmpasswordChanged(e) {
+        this.setState({ comfirmpassword: e.target.value });
     }
 
+    handleSubmit(e) {
+        fetch('api/users', {
+            method: 'post',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firstname: this.state.firstname,
+                surname: this.state.surname,
+                email: this.state.email,
+                password: this.state.password,
+                pictureId: 0,
+                roleId: 0
+            })
 
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+        })
     }
 
-    handleSubmit = async event => {
-
-      
-        
-
-        event.preventDefault();
-        const data = new FormData(event.target);
-        fetch('Create', {
-            method: 'POST',
-            body: data,
-
-        }).then((response) => response.json())
-
-        //this.setState({ isLoading: true });
-
-        //this.setState({ newUser: "test" });
-
-        //this.setState({ isLoading: false });
-    }
+    //handleSubmit = async event => {
 
 
 
 
+    //    event.preventDefault();
+    //    const data = new FormData(event.target);
+    //    fetch('Create', {
+    //        method: 'POST',
+    //        body: data,
 
-    renderForm() {
+    //    }).then((response) => response.json())
+
+    //    //this.setState({ isLoading: true });
+
+    //    //this.setState({ newUser: "test" });
+
+    //    //this.setState({ isLoading: false });
+    //}
+
+
+
+
+
+    render() {
         return (
             <form onSubmit={this.handleSubmit}>
                 <FormGroup controlId="firstname" bsSize="large">
@@ -105,7 +143,7 @@ export class Register extends React.Component {
                         autoFocus
                         type="text"
                         value={this.state.firstname}
-                        onChange={this.handleChange}
+                        onChange={e => this.firstnameChanged(e)}
                     />
                 </FormGroup>
                 <FormGroup controlId="surname" bsSize="large">
@@ -114,7 +152,7 @@ export class Register extends React.Component {
                         autoFocus
                         type="text"
                         value={this.state.surname}
-                        onChange={this.handleChange}
+                        onChange={e => this.surnameChanged(e)}
                     />
                 </FormGroup>
                 <FormGroup controlId="email" bsSize="large">
@@ -123,14 +161,14 @@ export class Register extends React.Component {
                         autoFocus
                         type="email"
                         value={this.state.email}
-                        onChange={this.handleChange}
+                        onChange={e => this.emailChanged(e)}
                     />
                 </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
                     <ControlLabel>Password</ControlLabel>
                     <FormControl
                         value={this.state.password}
-                        onChange={this.handleChange}
+                        onChange={e => this.passwordChanged(e)}
                         type="password"
                     />
                 </FormGroup>
@@ -138,14 +176,14 @@ export class Register extends React.Component {
                     <ControlLabel>Confirm Password</ControlLabel>
                     <FormControl
                         value={this.state.confirmPassword}
-                        onChange={this.handleChange}
+                        onChange={e => this.confirmpasswordChanged(e)}
                         type="password"
                     />
                 </FormGroup>
                 <Button
                     block
                     bsSize="large"
-                    disabled={!this.validateForm()}
+                    //disabled={!this.validateForm()}
                     type="submit"
                     isLoading={this.state.isLoading}
 
@@ -155,13 +193,13 @@ export class Register extends React.Component {
         );
     }
 
-    render() {
-        return (
-            <div className="Signup">
-                {this.state.newUser === null
-                    ? this.renderForm()
-                    : this.renderConfirmationForm()}
-            </div>
-        );
-    }
+    //render() {
+    //    return (
+    //        <div className="Signup">
+    //            {this.state.newUser === null
+    //                ? this.renderForm()
+    //                : this.renderConfirmationForm()}
+    //        </div>
+    //    );
+    //}
 }

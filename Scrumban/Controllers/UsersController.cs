@@ -26,8 +26,8 @@ namespace Scrumban.Controllers
 
         //Create user 
         [HttpPost]
-        [Route("Create")]
-        public int Create(Users user)
+
+        public int Create([FromBody]Users user)
         {
             return _userDataAccessLayer.AddUser(user);
         }

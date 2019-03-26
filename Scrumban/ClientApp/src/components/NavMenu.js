@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+//import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -9,7 +9,8 @@ export class NavMenu extends Component {
 
   render() {
     return (
-      <Navbar inverse fixedTop fluid collapseOnSelect>
+      <Navbar inverse fixedTop fluid collapseOnSelect className>
+            {/*}
         <Navbar.Header>
           <Navbar.Brand>
             <Link to={'/'}>Scrumban</Link>
@@ -40,6 +41,8 @@ export class NavMenu extends Component {
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
+        */}
+
       </Navbar>
     );
   }

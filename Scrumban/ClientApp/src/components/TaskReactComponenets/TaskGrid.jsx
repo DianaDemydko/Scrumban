@@ -5,8 +5,8 @@ import { TaskEdit } from './TaskEdit';
 //import '../../index.css';
 
 // const
-const apiUrlGet = "/api/SampleData/getTasks";
-const apiUrlDelete = "/api/SampleData";
+const apiUrlGet = "/api/TaskGrid/getTasks";
+const apiUrlDelete = "/api/TaskGrid";
 
 const styleObj = {
     //border: '1px solid red'
@@ -22,10 +22,22 @@ class Task extends React.Component {
 
         this.onRemoveTask = this.onRemoveTask.bind(this);
         this.onEditTask = this.onEditTask.bind(this);
+        this.onChangedTask = this.onChangedTask.bind(this);
+        this.onChangedEditTask = this.onChangedEditTask.bind(this);
     }
 
     onRemoveTask() {
         this.props.onRemove(this.state.data.id);
+    }
+
+    onChangedTask() {
+        var elem = this.state.data;
+        this.props.onChanged(elem);
+    }
+
+    onChangedEditTask(item) {
+        this.setState({ data: item });
+        this.onChangedTask();
     }
 
     onEditTask() {
@@ -37,7 +49,7 @@ class Task extends React.Component {
         return <tbody>
             {isEdit ?
                 (<TaskPrint item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} />)
-                : (<TaskEdit item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} />)
+                : (<TaskEdit item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} changed={this.onChangedEditTask}/>)
             }
         </tbody>;
     }
@@ -51,6 +63,7 @@ export class TaskGrid extends React.Component {
 
         this.onRemoveTask = this.onRemoveTask.bind(this);
         this.onAdded = this.onAdded.bind(this);
+        this.onChanged = this.onChanged.bind(this);
     }
 
     // Load data
@@ -72,6 +85,13 @@ export class TaskGrid extends React.Component {
         this.setState({tasks : this.state.tasks.push(item)});
     }
 
+    onChanged(item) {
+        var arr = this.state.tasks;
+        var index = arr.indexOf(x => x.id = item.id);
+        arr[index] = item;
+        this.setState({ tasks: arr});
+    }
+
     onRemoveTask(id) {
         var url = apiUrlDelete + "/" + id;
 
@@ -88,10 +108,11 @@ export class TaskGrid extends React.Component {
 
     render() {
         var remove = this.onRemoveTask;
+        var changed = this.onChanged;
         return <div>
             <h2>Tasks</h2>
             <div>
-                <table className="table table-fixed">
+                <table className="table table-hover table-fixed">
                     <thead className="bg-light">
                         <th>Name</th>
                         <th>Description</th>
@@ -99,12 +120,11 @@ export class TaskGrid extends React.Component {
                         <th>State</th>
                         <th></th>
                     </thead>
-                    {this.state.tasks.map(function (task) { return <Task key={task.id} task={task} onRemove={remove}/> })}
+                    {this.state.tasks.map(function (task) { return <Task key={task.id} task={task} onRemove={remove} onChanged={changed}/> })}
                 </table>
                 <div>
-                    <Link to='/add'><button className="btn btn-primary button-fixed">Add</button></Link>
+                    <Link to='/add'><button className="btn btn-outline-primary button-fixed">Add</button></Link>
                 </div>
-                
             </div>
         </div>;
     }

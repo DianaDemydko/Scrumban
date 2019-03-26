@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
-const updateTaskUri = "/api/sampleData/editTask";
+const updateTaskUri = "/api/TaskGrid/editTask";
 
 // consts of stable tables
 const priorityTable = data.priority;
@@ -60,8 +60,14 @@ export class TaskEdit extends React.Component {
         var taskTaskStateId = stateTable.find(x => x.name === this.state.taskState).id;
         let task = { id: this.props.item.id , name: taskName, description: taskDescription, priorityId: taskPriorityId, taskStateId: taskTaskStateId };
         this.onUpdate(task);
-        this.setState({ name: "", description: "", priorityId: 2, taskStateId: 1 });
+        this.setState({ name: "", description: "", priority: "", taskState: "" });
         this.props.edit();
+
+        var priority = { id: taskPriorityId, name: this.state.priority };
+        var state = { id: taskTaskStateId, name: this.state.taskState };
+        var callBackTask = { id: this.props.item.id, name: this.state.name, description: this.state.description, priority: priority, taskState: state };
+        this.props.changed(callBackTask);
+        
     }
 
     render() {
@@ -99,7 +105,7 @@ export class TaskEdit extends React.Component {
             </form>
             </td>
             <td>
-                <button type="submit" onClick={this.onSubmit} className="btn btn-primary button-fixed">Save</button>
+                <button type="submit" onClick={this.onSubmit} className="btn btn-outline-danger button-fixed">Save</button>
                 <button type="submit" onClick={this.props.edit} className="btn btn-danger button-fixed">Cancel</button>
             </td>
         </tr>;

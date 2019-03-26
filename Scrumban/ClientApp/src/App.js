@@ -15,13 +15,13 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
-        <Route exact path='/'   component={Home} />
-        <Route path='/counter'  component={Counter} />
-        <Route path='/fetchdata'component={FetchData} />
-        <Route path='/tasks'    component={TaskGrid} />
-        <Route path='/add'      component={TaskAdd} />
-            <Route path='/login' component={Login}/>
-            <Route path='/register' component={Register} />
+        <Route exact path='/'       component={TaskGrid} />
+        <Route path='/counter'      component={Counter} />
+        <Route path='/fetchdata'    component={FetchData} />
+        <Route path='/tasks'        component={TaskGrid} />
+        <Route path='/add'          component={TaskAdd} />
+        <Route path='/login'        component={Login}/>
+        <Route path='/register'     component={Register} />
       </Layout>
     );
   }

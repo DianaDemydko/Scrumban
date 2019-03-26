@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrumban.Models;
 using CustomIdentityApp.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
+//using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Scrumban
 {
@@ -22,38 +22,33 @@ namespace Scrumban
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+      
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //        services.AddDbContext<ScrumbanContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //        services.AddIdentity<User, ScrumbanRole>()
-            //            .AddEntityFrameworkStores<ScrumbanContext>();
+           
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            // äîáàâëÿåì êîíòåêñò MobileContext â êà÷åñòâå ñåðâèñà â ïðèëîæåíèå
+           
             services.AddDbContext<ScrumbanContext>(options =>
                 options.UseSqlServer(connection));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // In production, the React files will be served from this directory
+           
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
 
 
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            // äîáàâëÿåì êîíòåêñò MobileContext â êà÷åñòâå ñåðâèñà â ïðèëîæåíèå
+           
             services.AddDbContext<ScrumbanContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+       
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

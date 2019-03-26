@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Scrumban.Models;
 
-namespace Scrumban.Models
+namespace Scrumban.TaskModel.Models
 {
     public class Task
     {
