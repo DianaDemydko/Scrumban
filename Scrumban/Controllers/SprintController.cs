@@ -88,13 +88,7 @@ namespace Scrumban.Controllers
         {
             try
             {
-                Sprint sprintToUpdate = _unitOfWork.SprintRepository.GetByID(sprint.Sprint_id);
-
-                sprintToUpdate.Name = sprint.Name;
-                sprintToUpdate.Description = sprint.Description;
-                sprintToUpdate.StartDate = sprint.StartDate;
-                sprintToUpdate.EndDate = sprint.EndDate;
-                sprintToUpdate.Status = sprint.Status;
+                _unitOfWork.SprintRepository.Update(sprint);
 
                 _unitOfWork.Save();
 

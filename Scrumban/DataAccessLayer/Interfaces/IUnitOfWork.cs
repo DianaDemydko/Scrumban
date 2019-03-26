@@ -9,6 +9,6 @@ namespace Scrumban.DataAccessLayer
     {
         ISprintRepository SprintRepository { get; }
 
-        void Save();
+        int Save();
     }
 }

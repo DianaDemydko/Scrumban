@@ -53,6 +53,11 @@ namespace Scrumban.DataAccessLayer
             _repositoryContext.Set<TEntity>().Remove(entityToDelete);
         }
 
+        //Update methods
 
+        public virtual void Update(TEntity entityToUpdate)
+        {
+            _repositoryContext.Entry(entityToUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
     }
 }

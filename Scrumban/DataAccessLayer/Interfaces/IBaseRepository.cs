@@ -18,5 +18,8 @@ namespace Scrumban.DataAccessLayer
         //Delete methods
         void Delete(int id);
         void Delete(TEntity entity);
+
+        //Update methods
+        void Update(TEntity entity);
     }
 }
