@@ -18,7 +18,8 @@ export class FetchData extends Component {
     return (
       <table className='table'>
         <thead>
-          <tr>
+                <tr>
+
             <th>Date</th>
             <th>Temp. (C)</th>
             <th>Temp. (F)</th>
