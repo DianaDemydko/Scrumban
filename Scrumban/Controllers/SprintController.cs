@@ -7,6 +7,7 @@ using Scrumban.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Scrumban.DataAccessLayer;
+using Microsoft.AspNet.OData;
 
 namespace Scrumban.Controllers
 {
@@ -23,6 +24,7 @@ namespace Scrumban.Controllers
 
         //Get all sprints
         [HttpGet]
+        [EnableQuery]
         [Route("Index")]
         [ProducesResponseType(typeof(IEquatable<Sprint>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

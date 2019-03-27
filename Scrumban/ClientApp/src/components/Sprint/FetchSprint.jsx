@@ -1,22 +1,33 @@
 ﻿import React from 'react';
 import { SprintRow } from './CreateForm/SprintRow'
+import buildQuery from 'odata-query'
+
+const ENTER_KEY = 13;
+
 
 export class FetchSprintData extends React.Component
 {
    
     constructor(props) {
         super(props)
-        this.state = { sprints: [], loading: true, isEditing: false }
+        this.state = { sprints: [], loading: true, isTyping: false, nameSearch: "" }
 
         this.fetchSprintData = this.fetchSprintData.bind(this)
         this.onDeletingSprintElement = this.onDeletingSprintElement.bind(this)
         this.onUpdatingSprintElement = this.onUpdatingSprintElement.bind(this)
-        this.fetchSprintData()
+
+        this.onNameSearchChange = this.onNameSearchChange.bind(this)
+        this.onNameKeyDown = this.onNameKeyDown.bind(this)
     }
 
-    fetchSprintData() {
+    componentDidMount()
+    {
+        this.fetchSprintData("")
+    }
+
+    fetchSprintData(query) {
         this.setState({ loading: true })
-        fetch('api/Sprint/Index')
+        fetch('api/Sprint/Index' + query)
             .then(response => response.json())
             .then(data => {
                 this.setState({ sprints: data, loading: false });
@@ -31,6 +42,7 @@ export class FetchSprintData extends React.Component
             {
                 sprints: tempArray
             })
+        
     }
 
     onDeletingSprintElement(sprintToDelete_id) {
@@ -41,12 +53,42 @@ export class FetchSprintData extends React.Component
             })
     }
 
+
+    onNameSearchChange(event)
+    {
+        let value = event.target.value;
+        
+            this.setState({
+                nameSearch: value,
+            })
+        
+    }
+
+    onNameKeyDown(event)
+    {
+        if (event.key == 'Enter')
+        {
+            const orderBy = ['Description']
+
+            const filter = { Name: { contains: this.state.nameSearch } };
+
+            const query = buildQuery({ filter })
+
+            this.fetchSprintData(query)
+        }
+    }
+
+
+
     renderSprintsTable(sprints) {
         return (
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>
+                            <div>Name</div>
+                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChange} onKeyDown={this.onNameKeyDown} value={this.state.nameSearch}/></div>
+                        </th>
                         <th>Description</th>
                         <th>Start Date</th>
                         <th>End Date</th>

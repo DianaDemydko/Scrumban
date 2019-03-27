@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-
 using Scrumban.DataAccessLayer;
 using Scrumban.Extensions;
-
+using Microsoft.AspNet.OData.Extensions;
 
 namespace Scrumban
 {
@@ -27,6 +26,9 @@ namespace Scrumban
         {
             // Register context
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(Configuration["ConnectionStringDesktop:ScrumbanDB"]));
+
+            //Odata service
+            services.AddOData(); //odata 1
 
             services.ConfigureUnitOfWork();
 
@@ -61,6 +63,8 @@ namespace Scrumban
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+                routes.EnableDependencyInjection(); //odata 2
+                routes.Expand().Select().Count().OrderBy().Filter(); //odata 3
             });
 
             app.UseSpa(spa =>
