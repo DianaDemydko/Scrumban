@@ -1,23 +1,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Scrumban.Models;
-using Scrumban.TaskModel.Models; 
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNet.OData;
+using Scrumban.Models.Entities;
+using Scrumban.DataAccessLayer;
+using Scrumban.DataAccessLayer.Interfaces;
+using Scrumban.DataAccessLayer.Repositories;
 
 namespace Scrumban.Controllers
 {
+    
     [Route("api/[controller]")]
     public class TaskGridController : Controller
     {
         ScrumbanContext db;
-        IRepository _repo;
+        IRepository<Task> _repo;
+        IUnitOfWork _unitOfWork;
 
         public TaskGridController(ScrumbanContext context)
         {
             db = context;
+            _repo = new TaskRepository(context);
+            _unitOfWork = new UnitOfWork(context);
+        }
+
+        [HttpGet]
+        [EnableQuery()]
+        [Route("/api/[controller]/getTasks")]
+        public IEnumerable<Task> GetTasks()
+        {
+            return _unitOfWork.Tasks.GetAll();
         }
 
         private static string[] Summaries = new[]
@@ -52,18 +65,22 @@ namespace Scrumban.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("/api/[controller]/getTasks")]
-        public IEnumerable<TaskModel.Models.Task> Tasks()
-        {
-            return db.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
-        }
+        //[HttpGet]
+        //[Route("/api/[controller]/getTasks")]
+        ////[EnableQuery]
+        //public IEnumerable<Task> Tasks()
+        //{
+        //    return _unitOfWork.Tasks.GetAll();
+        //    //return Ok(_unitOfWork.Tasks.GetAll();
+        //    //return _repo.GetAll();
+        //    //return db.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
+        //}
 
         [HttpPost]
         [Route("/api/[controller]/addTask")]
-        public IActionResult Add([FromBody]TaskModel.Models.Task task)
+        public IActionResult Add([FromBody]Task task)
         {
-            TaskModel.Models.Task added = new TaskModel.Models.Task { Name = task.Name, Description = task.Description, PriorityId = task.PriorityId, TaskStateId = task.TaskStateId };
+            Task added = new Task { Name = task.Name, Description = task.Description, PriorityId = task.PriorityId, TaskStateId = task.TaskStateId };
             db.Add(added);
             db.SaveChanges();
             return Ok(task);
@@ -71,9 +88,9 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/editTask")]
-        public IActionResult Edit([FromBody]TaskModel.Models.Task task)
+        public IActionResult Edit([FromBody]Task task)
         {
-            TaskModel.Models.Task edited = db.Tasks.FirstOrDefault(x => x.Id == task.Id);
+            Task edited = db.Tasks.FirstOrDefault(x => x.Id == task.Id);
 
             edited.Name = task.Name; 
             edited.Description = task.Description;
@@ -88,7 +105,7 @@ namespace Scrumban.Controllers
         //[Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int id)
         {
-            TaskModel.Models.Task task = db.Tasks.FirstOrDefault(x => x.Id == id);
+            Task task = db.Tasks.FirstOrDefault(x => x.Id == id);
             if(task == null)
             {
                 return NotFound();

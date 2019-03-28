@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Scrumban.Models;
 
-namespace Scrumban.TaskModel.Models
+namespace Scrumban.Models.Entities
 {
     public class Task
     {
@@ -28,6 +23,5 @@ namespace Scrumban.TaskModel.Models
 
         public int? StoryId { get; set; }
         //public Story Story { get; set; }
-
     }
 }

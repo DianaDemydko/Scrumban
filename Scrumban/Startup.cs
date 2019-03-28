@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrumban.Models;
 using CustomIdentityApp.Models;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.OData.Edm;
+using Scrumban.DataAccessLayer;
 //using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Scrumban
@@ -25,27 +29,25 @@ namespace Scrumban
       
         public void ConfigureServices(IServiceCollection services)
         {
-
-           
             string connection = Configuration.GetConnectionString("DefaultConnection");
            
             services.AddDbContext<ScrumbanContext>(options =>
                 options.UseSqlServer(connection));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
            
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-
+            
+            services.AddODataQueryFilter();
            
             services.AddDbContext<ScrumbanContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddOData();
         }
 
        
@@ -65,11 +67,17 @@ namespace Scrumban
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.EnableDependencyInjection();
+                routeBuilder.Filter().OrderBy().Count().Expand().Select();
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "{controller}/{action=index}/{id?}");
             });
 
             app.UseSpa(spa =>

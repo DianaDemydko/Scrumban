@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Scrumban.Models;
-using Scrumban.TaskModel.Models;
+using Scrumban.Models.Entities;
+using Scrumban.DataAccessLayer.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace Scrumban.Models.Repositories
+namespace Scrumban.DataAccessLayer.Repositories
 {
-    public class TaskRepository : IRepository<TaskModel.Models.Task>
+    public class TaskRepository : IRepository<Task>
     {
         private ScrumbanContext _context;
 
@@ -16,13 +16,13 @@ namespace Scrumban.Models.Repositories
             _context = context;
         }
 
-        public void Create(TaskModel.Models.Task item)
+        public void Create(Task item)
         {
-            using(var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    TaskModel.Models.Task added = new TaskModel.Models.Task
+                    Task added = new Task
                     {
                         Name = item.Name,
                         Description = item.Description,
@@ -32,7 +32,7 @@ namespace Scrumban.Models.Repositories
                     _context.Add(added);
                     _context.SaveChanges();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                 }
@@ -45,40 +45,40 @@ namespace Scrumban.Models.Repositories
             {
                 try
                 {
-                    TaskModel.Models.Task task = _context.Tasks.FirstOrDefault(x => x.Id == id);
-                    if(task == null)
+                    Task task = _context.Tasks.FirstOrDefault(x => x.Id == id);
+                    if (task == null)
                     {
 
                     }
                     _context.Tasks.Remove(task);
                     _context.SaveChanges();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                 }
             }
         }
 
-        public TaskModel.Models.Task Get(int id)
+        public Task Get(int id)
         {
             return _context.Tasks.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(TaskModel.Models.Task item)
+        public void Update(Task item)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    TaskModel.Models.Task task = _context.Tasks.FirstOrDefault(x => x.Id == item.Id);
+                    Task task = _context.Tasks.FirstOrDefault(x => x.Id == item.Id);
                     if (task == null)
                     {
 
                     }
                     task.Name = task.Name;
                     task.Description = item.Description;
-                    task.PriorityId =  item.PriorityId;
+                    task.PriorityId = item.PriorityId;
                     task.TaskStateId = item.TaskStateId;
 
                     _context.SaveChanges();
@@ -90,9 +90,9 @@ namespace Scrumban.Models.Repositories
             }
         }
 
-        IEnumerable<TaskModel.Models.Task> IRepository<TaskModel.Models.Task>.GetAll()
+        IEnumerable<Task> IRepository<Task>.GetAll()
         {
-            return _context.Tasks.ToList();
+            return _context.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
         }
     }
 }
