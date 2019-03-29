@@ -1,27 +1,46 @@
 ﻿import React from 'react';
 import { SprintRow } from './CreateForm/SprintRow'
 import buildQuery from 'odata-query'
-
-const ENTER_KEY = 13;
-
+import DatePicker from "react-datepicker";
 
 export class FetchSprintData extends React.Component
 {
    
     constructor(props) {
         super(props)
-        this.state = { sprints: [], loading: true, isTyping: false, nameSearch: "" }
+        this.state =
+        {
+            sprints: [],
+            statuses: [],
+            loading: true,
+
+
+            nameSearch: "",
+            descriptionSearch: "",
+            startDateSearch: null,
+            endDateSearch: null,
+            statusSearch: "All"
+        }
 
         this.fetchSprintData = this.fetchSprintData.bind(this)
+        this.fetchSprintStatuses = this.fetchSprintStatuses.bind(this)
+
         this.onDeletingSprintElement = this.onDeletingSprintElement.bind(this)
         this.onUpdatingSprintElement = this.onUpdatingSprintElement.bind(this)
 
         this.onNameSearchChange = this.onNameSearchChange.bind(this)
-        this.onNameKeyDown = this.onNameKeyDown.bind(this)
+        this.onDescriptionSearchChange = this.onDescriptionSearchChange.bind(this)
+        this.onStartDateSearchChange = this.onStartDateSearchChange.bind(this)
+        this.onEndDateSearchChange = this.onEndDateSearchChange.bind(this)
+        this.onStatusSearchChange = this.onStatusSearchChange.bind(this)
+
+        this.onFiltersApply = this.onFiltersApply.bind(this)
+        this.onKeyDown = this.onKeyDown.bind(this)
     }
 
     componentDidMount()
     {
+        this.fetchSprintStatuses()
         this.fetchSprintData("")
     }
 
@@ -31,6 +50,15 @@ export class FetchSprintData extends React.Component
             .then(response => response.json())
             .then(data => {
                 this.setState({ sprints: data, loading: false });
+            })
+    }
+
+    fetchSprintStatuses()
+    {
+        fetch('api/Sprint/GetStatuses')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ statuses: data });
             })
     }
 
@@ -56,27 +84,68 @@ export class FetchSprintData extends React.Component
 
     onNameSearchChange(event)
     {
-        let value = event.target.value;
-        
-            this.setState({
-                nameSearch: value,
-            })
-        
+        this.setState({ nameSearch: event.target.value })  
     }
 
-    onNameKeyDown(event)
+    onDescriptionSearchChange(event)
+    {
+        this.setState({ descriptionSearch: event.target.value })
+    }
+
+    onStartDateSearchChange(startDate)
+    {
+        this.setState({ startDateSearch: startDate })
+    }
+
+    onEndDateSearchChange(endDate) {
+        this.setState({ endDateSearch: endDate })
+    }
+
+    onStatusSearchChange(event)
+    {
+        this.setState({ statusSearch: event.target.value })
+    }
+
+    onKeyDown(event)
     {
         if (event.key == 'Enter')
         {
-            const orderBy = ['Description']
-
-            const filter = { Name: { contains: this.state.nameSearch } };
-
-            const query = buildQuery({ filter })
-
-            this.fetchSprintData(query)
+            this.onFiltersApply()
         }
     }
+
+    onFiltersApply()
+    {
+        var filter = []
+        if (this.state.nameSearch != "")
+        {
+            filter.push({ "tolower(Name)": { contains: this.state.nameSearch.toLowerCase() } })
+        }
+
+        if (this.state.descriptionSearch != "")
+        {
+            filter.push({"tolower(Description)": { contains: this.state.descriptionSearch } })
+        }
+
+        if (this.state.startDateSearch != null)
+        {
+            filter.push({ startDate: { gt: this.state.startDateSearch } })
+        }
+
+        if (this.state.endDateSearch != null) {
+            filter.push({ endDate: { lt: this.state.endDateSearch } })
+        }
+
+        if (this.state.statusSearch != "All")
+        {
+            filter.push({ sprintStatus: this.state.statusSearch })
+        }
+            
+        var query = buildQuery({ filter })
+
+        this.fetchSprintData(query)
+    }
+
 
 
 
@@ -87,20 +156,61 @@ export class FetchSprintData extends React.Component
                     <tr>
                         <th>
                             <div>Name</div>
-                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChange} onKeyDown={this.onNameKeyDown} value={this.state.nameSearch}/></div>
+                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChange} onKeyDown={this.onKeyDown} value={this.state.nameSearch}/></div>
                         </th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Status</th>
-                        <th></th>
-                        <th></th>
+                        <th>
+                            <div>Description</div>
+                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChange} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} /></div>
+                        </th>
+                        <th>
+                            <div>Start Date</div>
+                            <DatePicker
+                                className="form-control"
+                                todayButton={"Today"}
+                                selected={this.state.startDateSearch}
+                                onChange={this.onStartDateSearchChange}
+                                onKeyDown={this.onKeyDown}
+                                isClearable={true}
+                                placeholderText="Search..."
+                            />
+                        </th>
+                        <th>
+                            <div>End Date</div>
+                            <DatePicker
+                                className="form-control"
+                                todayButton={"Today"}
+                                selected={this.state.endDateSearch}
+                                onChange={this.onEndDateSearchChange}
+                                onKeyDown={this.onKeyDown}
+                                isClearable={true}
+                                placeholderText="Search..."
+                            />
+                        </th>
+                        <th>Status
+                            <div>
+                                <select class="form-control" onChange={this.onStatusSearchChange} value={this.state.statusSearch}>
+                                    <option value="All">All</option>
+                                    {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
+                                </select>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div>
+                                <button type="button" style={{ width: '100%'}} class="btn btn-primary" onClick={this.onFiltersApply}>Apply Filters</button>
+                             </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {sprints.map(sprint =>
-                        <SprintRow key={sprint.sprint_id} sprint={sprint} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
+                    
+                    {(sprints.length > 0)
+                        ? sprints.map(sprint =>
+                            <SprintRow key={sprint.sprint_id} sprint={sprint} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
                         )
+                        : (<td colSpan="7">
+                            No results
+                          </td>)
+                            
                     }
                 </tbody>
             </table>
@@ -116,7 +226,7 @@ export class FetchSprintData extends React.Component
         return (
             <div>
                 <h1>Sprints</h1>
-                <button type="button" class="btn btn-primary" onClick={this.fetchSprintData} >Load Sprint Table</button>
+                <button type="button" class="btn btn-primary" onClick={() => { this.fetchSprintData("") }} >Load Sprint Table</button>
                 {content}
             </div>
         );

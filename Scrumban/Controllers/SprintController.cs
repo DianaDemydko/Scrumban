@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Scrumban.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Scrumban.DataAccessLayer;
 using Microsoft.AspNet.OData;
+using Scrumban.ServiceLayer;
+using Scrumban.ServiceLayer.Entities;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
     public class SprintController : Controller
     {
-        private IUnitOfWork _unitOfWork;
-
+        private ISprintService _sprintService;
 
         public SprintController(DbContextOptions<ScrumbanContext> options)
         {
-            _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
+            _sprintService = new SprintService(options);
         }
 
         //Get all sprints
         [HttpGet]
         [EnableQuery]
         [Route("Index")]
-        [ProducesResponseType(typeof(IEquatable<Sprint>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEquatable<SprintDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Index()
         {
             try
             {
-                IEnumerable<Sprint> sprints = _unitOfWork.SprintRepository.GetAll();
+                IEnumerable<SprintDTO> sprints = _sprintService.GetAll();
                 return Ok(sprints);
             }
             catch
@@ -42,17 +42,33 @@ namespace Scrumban.Controllers
             
         }
 
+        [HttpGet]
+        [Route("GetStatuses")]
+        [ProducesResponseType(typeof(IEquatable<SprintStatusDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetStatuses()
+        {
+            try
+            {
+                IEnumerable<SprintStatusDTO> statuses = _sprintService.GetAllStatuses();
+                return Ok(statuses);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
         //Add sprint
         [HttpPost]
         [Route("Create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Create([FromBody] Sprint sprint)
+        public IActionResult Create([FromBody] SprintDTO sprint)
         {
             try
             {
-                _unitOfWork.SprintRepository.Create(sprint);
-                _unitOfWork.Save();
+                _sprintService.Create(sprint);
                 return Ok();
             }
             catch
@@ -70,8 +86,7 @@ namespace Scrumban.Controllers
         {
             try
             {
-                _unitOfWork.SprintRepository.Delete(id);
-                _unitOfWork.Save();
+                _sprintService.Delete(id);
                 return Ok();
             }
             catch
@@ -86,14 +101,11 @@ namespace Scrumban.Controllers
         [Route("Edit")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Edit([FromBody] Sprint sprint)
+        public IActionResult Edit([FromBody] SprintDTO sprint)
         {
             try
             {
-                _unitOfWork.SprintRepository.Update(sprint);
-
-                _unitOfWork.Save();
-
+                _sprintService.Update(sprint);
                 return Ok();
             }
             catch
@@ -101,6 +113,5 @@ namespace Scrumban.Controllers
                 return BadRequest();
             }
         }
-
     }
 }

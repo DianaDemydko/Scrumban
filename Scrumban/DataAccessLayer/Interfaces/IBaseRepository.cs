@@ -10,7 +10,6 @@ namespace Scrumban.DataAccessLayer
         //Get methods
         IEnumerable<TEntity> GetAll();
         TEntity GetByID(int id);
-        IEnumerable<TEntity> GetbyCondition(Expression<Func<TEntity, bool>> expression);
 
         //Create methods
         void Create(TEntity entity);

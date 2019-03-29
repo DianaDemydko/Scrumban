@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
-using Scrumban.Models;
 
 namespace Scrumban.DataAccessLayer
 {
@@ -11,7 +10,8 @@ namespace Scrumban.DataAccessLayer
     {
         private readonly ScrumbanContext _scrumbanContext;
         private ISprintRepository _sprintRepository;
-        
+        private ISprintStatusRepository _sprintStatusRepository;
+
         public ISprintRepository SprintRepository
         {
             get
@@ -25,10 +25,22 @@ namespace Scrumban.DataAccessLayer
             }
         }
 
+        public ISprintStatusRepository SprintStatusRepository
+        {
+            get
+            {
+                if (_sprintStatusRepository == null)
+                {
+                    _sprintStatusRepository = new SprintStatusRepository(_scrumbanContext);
+                }
+
+                return _sprintStatusRepository;
+            }
+        }
+
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
             _scrumbanContext = scrumbanContext;
-
         }
 
         public int Save()

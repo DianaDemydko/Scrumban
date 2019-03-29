@@ -67,7 +67,7 @@ export class SprintRow extends React.Component {
                 <td>{this.state.sprint.description}</td>
                 <td>{this.state.sprint.startDate}</td>
                 <td>{this.state.sprint.endDate}</td>
-                <td>{this.state.sprint.status}</td>
+                <td>{this.state.sprint.sprintStatus}</td>
                 <td>
                     <button type="button" class="btn btn-success" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>
                 </td>

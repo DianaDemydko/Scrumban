@@ -53,7 +53,7 @@ export class DatePickerForm extends Component {
                         onChange={this.onStartDateChanged}
                         minDate={new Date()}
                         maxDate={this.state.endDate}
-                        />
+                    />
                 </div>
                 <br />
                 <div class="input-group mb-3">

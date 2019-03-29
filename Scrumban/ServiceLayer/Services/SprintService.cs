@@ -5,11 +5,13 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer;
-using Scrumban.Models;
+using Scrumban.DataAccessLayer.Models;
+using Scrumban.ServiceLayer.Entities;
+
 
 namespace Scrumban.ServiceLayer
 {
-    public class SprintService:ISprintService
+    public class SprintService: ISprintService
     {
         private IUnitOfWork _unitOfWork;
 
@@ -18,9 +20,9 @@ namespace Scrumban.ServiceLayer
             _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
         }
 
-        public void Create(Sprint entity)
+        public void Create(SprintDTO sprint)
         {
-            _unitOfWork.SprintRepository.Create(entity);
+            _unitOfWork.SprintRepository.Create(sprint);
             _unitOfWork.Save();
         }
 
@@ -30,30 +32,65 @@ namespace Scrumban.ServiceLayer
             _unitOfWork.Save();
         }
 
-        public void Delete(Sprint entity)
+        public void Delete(SprintDTO sprint)
         {
-            _unitOfWork.SprintRepository.Delete(entity);
+            SprintDAL sprintDAL = new SprintDAL()
+            {
+                Sprint_id = sprint.Sprint_id
+            };
+            _unitOfWork.SprintRepository.Delete(sprintDAL);
             _unitOfWork.Save();
         }
 
-        public List<Sprint> GetAll()
+        public List<SprintDTO> GetAll()
         {
-            return _unitOfWork.SprintRepository.GetAll().ToList();
+            List<SprintDAL> sprintsDAL = _unitOfWork.SprintRepository.GetAll().ToList();
+            List<SprintDTO> sprintsDTO = new List<SprintDTO>();
+            foreach (var item in sprintsDAL)
+            {
+                sprintsDTO.Add(new SprintDTO()
+                {
+                    Sprint_id = item.Sprint_id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
+                    SprintStatus = item.Status.StatusName
+                });
+            }
+            return sprintsDTO;
         }
 
-        public List<Sprint> GetbyCondition(Expression<Func<Sprint, bool>> expression)
+        public IList<SprintStatusDTO> GetAllStatuses()
         {
-            return _unitOfWork.SprintRepository.GetbyCondition(expression).ToList();
+            var statusesDAL = _unitOfWork.SprintStatusRepository.GetAll();
+            List<SprintStatusDTO> statuses = new List<SprintStatusDTO>();
+            foreach(var status in statusesDAL)
+            {
+                statuses.Add(new SprintStatusDTO() { SprintStatus = status.StatusName });
+            }
+            return statuses;
         }
 
-        public Sprint GetByID(int id)
+        public SprintDTO GetByID(int id)
         {
-            return _unitOfWork.SprintRepository.GetByID(id);
+            SprintDAL sprintDAL = _unitOfWork.SprintRepository.GetByID(id);
+            SprintDTO sprint = new SprintDTO()
+            {
+                Sprint_id = sprintDAL.Sprint_id,
+                Name = sprintDAL.Name,
+                Description = sprintDAL.Description,
+                StartDate = sprintDAL.StartDate,
+                EndDate = sprintDAL.EndDate,
+                SprintStatus = sprintDAL.Status.StatusName
+            };
+            return sprint;
         }
 
-        public void Update(Sprint entity)
+        public void Update(SprintDTO sprint)
         {
-            _unitOfWork.SprintRepository.Update(entity);
+            _unitOfWork.SprintRepository.Update(sprint);
+            _unitOfWork.Save();
         }
     }
 }

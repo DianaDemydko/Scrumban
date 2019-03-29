@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Scrumban.Models;
+using Scrumban.DataAccessLayer.Models;
 
 
 namespace Scrumban.DataAccessLayer
@@ -15,6 +15,7 @@ namespace Scrumban.DataAccessLayer
 
         }
 
-        public DbSet<Sprint> Sprints { get; set; }
+        public DbSet<SprintDAL> Sprints { get; set; }
+        public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
     }
 }

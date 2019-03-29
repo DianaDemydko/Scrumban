@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Scrumban.Models;
+using Scrumban.ServiceLayer.Entities;
+
 
 namespace Scrumban.ServiceLayer
 {
     interface ISprintService
     {
-        List<Sprint> GetAll();
-        Sprint GetByID(int id);
-        List<Sprint> GetbyCondition(Expression<Func<Sprint, bool>> expression);
+        List<SprintDTO> GetAll();
+        IList<SprintStatusDTO> GetAllStatuses();
 
-        void Create(Sprint entity);
+        SprintDTO GetByID(int id);
+
+        void Create(SprintDTO entity);
 
         void Delete(int id);
-        void Delete(Sprint entity);
+        void Delete(SprintDTO entity);
 
-        void Update(Sprint entity);
-
+        void Update(SprintDTO entity);
     }
 }

@@ -8,6 +8,7 @@ namespace Scrumban.DataAccessLayer
     public interface IUnitOfWork
     {
         ISprintRepository SprintRepository { get; }
+        ISprintStatusRepository SprintStatusRepository { get; }
 
         int Save();
     }
