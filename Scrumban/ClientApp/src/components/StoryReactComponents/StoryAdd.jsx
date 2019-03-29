@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 // consts of urls
-const addStoryUri = "/api/sampleData/addStory";
+const addStoryUri = "/api/storyGrid/addStory";
 const cancelUrl = "/stories";
 // consts of stable tables
 const priorityTable = data.priority;

@@ -5,8 +5,8 @@ import { StoryComponent } from './StoryComponent';
 //import '../../index.css';
 
 // const
-const apiUrlGet = "/api/SampleData/getStories";
-const apiUrlDelete = "/api/SampleData";
+const apiUrlGet = "/api/storyGrid/getStories";
+const apiUrlDelete = "/api/storyGrid";
 
 
 

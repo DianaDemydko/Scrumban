@@ -5,16 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Scrumban.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNet.OData;
+using Scrumban.DataAccessLayer;
+using Scrumban.DataAccessLayer.Interfaces;
+using Scrumban.DataAccessLayer.Repositories;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
-    public class SampleDataController : Controller
+    public class StoryGridController : Controller
     {
         ScrumbanContext db;
-        public SampleDataController(ScrumbanContext context)
+        IRepository<Story> _repo;
+        IUnitOfWork _unitOfWork;
+
+        public StoryGridController(ScrumbanContext context)
         {
             db = context;
+            _repo = new StoryRepository(context);
+            _unitOfWork = new UnitOfWork(context);
         }
 
         private static string[] Summaries = new[]
@@ -48,12 +57,22 @@ namespace Scrumban.Controllers
                 }
             }
         }
+
         [HttpGet]
+        [EnableQuery()]
         [Route("/api/[controller]/getStories")]
-        public IEnumerable<Models.Story> Stories()
+        public IEnumerable<Story> Stories()
         {
-            return db.Stories.Include(x => x.StoryState).Include(x => x.Priority).ToList();
+            return _unitOfWork.Stories.GetAll();
         }
+
+        //[HttpGet]
+        //[EnableQuery()]
+        //[Route("/api/[controller]/getStories")]
+        //public IEnumerable<Models.Story> Stories()
+        //{
+        //    return db.Stories.Include(x => x.StoryState).Include(x => x.Priority).ToList();
+        //}
 
         [HttpPost]
         [Route("/api/[controller]/addStory")]

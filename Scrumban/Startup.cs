@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrumban.Models;
 using CustomIdentityApp.Models;
+using Microsoft.AspNet.OData.Extensions;
+using Scrumban.DataAccessLayer;
+
 //using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Scrumban
@@ -34,7 +37,8 @@ namespace Scrumban
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-           
+            services.AddODataQueryFilter(); 
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
@@ -46,6 +50,7 @@ namespace Scrumban
                 options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddOData();
         }
 
        
@@ -64,6 +69,12 @@ namespace Scrumban
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.EnableDependencyInjection();
+                routeBuilder.Filter().OrderBy().Count().Expand().Select();
+            });
 
             app.UseMvc(routes =>
             {
