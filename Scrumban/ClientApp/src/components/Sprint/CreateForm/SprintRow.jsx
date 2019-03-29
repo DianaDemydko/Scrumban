@@ -75,7 +75,7 @@ export class SprintRow extends React.Component {
                     <button type="button" class="btn btn-danger" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
                 </td>
                 </tr>
-                {this.state.isEditMode ? <EditSprint sprint={this.state.sprint} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : null}
+                {this.state.isEditMode ? <EditSprint sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : null}
             </React.Fragment>
         )
     }

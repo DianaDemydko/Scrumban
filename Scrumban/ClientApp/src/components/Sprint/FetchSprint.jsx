@@ -2,6 +2,9 @@
 import { SprintRow } from './CreateForm/SprintRow'
 import buildQuery from 'odata-query'
 import DatePicker from "react-datepicker";
+import { Link } from 'react-router-dom';
+
+const AddSprintURL = "/AddSprint";
 
 export class FetchSprintData extends React.Component
 {
@@ -28,11 +31,11 @@ export class FetchSprintData extends React.Component
         this.onDeletingSprintElement = this.onDeletingSprintElement.bind(this)
         this.onUpdatingSprintElement = this.onUpdatingSprintElement.bind(this)
 
-        this.onNameSearchChange = this.onNameSearchChange.bind(this)
-        this.onDescriptionSearchChange = this.onDescriptionSearchChange.bind(this)
-        this.onStartDateSearchChange = this.onStartDateSearchChange.bind(this)
-        this.onEndDateSearchChange = this.onEndDateSearchChange.bind(this)
-        this.onStatusSearchChange = this.onStatusSearchChange.bind(this)
+        this.onNameSearchChanged = this.onNameSearchChanged.bind(this)
+        this.onDescriptionSearchChanged = this.onDescriptionSearchChanged.bind(this)
+        this.onStartDateSearchChanged = this.onStartDateSearchChanged.bind(this)
+        this.onEndDateSearchChanged = this.onEndDateSearchChanged.bind(this)
+        this.onStatusSearchChanged = this.onStatusSearchChanged.bind(this)
 
         this.onFiltersApply = this.onFiltersApply.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
@@ -82,26 +85,26 @@ export class FetchSprintData extends React.Component
     }
 
 
-    onNameSearchChange(event)
+    onNameSearchChanged(event)
     {
         this.setState({ nameSearch: event.target.value })  
     }
 
-    onDescriptionSearchChange(event)
+    onDescriptionSearchChanged(event)
     {
         this.setState({ descriptionSearch: event.target.value })
     }
 
-    onStartDateSearchChange(startDate)
+    onStartDateSearchChanged(startDate)
     {
         this.setState({ startDateSearch: startDate })
     }
 
-    onEndDateSearchChange(endDate) {
+    onEndDateSearchChanged(endDate) {
         this.setState({ endDateSearch: endDate })
     }
 
-    onStatusSearchChange(event)
+    onStatusSearchChanged(event)
     {
         this.setState({ statusSearch: event.target.value })
     }
@@ -151,16 +154,17 @@ export class FetchSprintData extends React.Component
 
     renderSprintsTable(sprints) {
         return (
+            <div>
             <table className='table'>
                 <thead>
                     <tr>
                         <th>
                             <div>Name</div>
-                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChange} onKeyDown={this.onKeyDown} value={this.state.nameSearch}/></div>
+                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} onKeyDown={this.onKeyDown} value={this.state.nameSearch}/></div>
                         </th>
                         <th>
                             <div>Description</div>
-                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChange} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} /></div>
+                            <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} /></div>
                         </th>
                         <th>
                             <div>Start Date</div>
@@ -168,7 +172,7 @@ export class FetchSprintData extends React.Component
                                 className="form-control"
                                 todayButton={"Today"}
                                 selected={this.state.startDateSearch}
-                                onChange={this.onStartDateSearchChange}
+                                onChange={this.onStartDateSearchChanged}
                                 onKeyDown={this.onKeyDown}
                                 isClearable={true}
                                 placeholderText="Search..."
@@ -180,7 +184,7 @@ export class FetchSprintData extends React.Component
                                 className="form-control"
                                 todayButton={"Today"}
                                 selected={this.state.endDateSearch}
-                                onChange={this.onEndDateSearchChange}
+                                onChange={this.onEndDateSearchChanged}
                                 onKeyDown={this.onKeyDown}
                                 isClearable={true}
                                 placeholderText="Search..."
@@ -188,7 +192,7 @@ export class FetchSprintData extends React.Component
                         </th>
                         <th>Status
                             <div>
-                                <select class="form-control" onChange={this.onStatusSearchChange} value={this.state.statusSearch}>
+                                <select class="form-control" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                                     <option value="All">All</option>
                                     {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                                 </select>
@@ -204,8 +208,8 @@ export class FetchSprintData extends React.Component
                 <tbody>
                     
                     {(sprints.length > 0)
-                        ? sprints.map(sprint =>
-                            <SprintRow key={sprint.sprint_id} sprint={sprint} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
+                            ? sprints.map(sprint =>
+                                <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
                         )
                         : (<td colSpan="7">
                             No results
@@ -214,6 +218,16 @@ export class FetchSprintData extends React.Component
                     }
                 </tbody>
             </table>
+                <div>
+                    <Link to={{
+                        pathname: AddSprintURL,
+                        state:
+                        {
+                            statuses: this.state.statuses
+                        }
+                    }}><button className="btn btn btn-info">Add</button></Link>
+                </div>
+            </div>
             )
     }
 

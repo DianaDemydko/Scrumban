@@ -2,24 +2,26 @@
 import { DatePickerForm } from './DatePickerForm';
 
 export class SprintForm extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state =
         {
+            statuses: this.props.location.state.statuses,
             name: "",
             description: "",
             startDate: null,
             endDate: null,
-            status: 0
-        };
+            sprintStatus: this.props.location.state.statuses[0].sprintStatus
+        }
 
-        this.addNewSprint = this.addNewSprint.bind(this);
+        this.addNewSprint = this.addNewSprint.bind(this)
 
-        this.onNameChanged = this.onNameChanged.bind(this);
-        this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
-        this.onStartDateChanged = this.onStartDateChanged.bind(this);
-        this.onEndDateChanged = this.onEndDateChanged.bind(this);
+        this.onNameChanged = this.onNameChanged.bind(this)
+        this.onDescriptionChanged = this.onDescriptionChanged.bind(this)
+        this.onStartDateChanged = this.onStartDateChanged.bind(this)
+        this.onEndDateChanged = this.onEndDateChanged.bind(this)
+        this.onStatusChanged = this.onStatusChanged.bind(this)
     }
 
     addNewSprint() {
@@ -35,30 +37,35 @@ export class SprintForm extends React.Component {
                         description: this.state.description,
                         startDate: this.state.startDate,
                         endDate: this.state.endDate,
-                        status: this.state.status
+                        sprintStatus: this.state.sprintStatus
                       })
                     
-            });
+            })
     }
 
     onStartDateChanged(startDate)
     {
-        this.setState({ startDate: startDate });
+        this.setState({ startDate: startDate })
     }
 
     onEndDateChanged(endDate)
     {
-        this.setState({ endDate: endDate });
+        this.setState({ endDate: endDate })
     }
 
     onNameChanged(event)
     {
-        this.setState({ name: event.target.value });
+        this.setState({ name: event.target.value })
     }
 
     onDescriptionChanged(event)
     {
-        this.setState({ description: event.target.value });
+        this.setState({ description: event.target.value })
+    }
+
+    onStatusChanged(event)
+    {
+        this.setState({ sprintStatus: event.target.value })
     }
 
     render() {
@@ -89,7 +96,13 @@ export class SprintForm extends React.Component {
                     </div>
                     
                     <DatePickerForm onStartDateChanged={this.onStartDateChanged} onEndDateChanged={this.onEndDateChanged} />
-                    
+
+                    <div>
+                        <select class="form-control" onChange={this.onStatusChanged}>
+                            {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
+                        </select>
+                    </div>
+                    <br/>
                     <button type="button" class="btn btn-primary" onClick={this.addNewSprint.bind(this)}>Create Sprint</button>
                 </form>
             </div>

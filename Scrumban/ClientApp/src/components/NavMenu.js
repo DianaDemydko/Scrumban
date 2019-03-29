@@ -33,7 +33,7 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='th-list' /> Fetch data
               </NavItem>
             </LinkContainer>
-                    <LinkContainer to={'/sprint'}>
+                    <LinkContainer to={'/Sprints'}>
                 <NavItem>
                     <Glyphicon glyph='th-list' /> Sprint Test
                 </NavItem>

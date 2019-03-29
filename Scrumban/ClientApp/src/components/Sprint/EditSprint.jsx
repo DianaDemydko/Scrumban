@@ -5,7 +5,8 @@ export class EditSprint extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            sprint: { ...props.sprint }
+            sprint: { ...props.sprint },
+            statuses: this.props.statuses
         }
 
         this.onNameChanged = this.onNameChanged.bind(this)
@@ -13,6 +14,8 @@ export class EditSprint extends React.Component {
         this.onStartDateChanged = this.onStartDateChanged.bind(this)
         this.onEndDateChanged = this.onEndDateChanged.bind(this)
         this.onStatusChanged = this.onStatusChanged.bind(this)
+
+
         this.onUpdatingSprint = this.onUpdatingSprint.bind(this)
     }
 
@@ -43,7 +46,7 @@ export class EditSprint extends React.Component {
     onStatusChanged(event)
     {
         let sprint = { ...this.state.sprint }
-        sprint.status = event.target.value
+        sprint.sprintStatus = event.target.value
         this.setState({ sprint: sprint })
     }
 
@@ -93,11 +96,8 @@ export class EditSprint extends React.Component {
                         <div className="form-group">
                             <div className="col-md-7">
                                 <label for="status">Status</label>
-                                <select class="form-control" id="status" onChange={this.onStatusChanged} placeholder="Pick Sprint status" defaultValue={this.state.sprint.status}>
-                                    <option>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                <select class="form-control" id="status" onChange={this.onStatusChanged} defaultValue={this.state.sprint.sprintStatus}>
+                                    {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                                 </select>
                             </div>
                         </div>

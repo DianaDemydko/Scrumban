@@ -9,8 +9,6 @@ export class SprintMain extends React.Component {
 
       return (
           <div>
-              <SprintForm />
-
               <FetchSprintData />
          </div>
     );
