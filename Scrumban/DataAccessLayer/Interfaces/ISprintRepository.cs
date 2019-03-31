@@ -9,8 +9,5 @@ namespace Scrumban.DataAccessLayer
 {
     public interface ISprintRepository:IBaseRepository<SprintDAL>
     {
-        void Create(SprintDTO sprint);
-
-        void Update(SprintDTO sprint);
     }
 }

@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { SprintEditForm } from './EditForm/SprintEditForm';
+import moment from 'moment';
 
 export class SprintRow extends React.Component {
     constructor(props) {
@@ -64,9 +65,9 @@ export class SprintRow extends React.Component {
             <React.Fragment>
             <tr key={this.state.sprint.sprint_id}>
                 <td>{this.state.sprint.name}</td>
-                <td>{this.state.sprint.description}</td>
-                <td>{this.state.sprint.startDate}</td>
-                <td>{this.state.sprint.endDate}</td>
+                    <td>{this.state.sprint.description}</td>
+                    <td>{moment(this.state.sprint.startDate).format("MM-DD-YYYY")}</td>
+                    <td>{moment(this.state.sprint.endDate).format("MM-DD-YYYY")}</td>
                 <td>{this.state.sprint.sprintStatus}</td>
                 <td>
                     <button type="button" class="btn btn-success" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>

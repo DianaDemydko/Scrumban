@@ -23,13 +23,13 @@ export class SprintEditForm extends React.Component {
 
     onStartDateChanged(startDate) {
         let sprint = { ...this.state.sprint }
-        sprint.startDate = startDate.toISOString()
+        sprint.startDate = startDate
         this.setState({ sprint: sprint })
     }
 
     onEndDateChanged(endDate) {
         let sprint = { ...this.state.sprint }
-        sprint.endDate = endDate.toISOString()
+        sprint.endDate = endDate
         this.setState({ sprint: sprint })
     }
 

@@ -10,7 +10,7 @@ namespace Scrumban.ServiceLayer
 {
     interface ISprintService
     {
-        List<SprintDTO> GetAll();
+        IQueryable<SprintDTO> GetAllSprints();
         IList<SprintStatusDTO> GetAllStatuses();
 
         SprintDTO GetByID(int id);

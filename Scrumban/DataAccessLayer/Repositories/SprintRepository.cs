@@ -15,9 +15,9 @@ namespace Scrumban.DataAccessLayer
 
         }
 
-        public override IEnumerable<SprintDAL> GetAll()
+        public override IQueryable<SprintDAL> GetAll()
         {
-            return _dbContext.Sprints.Include("Status").ToList();
+            return _dbContext.Sprints.Include("Status").AsQueryable();
         }
 
         public override SprintDAL GetByID(int id)
@@ -25,33 +25,6 @@ namespace Scrumban.DataAccessLayer
             var sprint = _dbContext.Sprints.Find(id);
             _dbContext.Entry(sprint).Reference("Status").Load();
             return sprint;
-        }
-
-        public void Create(SprintDTO sprint)
-        {
-            int sprintStatus_id = _dbContext.SprintStatuses.First(status => status.StatusName == sprint.SprintStatus).SprintStatus_id;
-
-            SprintDAL sprintDAL = new SprintDAL
-            {
-                Name = sprint.Name,
-                Description = sprint.Description,
-                StartDate = sprint.StartDate,
-                EndDate = sprint.EndDate,
-                SprintStatus_id = sprintStatus_id
-            };
-
-            _dbContext.Sprints.Add(sprintDAL);
-        }
-
-        public void Update(SprintDTO sprintDTO)
-        {
-            var sprintDAL = _dbContext.Sprints.Find(sprintDTO.Sprint_id);
-            sprintDAL.Name = sprintDTO.Name;
-            sprintDAL.Description = sprintDTO.Description;
-            sprintDAL.StartDate = sprintDTO.StartDate;
-            sprintDAL.EndDate = sprintDTO.EndDate;
-
-            sprintDAL.SprintStatus_id = _dbContext.SprintStatuses.First(sprintStatus => sprintStatus.StatusName == sprintDTO.SprintStatus).SprintStatus_id;
         }
     }
 }

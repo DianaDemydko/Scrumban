@@ -25,7 +25,7 @@ namespace Scrumban
         public void ConfigureServices(IServiceCollection services)
         {
             // Register context
-            services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(Configuration["ConnectionStringDesktop:ScrumbanDB"]));
+            services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(Configuration["ConnectionStringNotebook:ScrumbanDB"]));
 
             //Odata service
             services.AddOData(); //odata 1

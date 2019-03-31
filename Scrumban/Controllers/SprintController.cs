@@ -26,13 +26,13 @@ namespace Scrumban.Controllers
         [HttpGet]
         [EnableQuery]
         [Route("Index")]
-        [ProducesResponseType(typeof(IEnumerable<SprintDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IQueryable<SprintDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Index()
         {
             try
             {
-                IEnumerable<SprintDTO> sprints = _sprintService.GetAll();
+                IQueryable<SprintDTO> sprints = _sprintService.GetAllSprints();
                 return Ok(sprints);
             }
             catch

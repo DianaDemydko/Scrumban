@@ -22,7 +22,17 @@ namespace Scrumban.ServiceLayer
 
         public void Create(SprintDTO sprint)
         {
-            _unitOfWork.SprintRepository.Create(sprint);
+            int sprintStatus_id = _unitOfWork.SprintStatusRepository.GetByCondition(status => status.StatusName == sprint.SprintStatus).SprintStatus_id;
+            SprintDAL sprintDAL = new SprintDAL
+            {
+                Name = sprint.Name,
+                Description = sprint.Description,
+                StartDate = sprint.StartDate,
+                EndDate = sprint.EndDate,
+                SprintStatus_id = sprintStatus_id
+            };
+
+            _unitOfWork.SprintRepository.Create(sprintDAL);
             _unitOfWork.Save();
         }
 
@@ -42,23 +52,19 @@ namespace Scrumban.ServiceLayer
             _unitOfWork.Save();
         }
 
-        public List<SprintDTO> GetAll()
+        public IQueryable<SprintDTO> GetAllSprints()
         {
-            List<SprintDAL> sprintsDAL = _unitOfWork.SprintRepository.GetAll().ToList();
-            List<SprintDTO> sprintsDTO = new List<SprintDTO>();
-            foreach (var item in sprintsDAL)
+            IQueryable<SprintDAL> sprintsDAL = _unitOfWork.SprintRepository.GetAll();
+            IQueryable<SprintDTO> sprintsDTO = sprintsDAL.Select(sprintDAL => new SprintDTO()
             {
-                sprintsDTO.Add(new SprintDTO()
-                {
-                    Sprint_id = item.Sprint_id,
-                    Name = item.Name,
-                    Description = item.Description,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    SprintStatus = item.Status.StatusName
-                });
-            }
-            return sprintsDTO;
+                Sprint_id = sprintDAL.Sprint_id,
+                Name = sprintDAL.Name,
+                Description = sprintDAL.Description,
+                StartDate = sprintDAL.StartDate,
+                EndDate = sprintDAL.EndDate,
+                SprintStatus = sprintDAL.Status.StatusName
+            });
+            return sprintsDTO.AsQueryable();
         }
 
         public IList<SprintStatusDTO> GetAllStatuses()
@@ -87,9 +93,15 @@ namespace Scrumban.ServiceLayer
             return sprint;
         }
 
-        public void Update(SprintDTO sprint)
+        public void Update(SprintDTO sprintDTO)
         {
-            _unitOfWork.SprintRepository.Update(sprint);
+            var sprintDAL = _unitOfWork.SprintRepository.GetByID(sprintDTO.Sprint_id);
+            sprintDAL.Name = sprintDTO.Name;
+            sprintDAL.Description = sprintDTO.Description;
+            sprintDAL.StartDate = sprintDTO.StartDate;
+            sprintDAL.EndDate = sprintDTO.EndDate;
+
+            sprintDAL.SprintStatus_id = _unitOfWork.SprintStatusRepository.GetByCondition(sprintStatus => sprintStatus.StatusName == sprintDTO.SprintStatus).SprintStatus_id;
             _unitOfWork.Save();
         }
     }

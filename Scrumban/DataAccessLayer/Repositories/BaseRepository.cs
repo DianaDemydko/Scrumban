@@ -17,14 +17,19 @@ namespace Scrumban.DataAccessLayer
 
         //Get methods
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>();
+            return _dbContext.Set<TEntity>().AsQueryable();
         }
 
         public virtual TEntity GetByID(int id)
         {
             return _dbContext.Set<TEntity>().Find(id);
+        }
+
+        public TEntity GetByCondition(Expression<Func<TEntity, bool>> condition)
+        {
+            return _dbContext.Set<TEntity>().First(condition);
         }
 
         //Create methods
