@@ -1,6 +1,7 @@
 import React from 'react';
-import { FetchSprintData } from './FetchSprint';
-import { SprintForm } from './CreateForm/SprintForm';
+import { SprintTable } from './SprintTable';
+
+import './DatePicker.css'
 
 export class SprintMain extends React.Component {
  
@@ -9,7 +10,7 @@ export class SprintMain extends React.Component {
 
       return (
           <div>
-              <FetchSprintData />
+              <SprintTable />
          </div>
     );
   }

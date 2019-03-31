@@ -26,7 +26,7 @@ namespace Scrumban.Controllers
         [HttpGet]
         [EnableQuery]
         [Route("Index")]
-        [ProducesResponseType(typeof(IEquatable<SprintDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<SprintDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Index()
         {

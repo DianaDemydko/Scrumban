@@ -5,7 +5,7 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { SprintMain } from './components/Sprint/SprintMain';
-import { SprintForm } from './components/Sprint/CreateForm/SprintForm';
+import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
 
 export default class App extends Component {
     displayName = App.name
@@ -17,7 +17,7 @@ export default class App extends Component {
                 <Route path='/counter' component={Counter} />
                 <Route path='/fetchdata' component={FetchData} />
                 <Route path='/Sprints' component={SprintMain} />
-                <Route path='/AddSprint' component={SprintForm} />
+                <Route path='/CreateNewSprint' component={SprintCreateForm} />
             </Layout>
         );
     }

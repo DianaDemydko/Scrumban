@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { EditSprint } from '../EditSprint';
+import { SprintEditForm } from './EditForm/SprintEditForm';
 
 export class SprintRow extends React.Component {
     constructor(props) {
@@ -75,7 +75,7 @@ export class SprintRow extends React.Component {
                     <button type="button" class="btn btn-danger" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
                 </td>
                 </tr>
-                {this.state.isEditMode ? <EditSprint sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : null}
+                {this.state.isEditMode ? <SprintEditForm sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : null}
             </React.Fragment>
         )
     }
