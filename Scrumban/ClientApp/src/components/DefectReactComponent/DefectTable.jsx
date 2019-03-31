@@ -7,7 +7,7 @@ export class DefectTable extends React.Component {
 
     render() {
         return (
-            <tr>
+            <tr key={this.props.key}>
                 <td>{this.props.item.name}</td>
                 <td>{this.props.item.description}</td>
                 <td>{this.props.item.state}</td>
@@ -16,8 +16,8 @@ export class DefectTable extends React.Component {
                 <td>{this.props.item.storyId}</td>
                 <td>{this.props.item.status}</td>
                 <td>
-                    <button onClick={this.props.editDefect} className="btn btn-primary">Edit</button>
-                    <button onClick={this.props.deleteDefect} className="btn btn-primary">Delete</button>
+                    <button style={{ width: '50%' }} type="button" onClick={this.props.editDefect} className="btn btn-primary">Edit</button>
+                    <button style={{ width: '50%' }} type="submit" onClick={this.props.deleteDefect} className="btn btn-primary">Delete</button>
                 </td>
             </tr>
         );

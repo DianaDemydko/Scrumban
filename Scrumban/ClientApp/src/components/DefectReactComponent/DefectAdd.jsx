@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { DefectGrid } from './DefectGrid.jsx';
-const apiAddUrl = "/api/DefectData";
+const apiAddUrl = "/api/DefectData/addDefect";
 
 
 const data = require('../../DefectData.json');
@@ -68,7 +68,6 @@ export class DefectAdd extends React.Component {
     }
     onSubmit(e) {
         e.preventDefault();
-
         var defectDescription = this.state.description.trim();
         var defectName = this.state.name.trim();
         var defectState = this.state.state.trim();
@@ -79,7 +78,7 @@ export class DefectAdd extends React.Component {
         let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
         this.onAddDefect(defect);
         this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
-        this.props.history.push('/defects');
+        window.location.replace("/defects");
     }
 
     render() {
@@ -90,21 +89,21 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <label>Name</label>
-
                             <input type="text"
-                                placeholder="Name"
-                                value={this.state.name}
-                                onChange={this.onNameChange}
                                 class="form-control"
-                                id="name" />
+                                placeholder="defect name"
+                                onChange={this.onNameChange}
+                                id="name"
+                                autoComplete="false"
+                            />
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="col-md-7">
                             <label>Description</label>
-                            <input type="text"
-                                placeholder="Description"
-                                value={this.state.description}
+                            <textarea rows="3"
+                                type="text"
+                                placeholder="defect description"
                                 onChange={this.onDescriptionChange}
                                 class="form-control"
                                 id="description" />
@@ -113,7 +112,7 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <label>State</label>
-                            <select onChange={this.onStateChange} class="form-control" id="state" defaultValue={stateOption[0].name}>
+                            <select onChange={this.onStateChange} class="form-control" id="state" placeholder="state" defaultValue={stateOption[0].name}>
                                 {stateOption.map((item) => <option>{item.name}</option>)}
                             </select>
 
@@ -122,7 +121,7 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <label>Priority</label>
-                            <select onChange={this.onPriorityChange} class="form-control" id="priority" defaultValue={priorityOption[0].name}>
+                            <select onChange={this.onPriorityChange} class="form-control" id="priority" placeholder="priority" defaultValue={priorityOption[0].name}>
                                 {priorityOption.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
@@ -130,17 +129,16 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <label>Severity</label>
-                            <select onChange={this.onSeverityChange} class="form-control" id="severity" defaultValue={severityOption[0].name}>
+                            <select onChange={this.onSeverityChange} class="form-control" id="severity" placeholder="severity" defaultValue={severityOption[0].name}>
                                 {severityOption.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="col-md-7">
-                            <label>StoryId</label>
+                            <label>Story Id</label>
                             <input type="text"
-                                placeholder="StoryId"
-                                value={this.state.storyId}
+                                placeholder="Story Id"
                                 onChange={this.onStoryIdChange}
                                 class="form-control"
                                 id="storyId" />
@@ -149,7 +147,7 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <label>Status</label>
-                            <select onChange={this.onStatusChange} class="form-control" id="status" defaultValue={statusOption[0].name}>
+                            <select onChange={this.onStatusChange} class="form-control" id="status" placeholder="status" defaultValue={statusOption[0].name}>
                                 {statusOption.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>

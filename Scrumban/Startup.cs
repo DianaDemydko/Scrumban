@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrumban.Models;
+using Microsoft.AspNet.OData.Extensions;
 
 namespace Scrumban
 {
@@ -24,7 +25,10 @@ namespace Scrumban
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
-            services.AddMvc();
+            //services.AddMvc();
+
+            //Odata service
+            services.AddOData();//-------
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -57,6 +61,8 @@ namespace Scrumban
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+                routes.EnableDependencyInjection();
+                routes.Expand().Select().Count().OrderBy().Filter(); //------
             });
 
             app.UseSpa(spa =>
