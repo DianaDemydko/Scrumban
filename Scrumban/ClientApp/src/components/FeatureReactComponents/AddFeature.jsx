@@ -22,7 +22,7 @@ export class AddFeature extends React.Component {
     }
 
     handleClick(e) {
-        fetch('api/SampleData/', {
+        fetch('api/FeatureData/', {
             method: 'post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

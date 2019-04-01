@@ -13,11 +13,11 @@ using Scrumban.Models;
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
-    public class SampleDataController : Controller
+    public class FeatureDataController : Controller
     {
         private IFeatureService featureService;
 
-        public SampleDataController(ScrumbanContext context)
+        public FeatureDataController(ScrumbanContext context)
         {
             featureService = new FeatureService(context);
 

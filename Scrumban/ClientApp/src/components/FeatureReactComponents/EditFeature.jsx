@@ -34,7 +34,7 @@ export class EditFeature extends Component {
         this.setState({ date: newDate });
     }
     onSubmit() {
-        fetch('api/SampleData/', {
+        fetch('api/FeatureData/', {
             method: 'put',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

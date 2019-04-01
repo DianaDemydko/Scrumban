@@ -33,8 +33,9 @@ class DeleteButton extends Component {
         this.onClick = this.onClick.bind(this);
     }
     onClick(e) {
-        fetch('api/SampleData/', {
+        fetch('api/FeatureData/', {
             method: 'delete',
+            headers: { "Content-Type": "application/json" },
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: this.props.featureIDtoDelete })
         });
@@ -148,14 +149,14 @@ export class FeatureTable extends Component {
 
     //onFindNameChange(e) {
     //    this.setState({ findName: e.target.value });
-    //    //fetch('api/SampleData/' + '?$filter=contains(name,%27' + e.target.value + '%27)')
+    //    //fetch('api/FeatureData/' + '?$filter=contains(name,%27' + e.target.value + '%27)')
     //    //    .then(res => res.json())
     //    //    .then(json => {
     //    //        this.setState({ features: json })
     //    //    });
     //}
     //findData() {
-    //    fetch('api/SampleData/' + '?$filter=contains(time,%27' + e.target.value + '%27)')
+    //    fetch('api/FeatureData/' + '?$filter=contains(time,%27' + e.target.value + '%27)')
     //        .then(res => res.json())
     //        .then(json => {
     //            this.setState({ features: json })
@@ -163,14 +164,14 @@ export class FeatureTable extends Component {
     //}
 
     //onFindDescriptionChange(e) {
-    //    fetch('api/SampleData/' + '?$filter=contains(description,%27' + e.target.value + '%27)')
+    //    fetch('api/FeatureData/' + '?$filter=contains(description,%27' + e.target.value + '%27)')
     //        .then(res => res.json())
     //        .then(json => {
     //            this.setState({ features: json })
     //        });}
     //onFindPriorityChange(e) {
     //    if (e.target.value != '') {
-    //        fetch('api/SampleData/' + '?$filter=priority%20eq%20' + e.target.value)
+    //        fetch('api/FeatureData/' + '?$filter=priority%20eq%20' + e.target.value)
     //        .then(res => res.json())
     //        .then(json => {
     //            this.setState({ features: json })
@@ -363,7 +364,7 @@ export class FeatureTable extends Component {
 
     componentDidMount() {
 
-        fetch('api/SampleData/')
+        fetch('api/FeatureData/')
             .then(res => res.json())
             .then(json => {
                 this.setState({ features: json })
