@@ -1,65 +1,17 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { TaskPrint } from './TaskPrint';
-import { TaskEdit } from './TaskEdit';
-//import '../../index.css';
+import { TaskRow } from './TaskRow';
+import { TaskFilter } from './TaskFilter';
 
-const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
+const data = require('../../GlobalData.json'); // json file with const tables (priority, state)
 // consts of stable tables
 const priorityTable = data.priority;
 const stateTable = data.taskState;
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
-
 // const
 const apiUrlGet = "/api/TaskGrid/getTasks";
 const apiUrlDelete = "/api/TaskGrid";
-
-const styleObj = {
-    //border: '1px solid red'
-}
-
-class Task extends React.Component {
-
-    constructor(props) {
-        super(props);
-        // states : true - print
-        // states : false - edit 
-        this.state = {
-            data: props.task,
-            states: true // states : true - print, false - edit
-        };
-
-        this.onRemoveTask = this.onRemoveTask.bind(this);
-        this.onEditTask = this.onEditTask.bind(this);
-        this.onChangedTask = this.onChangedTask.bind(this);
-    }
-
-    onRemoveTask() {
-        this.props.onRemove(this.state.data.id);
-    }
-
-    onChangedTask(item) {
-        //console.log(item);
-        //this.setState({ data: item });
-        //var elem = this.state.data;
-        this.props.onChanged(item);
-    }
-
-    onEditTask() {
-        this.setState({ states: this.state.states === true ? false : true });
-    }
-    // render row
-    render() {
-        const isEdit = this.state.states;
-        return <tbody>
-            {isEdit ?
-                (<TaskPrint item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} />)
-                : (<TaskEdit item={this.state.data} edit={this.onEditTask} delete={this.onRemoveTask} changed={this.onChangedTask} />)
-            }
-        </tbody>;
-    }
-}
 
 export class TaskGrid extends React.Component {
 
@@ -70,28 +22,27 @@ export class TaskGrid extends React.Component {
             sortByTitle: icon_up,
             sortByDescription: icon_up,
             sortByPriority: icon_up,
-            sortByState: icon_up
+            sortByState: icon_up,
+            filter: null
         };
 
+        this.loadData = this.loadData.bind(this);
         this.onRemoveTask = this.onRemoveTask.bind(this);
         this.onAdded = this.onAdded.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.sort = this.sort.bind(this);
+        this.startFiltration = this.startFiltration.bind(this);
     }
 
     // Load data
-    loadData() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("get", apiUrlGet + "?$orderby=Name desc", true);
-        xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            this.setState({ tasks: data });
-        }.bind(this);
-        xhr.send();
+    loadData(filter) {
+        fetch(apiUrlGet + filter)
+            .then(response => response.json())
+            .then(data => { this.setState({ tasks: data, filter : filter }) });
     }
 
     componentDidMount() {
-        this.loadData();
+        this.loadData("");
     }
 
     onAdded(item) {
@@ -100,11 +51,17 @@ export class TaskGrid extends React.Component {
 
     onChanged(item) {
         var arr = this.state.tasks;
-        var index = arr.indexOf(x => x.id === item.id);
-        console.log(index);
-        arr[index] = item; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        console.log(arr[index]);
-        console.log(arr);
+        var index = arr.findIndex(x => x.id === item.id);
+
+        arr[index].name = item.name;
+        arr[index].description = item.description;
+        arr[index].startDate = item.startDate;
+        arr[index].finishDate = item.finishDate;
+        arr[index].priority = item.priority;
+        arr[index].priorityId = item.priorityId;
+        arr[index].taskState = item.taskState;
+        arr[index].taskStateId = item.taskStateId;
+        //arr[index] = item;
         this.setState({ tasks: arr });
     }
 
@@ -205,7 +162,6 @@ export class TaskGrid extends React.Component {
                     this.setState({ tasks: arr, sortByState: icon_up });
                 }
             }
-            
         }
     }
 
@@ -217,75 +173,64 @@ export class TaskGrid extends React.Component {
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function () {
             if (xhr.status == 200) {
-                this.loadData();
+                this.loadData(this.state.filter);
             }
         }.bind(this);
         xhr.send();
     }
 
+    startFiltration(filtParam) {
+        this.loadData(filtParam);
+        this.setState({filter : filtParam})
+    }
+
     render() {
         var remove = this.onRemoveTask;
         var changed = this.onChanged;
+
         return <div>
-            <h2>Tasks</h2><br/>
-            <div>
+            <br />
+                <h2>Tasks</h2>
+            <br />
+            <div className=" p-1">
+                
                 {/* render filter form */}
-                <form>
-                    <div className="row">
-                        <div class="form-group col-3">
-                            <label for="inputTitle">Title</label>
-                            <input type="email" class="form-control" id="inputTitle" aria-describedby="emailHelp" placeholder="Search"/>
-                            
-                        </div>
-                        <div class="form-group col-3">
-                            <label for="exampleInputDescription">Description</label>
-                            <input type="password" class="form-control" id="exampleInputDescription" placeholder="Search"/>
-                        </div>
-                        <div className="col-2">
-                            <label for="priority">Priority</label>
-                            <select class="form-control" id="priority" placeholder="task priority">
-                                {priorityTable.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                        <div className="col-2">
-                            <label for="state">State</label>
-                            <select class="form-control" id="state" placeholder="task state">
-                                {stateTable.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                        <div className="col-1">
-                            <br/>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </form>
+                <TaskFilter changeFilter={this.startFiltration}/>
+                <br />
                 <br />
 
                 {/* render grid */}
-                <table className="table table-hover table-fixed">
+                <table className="table table-hover table-responsive-x1 table-fixed">
                     <thead className="bg-light">
-                        <th >
+                        <th style={{ width: '20%' }}>
                             <span>Title</span>
                             <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("title", null)} />
                         </th>
-                        <th>
+                        <th style={{ width: '20%' }}>
                             <span>Description</span>
                             <ion-icon src={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
                         </th>
                         <th>
+                            <span>Start Date</span>
+                        </th>
+                        <th>
+                            <span>Finish Date</span>
+                        </th>
+                        <th style={{ width: '10%' }}>    
                             <span>Priority</span>
                             <ion-icon src={this.state.sortByPriority} onClick={() => this.sort("priority", "id")} />
                         </th>
-                        <th>
+                        <th style={{ width: '10%' }}>
                             <span>State</span>
                             <ion-icon src={this.state.sortByState} onClick={() => this.sort("taskState", "id")} />
                         </th>
-                        <th></th>
+                        <th style={{ width: '7%' }}>{/* For button Edit   */}</th>
+                        <th style={{ width: '7%' }}>{/* For button Delete */}</th>
                     </thead>
-                    {this.state.tasks.map(function (task) { return <Task key={task.id} task={task} onRemove={remove} onChanged={changed} /> })}
+                    {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} /> })}
                 </table>
                 <div>
-                    <Link to='/add'><button className="btn btn-outline-primary button-fixed">Add</button></Link>
+                    <Link to='/add'><button className="btn btn-sm btn-outline-info button-fixed">Add</button></Link>
                 </div>
             </div>
         </div>;

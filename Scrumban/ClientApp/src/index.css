@@ -12,7 +12,7 @@
 
 @media{
     .table-fixed {
-        table-layout: fixed;
+        table-layout: fixed;    
         width: 100%;
     }
 
@@ -22,5 +22,15 @@
 
     .current-row {
         background-color: #fff4f4;
+    }
+
+    .datePickerStyle{
+        width: 100px;
+    }
+     #ff6a00
+    .color {
+        color: #ff6a00;
+        outline-color: #ff6a00;
+        border-color: #ff6a00;
     }
 }

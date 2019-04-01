@@ -12,7 +12,12 @@ using CustomIdentityApp.Models;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.OData.Edm;
+using Scrumban.Models.Entities;
 using Scrumban.DataAccessLayer;
+using Scrumban.DataAccessLayer.Interfaces;
+using Scrumban.DataAccessLayer.Repositories;
+using Scrumban.BusinessLogicLayer;
+using Scrumban.BusinessLogicLayer.Interfaces;
 //using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Scrumban
@@ -30,21 +35,22 @@ namespace Scrumban
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-           
-            services.AddDbContext<ScrumbanContext>(options =>
-                options.UseSqlServer(connection));
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           
+            
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
             
             services.AddODataQueryFilter();
+            services.AddOptions();
+            services.AddTransient<ITaskService, TaskService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IRepository<Task>, TaskRepository>();
            
             services.AddDbContext<ScrumbanContext>(options =>
                 options.UseSqlServer(connection));
+            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();

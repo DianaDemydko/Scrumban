@@ -48,9 +48,9 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<Task>().HasData(
                 new Task[]
                 {
-                    new Task { Id = 1, Name = "Task1" },
-                    new Task { Id = 2, Name = "Task2" },
-                    new Task { Id = 3, Name = "Task3" }
+                    new Task { Id = 1, Name = "Create task table", Description = "Create task table with fields: " ,StartDate=System.DateTime.Now },
+                    new Task { Id = 2, Name = "Add ", Description = "" , StartDate=System.DateTime.Now },
+                    new Task { Id = 3, Name = "Task3", Description = "" , StartDate=System.DateTime.Now }
                 }
             );
             base.OnModelCreating(modelBuilder);

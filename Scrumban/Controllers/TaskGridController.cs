@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
-using Scrumban.Models.Entities;
-using Scrumban.DataAccessLayer;
-using Scrumban.DataAccessLayer.Interfaces;
-using Scrumban.DataAccessLayer.Repositories;
+using Scrumban.BusinessLogicLayer.Interfaces;
+using Scrumban.BusinessLogicLayer.DTO;
+using AutoMapper.QueryableExtensions;
 
 namespace Scrumban.Controllers
 {
@@ -14,40 +13,20 @@ namespace Scrumban.Controllers
     [Route("api/[controller]")]
     public class TaskGridController : Controller
     {
-        ScrumbanContext db;
-        IRepository<Task> _repo;
-        IUnitOfWork _unitOfWork;
+        ITaskService _taskServise;
 
-        public TaskGridController(ScrumbanContext context)
+        public TaskGridController(ITaskService taskService)
         {
-            db = context;
-            _repo = new TaskRepository(context);
-            _unitOfWork = new UnitOfWork(context);
+            _taskServise = taskService;
         }
 
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getTasks")]
-        public IEnumerable<Task> GetTasks()
+        public IQueryable<TaskDTO> GetTasks()
         {
-            return _unitOfWork.Tasks.GetAll();
-        }
-
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
+            IQueryable<TaskDTO> tasks = _taskServise.GetTasks();
+            return tasks;
         }
 
         public class WeatherForecast
@@ -65,54 +44,29 @@ namespace Scrumban.Controllers
             }
         }
 
-        //[HttpGet]
-        //[Route("/api/[controller]/getTasks")]
-        ////[EnableQuery]
-        //public IEnumerable<Task> Tasks()
-        //{
-        //    return _unitOfWork.Tasks.GetAll();
-        //    //return Ok(_unitOfWork.Tasks.GetAll();
-        //    //return _repo.GetAll();
-        //    //return db.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
-        //}
-
         [HttpPost]
         [Route("/api/[controller]/addTask")]
-        public IActionResult Add([FromBody]Task task)
+        public IActionResult Add([FromBody]TaskDTO taskDTO)
         {
-            Task added = new Task { Name = task.Name, Description = task.Description, PriorityId = task.PriorityId, TaskStateId = task.TaskStateId };
-            db.Add(added);
-            db.SaveChanges();
-            return Ok(task);
+            _taskServise.AddTask(taskDTO);
+            return Ok(taskDTO);
         }
 
         [HttpPost]
         [Route("/api/[controller]/editTask")]
-        public IActionResult Edit([FromBody]Task task)
+        public IActionResult Edit([FromBody]TaskDTO taskDTO)
         {
-            Task edited = db.Tasks.FirstOrDefault(x => x.Id == task.Id);
-
-            edited.Name = task.Name; 
-            edited.Description = task.Description;
-            edited.PriorityId = task.PriorityId;
-            edited.TaskStateId = task.TaskStateId;
-            db.SaveChanges();
-
-            return Ok(task);
+            _taskServise.UpdateTask(taskDTO);
+            return Ok(taskDTO);
         }
 
         [HttpDelete("{id}")]
         //[Route("/api/[controller]/deleteTask")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            Task task = db.Tasks.FirstOrDefault(x => x.Id == id);
-            if(task == null)
-            {
-                return NotFound();
-            }
-            db.Tasks.Remove(task);
-            db.SaveChanges();
-            return Ok(task);
+            TaskDTO taskDTO = _taskServise.GetTask(id);
+            _taskServise.DeleteTask(id);
+            return Ok(taskDTO);
         }
     }
 }

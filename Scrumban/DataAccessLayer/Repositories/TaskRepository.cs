@@ -26,11 +26,13 @@ namespace Scrumban.DataAccessLayer.Repositories
                     {
                         Name = item.Name,
                         Description = item.Description,
+                        StartDate = item.StartDate,
+                        FinishDate = item.FinishDate,
                         PriorityId = item.PriorityId,
                         TaskStateId = item.TaskStateId
                     };
                     _context.Add(added);
-                    _context.SaveChanges();
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -51,7 +53,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
                     }
                     _context.Tasks.Remove(task);
-                    _context.SaveChanges();
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -78,10 +80,12 @@ namespace Scrumban.DataAccessLayer.Repositories
                     }
                     task.Name = task.Name;
                     task.Description = item.Description;
+                    task.StartDate = item.StartDate;
+                    task.FinishDate = item.FinishDate;
                     task.PriorityId = item.PriorityId;
                     task.TaskStateId = item.TaskStateId;
 
-                    _context.SaveChanges();
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -90,9 +94,9 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        IEnumerable<Task> IRepository<Task>.GetAll()
+        public IQueryable<Task> GetAll()
         {
-            return _context.Tasks.Include(x => x.TaskState).Include(x => x.Priority).ToList();
+            return _context.Tasks.Include(x => x.TaskState).Include(x => x.Priority);
         }
     }
 }

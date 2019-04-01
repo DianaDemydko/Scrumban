@@ -8,7 +8,10 @@ namespace Scrumban.BusinessLogicLayer.Interfaces
     public interface ITaskService
     {
         TaskDTO GetTask(int? id);
-        IEnumerable<TaskDTO> GetTasks();
+        IQueryable<TaskDTO> GetTasks();
+        void AddTask(TaskDTO taskDTO);
+        void DeleteTask(int? id);
+        void UpdateTask(TaskDTO taskDTO);
 
         void Dispose();
     }

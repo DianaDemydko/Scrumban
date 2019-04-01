@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Scrumban.Models.Entities;
 
 namespace Scrumban.BusinessLogicLayer.DTO
 {
@@ -11,9 +9,15 @@ namespace Scrumban.BusinessLogicLayer.DTO
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public DateTime? StartDate { get; set; } = null;
+        public DateTime? FinishDate { get; set; } = null;
 
-        public int? TaskStateId { get; set; }
-        public int? PriorityId { get; set; }
+        public int TaskStateId { get; set; } = 1;
+        public TaskStateDTO TaskState { get; set; }
+
+        public int PriorityId { get; set; } = 1;
+        public PriorityDTO Priority { get; set; }
+
         public int? ProgrammerId { get; set; }
         public int? StoryId { get; set; }
     }

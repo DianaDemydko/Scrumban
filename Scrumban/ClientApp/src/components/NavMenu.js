@@ -8,7 +8,8 @@ export class NavMenu extends Component {
   displayName = NavMenu.name
 
   render() {
-    return (
+      return (
+          
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
@@ -41,6 +42,7 @@ export class NavMenu extends Component {
           </Nav>
         </Navbar>
       </Navbar>
+      
     );
   }
 }

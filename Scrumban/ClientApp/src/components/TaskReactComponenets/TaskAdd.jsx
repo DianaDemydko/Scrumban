@@ -1,26 +1,35 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
+
 // consts of urls
-const addTaskUri = "/api/TaskGrid/addTask";
+const addTaskUrl = "/api/TaskGrid/addTask";
 const cancelUrl = "/tasks";
 // consts of stable tables
 const priorityTable = data.priority;
 const stateTable = data.taskState;
-
 
 export class TaskAdd extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            name: "", description: "", priority: priorityTable[0].name, taskState: stateTable[0].name };
+            name: "",
+            description: "",
+            startDate: "",
+            finishDate: "",
+            priority: priorityTable[0].name,
+            taskState: stateTable[0].name
+        };
 
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onStartDateChange = this.onStartDateChange.bind(this);
+        this.onFinishDateChange = this.onFinishDateChange.bind(this);
     }
 
     onNameChanged(e) {
@@ -29,6 +38,14 @@ export class TaskAdd extends React.Component {
 
     onDescriptionChanged(e) {
         this.setState({ description: e.target.value });
+    }
+
+    onStartDateChange(date) {
+        this.setState({ startDate: date });
+    }
+
+    onFinishDateChange(date) {
+        this.setState({ finishDate: date });
     }
 
     onPriorityChanged(e){
@@ -41,10 +58,17 @@ export class TaskAdd extends React.Component {
 
     onAdd(task) {
         if (task) {
-            var data = JSON.stringify({ "name": task.name, "description": task.description });
+            var data = JSON.stringify({
+                "name": task.name,
+                "description": task.description,
+                "startDate": task.startDate,
+                "finishDate": task.finishDate,
+                "priorityId": task.priorityId,
+                "taskStateId": task.taskStateId
+            });
             var xhr = new XMLHttpRequest();
 
-            xhr.open("post", addTaskUri, true);
+            xhr.open("post", addTaskUrl, true);
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
@@ -57,14 +81,17 @@ export class TaskAdd extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        var taskName = this.state.name;
-        var taskDescription = this.state.description;
-        var taskPriorityId = priorityTable.find(x => x.name === this.state.priority).id;
-        var taskStateId = stateTable.find(x => x.name === this.state.taskState).id;
 
-        let task = { name: taskName, description: taskDescription, priority : taskPriorityId, taskState : taskStateId };
+        let task = {
+            name: this.state.name,
+            description: this.state.description,
+            startDate: this.state.startDate,
+            finishDate: this.state.finishDate,
+            priorityId: priorityTable.find(x => x.name === this.state.priority).id,
+            taskStateId: stateTable.find(x => x.name === this.state.taskState).id
+        };
         this.onAdd(task);
-        this.setState({ name: "", description: "", priorityId: 2, taskStateId: 1 });
+        this.setState({ name: "", description: "", startDate: "", finishDate: "", priorityId: "", taskStateId: "" });
         window.location.replace("/tasks");
     }
 
@@ -83,6 +110,34 @@ export class TaskAdd extends React.Component {
                         <div className="">
                             <label for="description">Description</label>
                             <textarea rows="3" class="form-control" onChange={this.onDescriptionChanged} id="description" placeholder="task description" />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-md-7">
+                            <label for="description">Start Date</label>
+                            <DatePicker
+                                selected={this.state.startDate}
+                                onChange={this.onStartDateChange}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                timeCaption="time"
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-md-7">
+                            <label for="description">Finish Date</label>
+                            <DatePicker
+                                selected={this.state.finishDate}
+                                onChange={this.onFinishDateChange}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                timeCaption="time"
+                            />
                         </div>
                     </div>
                     <div className="form-group">
