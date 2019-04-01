@@ -5,11 +5,9 @@ using Scrumban.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer;
-using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.BusinessLogicLayer
 {
@@ -21,32 +19,89 @@ namespace Scrumban.BusinessLogicLayer
         {
             this._unitOfWork = unitOfWork;
         }
-        public void Create(Defect defect)
+
+        public IQueryable<DefectDTO> GetDefects()
         {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Defect, DefectDTO>();
+            }).CreateMapper();
+            return mapper.Map<IQueryable<Defect>, List<DefectDTO>>(_unitOfWork.Defects.GetAll()).AsQueryable();
+        }
+
+        public DefectDTO GetDefect(int? id)
+        {
+            if (id == null)
+            {
+
+            }
+            var defect = _unitOfWork.Defects.Get(id.Value);
+            if (defect == null)
+            {
+
+            }
+            return new DefectDTO
+            {
+                DefectId = defect.DefectId,
+                Name = defect.Name,
+                Description = defect.Description,
+                State = defect.State,
+                Severity = defect.Severity,
+                Priority = defect.Priority,
+                Status = defect.Status
+            };
+        }
+
+        public void AddDefect(DefectDTO defectDTO)
+        {
+            if (defectDTO == null)
+            {
+
+            }
+            Defect defect = new Defect
+            {
+                DefectId = defectDTO.DefectId,
+                Name = defectDTO.Name,
+                Description = defectDTO.Description,
+                State = defectDTO.State,
+                Severity = defectDTO.Severity,
+                Priority = defectDTO.Priority,
+                Status = defectDTO.Status
+            };
             _unitOfWork.Defects.Create(defect);
             _unitOfWork.Save();
         }
-        public void Delete(int id)
+        public void DeleteDefect(int? id)
         {
-            _unitOfWork.Defects.Delete(id);
+            if (id == null)
+            {
+
+            }
+            _unitOfWork.Defects.Delete(id.Value);
             _unitOfWork.Save();
         }
-       
+        public void UpdateDefect(DefectDTO defectDTO)
+        {
+            if (defectDTO == null)
+            {
 
-        //public void Dispose()
-        //{
-        //    throw new NotImplementedException();
-        //}
+            }
+            Defect defect = new Defect
+            {
+                DefectId = defectDTO.DefectId,
+                Name = defectDTO.Name,
+                Description = defectDTO.Description,
+                State = defectDTO.State,
+                Severity = defectDTO.Severity,
+                Priority = defectDTO.Priority,
+                Status = defectDTO.Status
+            };
+            _unitOfWork.Defects.Update(defect);
+            _unitOfWork.Save();
+        }
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
-        //public DefectDTO GetDefect(int? id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public IEnumerable<DefectDTO> GetDefects()
-        //{
-        //    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<DefectDTO, DefectDTO>()).CreateMapper();
-        //    return mapper.Map<IEnumerable<Defect>, List<DefectDTO>>(_unitOfWork.Defects.GetAll());
-        //}
     }
 }

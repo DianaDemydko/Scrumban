@@ -8,6 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrumban.Models;
 using Microsoft.AspNet.OData.Extensions;
+using Scrumban.BusinessLogicLayer.Interfaces;
+using Scrumban.BusinessLogicLayer;
+using Scrumban.DataAccessLayer;
+using Scrumban.DataAccessLayer.Interfaces;
+using Scrumban.DataAccessLayer.Repositories;
 
 namespace Scrumban
 {
@@ -25,10 +30,12 @@ namespace Scrumban
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
-            //services.AddMvc();
+            services.AddTransient<IDefectService, DefectService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IDefectRepository<Defect>, DefectRepository>();
 
-            //Odata service
-            services.AddOData();//-------
+           
+            services.AddOData();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

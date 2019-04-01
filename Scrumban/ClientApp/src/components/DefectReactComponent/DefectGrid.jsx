@@ -168,6 +168,8 @@ export class DefectGrid extends React.Component {
         this.state.severitySearch = "All";
         this.state.storyIdSearch = "";
         this.state.statusSearch = "All";
+
+        this.onFiltersApply();
     }
 
     //sorting
@@ -476,19 +478,19 @@ export class DefectGrid extends React.Component {
                             <option value="All">All</option>
                             {severityOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
-                     <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onStoryIdSearchChanged} value={this.state.storyIdSearch} /></th>
+                        <th style={{ width: '10%' }}><input type="text" class="form-control" placeholder="Search..." onChange={this.onStoryIdSearchChanged} value={this.state.storyIdSearch} /></th>
                      <th>
                         <select class="form-control" placeholder="Search..." onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                         <option value="All">All</option>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                         </select>
                     </th>
-                    <th colspan="2">
+                     <th style={{ width: '15%' }}>
                         <div>
                                 <button style={{ width: '50%' }} type="button" class="btn btn-primary" onClick={this.onFiltersApply}>Search</button>
                                 <button style={{ width: '50%' }} type="button" class="btn btn-primary" onClick={this.onFiltersClear}>Clear</button>
                         </div>
-                        </th>
+                    </th>
                         </tr>
                 </thead>
                 {(this.state.defects.length > 0)

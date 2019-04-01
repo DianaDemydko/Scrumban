@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
 using Scrumban.Models;
 using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
+using Scrumban.BusinessLogicLayer.Interfaces;
+using Scrumban.BusinessLogicLayer.DTO;
 
 namespace Scrumban.Controllers
 {
@@ -15,30 +16,37 @@ namespace Scrumban.Controllers
     [Route("api/[controller]")]
     public class DefectDataController : Controller
     {
-        IDefectRepository<Defect> _repo;
-        IUnitOfWork _unitOfWork;
-        public DefectDataController(ScrumbanContext context)
+        //IDefectRepository<Defect> _repo;
+        //IUnitOfWork _unitOfWork;
+        IDefectService _defectService;
+        public DefectDataController(IDefectService defectService/*ScrumbanContext context*/)
         {
-            _repo = new DefectRepository(context);
-            _unitOfWork = new UnitOfWork(context);
+            _defectService = defectService;
+            //_repo = new DefectRepository(context);
+            //_unitOfWork = new UnitOfWork(context);
         }
 
         [HttpGet]
-        [EnableQuery]
+        [EnableQuery()]
         [Route("/api/[controller]/getDefects")]
-        public IEnumerable<Defect> GetDefects() 
+        public IQueryable<DefectDTO> GetDefects()
         {
-            return _unitOfWork.Defects.GetAll();  
+            IQueryable<DefectDTO> defects = _defectService.GetDefects();
+            return defects;
         }
+        //public IEnumerable<Defect> GetDefects()
+        //{
+        //    return _unitOfWork.Defects.GetAll();
+        //}
 
         [HttpPost]
         [Route("/api/[controller]/addDefect")]
-        public IActionResult Add([FromBody] Defect defect)
+        public IActionResult Add([FromBody] DefectDTO defectDTO)
         {
             try
             {
-                _unitOfWork.Defects.Create(defect);
-                return Ok();
+                _defectService.AddDefect(defectDTO);
+                return Ok(defectDTO);
             }
             catch
             {
@@ -48,12 +56,12 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/editDefect")]
-        public IActionResult Edit([FromBody]Defect defect)
+        public IActionResult Edit([FromBody]DefectDTO defectDTO)
         {
             try
             {
-                _unitOfWork.Defects.Update(defect);
-                return Ok();
+                _defectService.UpdateDefect(defectDTO);
+                return Ok(defectDTO);
             }
             catch
             {
@@ -63,12 +71,13 @@ namespace Scrumban.Controllers
 
         [HttpDelete("{id}")]
        // [Route("/api/[controller]/deleteDefect")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             try
             {
-                _unitOfWork.Defects.Delete(id);
-                return Ok();
+                DefectDTO defectDTO = _defectService.GetDefect(id);
+                _defectService.DeleteDefect(id);
+                return Ok(defectDTO);
             }
             catch
             {

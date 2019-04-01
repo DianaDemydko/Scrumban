@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Scrumban.BusinessLogicLayer.DTO;
-using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.Models
 {

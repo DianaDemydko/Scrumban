@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Scrumban.BusinessLogicLayer.DTO;
 using Scrumban.DataAccessLayer.Interfaces;
-using Scrumban.DataAccessLayer.Models;
 using Scrumban.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -18,9 +16,13 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
             _context = context;
         }
-        IEnumerable<Defect> IDefectRepository<Defect>.GetAll()
+        //IEnumerable<Defect> IDefectRepository<Defect>.GetAll()
+        //{
+        //    return _context.Defects.ToList();
+        //}
+        public IQueryable<Defect> GetAll()
         {
-            return _context.Defects.ToList();
+            return _context.Defects.AsQueryable();
         }
 
         public void Create(Defect item)
@@ -36,7 +38,6 @@ namespace Scrumban.DataAccessLayer.Repositories
                         Status = item.Status
                     };
                     _context.Add(added);
-                    _context.SaveChanges();
         }
 
         public void Delete(int id)
@@ -47,7 +48,6 @@ namespace Scrumban.DataAccessLayer.Repositories
 
                     }
                     _context.Defects.Remove(defect);
-                    _context.SaveChanges();
         }
 
         public Defect Get(int id)
@@ -70,8 +70,6 @@ namespace Scrumban.DataAccessLayer.Repositories
                     defect.Priority = item.Priority;
                     defect.StoryId = item.StoryId;
                     defect.Status = item.Status;
-
-                    _context.SaveChanges();
         }
 
 
