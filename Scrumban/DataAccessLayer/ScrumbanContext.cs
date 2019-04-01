@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +5,8 @@ using Scrumban.BusinessLogicLayer.DTO;
 using CustomIdentityApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.Models;
+using Scrumban.Models.Entities;
+
 
 namespace Scrumban.DataAccessLayer
 {
@@ -15,15 +16,26 @@ namespace Scrumban.DataAccessLayer
         {
             Database.EnsureCreated();
         }
-         public DbSet<Defect> Defects { get; set; }
+
+        public DbSet<Defect> Defects { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<StoryState> StoryStates { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskState> TaskStates { get; set; }
         public DbSet<Priority> Priorities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TaskState>().HasData(
+                new TaskState[]
+                {
+                    new TaskState{Id = 1, Name = "To Do"},
+                    new TaskState{Id = 2, Name = "In Progress"},
+                    new TaskState{Id = 3, Name = "Completed"}
+                }
+            );
             modelBuilder.Entity<State>().HasData(
                 new State[]
                 {
@@ -61,9 +73,16 @@ namespace Scrumban.DataAccessLayer
                     new Story{Id=2,Name="Story2",Description = "Description2"},
                     new Story{Id=3,Name="Story3",Description = "Description3"}
                 }
+                );
+            modelBuilder.Entity<Task>().HasData(
+                new Task[]
+                {
+                    new Task { Id = 1, Name = "Create task table", Description = "Create task table with fields: " ,StartDate=System.DateTime.Now },
+                    new Task { Id = 2, Name = "Add ", Description = "" , StartDate=System.DateTime.Now },
+                    new Task { Id = 3, Name = "Task3", Description = "" , StartDate=System.DateTime.Now }
+                }
             );
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

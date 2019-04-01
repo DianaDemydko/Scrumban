@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Scrumban.Models.Entities;
+
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {
@@ -11,7 +13,7 @@ namespace Scrumban.DataAccessLayer.Interfaces
 
         IDefectRepository<Defect> Defects { get; }
         IRepository<Story> Stories { get; }
+        IRepository<Task> Tasks { get; }
         void Save();
     }
 }
-

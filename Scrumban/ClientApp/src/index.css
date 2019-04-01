@@ -17,10 +17,21 @@
     }
 
     .button-fixed{
-        width: 100px;
+
+        width: 80px;
     }
 
     .current-row {
-        background-color: #ffe6e6;
+        background-color: #fff4f4;
+    }
+
+    .datePickerStyle{
+        width: 100px;
+    }
+     #ff6a00
+    .color {
+        color: #ff6a00;
+        outline-color: #ff6a00;
+        border-color: #ff6a00;
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +15,11 @@ using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
 using CustomIdentityApp.Models;
+using CustomIdentityApp.Models;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.OData.Edm;
+using Scrumban.Models.Entities;
+
 
 namespace Scrumban
 {
@@ -31,20 +36,27 @@ namespace Scrumban
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
+
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDefectRepository<Defect>, DefectRepository>();
-
+            services.AddTransient<IRepository<Task>, TaskRepository>();
+            services.AddTransient<ITaskService, TaskService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddODataQueryFilter(); 
+
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
+            services.AddOptions();
+            
+           
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
         }
@@ -72,13 +84,15 @@ namespace Scrumban
             //    routeBuilder.Filter().OrderBy().Count().Expand().Select();
             //});
 
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
                 routes.EnableDependencyInjection();
-                routes.Expand().Select().Count().OrderBy().Filter(); //------
+                routes.Expand().Select().Count().OrderBy().Filter(); 
+
             });
 
             app.UseSpa(spa =>

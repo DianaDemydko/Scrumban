@@ -7,8 +7,10 @@ namespace Scrumban.DataAccessLayer.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        // Get
+        
         IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll();
+
         TEntity Get(int id);
 
         // Create

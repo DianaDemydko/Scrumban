@@ -10,6 +10,8 @@ import { StoryGrid } from './components/StoryReactComponents/StoryGrid';
 import { StoryAdd } from './components/StoryReactComponents/StoryAdd';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
+import { TaskGrid } from './components/TaskReactComponenets/TaskGrid';
+import { TaskAdd } from './components/TaskReactComponenets/TaskAdd';
 
 
 export default class App extends Component {
@@ -30,6 +32,8 @@ export default class App extends Component {
 		    <Route path='/register' component={Register} />
 		    <Route path='/stories' component={StoryGrid} />
 		    <Route path='/add' component={StoryAdd} />
+        <Route path='/tasks'        component={TaskGrid} />
+        <Route path='/add'          component={TaskAdd} />
       </Layout>
     );
   }

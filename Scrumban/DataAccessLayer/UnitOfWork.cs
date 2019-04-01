@@ -1,17 +1,20 @@
-﻿using Scrumban.DataAccessLayer.Interfaces;
-using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.Models;
-using System;
 using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using Scrumban.DataAccessLayer.Interfaces;
+using Scrumban.DataAccessLayer.Repositories;
+using Scrumban.Models.Entities;
 
 namespace Scrumban.DataAccessLayer
 {
     public class UnitOfWork : IUnitOfWork
     {
         ScrumbanContext _context;
+
         private DefectRepository defectRepository;
         private StoryRepository storyRepository;
+        private TaskRepository taskRepository;
 
         public UnitOfWork(ScrumbanContext context)
         {
@@ -38,6 +41,17 @@ namespace Scrumban.DataAccessLayer
                     storyRepository = new StoryRepository(_context);
                 }
                 return storyRepository;
+            }
+        }
+        public IRepository<Task> Tasks
+        {
+            get
+            {
+                if (taskRepository == null)
+                {
+                    taskRepository = new TaskRepository(_context);
+                }
+                return taskRepository;
             }
         }
 
