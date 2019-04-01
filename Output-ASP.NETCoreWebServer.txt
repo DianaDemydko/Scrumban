@@ -1,0 +1,1203 @@
+﻿Scrumban> info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
+Scrumban>       User profile is available. Using 'C:\Users\NASTYA\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Starting create-react-app server on port 58245...
+Scrumban> Hosting environment: Development
+Scrumban> Content root path: G:\Soft\Scrumban-master\Scrumban
+Scrumban> Now listening on: http://127.0.0.1:7794
+Scrumban> Application started. Press Ctrl+C to shut down.
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/  
+Scrumban> warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+Scrumban>       Failed to determine the https port for redirect.
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       > Scrumban@0.1.0 start G:\Soft\Scrumban-master\Scrumban\ClientApp
+Scrumban> > rimraf ./build && react-scripts start
+Scrumban> 
+Scrumban> Starting the development server...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:  Useless constructor  no-useless-constructor
+Scrumban> 
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 36285.4469ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 291.0402ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.2928ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553680247888  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 63.1087ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1121.7153ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/705/fmtjxw2w/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1253.1894ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (48ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1100.1872ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 3377.1471ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3435.2456ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 DELETE http://localhost:50788/api/SampleData/ application/json 8
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Delete", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Delete (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (12ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Delete (Scrumban) with arguments (Scrumban.Models.Feature) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (3ms) [Parameters=[@___feature_ID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT TOP(1) [f].[ID], [f].[Description], [f].[Name], [f].[OwnerID], [f].[Priority], [f].[ReleaseID], [f].[StateID]
+Scrumban>       FROM [Features] AS [f]
+Scrumban>       WHERE [f].[ID] = @___feature_ID_0
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SET NOCOUNT ON;
+Scrumban>       DELETE FROM [Features]
+Scrumban>       WHERE [ID] = @p0;
+Scrumban>       SELECT @@ROWCOUNT;
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Delete (Scrumban), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 389.4722ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Delete (Scrumban) in 496.8859ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 514.3828ms 200 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1011.0332ms 200 text/html; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 13.6047ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10398.9703ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (7ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 11.9715ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 21.0255ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 21.4147ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.7331ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553680259689  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.5873ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 8.6937ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/312/o05sfaja/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/312/1rxeizop/xhr_streaming?t=1553680260427  0
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1007.2643ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 PUT http://localhost:50788/api/SampleData/ application/json 82
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Put", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Put (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Put (Scrumban) with arguments (Scrumban.Models.Feature) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (1ms) [Parameters=[@__feature_ID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT TOP(1) [f].[ID], [f].[Description], [f].[Name], [f].[OwnerID], [f].[Priority], [f].[ReleaseID], [f].[StateID]
+Scrumban>       FROM [Features] AS [f]
+Scrumban>       WHERE [f].[ID] = @__feature_ID_0
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (4ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SET NOCOUNT ON;
+Scrumban>       UPDATE [Features] SET [Priority] = @p0
+Scrumban>       WHERE [ID] = @p1;
+Scrumban>       SELECT @@ROWCOUNT;
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Put (Scrumban), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 37.9982ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Put (Scrumban) in 47.8909ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 50.9147ms 200 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1007.3651ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 13.6489ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11545.4022ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2.0041ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 13.0038ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 13.3838ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.8611ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553680271358  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.5984ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.6054ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/531/s21xhmer/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/531/4oe12z1b/xhr_streaming?t=1553680272186  0
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1015.6957ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 25029.9425ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/api/SampleData/ application/json 73
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Post", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Post (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Post (Scrumban) with arguments (Scrumban.Models.Feature) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SET NOCOUNT ON;
+Scrumban>       INSERT INTO [Features] ([Description], [Name], [OwnerID], [Priority], [ReleaseID], [StateID])
+Scrumban>       VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+Scrumban>       SELECT [ID]
+Scrumban>       FROM [Features]
+Scrumban>       WHERE @@ROWCOUNT = 1 AND [ID] = scope_identity();
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Post (Scrumban), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 124.888ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Post (Scrumban) in 130.2375ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 133.1416ms 200 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/api/SampleData/ application/json 73
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Post", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Post (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Post (Scrumban) with arguments (Scrumban.Models.Feature) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SET NOCOUNT ON;
+Scrumban>       INSERT INTO [Features] ([Description], [Name], [OwnerID], [Priority], [ReleaseID], [StateID])
+Scrumban>       VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+Scrumban>       SELECT [ID]
+Scrumban>       FROM [Features]
+Scrumban>       WHERE @@ROWCOUNT = 1 AND [ID] = scope_identity();
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Post (Scrumban), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 3.2422ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Post (Scrumban) in 9.6766ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.1337ms 200 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1.8066ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 11.0972ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.6325ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 DELETE http://localhost:50788/api/SampleData/ application/json 8
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Delete", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Delete (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Delete (Scrumban) with arguments (Scrumban.Models.Feature) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (0ms) [Parameters=[@___feature_ID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT TOP(1) [f].[ID], [f].[Description], [f].[Name], [f].[OwnerID], [f].[Priority], [f].[ReleaseID], [f].[StateID]
+Scrumban>       FROM [Features] AS [f]
+Scrumban>       WHERE [f].[ID] = @___feature_ID_0
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SET NOCOUNT ON;
+Scrumban>       DELETE FROM [Features]
+Scrumban>       WHERE [ID] = @p0;
+Scrumban>       SELECT @@ROWCOUNT;
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Delete (Scrumban), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 4.1086ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Delete (Scrumban) in 9.9425ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.7756ms 200 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 PUT http://localhost:50788/api/SampleData/ application/json 82
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Put", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Put (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Put (Scrumban) with arguments (Scrumban.Models.Feature) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (0ms) [Parameters=[@__feature_ID_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT TOP(1) [f].[ID], [f].[Description], [f].[Name], [f].[OwnerID], [f].[Priority], [f].[ReleaseID], [f].[StateID]
+Scrumban>       FROM [Features] AS [f]
+Scrumban>       WHERE [f].[ID] = @__feature_ID_0
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (0ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+Scrumban>       SET NOCOUNT ON;
+Scrumban>       UPDATE [Features] SET [Priority] = @p0
+Scrumban>       WHERE [ID] = @p1;
+Scrumban>       SELECT @@ROWCOUNT;
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Put (Scrumban), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 3.2059ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Put (Scrumban) in 9.2954ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 9.5529ms 200 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1006.1044ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.2956ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 36168.5664ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1.4226ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 7.5401ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 7.8664ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.9796ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553680307637  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.3874ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/262/isgmuiwr/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 5.5798ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/262/qinkn42j/xhr_streaming?t=1553680308392  0
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1084.1429ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 50005.7295ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiling...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:   Useless constructor                                                    no-useless-constructor
+Scrumban>   Line 185:  Expected to return a value in function                                 array-callback-return
+Scrumban>   Line 185:  Expected an assignment or function call and instead saw an expression  no-unused-expressions
+Scrumban> 
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/eb3b75151535d7fbd02c.hot-update.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1014.4869ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/0.eb3b75151535d7fbd02c.hot-update.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 4.3926ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.0388ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1375381.9506ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 238.3457ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1375029.1788ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (53ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 10.7982ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 74.0941ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 74.4604ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.6232ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.8237ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.4466ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681685441  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.7702ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.9799ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 5.0117ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/737/mcx2jglt/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 214.0846ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1075.2276ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 7.7937ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/737/miepztsx/xhr_streaming?t=1553681687255  0
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1012.0651ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 6.441ms 304 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiling...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:  Useless constructor  no-useless-constructor
+Scrumban> 
+Scrumban> Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/e19c694f46dd2568f2d8.hot-update.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1009.1113ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/0.e19c694f46dd2568f2d8.hot-update.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 5.5786ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/addfeature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 4.2567ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 102106.4548ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 235.3373ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.8985ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.8227ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681788235  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.1467ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/466/41syamgx/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/466/lyb3mfnd/xhr_streaming?t=1553681789054  0
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiling...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 103705.0873ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:  Useless constructor  no-useless-constructor
+Scrumban> 
+Scrumban> Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/ca801017bd3d0a24106d.hot-update.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1006.7271ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/0.ca801017bd3d0a24106d.hot-update.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 6.8764ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/addfeature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 4.6ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 5904.9296ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 254.663ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.0475ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 8.873ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681794845  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.0412ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/892/m4gwz3h1/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/892/qrwt4n3w/xhr_streaming?t=1553681795683  0
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 25006.1878ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiling...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:  Useless constructor  no-useless-constructor
+Scrumban> 
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/a8309dd0bda7dd31562b.hot-update.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1008.8355ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/0.a8309dd0bda7dd31562b.hot-update.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 5.7228ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/addfeature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.5539ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 41307.5471ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 295.4325ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.0972ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681836871  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.1771ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1011.7005ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/945/3ah3sxjg/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (35ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 6.076ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 42.7693ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 43.0561ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 50005.3202ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1007.0984ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 13.2744ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 20599.2973ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2.0602ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 9.0145ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 9.3037ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1015.6128ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681868105  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.5015ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 9.0081ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1026.7875ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/750/0hnxfhhg/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1007.2193ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 14.3221ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 8249.5635ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.9298ms 304 
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (32ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4.7024ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 38.6449ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 39.5223ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681882101  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.6059ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 9.1018ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/009/bueekpf4/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1014.2731ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1007.3461ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.1191ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 20471.5727ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.8101ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681910814  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.5778ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.9017ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 6.5058ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/773/52ad0u4s/websocket  
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (147ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 8.5759ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 157.4154ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 157.6584ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiling...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:  Useless constructor  no-useless-constructor
+Scrumban> 
+Scrumban> Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/e450c65c50f87bfb9152.hot-update.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1006.9345ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/0.e450c65c50f87bfb9152.hot-update.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 6.2901ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.9436ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 19760.9288ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 249.1337ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3.7728ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 15.1525ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 15.8099ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.3481ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 21.4522ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 9.4636ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553681932856  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1.7999ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 9.5466ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.1428ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/458/rfmbgpke/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 217.6433ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1030.4959ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 7.2797ms 304 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> Compiling...
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Compiled with warnings.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       
+Scrumban> ./src/components/FeatureReactComponents/AddFeature.jsx
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>         Line 2:  'Component' is defined but never used  no-unused-vars
+Scrumban>   Line 3:  'Feature' is defined but never used    no-unused-vars
+Scrumban> 
+Scrumban> ./src/components/FeatureReactComponents/FeatureTable.jsx
+Scrumban>   Line 45:  Useless constructor  no-useless-constructor
+Scrumban> 
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.SpaServices[0]
+Scrumban>       Search for the keywords to learn more about each warning.
+Scrumban> To ignore, add // eslint-disable-next-line to the line before.
+Scrumban> 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/dbf9dce45f15158e69c6.hot-update.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1009.0224ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/0.dbf9dce45f15158e69c6.hot-update.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 4.847ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 4.3057ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 132347.6889ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 239.7075ms 200 application/javascript; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (46ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (24ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 25.5707ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 73.0741ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 73.4802ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.3786ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.9691ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553682067684  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.8855ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/752/iormddr4/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.0736ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 264.8607ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1004.4452ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1020.8861ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 8.862ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.9245ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/752/g1xxd3qk/xhr_streaming?t=1553682069591  0
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/feature  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 1009.6244ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.9459ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 278236.4427ms 101 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/api/SampleData/  
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Route matched with {action = "Get", controller = "SampleData", page = ""}. Executing action Scrumban.Controllers.SampleDataController.Get (Scrumban)
+Scrumban> info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+Scrumban>       Entity Framework Core 2.1.8-servicing-32085 initialized 'ScrumbanContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (39ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[1]
+Scrumban>       Executing action method Scrumban.Controllers.SampleDataController.Get (Scrumban) - Validation state: Valid
+Scrumban> info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+Scrumban>       Executed DbCommand (12ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+Scrumban>       SELECT [x].[ID], [x].[Description], [x].[Name], [x].[OwnerID], [x].[Priority], [x].[ReleaseID], [x].[StateID], [x.State].[ID], [x.State].[Name], [x.Owner].[ID], [x.Owner].[Name]
+Scrumban>       FROM [Features] AS [x]
+Scrumban>       LEFT JOIN [State] AS [x.State] ON [x].[StateID] = [x.State].[ID]
+Scrumban>       LEFT JOIN [Owner] AS [x.Owner] ON [x].[OwnerID] = [x.Owner].[ID]
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action method Scrumban.Controllers.SampleDataController.Get (Scrumban), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 12.717ms.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor[1]
+Scrumban>       Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[Scrumban.Models.Feature, Scrumban, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+Scrumban> info: Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker[2]
+Scrumban>       Executed action Scrumban.Controllers.SampleDataController.Get (Scrumban) in 70.2079ms
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 70.955ms 200 application/json; charset=utf-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.9363ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/media/glyphicons-halflings-regular.448c34a5.woff2  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.4363ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.3212ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/info?t=1553682348215  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 2.3727ms 200 application/json; charset=UTF-8
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/manifest.json  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 3.3817ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 11.3169ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/sockjs-node/424/353yy5ce/websocket  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/favicon.ico  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 7.4101ms 200 image/x-icon
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 10.6046ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 8.0533ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 GET http://localhost:50788/static/js/bundle.js.map  
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
+Scrumban>       Request finished in 8.5708ms 304 
+Scrumban> info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
+Scrumban>       Request starting HTTP/1.1 POST http://localhost:50788/sockjs-node/424/djdikhaf/xhr_streaming?t=1553682349702  0
