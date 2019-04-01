@@ -7,7 +7,7 @@ export class FetchData extends Component {
     super(props);
     this.state = { forecasts: [], loading: true };
 
-    fetch('api/taskGrid/WeatherForecasts')
+    fetch('api/SampleData/WeatherForecasts')
       .then(response => response.json())
       .then(data => {
         this.setState({ forecasts: data, loading: false });
@@ -18,8 +18,7 @@ export class FetchData extends Component {
     return (
       <table className='table'>
         <thead>
-                <tr>
-
+          <tr>
             <th>Date</th>
             <th>Temp. (C)</th>
             <th>Temp. (F)</th>
