@@ -16,14 +16,10 @@ namespace Scrumban.Controllers
     [Route("api/[controller]")]
     public class DefectDataController : Controller
     {
-        //IDefectRepository<Defect> _repo;
-        //IUnitOfWork _unitOfWork;
         IDefectService _defectService;
-        public DefectDataController(IDefectService defectService/*ScrumbanContext context*/)
+        public DefectDataController(IDefectService defectService)
         {
             _defectService = defectService;
-            //_repo = new DefectRepository(context);
-            //_unitOfWork = new UnitOfWork(context);
         }
 
         [HttpGet]
@@ -34,10 +30,6 @@ namespace Scrumban.Controllers
             IQueryable<DefectDTO> defects = _defectService.GetDefects();
             return defects;
         }
-        //public IEnumerable<Defect> GetDefects()
-        //{
-        //    return _unitOfWork.Defects.GetAll();
-        //}
 
         [HttpPost]
         [Route("/api/[controller]/addDefect")]
