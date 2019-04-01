@@ -1,0 +1,56 @@
+{
+  "priority": [
+    {
+      "id": "1",
+      "name": "Low"
+    },
+    {
+      "id": "2",
+      "name": "Medium"
+    },
+    {
+      "id": "3",
+      "name": "Heigh"
+    },
+    {
+      "id": "4",
+      "name": "Immediate"
+    }
+  ],
+  "taskState": [
+    {
+      "id": "1",
+      "name": "To Do"
+    },
+    {
+      "id": "2",
+      "name": "In Progress"
+    },
+    {
+      "id": "3",
+      "name": "Completed"
+    }
+  ],
+  "state": [
+    {
+      "id": "1",
+      "name": "Ready To Start"
+    },
+    {
+      "id": "2",
+      "name": "In Progress"
+    },
+    {
+      "id": "3",
+      "name": "Development Complited"
+    },
+    {
+      "id": "4",
+      "name": "Test Completed"
+    },
+    {
+      "id": "5",
+      "name": "Accepted"
+    }
+  ]
+}

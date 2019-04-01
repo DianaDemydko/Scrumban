@@ -2,5 +2,35 @@
     /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
     body {
         padding-top: 50px;
+        background-color: red;
+    }
+
+    .table-fixed {
+        border: 1px solid red;
+    }
+}
+
+@media{
+    .table-fixed {
+        table-layout: fixed;    
+        width: 100%;
+    }
+
+    .button-fixed{
+        width: 80px;
+    }
+
+    .current-row {
+        background-color: #fff4f4;
+    }
+
+    .datePickerStyle{
+        width: 100px;
+    }
+     #ff6a00
+    .color {
+        color: #ff6a00;
+        outline-color: #ff6a00;
+        border-color: #ff6a00;
     }
 }
