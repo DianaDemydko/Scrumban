@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Scrumban.Migrations
@@ -40,6 +41,19 @@ namespace Scrumban.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Priority",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Priority", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "States",
                 columns: table => new
                 {
@@ -63,6 +77,19 @@ namespace Scrumban.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StoryStates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskStates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskStates", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,56 +140,37 @@ namespace Scrumban.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Priorities",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
                 {
-                    { 1, "Low" },
-                    { 2, "Medium" },
-                    { 3, "Heigh" },
-                    { 4, "Immediate" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "States",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    FinishDate = table.Column<DateTime>(nullable: true),
+                    TaskStateId = table.Column<int>(nullable: false),
+                    PriorityId = table.Column<int>(nullable: false),
+                    ProgrammerId = table.Column<int>(nullable: true),
+                    StoryId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
                 {
-                    { 1, "Ready To Start" },
-                    { 2, "In Progress" },
-                    { 3, "Development Complete" },
-                    { 4, "Test Complete" },
-                    { 5, "Accepted" }
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Priority_PriorityId",
+                        column: x => x.PriorityId,
+                        principalTable: "Priority",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tasks_TaskStates_TaskStateId",
+                        column: x => x.TaskStateId,
+                        principalTable: "TaskStates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "StoryStates",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Non Started" },
-                    { 2, "In Progress" },
-                    { 3, "Rejected" },
-                    { 4, "In Complete" },
-                    { 5, "Done" },
-                    { 6, "Accepted" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Stories",
-                columns: new[] { "Id", "Description", "Name", "PriorityId", "ProgrammerId", "StoryStateId", "TaskId" },
-                values: new object[] { 1, "Description1", "Story1", 2, null, 1, 0 });
-
-            migrationBuilder.InsertData(
-                table: "Stories",
-                columns: new[] { "Id", "Description", "Name", "PriorityId", "ProgrammerId", "StoryStateId", "TaskId" },
-                values: new object[] { 2, "Description2", "Story2", 2, null, 1, 0 });
-
-            migrationBuilder.InsertData(
-                table: "Stories",
-                columns: new[] { "Id", "Description", "Name", "PriorityId", "ProgrammerId", "StoryStateId", "TaskId" },
-                values: new object[] { 3, "Description3", "Story3", 2, null, 1, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stories_PriorityId",
@@ -173,6 +181,16 @@ namespace Scrumban.Migrations
                 name: "IX_Stories_StoryStateId",
                 table: "Stories",
                 column: "StoryStateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_PriorityId",
+                table: "Tasks",
+                column: "PriorityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_TaskStateId",
+                table: "Tasks",
+                column: "TaskStateId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -187,6 +205,9 @@ namespace Scrumban.Migrations
                 name: "Stories");
 
             migrationBuilder.DropTable(
+                name: "Tasks");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -194,6 +215,12 @@ namespace Scrumban.Migrations
 
             migrationBuilder.DropTable(
                 name: "StoryStates");
+
+            migrationBuilder.DropTable(
+                name: "Priority");
+
+            migrationBuilder.DropTable(
+                name: "TaskStates");
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Scrumban.Controllers
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getStories")]
-        public IEnumerable<Story> Stories()
+        public IQueryable<Story> Stories()
         {
             return _unitOfWork.Stories.GetAll();
         }

@@ -67,6 +67,63 @@ namespace Scrumban.Migrations
                     b.ToTable("Defects");
                 });
 
+            modelBuilder.Entity("Scrumban.Models.Entities.Priority", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Priority");
+                });
+
+            modelBuilder.Entity("Scrumban.Models.Entities.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime?>("FinishDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("PriorityId");
+
+                    b.Property<int?>("ProgrammerId");
+
+                    b.Property<DateTime?>("StartDate");
+
+                    b.Property<int?>("StoryId");
+
+                    b.Property<int>("TaskStateId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PriorityId");
+
+                    b.HasIndex("TaskStateId");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Scrumban.Models.Entities.TaskState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaskStates");
+                });
+
             modelBuilder.Entity("Scrumban.Models.Priority", b =>
                 {
                     b.Property<int>("Id")
@@ -78,13 +135,6 @@ namespace Scrumban.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Priorities");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Low" },
-                        new { Id = 2, Name = "Medium" },
-                        new { Id = 3, Name = "Heigh" },
-                        new { Id = 4, Name = "Immediate" }
-                    );
                 });
 
             modelBuilder.Entity("Scrumban.Models.State", b =>
@@ -98,14 +148,6 @@ namespace Scrumban.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("States");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Ready To Start" },
-                        new { Id = 2, Name = "In Progress" },
-                        new { Id = 3, Name = "Development Complete" },
-                        new { Id = 4, Name = "Test Complete" },
-                        new { Id = 5, Name = "Accepted" }
-                    );
                 });
 
             modelBuilder.Entity("Scrumban.Models.Story", b =>
@@ -133,12 +175,6 @@ namespace Scrumban.Migrations
                     b.HasIndex("StoryStateId");
 
                     b.ToTable("Stories");
-
-                    b.HasData(
-                        new { Id = 1, Description = "Description1", Name = "Story1", PriorityId = 2, StoryStateId = 1, TaskId = 0 },
-                        new { Id = 2, Description = "Description2", Name = "Story2", PriorityId = 2, StoryStateId = 1, TaskId = 0 },
-                        new { Id = 3, Description = "Description3", Name = "Story3", PriorityId = 2, StoryStateId = 1, TaskId = 0 }
-                    );
                 });
 
             modelBuilder.Entity("Scrumban.Models.StoryState", b =>
@@ -152,15 +188,19 @@ namespace Scrumban.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StoryStates");
+                });
 
-                    b.HasData(
-                        new { Id = 1, Name = "Non Started" },
-                        new { Id = 2, Name = "In Progress" },
-                        new { Id = 3, Name = "Rejected" },
-                        new { Id = 4, Name = "In Complete" },
-                        new { Id = 5, Name = "Done" },
-                        new { Id = 6, Name = "Accepted" }
-                    );
+            modelBuilder.Entity("Scrumban.Models.Entities.Task", b =>
+                {
+                    b.HasOne("Scrumban.Models.Entities.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Scrumban.Models.Entities.TaskState", "TaskState")
+                        .WithMany()
+                        .HasForeignKey("TaskStateId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Scrumban.Models.Story", b =>

@@ -2,9 +2,7 @@ using Scrumban.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Scrumban.Models.Entities;
-
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {

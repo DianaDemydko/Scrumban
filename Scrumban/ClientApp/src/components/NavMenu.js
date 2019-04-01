@@ -17,7 +17,7 @@ export class NavMenu extends Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-        <Navbar>
+        <Navbar.Collapse>
           <Nav>
             <LinkContainer to={'/'} exact>
               <NavItem>
@@ -52,7 +52,8 @@ export class NavMenu extends Component {
               </NavItem>
             </LinkContainer>
           </Nav>
-        </Navbar>
+              </Navbar.Collapse>
+              </Navbar>
 
       
     );

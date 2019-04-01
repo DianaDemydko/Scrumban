@@ -90,9 +90,11 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        IEnumerable<Story> IRepository<Story>.GetAll()
+       
+
+         public IQueryable<Story> GetAll()
         {
-            return _context.Stories.Include(x => x.StoryState).Include(x => x.Priority).ToList();
+            return _context.Stories.Include(x => x.StoryState).Include(x => x.Priority);
         }
     }
 }

@@ -15,7 +15,6 @@ using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
 using CustomIdentityApp.Models;
-using CustomIdentityApp.Models;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.OData.Edm;
 using Scrumban.Models.Entities;
