@@ -50,6 +50,7 @@ export class SprintTable extends React.Component
         this.sortByDescription = this.sortByDescription.bind(this)
         this.sortByDate = this.sortByDate.bind(this)
         this.renderCaret = this.renderCaret.bind(this)
+        this.clearFilters = this.clearFilters.bind(this)
     }
 
     componentDidMount()
@@ -337,6 +338,17 @@ export class SprintTable extends React.Component
         }
     }
 
+    clearFilters()
+    {
+        this.setState({
+            nameSearch: "",
+            descriptionSearch: "",
+            startDateSearch: null,
+            endDateSearch: null,
+            statusSearch: "All",
+        })
+    }
+
     renderSprintsTable(sprints) {
         return (
             <div class="panel-heading">
@@ -403,10 +415,15 @@ export class SprintTable extends React.Component
                                     </select>
                                 </div>
                             </th>
-                            <th colspan="2">
+                            <th>
                                 <div>
                                     <button type="button" style={{ width: '100%'}} class="btn btn-primary" onClick={this.onFiltersApply}>Apply Filters</button>
                                     </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <button type="button" style={{ width: '100%' }} class="btn btn-primary" onClick={this.clearFilters}>Clear Filters</button>
+                                </div>
                             </th>
                         </tr>
                 </thead>
