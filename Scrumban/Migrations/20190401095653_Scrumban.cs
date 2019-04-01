@@ -3,10 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Scrumban.Migrations
 {
-    public partial class scrumban : Migration
+    public partial class Scrumban : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Defects",
+                columns: table => new
+                {
+                    DefectId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Priority = table.Column<string>(nullable: true),
+                    Severity = table.Column<string>(nullable: true),
+                    StoryId = table.Column<int>(nullable: true),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Defects", x => x.DefectId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Priorities",
                 columns: table => new
@@ -158,6 +177,9 @@ namespace Scrumban.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Defects");
+
             migrationBuilder.DropTable(
                 name: "States");
 

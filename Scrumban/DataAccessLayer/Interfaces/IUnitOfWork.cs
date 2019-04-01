@@ -10,9 +10,6 @@ namespace Scrumban.DataAccessLayer.Interfaces
     {
 
         IDefectRepository<Defect> Defects { get; }
-        void Save();
-    }
-}
         IRepository<Story> Stories { get; }
         void Save();
     }

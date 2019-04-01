@@ -66,11 +66,11 @@ namespace Scrumban
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routeBuilder =>
-            {
-                routeBuilder.EnableDependencyInjection();
-                routeBuilder.Filter().OrderBy().Count().Expand().Select();
-            });
+            //app.UseMvc(routeBuilder =>
+            //{
+            //    routeBuilder.EnableDependencyInjection();
+            //    routeBuilder.Filter().OrderBy().Count().Expand().Select();
+            //});
 
             app.UseMvc(routes =>
             {

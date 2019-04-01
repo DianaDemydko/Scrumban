@@ -39,14 +39,13 @@ export class NavMenu extends Component {
                                 <Glyphicon glyph='th-list' /> Defects
               </NavItem>
                         </LinkContainer>
-                    
-            </LinkContainer>
-		  <LinkContainer to={'/stories'}>
-		  <NavItem>
-		  <Glyphicon glyph='th-list' /> Stories
-		  </NavItem>
-		  </LinkContainer>
-          </Nav>
+
+		                <LinkContainer to={'/stories'}>
+		                    <NavItem>
+		                        <Glyphicon glyph='th-list' /> Stories
+		        </NavItem>
+		                </LinkContainer>
+            </Nav>
         </Navbar.Collapse>
       </Navbar>
     );

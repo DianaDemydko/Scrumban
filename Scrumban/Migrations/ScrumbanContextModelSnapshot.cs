@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Scrumban.DataAccessLayer;
-using Scrumban.Models;
 
 namespace Scrumban.Migrations
 {
@@ -41,6 +40,31 @@ namespace Scrumban.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Scrumban.Models.Defect", b =>
+                {
+                    b.Property<int>("DefectId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Priority");
+
+                    b.Property<string>("Severity");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("Status");
+
+                    b.Property<int?>("StoryId");
+
+                    b.HasKey("DefectId");
+
+                    b.ToTable("Defects");
                 });
 
             modelBuilder.Entity("Scrumban.Models.Priority", b =>

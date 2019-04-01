@@ -6,13 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Scrumban.DataAccessLayer;
-using Scrumban.Models;
 
 namespace Scrumban.Migrations
 {
     [DbContext(typeof(ScrumbanContext))]
-    [Migration("20190327113120_scrumban")]
-    partial class scrumban
+    [Migration("20190401095653_Scrumban")]
+    partial class Scrumban
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +42,31 @@ namespace Scrumban.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Scrumban.Models.Defect", b =>
+                {
+                    b.Property<int>("DefectId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Priority");
+
+                    b.Property<string>("Severity");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("Status");
+
+                    b.Property<int?>("StoryId");
+
+                    b.HasKey("DefectId");
+
+                    b.ToTable("Defects");
                 });
 
             modelBuilder.Entity("Scrumban.Models.Priority", b =>
