@@ -1,55 +1,63 @@
 ﻿
 import React, { Component } from 'react';
-import Feature from './FeatureTable';
-import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
 
 export class AddFeature extends React.Component {
-    state = {
-        name: '',
-        description: '',
-        priority: 0
-
-    }
+   
 
     constructor(props) {
         super(props);
+        this.state = {
+            name: 'Default Name',
+            description: 'Default Description',
+            priority: 1,
+            date: new Date(),
+
+        };
         this.handleClick = this.handleClick.bind(this);
-        this.nameChanged = this.nameChanged.bind(this);
-        this.descrioptionChanged = this.descriptionChanged.bind(this);
-        this.priorityChanged = this.priorityChanged.bind(this);
+        this.onNameChanged = this.onNameChanged.bind(this);
+        this.onDescrioptionChanged = this.onDescriptionChanged.bind(this);
+        this.onPriorityChanged = this.onPriorityChanged.bind(this);
+        this.onDateChanged = this.onDateChanged.bind(this);
     }
 
     handleClick(e) {
         fetch('api/SampleData/', {
             method: 'post',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: this.state.name, description: this.state.description, priority: this.state.priority })
+            body: JSON.stringify({
+                name: this.state.name, description: this.state.description,
+                priority: this.state.priority, time: this.state.date
+            })
         });
         window.location = "/feature";
     }
-    nameChanged(e) {
+    onNameChanged(e) {
         this.setState({ name: e.target.value });
     }
-    descriptionChanged(e) {
+    onDescriptionChanged(e) {
         this.setState({ description: e.target.value });
     }
-    priorityChanged(e) {
+    onPriorityChanged(e) {
         this.setState({ priority: e.target.value });
+    }
+    onDateChanged(newDate) {
+        this.setState({ date: newDate });
     }
 
     render() {
         return (
             <div >
                 <label> Name: </label>
-                <input type="text" name="name" onChange={e => this.nameChanged(e)} vale={this.state.name} />
+                <input type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
                 <div />
                 <label> Description: </label>
-                <input type="text" name="description" onChange={e => this.descriptionChanged(e)} />
+                <input type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
                 <div />
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name ="owners">Ownres</button>*/}
                 <div />
                 <label> Priority</label>
-                <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.priorityChanged(e)} >
+                <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -58,8 +66,9 @@ export class AddFeature extends React.Component {
                 </select>
                 <div />
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name = "state">States</button>*/}
+                <label >Statrt Date</label>
+                <DatePicker onChange={this.onDateChanged} dateFormat="yyyy/MM/dd"/>
                 <div />
-                
                     <button class="btn btn-dark" onClick={this.handleClick} > Submit </button>
             
 
