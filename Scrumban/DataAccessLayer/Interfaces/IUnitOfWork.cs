@@ -12,6 +12,10 @@ namespace Scrumban.DataAccessLayer.Interfaces
         IDefectRepository<Defect> Defects { get; }
         IRepository<Story> Stories { get; }
         IRepository<Task> Tasks { get; }
-        void Save();
+
+        ISprintRepository SprintRepository { get; }
+        ISprintStatusRepository SprintStatusRepository { get; }
+
+        int Save();
     }
 }

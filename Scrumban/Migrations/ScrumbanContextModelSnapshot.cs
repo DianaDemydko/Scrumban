@@ -20,201 +20,201 @@ namespace Scrumban.Migrations
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CustomIdentityApp.Models.Users", b =>
-                {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("UserID")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email");
+                b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
+                b.Property<string>("FirstName");
 
-                    b.Property<string>("Password");
+                b.Property<string>("Password");
 
-                    b.Property<int>("PictureID");
+                b.Property<int>("PictureID");
 
-                    b.Property<int>("RoleID");
+                b.Property<int>("RoleID");
 
-                    b.Property<string>("Surname");
+                b.Property<string>("Surname");
 
-                    b.HasKey("UserID");
+                b.HasKey("UserID");
 
-                    b.ToTable("Users");
-                });
+                b.ToTable("Users");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Defect", b =>
-                {
-                    b.Property<int>("DefectId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("DefectId")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                b.Property<string>("Description");
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.Property<string>("Priority");
+                b.Property<string>("Priority");
 
-                    b.Property<string>("Severity");
+                b.Property<string>("Severity");
 
-                    b.Property<string>("State");
+                b.Property<string>("State");
 
-                    b.Property<string>("Status");
+                b.Property<string>("Status");
 
-                    b.Property<int?>("StoryId");
+                b.Property<int?>("StoryId");
 
-                    b.HasKey("DefectId");
+                b.HasKey("DefectId");
 
-                    b.ToTable("Defects");
-                });
+                b.ToTable("Defects");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Entities.Priority", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Priority");
-                });
+                b.ToTable("Priority");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Entities.Task", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                b.Property<string>("Description");
 
-                    b.Property<DateTime?>("FinishDate");
+                b.Property<DateTime?>("FinishDate");
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.Property<int>("PriorityId");
+                b.Property<int>("PriorityId");
 
-                    b.Property<int?>("ProgrammerId");
+                b.Property<int?>("ProgrammerId");
 
-                    b.Property<DateTime?>("StartDate");
+                b.Property<DateTime?>("StartDate");
 
-                    b.Property<int?>("StoryId");
+                b.Property<int?>("StoryId");
 
-                    b.Property<int>("TaskStateId");
+                b.Property<int>("TaskStateId");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("PriorityId");
+                b.HasIndex("PriorityId");
 
-                    b.HasIndex("TaskStateId");
+                b.HasIndex("TaskStateId");
 
-                    b.ToTable("Tasks");
-                });
+                b.ToTable("Tasks");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Entities.TaskState", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("TaskStates");
-                });
+                b.ToTable("TaskStates");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Priority", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Priorities");
-                });
+                b.ToTable("Priorities");
+            });
 
             modelBuilder.Entity("Scrumban.Models.State", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("States");
-                });
+                b.ToTable("States");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Story", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                b.Property<string>("Description");
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.Property<int>("PriorityId");
+                b.Property<int>("PriorityId");
 
-                    b.Property<int?>("ProgrammerId");
+                b.Property<int?>("ProgrammerId");
 
-                    b.Property<int>("StoryStateId");
+                b.Property<int>("StoryStateId");
 
-                    b.Property<int>("TaskId");
+                b.Property<int>("TaskId");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("PriorityId");
+                b.HasIndex("PriorityId");
 
-                    b.HasIndex("StoryStateId");
+                b.HasIndex("StoryStateId");
 
-                    b.ToTable("Stories");
-                });
+                b.ToTable("Stories");
+            });
 
             modelBuilder.Entity("Scrumban.Models.StoryState", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("StoryStates");
-                });
+                b.ToTable("StoryStates");
+            });
 
             modelBuilder.Entity("Scrumban.Models.Entities.Task", b =>
-                {
-                    b.HasOne("Scrumban.Models.Entities.Priority", "Priority")
-                        .WithMany()
-                        .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+            {
+                b.HasOne("Scrumban.Models.Entities.Priority", "Priority")
+                    .WithMany()
+                    .HasForeignKey("PriorityId")
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Scrumban.Models.Entities.TaskState", "TaskState")
-                        .WithMany()
-                        .HasForeignKey("TaskStateId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                b.HasOne("Scrumban.Models.Entities.TaskState", "TaskState")
+                    .WithMany()
+                    .HasForeignKey("TaskStateId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Scrumban.Models.Story", b =>
-                {
-                    b.HasOne("Scrumban.Models.Priority", "Priority")
-                        .WithMany()
-                        .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+            {
+                b.HasOne("Scrumban.Models.Priority", "Priority")
+                    .WithMany()
+                    .HasForeignKey("PriorityId")
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Scrumban.Models.StoryState", "StoryState")
-                        .WithMany()
-                        .HasForeignKey("StoryStateId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                b.HasOne("Scrumban.Models.StoryState", "StoryState")
+                    .WithMany()
+                    .HasForeignKey("StoryStateId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 #pragma warning restore 612, 618
         }
     }

@@ -6,6 +6,7 @@ using CustomIdentityApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.Models;
 using Scrumban.Models.Entities;
+using Scrumban.DataAccessLayer.Models;
 
 
 namespace Scrumban.DataAccessLayer
@@ -25,6 +26,8 @@ namespace Scrumban.DataAccessLayer
         public DbSet<Task> Tasks { get; set; }
         public DbSet<TaskState> TaskStates { get; set; }
         public DbSet<Models.Priority> Priorities { get; set; }
+        public DbSet<SprintDAL> Sprints { get; set; }
+        public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

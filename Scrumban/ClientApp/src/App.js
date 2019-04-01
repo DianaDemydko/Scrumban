@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
+
 import { DefectGrid } from './components/DefectReactComponent/DefectGrid';
 import { DefectAdd } from './components/DefectReactComponent/DefectAdd';
 import { StoryGrid } from './components/StoryReactComponents/StoryGrid';
@@ -13,9 +14,13 @@ import { Register } from './components/Register';
 import { TaskGrid } from './components/TaskReactComponenets/TaskGrid';
 import { TaskAdd } from './components/TaskReactComponenets/TaskAdd';
 
+import { SprintMain } from './components/Sprint/SprintMain';
+import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
+
 
 export default class App extends Component {
-  displayName = App.name
+    displayName = App.name
+
 
   render() {
     return (
@@ -33,7 +38,9 @@ export default class App extends Component {
 		    <Route path='/stories' component={StoryGrid} />
 		    <Route path='/add' component={StoryAdd} />
         <Route path='/tasks'        component={TaskGrid} />
-        <Route path='/add'          component={TaskAdd} />
+            <Route path='/add' component={TaskAdd} />
+            <Route path='/Sprints' component={SprintMain} />
+            <Route path='/CreateNewSprint' component={SprintCreateForm} />
       </Layout>
     );
   }

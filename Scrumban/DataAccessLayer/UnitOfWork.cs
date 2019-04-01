@@ -5,20 +5,49 @@ using System.Linq;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.Models.Entities;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Scrumban.DataAccessLayer
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        ScrumbanContext _context;
+        private readonly ScrumbanContext _scrumbanContext;
 
+        private ISprintRepository _sprintRepository;
+        private ISprintStatusRepository _sprintStatusRepository;
         private DefectRepository defectRepository;
         private StoryRepository storyRepository;
         private TaskRepository taskRepository;
 
-        public UnitOfWork(ScrumbanContext context)
+        public UnitOfWork(ScrumbanContext scrumbanContext)
         {
-            _context = context;
+            _scrumbanContext = scrumbanContext;
+        }
+
+        public ISprintRepository SprintRepository
+        {
+            get
+            {
+                if (_sprintRepository == null)
+                {
+                    _sprintRepository = new SprintRepository(_scrumbanContext);
+                }
+
+                return _sprintRepository;
+            }
+        }
+
+        public ISprintStatusRepository SprintStatusRepository
+        {
+            get
+            {
+                if (_sprintStatusRepository == null)
+                {
+                    _sprintStatusRepository = new SprintStatusRepository(_scrumbanContext);
+                }
+
+                return _sprintStatusRepository;
+            }
         }
 
         public IDefectRepository<Defect> Defects
@@ -27,7 +56,7 @@ namespace Scrumban.DataAccessLayer
             {
                 if (defectRepository == null)
                 {
-                    defectRepository = new DefectRepository(_context);
+                    defectRepository = new DefectRepository(_scrumbanContext);
                 }
                 return defectRepository;
             }
@@ -38,7 +67,7 @@ namespace Scrumban.DataAccessLayer
             {
                 if (storyRepository == null)
                 {
-                    storyRepository = new StoryRepository(_context);
+                    storyRepository = new StoryRepository(_scrumbanContext);
                 }
                 return storyRepository;
             }
@@ -49,35 +78,35 @@ namespace Scrumban.DataAccessLayer
             {
                 if (taskRepository == null)
                 {
-                    taskRepository = new TaskRepository(_context);
+                    taskRepository = new TaskRepository(_scrumbanContext);
                 }
                 return taskRepository;
             }
         }
 
-        public virtual void Dispose(bool disposing)
+        public int Save()
         {
-            if (!this.disposed)
+            return _scrumbanContext.SaveChanges();
+        }
+
+        private bool _disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this._disposed)
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    _scrumbanContext.Dispose();
                 }
-                this.disposed = true;
             }
+            this._disposed = true;
         }
-
-        private bool disposed = false;
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public void Save()
-        {
-            _context.SaveChanges();
         }
     }
 }

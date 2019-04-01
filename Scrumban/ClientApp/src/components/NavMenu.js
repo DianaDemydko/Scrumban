@@ -51,6 +51,11 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='th-list' /> Tasks
               </NavItem>
             </LinkContainer>
+                    <LinkContainer to={'/Sprints'}>
+                <NavItem>
+                    <Glyphicon glyph='th-list' /> Sprint Test
+                </NavItem>
+            </LinkContainer>
           </Nav>
               </Navbar.Collapse>
               </Navbar>

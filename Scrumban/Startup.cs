@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Scrumban.Models;
 using Microsoft.AspNet.OData.Extensions;
 using Scrumban.BusinessLogicLayer.Interfaces;
 using Scrumban.BusinessLogicLayer;
@@ -17,8 +16,11 @@ using Scrumban.DataAccessLayer.Repositories;
 using CustomIdentityApp.Models;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.OData.Edm;
-using Scrumban.Models.Entities;
 
+using Scrumban.Models.Entities;
+using Scrumban.DataAccessLayer;
+using Scrumban.Extensions;
+using Scrumban.Models;
 
 namespace Scrumban
 {
@@ -43,6 +45,7 @@ namespace Scrumban
             services.AddTransient<IDefectRepository<Defect>, DefectRepository>();
             services.AddTransient<IRepository<Task>, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddODataQueryFilter(); 
@@ -77,13 +80,6 @@ namespace Scrumban
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            //app.UseMvc(routeBuilder =>
-            //{
-            //    routeBuilder.EnableDependencyInjection();
-            //    routeBuilder.Filter().OrderBy().Count().Expand().Select();
-            //});
-
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -91,7 +87,7 @@ namespace Scrumban
                     template: "{controller}/{action=Index}/{id?}");
                 routes.EnableDependencyInjection();
                 routes.Expand().Select().Count().OrderBy().Filter(); 
-
+                
             });
 
             app.UseSpa(spa =>
