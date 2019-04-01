@@ -129,21 +129,17 @@ export class SprintTable extends React.Component
         }
     }
 
-    onFiltersApply()
-    {
+    onFiltersApply() {
         var filter = []
-        if (this.state.nameSearch != "")
-        {
+        if (this.state.nameSearch != "") {
             filter.push({ "tolower(Name)": { contains: this.state.nameSearch.toLowerCase() } })
         }
 
-        if (this.state.descriptionSearch != "")
-        {
-            filter.push({"tolower(Description)": { contains: this.state.descriptionSearch } })
+        if (this.state.descriptionSearch != "") {
+            filter.push({ "tolower(Description)": { contains: this.state.descriptionSearch } })
         }
 
-        if (this.state.startDateSearch != null)
-        {
+        if (this.state.startDateSearch != null) {
             filter.push({ startDate: { gt: this.state.startDateSearch } })
         }
 
@@ -151,14 +147,22 @@ export class SprintTable extends React.Component
             filter.push({ endDate: { lt: this.state.endDateSearch } })
         }
 
-        if (this.state.statusSearch != "All")
-        {
+        if (this.state.statusSearch != "All") {
             filter.push({ sprintStatus: this.state.statusSearch })
         }
-            
+
         var query = buildQuery({ filter })
 
         this.fetchSprintData(query)
+
+        this.setState({
+            currentSort:
+            {
+                columnName: '',
+                sortingOrder: ''
+            }
+        })
+    
     }
 
     sortByName(sortingOrder, columnName) {
