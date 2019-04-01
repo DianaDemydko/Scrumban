@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.8" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.8">
@@ -23,8 +24,7 @@
     </PackageReference>
     <PackageReference Include="Npm" Version="3.5.2" />
 
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.1.8" />
 
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
@@ -41,11 +41,6 @@
 
     <EmbeddedResource Remove="ViewModels\**" />
     <None Remove="ViewModels\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\20190321142216_m1.cs" />
-    <Compile Remove="Migrations\20190321142216_m1.Designer.cs" />
   </ItemGroup>
 
 

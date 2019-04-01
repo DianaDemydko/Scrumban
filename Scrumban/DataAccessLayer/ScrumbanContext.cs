@@ -22,10 +22,10 @@ namespace Scrumban.DataAccessLayer
         public DbSet<Users> Users { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<StoryState> StoryStates { get; set; }
-        public DbSet<Models.State> States { get; set; }
+        public DbSet<Scrumban.Models.State> States { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<TaskState> TaskStates { get; set; }
-        public DbSet<Models.Priority> Priorities { get; set; }
+        public DbSet<Scrumban.Models.Priority> Priorities { get; set; }
         public DbSet<SprintDAL> Sprints { get; set; }
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
 

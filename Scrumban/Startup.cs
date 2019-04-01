@@ -18,7 +18,6 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.OData.Edm;
 
 using Scrumban.Models.Entities;
-using Scrumban.DataAccessLayer;
 using Scrumban.Extensions;
 using Scrumban.Models;
 
@@ -36,7 +35,7 @@ namespace Scrumban
       
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            string connection = Configuration.GetConnectionString("PavloConnectionStringDesktop");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
 

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer;
+using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Models;
 using Scrumban.ServiceLayer.Entities;
 

@@ -327,14 +327,14 @@ export class SprintTable extends React.Component
     {
         if (this.state.currentSort.columnName == columnName) {
             if (this.state.currentSort.sortingOrder == 'ascending') {
-                return (<span class="glyphicon glyphicon-triangle-top" id="active-caret" style={{ color: '#2adc29' }}></span>)
+                return (<span class="fa fa-caret-up" id="active-caret" style={{ color: '#2adc29' }}></span>)
             }
             else {
-                return (<span class="glyphicon glyphicon-triangle-bottom" id="active-caret" style={{ color: '#2adc29' }}></span>)
+                return (<span class="fa fa-caret-down" id="active-caret" style={{ color: '#2adc29' }}></span>)
             }
         }
         else {
-            return (<span class="glyphicon glyphicon-triangle-bottom"></span>)
+            return (<span class="fa fa-caret-down"></span>)
         }
     }
 
