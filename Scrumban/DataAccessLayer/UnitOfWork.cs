@@ -11,6 +11,7 @@ namespace Scrumban.DataAccessLayer
     {
         ScrumbanContext _context;
         private DefectRepository defectRepository;
+        private StoryRepository storyRepository;
 
         public UnitOfWork(ScrumbanContext context)
         {
@@ -26,6 +27,17 @@ namespace Scrumban.DataAccessLayer
                     defectRepository = new DefectRepository(_context);
                 }
                 return defectRepository;
+            }
+        }
+        public IRepository<Story> Stories
+        {
+            get
+            {
+                if (storyRepository == null)
+                {
+                    storyRepository = new StoryRepository(_context);
+                }
+                return storyRepository;
             }
         }
 
@@ -55,6 +67,4 @@ namespace Scrumban.DataAccessLayer
         }
     }
 }
-
-
 
