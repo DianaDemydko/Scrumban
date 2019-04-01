@@ -15,9 +15,9 @@ namespace Scrumban.DataAccessLayer
             db = context;
         }
 
-        public IEnumerable<Feature> Get()
+        public IQueryable<Feature> Get()
         {
-            return db.Features.Include(x => x.Owner).Include(y => y.State).ToList();
+            return db.Features.Include(x => x.Owner).Include(y => y.State).AsQueryable();
         }
         public void Delete([FromBody] Feature _feature)
         {

@@ -9,7 +9,7 @@ namespace Scrumban.DataAccessLayer
 {
     public interface IFeatureRepository
     {
-         IEnumerable<Feature> Get();
+         IQueryable<Feature> Get();
          void Delete([FromBody] Feature _feature);
          void Put([FromBody] Feature feature);
     }

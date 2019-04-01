@@ -16,9 +16,9 @@ namespace Scrumban.BusinessLogicLayer
         {
             _unitOfWork = new UnitOfWork(options);
         }
-        public IEnumerable<FeatureDTO> Get()
+        public IQueryable<FeatureDTO> Get()
         {
-             IEnumerable<Feature> features = _unitOfWork.featureRepository.Get();
+             IQueryable<Feature> features = _unitOfWork.featureRepository.Get();
              List<FeatureDTO> featureDTOs = new List<FeatureDTO>();
             foreach(var item in features)
             {
@@ -36,7 +36,7 @@ namespace Scrumban.BusinessLogicLayer
 
                 });
             }
-            return featureDTOs;
+            return featureDTOs.AsQueryable();
 
         }
 

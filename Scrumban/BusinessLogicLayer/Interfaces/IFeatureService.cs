@@ -7,7 +7,7 @@ namespace Scrumban.BusinessLogicLayer
 {
     interface IFeatureService
     {
-        IEnumerable<FeatureDTO> Get();
+        IQueryable<FeatureDTO> Get();
         void Delete(FeatureDTO feature);
         void Put(FeatureDTO feature);
         void Post(FeatureDTO feature);
