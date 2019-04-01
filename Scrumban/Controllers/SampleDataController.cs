@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Scrumban.BusinessLogicLayer;
-using Scrumban.DataAccessLayer;
-using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.Models;
 
 namespace Scrumban.Controllers
@@ -20,7 +16,6 @@ namespace Scrumban.Controllers
         public SampleDataController (ScrumbanContext context)
         {
             featureService = new FeatureService(context);
-           
         }
         [HttpGet]
         [EnableQuery()]
