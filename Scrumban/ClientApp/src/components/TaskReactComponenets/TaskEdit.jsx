@@ -29,6 +29,7 @@ export class TaskEdit extends React.Component {
             programmerId: this.props.item.programmerId
         };
 
+
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
@@ -37,6 +38,7 @@ export class TaskEdit extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
+
     }
 
     onNameChanged(e) {
@@ -131,6 +133,7 @@ export class TaskEdit extends React.Component {
                     <div className="col-md-7">
                         <label for="name">Name</label>
                             <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name}/>
+
                     </div>
                 </div>
                 <div className="form-group">
@@ -167,12 +170,14 @@ export class TaskEdit extends React.Component {
                                 timeCaption="time"
                                 className="datePickerStyle btn btn-sm btn-outline-secondary"
                             />
+
                     </div>
                 </div>
                 <div className="form-group">
                     <div className="col-md-7">
                         <label for="priorityName">Priority</label>
                             <select class="form-control form-control-sm" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
+
                             {priorityTable.map((item) => <option>{item.name}</option> )}
                         </select>
                     </div>
@@ -181,6 +186,7 @@ export class TaskEdit extends React.Component {
                     <div className="col-md-7">
                         <label for="taskStateName">State</label>
                             <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
+
                             {stateTable.map((item) => <option>{item.name}</option>)}
                         </select>
                     </div>
@@ -189,6 +195,7 @@ export class TaskEdit extends React.Component {
             </td>
             <td>
                 <button type="submit" onClick={this.onSubmit} className="btn btn-outline-danger button-fixed">Save</button>
+
                 <button type="submit" onClick={this.props.edit} className="btn btn-danger button-fixed">Cancel</button>
             </td>
         </tr>;

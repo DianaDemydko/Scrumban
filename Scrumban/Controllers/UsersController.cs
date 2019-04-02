@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,37 +8,40 @@ using Scrumban.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using CustomIdentityApp.Models;
+using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer;
+using Scrumban.SeviceLayer.Interfaces;
+using Scrumban.SeviceLayer.Sevices;
+using Scrumban.SeviceLayer.Entities.DTO;
 
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        UserDataAccessLayer _userDataAccessLayer;
+
+        IUserService _userService;
 
         public UsersController(DbContextOptions<ScrumbanContext> options)
         {
-            _userDataAccessLayer = new UserDataAccessLayer(options);
+            _userService = new UserService(options);
         }
 
         //Create user 
         [HttpPost]
-
-        public int Create([FromBody]Users user)
+        [Route("Create")]
+        public int Create([FromBody]UserDTO user)
         {
-            return _userDataAccessLayer.AddUser(user);
+            return _userService.AddUser(user);
         }
 
         //Edit user
         [HttpPost]
         [Route("Edit")]
-        public int Edit(Users user)
+        public int Edit(UserDTO user)
         {
-            return _userDataAccessLayer.UpdateUser(user);
+            return _userService.UpdateUser(user);
         }
 
         //Delete user
@@ -45,14 +49,39 @@ namespace Scrumban.Controllers
         [Route("Delete/{id}")]
         public int Delete(int id)
         {
-            return _userDataAccessLayer.DeleteUser(id);
+            return _userService.DeleteUser(id);
         }
         //Details about users
         [HttpGet]
         [Route("Details/{id}")]
-        public Users Details(int id)
+        public UserDTO Details(int id)
         {
-            return _userDataAccessLayer.GetUserData(id);
+            return _userService.GetUserData(id);
+        }
+        //Check availability 
+        [HttpPost]
+        [Route("Check")]
+
+        public bool CheckAvailability([FromBody]UserDTO user)
+        {
+            try
+            {
+                bool isAuth = _userService.CheckAvailability(user.Email, user.Password);
+                return isAuth;
+
+            }
+            catch
+            {
+                return false;
+               
+            }
+            
+        }
+        [HttpPost]
+        [Route("GetUserAccount")]
+        public UserDTO GetUseAccount([FromBody]UserDTO user)
+        {
+            return _userService.GetUserAccount(user.Email, user.Password);
         }
     }
 }

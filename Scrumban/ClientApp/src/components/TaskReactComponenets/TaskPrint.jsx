@@ -45,6 +45,6 @@ export class TaskPrint extends React.Component {
                 </td>
             </tr>
 
-       );
+        );
     }
 }

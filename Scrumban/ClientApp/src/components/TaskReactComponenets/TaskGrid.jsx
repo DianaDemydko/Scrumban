@@ -38,7 +38,7 @@ export class TaskGrid extends React.Component {
     loadData(filter) {
         fetch(apiUrlGet + filter)
             .then(response => response.json())
-            .then(data => { this.setState({ tasks: data, filter : filter }) });
+            .then(data => { this.setState({ tasks: data, filter: filter }) });
     }
 
     componentDidMount() {
@@ -181,7 +181,7 @@ export class TaskGrid extends React.Component {
 
     startFiltration(filtParam) {
         this.loadData(filtParam);
-        this.setState({filter : filtParam})
+        this.setState({ filter: filtParam })
     }
 
     render() {
@@ -190,12 +190,12 @@ export class TaskGrid extends React.Component {
 
         return <div>
             <br />
-                <h2>Tasks</h2>
+            <h2>Tasks</h2>
             <br />
             <div className=" p-1">
-                
+
                 {/* render filter form */}
-                <TaskFilter changeFilter={this.startFiltration}/>
+                <TaskFilter changeFilter={this.startFiltration} />
                 <br />
                 <br />
 
@@ -216,7 +216,7 @@ export class TaskGrid extends React.Component {
                         <th>
                             <span>Finish Date</span>
                         </th>
-                        <th style={{ width: '10%' }}>    
+                        <th style={{ width: '10%' }}>
                             <span>Priority</span>
                             <ion-icon src={this.state.sortByPriority} onClick={() => this.sort("priority", "id")} />
                         </th>

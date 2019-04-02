@@ -22,6 +22,7 @@ using Scrumban.Extensions;
 
 using Scrumban.Models;
 
+
 namespace Scrumban
 {
     public class Startup
@@ -37,6 +38,7 @@ namespace Scrumban
         public void ConfigureServices(IServiceCollection services)
         {
 
+
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
@@ -49,13 +51,11 @@ namespace Scrumban
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-
-
-
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
 
             services.AddOptions();
             
@@ -63,6 +63,7 @@ namespace Scrumban
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
+
         }
 
        

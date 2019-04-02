@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
+
 export class NavMenu extends Component {
     displayName = NavMenu.name
 
@@ -62,6 +63,7 @@ export class NavMenu extends Component {
                                 <Glyphicon glyph='th-list' /> Feature
               </NavItem>
                         </LinkContainer>
+
           </Nav>
               </Navbar.Collapse>
               </Navbar>

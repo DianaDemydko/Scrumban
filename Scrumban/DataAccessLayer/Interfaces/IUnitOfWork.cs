@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Scrumban.Models.Entities;
 
-
 namespace Scrumban.DataAccessLayer.Interfaces
 {
     public interface IUnitOfWork
@@ -21,6 +20,8 @@ namespace Scrumban.DataAccessLayer.Interfaces
         int Save();
 
         void Dispose();
+
+        IUserRepository UserRepository { get; }
 
     }
 }

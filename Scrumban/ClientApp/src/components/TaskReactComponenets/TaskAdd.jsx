@@ -30,6 +30,7 @@ export class TaskAdd extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
+
     }
 
     onNameChanged(e) {
@@ -47,6 +48,7 @@ export class TaskAdd extends React.Component {
     onFinishDateChange(date) {
         this.setState({ finishDate: date });
     }
+
 
     onPriorityChanged(e){
         this.setState({ priority: e.target.value });
@@ -159,6 +161,7 @@ export class TaskAdd extends React.Component {
                     
                         <button type="submit" className="btn btn-primary button-fixed">Submit</button>
                     
+
                     <Link to={cancelUrl}>
                         <button type="submit" className="btn btn-danger  button-fixed">Cancel</button>
                     </Link>

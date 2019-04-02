@@ -7,6 +7,9 @@ import { Counter } from './components/Counter';
 import { FeatureTable } from './components/FeatureReactComponents/FeatureTable';
 import { AddFeature } from './components/FeatureReactComponents/AddFeature';
 import { EditFeature } from './components/FeatureReactComponents/EditFeature';
+import { TaskGrid } from './components/TaskReactComponenets/TaskGrid';
+import { TaskAdd } from './components/TaskReactComponenets/TaskAdd';
+import { Panel } from './components/PanelReactComponents/Panel';
 
 import { DefectGrid } from './components/DefectReactComponent/DefectGrid';
 import { DefectAdd } from './components/DefectReactComponent/DefectAdd';
@@ -45,6 +48,8 @@ export default class App extends Component {
 <Route path='/feature' component={FeatureTable} />
                 <Route path='/addfeature' component={AddFeature} />
                 <Route path='/editfeature' component={EditFeature} />
+        <Route path='/panel' component={Panel} />
+           
       </Layout>
     );
   }

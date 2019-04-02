@@ -1,3 +1,4 @@
+
 using Scrumban.Models;
 using System.Collections.Generic;
 ﻿using System;
@@ -95,7 +96,22 @@ namespace Scrumban.DataAccessLayer
                 }
                 return taskRepository;
             }
+
+        private IUserRepository _userRepository;
+
+        public IUserRepository UserRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                {
+                    _userRepository = new UserRepository(_scrumbanContext);
+                }
+
+                return _userRepository;
+            }
         }
+
 
         public int Save()
         {
@@ -117,6 +133,7 @@ namespace Scrumban.DataAccessLayer
         }
 
          public void Dispose()
+
         {
             Dispose(true);
             GC.SuppressFinalize(this);
