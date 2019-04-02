@@ -17,7 +17,7 @@ namespace Scrumban.DataAccessLayer
         {
             Database.EnsureCreated();
         }
-
+        public DbSet<Feature> Features { get; set;}
         public DbSet<Defect> Defects { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Story> Stories { get; set; }
@@ -33,5 +33,6 @@ namespace Scrumban.DataAccessLayer
         {
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

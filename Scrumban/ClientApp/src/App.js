@@ -4,6 +4,9 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
+import { FeatureTable } from './components/FeatureReactComponents/FeatureTable';
+import { AddFeature } from './components/FeatureReactComponents/AddFeature';
+import { EditFeature } from './components/FeatureReactComponents/EditFeature';
 
 import { DefectGrid } from './components/DefectReactComponent/DefectGrid';
 import { DefectAdd } from './components/DefectReactComponent/DefectAdd';
@@ -20,8 +23,6 @@ import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateFor
 
 export default class App extends Component {
     displayName = App.name
-
-
   render() {
     return (
       <Layout>
@@ -41,8 +42,12 @@ export default class App extends Component {
             <Route path='/add' component={TaskAdd} />
             <Route path='/Sprints' component={SprintMain} />
             <Route path='/CreateNewSprint' component={SprintCreateForm} />
+<Route path='/feature' component={FeatureTable} />
+                <Route path='/addfeature' component={AddFeature} />
+                <Route path='/editfeature' component={EditFeature} />
       </Layout>
     );
   }
+
 }
 

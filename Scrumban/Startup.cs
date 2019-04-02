@@ -1,4 +1,4 @@
- using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -19,6 +19,7 @@ using Microsoft.OData.Edm;
 
 using Scrumban.Models.Entities;
 using Scrumban.Extensions;
+
 using Scrumban.Models;
 
 namespace Scrumban
@@ -35,6 +36,7 @@ namespace Scrumban
       
         public void ConfigureServices(IServiceCollection services)
         {
+
             string connection = Configuration.GetConnectionString("PavloConnectionStringDesktop");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
@@ -47,16 +49,17 @@ namespace Scrumban
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddODataQueryFilter(); 
+
 
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
             services.AddOptions();
             
-           
+           services.AddODataQueryFilter();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
@@ -78,6 +81,11 @@ namespace Scrumban
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.EnableDependencyInjection();
+                routeBuilder.Filter().OrderBy().Count().Expand().Select();
+            });
 
             app.UseMvc(routes =>
             {

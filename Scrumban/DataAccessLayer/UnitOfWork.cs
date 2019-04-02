@@ -18,11 +18,24 @@ namespace Scrumban.DataAccessLayer
         private DefectRepository defectRepository;
         private StoryRepository storyRepository;
         private TaskRepository taskRepository;
+        private FeatureRepository feature_repository;
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
             _scrumbanContext = scrumbanContext;
         }
+
+         public FeatureRepository featureRepository
+        {
+            get
+            {
+                if (feature_repository == null)
+                    feature_repository = new FeatureRepository(context);
+
+                return feature_repository;
+            }
+        }
+      
 
         public ISprintRepository SprintRepository
         {
@@ -103,11 +116,10 @@ namespace Scrumban.DataAccessLayer
             this._disposed = true;
         }
 
-        public void Dispose()
+         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
     }
 }
-

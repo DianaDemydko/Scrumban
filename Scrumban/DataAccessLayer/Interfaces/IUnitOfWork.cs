@@ -1,8 +1,10 @@
+
 using Scrumban.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Scrumban.Models.Entities;
+using System.Threading.Tasks;
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {
@@ -17,5 +19,8 @@ namespace Scrumban.DataAccessLayer.Interfaces
         ISprintStatusRepository SprintStatusRepository { get; }
 
         int Save();
+
+        void Dispose();
+
     }
 }

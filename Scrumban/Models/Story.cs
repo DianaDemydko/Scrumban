@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Scrumban.Models
 {
     public class Story
     {
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -27,6 +27,7 @@ namespace Scrumban.Models
 
         public int TaskId { get; set; }
         //public Task Task { get; set; }
+
 
     }
 }

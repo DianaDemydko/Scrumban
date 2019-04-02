@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Scrumban.Models
 {
-    public class State
+    public class Owner
     {
-
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
-
     }
 }

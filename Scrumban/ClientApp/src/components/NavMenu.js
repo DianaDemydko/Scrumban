@@ -7,6 +7,7 @@ export class NavMenu extends Component {
     displayName = NavMenu.name
 
 
+
   render() {
       return (
           
@@ -56,6 +57,11 @@ export class NavMenu extends Component {
                     <Glyphicon glyph='th-list' /> Sprint Test
                 </NavItem>
             </LinkContainer>
+             <LinkContainer to={'/feature'}>
+                            <NavItem>
+                                <Glyphicon glyph='th-list' /> Feature
+              </NavItem>
+                        </LinkContainer>
           </Nav>
               </Navbar.Collapse>
               </Navbar>
