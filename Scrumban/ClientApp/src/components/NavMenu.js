@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import './NavMenu.css';
+//import './NavMenu.css';
 
 export class NavMenu extends Component {
   displayName = NavMenu.name
@@ -31,6 +31,11 @@ export class NavMenu extends Component {
             <LinkContainer to={'/fetchdata'}>
               <NavItem>
                 <Glyphicon glyph='th-list' /> Fetch data
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to={'/tasks'}>
+              <NavItem>
+                <Glyphicon glyph='th-list' /> Tasks
               </NavItem>
             </LinkContainer>
           </Nav>
