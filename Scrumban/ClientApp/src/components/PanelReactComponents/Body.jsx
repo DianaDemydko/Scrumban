@@ -29,6 +29,7 @@ export class Body extends React.Component {
         } else if (this.props.panelStatus === "about") {
             renderedComponent = <About />
         }
+        else { renderedComponent = this.props.children }
 
         return (<Grid fluid>
             <Row>
@@ -37,6 +38,9 @@ export class Body extends React.Component {
                 </Col>
                 <Col sm={9}>
                     {renderedComponent}
+                    
+                    
+                   
                 </Col>
             </Row>
         </Grid>

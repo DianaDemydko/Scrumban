@@ -12,7 +12,7 @@ namespace Scrumban.DataAccessLayer.Interfaces
 
         IDefectRepository<Defect> Defects { get; }
         IRepository<Story> Stories { get; }
-        IRepository<Task> Tasks { get; }
+        IRepository<Scrumban.Models.Entities.Task> Tasks { get; }
 
         ISprintRepository SprintRepository { get; }
         ISprintStatusRepository SprintStatusRepository { get; }

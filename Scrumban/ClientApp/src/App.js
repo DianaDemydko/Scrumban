@@ -17,8 +17,8 @@ import { StoryGrid } from './components/StoryReactComponents/StoryGrid';
 import { StoryAdd } from './components/StoryReactComponents/StoryAdd';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
-import { TaskGrid } from './components/TaskReactComponenets/TaskGrid';
-import { TaskAdd } from './components/TaskReactComponenets/TaskAdd';
+
+
 
 import { SprintMain } from './components/Sprint/SprintMain';
 import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';

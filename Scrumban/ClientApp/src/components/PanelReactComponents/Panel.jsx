@@ -27,6 +27,7 @@ export class Panel extends React.Component {
         localStorage.clear();
         this.setState({ loginStatus: false });
         this.setState({ user: null });
+        window.location.replace("./login");
     }
     componentWillMount() {
         this.setState({ loginStatus: this.props.loginStatusCallBack })

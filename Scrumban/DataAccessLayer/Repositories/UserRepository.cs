@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
-    public class UserRepository: BaseRepository<Users>, IUserRepository
+    public class UserRepository: BaseUserRepository<Users>, IUserRepository
     {
         public UserRepository(DbContextOptions<ScrumbanContext> options) : base(options)
         {

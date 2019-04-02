@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Scrumban.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.ServiceLayer.Entities;
+using Scrumban.DataAccessLayer;
 
 namespace Scrumban.DataAccessLayer
 {

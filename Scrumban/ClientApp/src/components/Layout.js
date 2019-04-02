@@ -41,7 +41,9 @@ export class Layout extends Component {
             <span>
                 <Panel key={this.state.childRefresh} login={this.onLogIn} loginStatusCallBack={this.state.panelLoginStatus} currentUser={this.state.user} />
             </span>
-            <Body panelStatus={this.state.panelSatus} parentOnLoginStatusCallBack={this.onLoginStatusCallBack} /> 
+
+            <Body children={this.props.children} panelStatus={this.state.panelSatus} parentOnLoginStatusCallBack={this.onLoginStatusCallBack} /> 
+
         </div>
 
     );

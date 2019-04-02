@@ -8,7 +8,7 @@ using Scrumban.Models;
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<Users>
+    public interface IUserRepository : IBaseUserRepository<Users>
     {
       
        

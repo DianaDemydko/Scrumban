@@ -83,6 +83,7 @@ export class Login extends React.Component {
             }).then((resp) => resp.json()).then(data => { this.setState({ user: data }) });
 
             this.props.parentOnLoginStatusCallBack(true, this.state.user);
+            //window.location.replace("/Sprints");
         }
         else {
 

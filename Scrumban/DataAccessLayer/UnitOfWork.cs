@@ -86,7 +86,7 @@ namespace Scrumban.DataAccessLayer
                 return storyRepository;
             }
         }
-        public IRepository<Task> Tasks
+        public IRepository<Scrumban.Models.Entities.Task> Tasks
         {
             get
             {
@@ -96,6 +96,7 @@ namespace Scrumban.DataAccessLayer
                 }
                 return taskRepository;
             }
+        }
 
         private IUserRepository _userRepository;
 
