@@ -79,7 +79,7 @@ render() {
 					{this.state.stories.map(function (story) { return <StoryComponent key={story.id} story={story} onRemove={remove} onChanged={changed} /> })}
 				</table>
 				<div>
-					<Link to='/add'><button className="btn btn-primary button-fixed">Add</button></Link>
+                    <Link to='/addStory'><button className="btn btn-primary button-fixed">Add</button></Link>
 				</div>
 			</div>
 	</div>

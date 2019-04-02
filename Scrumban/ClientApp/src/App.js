@@ -37,9 +37,9 @@ export default class App extends Component {
         <Route path='/login'        component={Login}/>
 		    <Route path='/register' component={Register} />
 		    <Route path='/stories' component={StoryGrid} />
-		    <Route path='/add' component={StoryAdd} />
+		    <Route path='/addStory' component={StoryAdd} />
         <Route path='/tasks'        component={TaskGrid} />
-            <Route path='/add' component={TaskAdd} />
+            <Route path='/addTask' component={TaskAdd} />
             <Route path='/Sprints' component={SprintMain} />
             <Route path='/CreateNewSprint' component={SprintCreateForm} />
 <Route path='/feature' component={FeatureTable} />

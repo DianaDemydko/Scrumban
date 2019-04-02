@@ -37,7 +37,7 @@ namespace Scrumban
         public void ConfigureServices(IServiceCollection services)
         {
 
-            string connection = Configuration.GetConnectionString("PavloConnectionStringDesktop");
+            string connection = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
 
@@ -83,7 +83,6 @@ namespace Scrumban
             app.UseSpaStaticFiles();
             app.UseMvc(routeBuilder =>
             {
-                routeBuilder.EnableDependencyInjection();
                 routeBuilder.Filter().OrderBy().Count().Expand().Select();
             });
 

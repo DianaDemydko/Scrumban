@@ -101,7 +101,7 @@ export class TaskFilter extends React.Component {
                     <label for="exampleInputDescription">Description</label><br />
                     <input type="text" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder="Search" autocomplete="off"/>
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-4">
                     <label for="">Start Date</label><br />
                         <DatePicker
                             selected={this.state.startDate} 
@@ -115,7 +115,7 @@ export class TaskFilter extends React.Component {
 
                         />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-4">
                         <label for="">FinishDate</label><br />
                         <DatePicker
                             selected={this.state.finishDate}

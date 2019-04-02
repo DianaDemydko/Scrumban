@@ -78,12 +78,13 @@ namespace Scrumban.DataAccessLayer.Repositories
                     {
 
                     }
-                    task.Name = task.Name;
+                    task.Name = item.Name;
                     task.Description = item.Description;
                     task.StartDate = item.StartDate;
                     task.FinishDate = item.FinishDate;
                     task.PriorityId = item.PriorityId;
                     task.TaskStateId = item.TaskStateId;
+                    _context.SaveChanges();
 
                     transaction.Commit();
                 }

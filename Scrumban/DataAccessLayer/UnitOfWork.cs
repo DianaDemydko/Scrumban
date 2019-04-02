@@ -30,7 +30,7 @@ namespace Scrumban.DataAccessLayer
             get
             {
                 if (feature_repository == null)
-                    feature_repository = new FeatureRepository(context);
+                    feature_repository = new FeatureRepository(_scrumbanContext);
 
                 return feature_repository;
             }

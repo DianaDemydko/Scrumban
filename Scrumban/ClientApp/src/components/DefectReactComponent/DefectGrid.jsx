@@ -462,6 +462,7 @@ export class DefectGrid extends React.Component {
                         <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity</th>
                         <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> StoryId</th>
                         <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status</th>
+
                     </tr>
                     <tr>
                      <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></th>

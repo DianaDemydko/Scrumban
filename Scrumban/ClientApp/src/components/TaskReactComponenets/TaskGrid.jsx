@@ -230,7 +230,7 @@ export class TaskGrid extends React.Component {
                     {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} /> })}
                 </table>
                 <div>
-                    <Link to='/add'><button className="btn btn-sm btn-outline-info button-fixed">Add</button></Link>
+                    <Link to='/addTask'><button className="btn btn-sm btn-outline-info button-fixed">Add</button></Link>
                 </div>
             </div>
         </div>;

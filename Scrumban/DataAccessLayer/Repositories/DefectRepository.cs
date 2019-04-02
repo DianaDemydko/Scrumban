@@ -63,7 +63,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
                     }
 
-                    defect.Name = defect.Name;
+                    defect.Name = item.Name;
                     defect.Description = item.Description;
                     defect.State = item.State;
                     defect.Severity = item.Severity;

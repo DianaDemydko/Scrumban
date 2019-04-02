@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.Models;
 using System;

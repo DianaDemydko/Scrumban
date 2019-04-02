@@ -92,6 +92,7 @@ class FeaturePrint extends Component {
                 <td class="col" > {this.state.feature.description} </td>
                 {/* <td class="col" > {this.state.state} </td>*/}
                 {/*<td class="col" > {this.state.feature.owner.name } </td>*/}
+                 <td class="col" > {this.state.state} </td>
                 <td class="col" > Owner </td>
                 <td class="col" > {this.state.feature.priority} </td>
                 {/*<td class="col col-primary dropdown-toggle" type="divider" data-toggle="dropdown"> {feature.stories} </td>*/}
@@ -136,9 +137,9 @@ export class FeatureTable extends Component {
         this.sortByDate = this.sortByDate.bind(this)
         this.sortByPriority = this.sortByPriority.bind(this)
 
-        //this.onFindNameChange = this.onFindNameChange.bind(this);
-        //this.onFindDescriptionChange = this.onFindDescriptionChange.bind(this);
-        //this.onFindPriorityChange = this.onFindPriorityChange.bind(this);
+        this.onFindNameChange = this.onFindNameChange.bind(this);
+        this.onFindDescriptionChange = this.onFindDescriptionChange.bind(this);
+        this.onFindPriorityChange = this.onFindPriorityChange.bind(this);
         //this.onFindDateChange = this.onFindDateChange.bind(this);
 
         //this.findData = this.findData.bind(this);
@@ -147,14 +148,14 @@ export class FeatureTable extends Component {
 
 
 
-    //onFindNameChange(e) {
-    //    this.setState({ findName: e.target.value });
-    //    //fetch('api/FeatureData/' + '?$filter=contains(name,%27' + e.target.value + '%27)')
-    //    //    .then(res => res.json())
-    //    //    .then(json => {
-    //    //        this.setState({ features: json })
-    //    //    });
-    //}
+    onFindNameChange(e) {
+        //this.setState({ findName: e.target.value });
+        fetch('api/FeatureData/' + '?$filter=contains(name,%27' + e.target.value + '%27)')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ features: json })
+            });
+    }
     //findData() {
     //    fetch('api/FeatureData/' + '?$filter=contains(time,%27' + e.target.value + '%27)')
     //        .then(res => res.json())
@@ -163,21 +164,21 @@ export class FeatureTable extends Component {
     //        });
     //}
 
-    //onFindDescriptionChange(e) {
-    //    fetch('api/FeatureData/' + '?$filter=contains(description,%27' + e.target.value + '%27)')
-    //        .then(res => res.json())
-    //        .then(json => {
-    //            this.setState({ features: json })
-    //        });}
-    //onFindPriorityChange(e) {
-    //    if (e.target.value != '') {
-    //        fetch('api/FeatureData/' + '?$filter=priority%20eq%20' + e.target.value)
-    //        .then(res => res.json())
-    //        .then(json => {
-    //            this.setState({ features: json })
-    //        });
-    //    }
-    //}
+    onFindDescriptionChange(e) {
+        fetch('api/FeatureData/' + '?$filter=contains(description,%27' + e.target.value + '%27)')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ features: json })
+            });}
+    onFindPriorityChange(e) {
+        if (e.target.value != '') {
+            fetch('api/FeatureData/' + '?$filter=priority%20eq%20' + e.target.value)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ features: json })
+            });
+        }
+    }
     //onFindDateChange(e) {
 
     //}
@@ -384,7 +385,7 @@ export class FeatureTable extends Component {
                         <button class="btn btn-dark" onClick={() => this.sortData('name')}>
                             Sort
                         </button>
-                        {/*<input id='nameFindInput' type='text' onChange={e => this.onFindNameChange(e)} />*/}
+                        <input id='nameFindInput' type='text' onChange={e => this.onFindNameChange(e)} />
 
                     </th>
                     <th class="col"> Description
@@ -392,7 +393,7 @@ export class FeatureTable extends Component {
                         <button class="btn btn-dark" onClick={() => this.sortData('description')}>
                             Sort
                         </button>
-                        {/*<input type='text' onChange={e => this.onFindDescriptionChange(e)} />*/}
+                        <input type='text' onChange={e => this.onFindDescriptionChange(e)} />
                     </th>
                     <th class="col" > State  </th>
                     <th class="col" > Owner  </th>
@@ -400,7 +401,7 @@ export class FeatureTable extends Component {
                          <button class="btn btn-dark" onClick={() => this.sortData('priority')}>
                             Sort
                          </button>
-                        {/* <input type='text' onChange={e => this.onFindPriorityChange(e)} />*/}
+                         <input type='text' onChange={e => this.onFindPriorityChange(e)} />
                     </th>
                     <th class="col"> Stories </th>
                     <th class="col" > Time
@@ -409,9 +410,7 @@ export class FeatureTable extends Component {
                          </button>
                         {/* <input type='text' onChange={e => this.onFindDateChange(e)} />*/}
                     </th>
-                    <button class="btn btn-dark" onClick={this.findData}>
-                        Find
-                        </button>
+                 
                 </tr>
 
                 {this.state.features.map(feature => (
