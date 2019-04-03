@@ -15,11 +15,9 @@ import { DefectGrid } from './components/DefectReactComponent/DefectGrid';
 import { DefectAdd } from './components/DefectReactComponent/DefectAdd';
 import { StoryGrid } from './components/StoryReactComponents/StoryGrid';
 import { StoryAdd } from './components/StoryReactComponents/StoryAdd';
-import { Login } from './components/Login';
-import { Register } from './components/Register';
 
 
-
+import { Login } from './components/PanelReactComponents/Login';
 import { SprintMain } from './components/Sprint/SprintMain';
 import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
 
@@ -37,8 +35,6 @@ export default class App extends Component {
         <Route path='/defect_add' component={DefectAdd} /> 
         <Route path='/counter'      component={Counter} />
         <Route path='/fetchdata'    component={FetchData} />
-        <Route path='/login'        component={Login}/>
-		    <Route path='/register' component={Register} />
 		    <Route path='/stories' component={StoryGrid} />
 		    <Route path='/addStory' component={StoryAdd} />
         <Route path='/tasks'        component={TaskGrid} />
@@ -48,7 +44,8 @@ export default class App extends Component {
 <Route path='/feature' component={FeatureTable} />
                 <Route path='/addfeature' component={AddFeature} />
                 <Route path='/editfeature' component={EditFeature} />
-        <Route path='/panel' component={Panel} />
+            <Route path='/panel' component={Panel} />
+            <Route path='/login' component={Login} />
            
       </Layout>
     );

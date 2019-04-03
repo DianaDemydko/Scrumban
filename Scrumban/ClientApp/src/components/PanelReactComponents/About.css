@@ -3,16 +3,37 @@
     height: auto;
     margin-left: 20px;
     margin-top:50px;
+    padding:60px;
 }
     .header img {
-        position: absolute;
-        top: 50px;
-        left: 199px;
+        position:absolute;
+        top: 5px;
+        left: 150px;
         right: 0px;
-        width: 50%;
-        height: 100%;
+        width: 68%;
+        height: 95%;
     }
 .info {
-    width: auto;
-    height: auto;
+    position: absolute;
+    left: 150px;
+    width: 700px;
+    height: 165px;
+    padding: 0px;
+}
+p {
+    font-size: 1.4rem;
+    color: black;
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    text-indent: 1.5em;
+    text-align:justify;
+}
+.info em  {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    text-shadow: -1px -1px 1px #aaa, 0px 2px 1px rgba(0,0,0,0.5), 2px 2px 2px rgba(0,0,0,0.7), 0px 0px 3px rgba(0,0,0,0.4);
+    text-align: center;
+}
+hr{
+    color:saddlebrown;
 }

@@ -147,6 +147,8 @@ export class Register extends React.Component {
                 }
             }.bind(this))
                 .catch(() => alert("Unexpected error occured."))
+
+            window.location.replace("./login");
         } else
         {
             var erText = "";
