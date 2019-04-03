@@ -2,7 +2,7 @@
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {
-    public interface ISprintRepository : IBaseRepository<SprintDAL>
+    public interface IStoryRepository : IBaseRepository<StoryDAL>
     {
 
     }

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Models;
-using Scrumban.ServiceLayer.Entities;
+using Scrumban.ServiceLayer.DTO;
+using Scrumban.ServiceLayer.Interfaces;
 
-
-namespace Scrumban.ServiceLayer
+namespace Scrumban.ServiceLayer.Services
 {
     public class SprintService: ISprintService
     {

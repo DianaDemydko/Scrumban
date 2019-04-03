@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
 
-namespace Scrumban.DataAccessLayer
+namespace Scrumban.DataAccessLayer.Interfaces
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {
@@ -18,6 +17,7 @@ namespace Scrumban.DataAccessLayer
 
         //Delete methods
         void Delete(int id);
+
         void Delete(TEntity entity);
 
         //Update methods

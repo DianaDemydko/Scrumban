@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Scrumban.DataAccessLayer.Interfaces;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Scrumban.DataAccessLayer;
 
 
-namespace Scrumban.DataAccessLayer
+namespace Scrumban.DataAccessLayer.Repositories
 {
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {

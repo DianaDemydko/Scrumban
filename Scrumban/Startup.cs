@@ -1,27 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNet.OData.Extensions;
-using Scrumban.BusinessLogicLayer.Interfaces;
 using Scrumban.BusinessLogicLayer;
 using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
-using CustomIdentityApp.Models;
-using Microsoft.AspNet.OData.Builder;
-using Microsoft.OData.Edm;
-
-using Scrumban.Models.Entities;
-using Scrumban.Extensions;
-
-using Scrumban.Models;
-
+using Scrumban.ServiceLayer.Interfaces;
+using Scrumban.ServiceLayer.Services;
 
 namespace Scrumban
 {
@@ -45,8 +36,8 @@ namespace Scrumban
 
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IDefectRepository<Defect>, DefectRepository>();
-            services.AddTransient<IRepository<Task>, TaskRepository>();
+            services.AddTransient<IDefectRepository, DefectRepository>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

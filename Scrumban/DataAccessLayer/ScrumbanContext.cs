@@ -1,12 +1,5 @@
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Scrumban.BusinessLogicLayer.DTO;
-using CustomIdentityApp.Models;
 using Microsoft.EntityFrameworkCore;
-using Scrumban.Models;
-using Scrumban.Models.Entities;
 using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.DataAccessLayer
@@ -17,41 +10,41 @@ namespace Scrumban.DataAccessLayer
         {
             Database.EnsureCreated();
         }
-        public DbSet<Feature> Features { get; set;}
-        public DbSet<Defect> Defects { get; set; }
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Story> Stories { get; set; }
-        public DbSet<StoryState> StoryStates { get; set; }
-        public DbSet<State> States { get; set; }
-        public DbSet<Task> Tasks { get; set; }
-        public DbSet<TaskState> TaskStates { get; set; }
-        public DbSet<Priority> Priorities { get; set; }
+        public DbSet<FeatureDAL> Features { get; set;}
+        public DbSet<DefectDAL> Defects { get; set; }
+        public DbSet<UsersDAL> Users { get; set; }
+        public DbSet<StoryDAL> Stories { get; set; }
+        public DbSet<StoryStateDAL> StoryStates { get; set; }
+        public DbSet<StateDAL> States { get; set; }
+        public DbSet<TaskDAL> Tasks { get; set; }
+        public DbSet<TaskStateDAL> TaskStates { get; set; }
+        public DbSet<PriorityDAL> Priorities { get; set; }
         public DbSet<SprintDAL> Sprints { get; set; }
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TaskState>().HasData(
-                new TaskState[]
+            modelBuilder.Entity<TaskStateDAL>().HasData(
+                new TaskStateDAL[]
                 {
-                    new TaskState{Id = 1, Name = "To Do"},
-                    new TaskState{Id = 2, Name = "In Progress"},
-                    new TaskState{Id = 3, Name = "Completed"}
+                    new TaskStateDAL{Id = 1, Name = "To Do"},
+                    new TaskStateDAL{Id = 2, Name = "In Progress"},
+                    new TaskStateDAL{Id = 3, Name = "Completed"}
                 }
             );
-            modelBuilder.Entity<Scrumban.Models.Entities.State>().HasData(
-                new Scrumban.Models.Entities.State[]
+            modelBuilder.Entity<StateDAL>().HasData(
+                new StateDAL[]
                 {
-                    new Scrumban.Models.Entities.State{Id = 1, Name = "Ready To Start"},
-                    new Scrumban.Models.Entities.State{Id = 2, Name = "In Progress"},
-                    new Scrumban.Models.Entities.State{Id = 3, Name = "Development Complete"},
-                    new Scrumban.Models.Entities.State{Id = 4, Name = "Test Complete"},
-                    new Scrumban.Models.Entities.State{Id = 5, Name = "Accepted"}
+                    new StateDAL{Id = 1, Name = "Ready To Start"},
+                    new StateDAL{Id = 2, Name = "In Progress"},
+                    new StateDAL{Id = 3, Name = "Development Complete"},
+                    new StateDAL{Id = 4, Name = "Test Complete"},
+                    new StateDAL{Id = 5, Name = "Accepted"}
                 }
             );
 
-            modelBuilder.Entity<Scrumban.DataAccessLayer.Models.SprintStatusDAL>().HasData(
-                new Scrumban.DataAccessLayer.Models.SprintStatusDAL[]
+            modelBuilder.Entity<SprintStatusDAL>().HasData(
+                new SprintStatusDAL[]
                 {
                     new SprintStatusDAL(){SprintStatus_id=1, StatusName="Not Started" },
                     new SprintStatusDAL(){SprintStatus_id=2, StatusName="Started" },
@@ -60,8 +53,8 @@ namespace Scrumban.DataAccessLayer
                 }
                 );
 
-            modelBuilder.Entity<Scrumban.DataAccessLayer.Models.SprintDAL>().HasData(
-                new Scrumban.DataAccessLayer.Models.SprintDAL[]
+            modelBuilder.Entity<SprintDAL>().HasData(
+                new SprintDAL[]
                 {
                     new SprintDAL(){ Sprint_id=1, SprintStatus_id=1, Description="HUGE desc ======== ============== ========= ===============",
                         EndDate =new DateTime(2019,4,20), StartDate=new DateTime(2019,1,12), Name="AAaSprint"},
@@ -73,41 +66,41 @@ namespace Scrumban.DataAccessLayer
                 }
                 );
 
-            modelBuilder.Entity<Scrumban.Models.Entities.Priority>().HasData(
-                new Scrumban.Models.Entities.Priority[]
+            modelBuilder.Entity<PriorityDAL>().HasData(
+                new PriorityDAL[]
                 {
-                    new Scrumban.Models.Entities.Priority{Id = 1, Name = "Low"},
-                    new Scrumban.Models.Entities.Priority{Id = 2, Name = "Medium"},
-                    new Scrumban.Models.Entities.Priority{Id = 3, Name = "Heigh"},
-                    new Scrumban.Models.Entities.Priority{Id = 4, Name = "Immediate"}
+                    new PriorityDAL{Id = 1, Name = "Low"},
+                    new PriorityDAL{Id = 2, Name = "Medium"},
+                    new PriorityDAL{Id = 3, Name = "Heigh"},
+                    new PriorityDAL{Id = 4, Name = "Immediate"}
                 }
             );
-            modelBuilder.Entity<Scrumban.Models.Entities.Task>().HasData(
-                new Scrumban.Models.Entities.Task[]
+            modelBuilder.Entity<TaskDAL>().HasData(
+                new TaskDAL[]
                 {
-                    new Scrumban.Models.Entities.Task { Id = 1, Name = "Task1" },
-                    new Scrumban.Models.Entities.Task { Id = 2, Name = "Task2" },
-                    new Scrumban.Models.Entities.Task { Id = 3, Name = "Task3" }
+                    new TaskDAL { Id = 1, Name = "Task1" },
+                    new TaskDAL { Id = 2, Name = "Task2" },
+                    new TaskDAL { Id = 3, Name = "Task3" }
                 }
             );
             
-            modelBuilder.Entity<StoryState>().HasData(
-                new StoryState[]
+            modelBuilder.Entity<StoryStateDAL>().HasData(
+                new StoryStateDAL[]
                 {
-                    new StoryState{Id=1,Name = "Non Started"},
-                    new StoryState{Id=2,Name="In Progress"},
-                    new StoryState{Id=3,Name="Rejected"},
-                    new StoryState{Id=4,Name="In Complete"},
-                    new StoryState{Id=5,Name="Done"},
-                    new StoryState{Id=6,Name="Accepted"}
+                    new StoryStateDAL{Id=1,Name = "Non Started"},
+                    new StoryStateDAL{Id=2,Name="In Progress"},
+                    new StoryStateDAL{Id=3,Name="Rejected"},
+                    new StoryStateDAL{Id=4,Name="In Complete"},
+                    new StoryStateDAL{Id=5,Name="Done"},
+                    new StoryStateDAL{Id=6,Name="Accepted"}
                 }
             );
-            modelBuilder.Entity<Story>().HasData(
-                new Story[]
+            modelBuilder.Entity<StoryDAL>().HasData(
+                new StoryDAL[]
                 {
-                    new Story{Id=1,Name="Story1",Description = "Description1"},
-                    new Story{Id=2,Name="Story2",Description = "Description2"},
-                    new Story{Id=3,Name="Story3",Description = "Description3"}
+                    new StoryDAL{Id=1,Name="Story1",Description = "Description1"},
+                    new StoryDAL{Id=2,Name="Story2",Description = "Description2"},
+                    new StoryDAL{Id=3,Name="Story3",Description = "Description3"}
                 }
             );
             base.OnModelCreating(modelBuilder);

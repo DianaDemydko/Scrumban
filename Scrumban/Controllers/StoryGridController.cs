@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Scrumban.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNet.OData;
 using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
+using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.Controllers
 {
@@ -16,7 +14,7 @@ namespace Scrumban.Controllers
     public class StoryGridController : Controller
     {
         ScrumbanContext db;
-        IRepository<Story> _repo;
+        IStoryRepository _repo;
         IUnitOfWork _unitOfWork;
 
         public StoryGridController(ScrumbanContext context)
@@ -61,7 +59,7 @@ namespace Scrumban.Controllers
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getStories")]
-        public IQueryable<Story> Stories()
+        public IQueryable<StoryDAL> Stories()
         {
             return _unitOfWork.Stories.GetAll();
         }
@@ -76,9 +74,9 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/addStory")]
-        public IActionResult Add([FromBody]Models.Story story)
+        public IActionResult Add([FromBody]StoryDAL story)
         {
-            Models.Story added = new Models.Story { Name = story.Name, Description = story.Description, PriorityId = story.PriorityId, StoryStateId = story.StoryStateId };
+            StoryDAL added = new StoryDAL { Name = story.Name, Description = story.Description, PriorityId = story.PriorityId, StoryStateId = story.StoryStateId };
             db.Add(added);
             db.SaveChanges();
             return Ok(story);
@@ -86,9 +84,9 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/editStory")]
-        public IActionResult Edit([FromBody]Models.Story story)
+        public IActionResult Edit([FromBody]StoryDAL story)
         {
-            Models.Story edited = db.Stories.FirstOrDefault(x => x.Id == story.Id);
+            StoryDAL edited = db.Stories.FirstOrDefault(x => x.Id == story.Id);
 
             edited.Name = story.Name;
             edited.Description = story.Description;
@@ -103,7 +101,7 @@ namespace Scrumban.Controllers
         //[Route("/api/[controller]/deleteStory")]
         public IActionResult Delete(int id)
         {
-            Models.Story story = db.Stories.FirstOrDefault(x => x.Id == id);
+            StoryDAL story = db.Stories.FirstOrDefault(x => x.Id == id);
             if (story == null)
             {
                 return NotFound();

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
-using Scrumban.BusinessLogicLayer.Interfaces;
-using Scrumban.BusinessLogicLayer.DTO;
-using AutoMapper.QueryableExtensions;
+using Scrumban.ServiceLayer.Interfaces;
+using Scrumban.ServiceLayer.DTO;
 
 namespace Scrumban.Controllers
 {

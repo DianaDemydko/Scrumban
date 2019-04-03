@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Scrumban.DataAccessLayer;
 using Microsoft.AspNet.OData;
-using Scrumban.ServiceLayer;
-using Scrumban.ServiceLayer.Entities;
+using Scrumban.ServiceLayer.Interfaces;
+using Scrumban.ServiceLayer.Services;
+using Scrumban.ServiceLayer.DTO;
 
 namespace Scrumban.Controllers
 {

@@ -1,12 +1,6 @@
-
-using Scrumban.Models;
-using System.Collections.Generic;
 ﻿using System;
-using System.Linq;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
-using Scrumban.Models.Entities;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Scrumban.DataAccessLayer
 {
@@ -16,17 +10,18 @@ namespace Scrumban.DataAccessLayer
 
         private ISprintRepository _sprintRepository;
         private ISprintStatusRepository _sprintStatusRepository;
-        private DefectRepository defectRepository;
-        private StoryRepository storyRepository;
-        private TaskRepository taskRepository;
-        private FeatureRepository feature_repository;
+        private IDefectRepository defectRepository;
+        private IStoryRepository storyRepository;
+        private ITaskRepository taskRepository;
+        private IFeatureRepository feature_repository;
+        private IUserRepository _userRepository;
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
             _scrumbanContext = scrumbanContext;
         }
 
-         public FeatureRepository featureRepository
+         public IFeatureRepository Feature
         {
             get
             {
@@ -64,7 +59,7 @@ namespace Scrumban.DataAccessLayer
             }
         }
 
-        public IDefectRepository<Defect> Defects
+        public IDefectRepository Defects
         {
             get
             {
@@ -75,7 +70,7 @@ namespace Scrumban.DataAccessLayer
                 return defectRepository;
             }
         }
-        public IRepository<Story> Stories
+        public IStoryRepository Stories
         {
             get
             {
@@ -86,7 +81,8 @@ namespace Scrumban.DataAccessLayer
                 return storyRepository;
             }
         }
-        public IRepository<Scrumban.Models.Entities.Task> Tasks
+
+        public ITaskRepository Tasks
         {
             get
             {
@@ -98,7 +94,7 @@ namespace Scrumban.DataAccessLayer
             }
         }
 
-        private IUserRepository _userRepository;
+        
 
         public IUserRepository UserRepository
         {

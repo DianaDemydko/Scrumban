@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Scrumban.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
-using Scrumban.ServiceLayer.Entities;
-using Scrumban.DataAccessLayer;
+using Scrumban.DataAccessLayer.Interfaces;
 
-namespace Scrumban.DataAccessLayer
+namespace Scrumban.DataAccessLayer.Repositories
 {
     public class SprintRepository : BaseRepository<SprintDAL>, ISprintRepository
     {

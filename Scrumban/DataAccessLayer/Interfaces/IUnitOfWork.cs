@@ -1,27 +1,21 @@
-
-using Scrumban.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Scrumban.Models.Entities;
+using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {
     public interface IUnitOfWork
     {
-
-        IDefectRepository<Defect> Defects { get; }
-        IRepository<Story> Stories { get; }
-        IRepository<Scrumban.Models.Entities.Task> Tasks { get; }
-
+        IDefectRepository Defects { get; }
+        IStoryRepository Stories { get; }
+        ITaskRepository Tasks { get; }
+        IFeatureRepository Feature { get; }
         ISprintRepository SprintRepository { get; }
         ISprintStatusRepository SprintStatusRepository { get; }
+        IUserRepository UserRepository { get; }
 
         int Save();
-
         void Dispose();
 
-        IUserRepository UserRepository { get; }
+        
 
     }
 }

@@ -1,36 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Scrumban.Models;
-using Scrumban.DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Scrumban.DataAccessLayer.Interfaces;
+using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
-    public class StoryRepository : IRepository<Story>
+    public class StoryRepository : BaseRepository<StoryDAL>, IStoryRepository
     {
-        private ScrumbanContext _context;
-
-        public StoryRepository(ScrumbanContext context)
+     
+        public StoryRepository(ScrumbanContext context) :base(context)
         {
-            _context = context;
         }
 
-        public void Create(Story item)
+        public override void Create(StoryDAL item)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    Story added = new Story
+                    StoryDAL added = new StoryDAL
                     {
                         Name = item.Name,
                         Description = item.Description,
                         PriorityId = item.PriorityId,
                         StoryStateId = item.StoryStateId
                     };
-                    _context.Add(added);
-                    _context.SaveChanges();
+                    _dbContext.Add(added);
+                    _dbContext.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -39,19 +36,19 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        public void Delete(int id)
+        public override void Delete(int id)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    Story story = _context.Stories.FirstOrDefault(x => x.Id == id);
+                    StoryDAL story = _dbContext.Stories.FirstOrDefault(x => x.Id == id);
                     if (story == null)
                     {
 
                     }
-                    _context.Stories.Remove(story);
-                    _context.SaveChanges();
+                    _dbContext.Stories.Remove(story);
+                    _dbContext.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -60,18 +57,18 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        public Story Get(int id)
+        public override StoryDAL GetByID(int id)
         {
-            return _context.Stories.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Stories.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(Story item)
+        public override void Update(StoryDAL item)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    Story story = _context.Stories.FirstOrDefault(x => x.Id == item.Id);
+                    StoryDAL story = _dbContext.Stories.FirstOrDefault(x => x.Id == item.Id);
                     if (story == null)
                     {
 
@@ -81,7 +78,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                     story.PriorityId = item.PriorityId;
                     story.StoryStateId = item.StoryStateId;
 
-                    _context.SaveChanges();
+                    _dbContext.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -92,9 +89,9 @@ namespace Scrumban.DataAccessLayer.Repositories
 
        
 
-         public IQueryable<Story> GetAll()
+         public override IQueryable<StoryDAL> GetAll()
         {
-            return _context.Stories.Include(x => x.StoryState).Include(x => x.Priority);
+            return _dbContext.Stories.Include(x => x.StoryState).Include(x => x.Priority);
         }
     }
 }

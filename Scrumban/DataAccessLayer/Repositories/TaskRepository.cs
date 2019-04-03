@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Scrumban.Models.Entities;
 using Scrumban.DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
-    public class TaskRepository : IRepository<Task>
+    public class TaskRepository :BaseRepository<TaskDAL>, ITaskRepository
     {
-        private ScrumbanContext _context;
 
-        public TaskRepository(ScrumbanContext context)
+        public TaskRepository(ScrumbanContext context) : base(context)
         {
-            _context = context;
         }
 
-        public void Create(Task item)
+        public override void Create(TaskDAL item)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    Task added = new Task
+                    TaskDAL added = new TaskDAL
                     {
                         Name = item.Name,
                         Description = item.Description,
@@ -31,7 +28,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                         PriorityId = item.PriorityId,
                         TaskStateId = item.TaskStateId
                     };
-                    _context.Add(added);
+                    _dbContext.Add(added);
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -41,18 +38,18 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        public void Delete(int id)
+        public override void Delete(int id)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    Task task = _context.Tasks.FirstOrDefault(x => x.Id == id);
+                    TaskDAL task = _dbContext.Tasks.FirstOrDefault(x => x.Id == id);
                     if (task == null)
                     {
 
                     }
-                    _context.Tasks.Remove(task);
+                    _dbContext.Tasks.Remove(task);
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -62,18 +59,18 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        public Task Get(int id)
+        public override TaskDAL GetByID(int id)
         {
-            return _context.Tasks.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Tasks.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(Task item)
+        public override void Update(TaskDAL item)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    Task task = _context.Tasks.FirstOrDefault(x => x.Id == item.Id);
+                    TaskDAL task = _dbContext.Tasks.FirstOrDefault(x => x.Id == item.Id);
                     if (task == null)
                     {
 
@@ -84,7 +81,6 @@ namespace Scrumban.DataAccessLayer.Repositories
                     task.FinishDate = item.FinishDate;
                     task.PriorityId = item.PriorityId;
                     task.TaskStateId = item.TaskStateId;
-                    _context.SaveChanges();
 
                     transaction.Commit();
                 }
@@ -95,9 +91,9 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
         }
 
-        public IQueryable<Task> GetAll()
+        public override IQueryable<TaskDAL> GetAll()
         {
-            return _context.Tasks.Include(x => x.TaskState).Include(x => x.Priority);
+            return _dbContext.Tasks.Include(x => x.TaskState).Include(x => x.Priority);
         }
     }
 }

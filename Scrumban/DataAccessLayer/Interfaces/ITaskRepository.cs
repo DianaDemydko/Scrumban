@@ -2,8 +2,11 @@
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {
-    public interface ISprintRepository : IBaseRepository<SprintDAL>
+    public interface ITaskRepository : IBaseRepository<TaskDAL>
     {
 
     }
+
 }
+
+
