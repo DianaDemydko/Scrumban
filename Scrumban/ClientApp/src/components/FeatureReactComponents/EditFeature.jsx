@@ -80,7 +80,7 @@ export class EditFeature extends Component {
                     </div>
                     <div>
                         <label for='date'> Start Date</label>
-                        <DatePicker onChange={this.onDateChange} dateFormat="yyyy/MM/dd" />
+                        <DatePicker todayButton={"Today"} selected={this.state.date} onChange={this.onDateChange} dateFormat="yyyy/MM/dd" />
 
                     </div>
                 </form>
