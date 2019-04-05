@@ -1,18 +1,12 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { TaskPrint } from './TaskPrint';
-import { TaskEdit } from './TaskEdit';
 import buildQuery from 'odata-query'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const data = require('../../GlobalData.json'); // json file with const tables (priority, state)
 // consts of stable tables
-const priorityTable = data.priority;
-const stateTable = data.taskState;
-// const
-const apiUrlGet = "/api/TaskGrid/getTasks";
-const apiUrlDelete = "/api/TaskGrid";
+//const priorityTable = data.priority;
+//const stateTable = data.taskState;
 
 export class TaskFilter extends React.Component {
     constructor(props) {
@@ -37,6 +31,7 @@ export class TaskFilter extends React.Component {
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
         this.onSetFilter = this.onSetFilter.bind(this);
+        this.onCancelFilter = this.onCancelFilter.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
     }
@@ -58,11 +53,11 @@ export class TaskFilter extends React.Component {
     }
 
     onPriorityChanged(e) {
-        this.setState({ priorityName: e.target.value });
+        this.setState({ priorityName: e.target.value == "All" ? "" : e.target.value });
     }
 
     onStateChanged(e) {
-        this.setState({ taskStateName: e.target.value });
+        this.setState({ taskStateName: e.target.value == "All" ? "" : e.target.value });
     }
 
     onSetFilter() {
@@ -89,64 +84,107 @@ export class TaskFilter extends React.Component {
         this.props.changeFilter(query);
     }
 
+    onCancelFilter() {
+        this.setState({
+            name: "",
+            description: "",
+            startData: "",
+            finishData: "",
+            priorityId: "",
+            priorityName: "",
+            taskStateId: "",
+            taskStateName: "",
+            storyId: "",
+            programmerId: ""
+        })
+        this.props.changeFilter("");
+    }
+
     // render row
     render() {
-        return <div>
-            <div className="row bg-light">
-                <div class="form-group col-1">
-                    <label for="inputTitle">Title</label><br />
-                    <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="inputTitle" aria-describedby="emailHelp" placeholder="Search" autocomplete="off"/>
-                </div>
-                <div class="form-group col-2">
-                    <label for="exampleInputDescription">Description</label><br />
-                    <input type="text" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder="Search" autocomplete="off"/>
-                </div>
-                <div className="form-group col-4">
-                    <label for="">Start Date</label><br />
-                        <DatePicker
-                            selected={this.state.startDate} 
-                            onChange={this.onStartDateChange}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={60}
-                            dateFormat="MMMM d"
-                            timeCaption="time"
-                            className="datePickerStyle btn btn-sm btn-outline-secondary"
-
-                        />
-                </div>
-                <div className="form-group col-4">
-                        <label for="">FinishDate</label><br />
-                        <DatePicker
-                            selected={this.state.finishDate}
-                            onChange={this.onFinishDateChange}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={15}
-                            dateFormat="MMMM d"
-                            timeCaption="time"
-                            className="datePickerStyle btn btn-sm btn-outline-secondary"
-
-                        />
-                </div>
-                <div className="col-2">
-                    <label for="priority">Priority</label><br />
-                    <select class="form-control form-control-sm" onChange={this.onPriorityChanged} id="priority" placeholder="task priority">
-                        {priorityTable.map((item) => <option>{item.name}</option>)}
-                    </select>
-                </div>
-                <div className="col-2">
+        return <table className="table table-responsive-x1 table-fixed">
+            <thead>
+                <th className="col-1">
+                    <label for="inputTitle">Title</label>
+                </th>
+                <th className="col-3">
+                    <label for="exampleInputDescription">Description</label>
+                </th>
+                <th className="col-1">
+                    <label for="">Start Date</label>
+                </th>
+                <th className="col-1">
+                    <label for="">FinishDate</label>
+                </th>
+                <th className="col-1">
+                    <label for="priority">Priority</label>
+                </th>
+                <th className="col-1">
                     <label for="state">State</label><br />
-                    <select class="form-control form-control-sm" onChange={this.onStateChanged} id="state" placeholder="task state">
-                        {stateTable.map((item) => <option>{item.name}</option>)}
-                    </select>
-                </div>
-                <div className="col-1">
-                    <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label><br />
-                    <button type="submit" onClick={this.onSetFilter} class="btn btn-sm btn-outline-info"> Filter </button>
-                </div>
-                <br/>
-            </div>
-        </div>;
+                </th>
+                <th className="col-1">{/* For button Edit   */}</th>
+                <th className="col-1">{/* For button Delete */}</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="inputTitle" aria-describedby="emailHelp" placeholder="Search" autocomplete="off" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder="Search" autocomplete="off" />
+                        </div>
+                    </td>
+                    <td>
+                        <div className="form-group">
+                            <DatePicker
+                                selected={this.state.startDate}
+                                onChange={this.onStartDateChange}
+                                dateFormat="MMMM d"
+                                timeCaption="time"
+                                className="datePickerStyle btn btn-sm btn-outline-secondary"
+                            />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <div className="form-group">
+                                <DatePicker
+                                    selected={this.state.finishDate}
+                                    onChange={this.onFinishDateChange}
+                                    dateFormat="MMMM d"
+                                    timeCaption="time"
+                                    className="datePickerStyle btn btn-sm btn-outline-secondary"
+                                />
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select class="form-control form-control-sm" onChange={this.onPriorityChanged} id="priority" placeholder="task priority">
+                                <option>All</option>
+                                {this.props.priorities.map((item) => <option>{item.name}</option>)}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select class="form-control form-control-sm" onChange={this.onStateChanged} id="state" placeholder="task state">
+                                <option>All</option>
+                                {this.props.states.map((item) => <option>{item.name}</option>)}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" onClick={this.onSetFilter} class="btn btn-sm btn-outline-info button-fixed"> Filter </button>
+                    </td>
+                    <td>
+                        <button type="submit" onClick={this.onCancelFilter} class="btn btn-sm btn-outline-info button-fixed"> Cancel </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>;
     }
 }

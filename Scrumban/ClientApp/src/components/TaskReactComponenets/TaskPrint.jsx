@@ -11,7 +11,7 @@ export class TaskPrint extends React.Component {
     render() {
         return (
             <tr>
-                <td className="w-25">{this.props.item.name}           </td>
+                <td>{this.props.item.name}           </td>
                 <td>{this.props.item.description}    </td>
                 <td>
                     <DatePicker

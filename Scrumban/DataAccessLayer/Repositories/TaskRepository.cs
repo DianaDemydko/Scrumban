@@ -3,10 +3,11 @@ using System.Linq;
 using Scrumban.DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer.Models;
+using System.Collections.Generic;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
-    public class TaskRepository :BaseRepository<TaskDAL>, ITaskRepository
+    public class TaskRepository : BaseRepository<TaskDAL>, ITaskRepository
     {
 
         public TaskRepository(ScrumbanContext context) : base(context)
@@ -94,6 +95,16 @@ namespace Scrumban.DataAccessLayer.Repositories
         public override IQueryable<TaskDAL> GetAll()
         {
             return _dbContext.Tasks.Include(x => x.TaskState).Include(x => x.Priority);
+        }
+
+        public IEnumerable<TaskStateDAL> GetAllStates()
+        {
+            return _dbContext.TaskStates;
+        }
+
+        public IEnumerable<PriorityDAL> GetAllPriorities()
+        {
+            return _dbContext.Priorities;
         }
     }
 }

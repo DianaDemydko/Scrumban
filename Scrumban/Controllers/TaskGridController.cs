@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Scrumban.Controllers
 {
@@ -26,21 +28,6 @@ namespace Scrumban.Controllers
             return tasks;
         }
 
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
-
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
-        }
-
         [HttpPost]
         [Route("/api/[controller]/addTask")]
         public IActionResult Add([FromBody]TaskDTO taskDTO)
@@ -58,12 +45,29 @@ namespace Scrumban.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Route("/api/[controller]/deleteTask")]
+        [Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int? id)
         {
             TaskDTO taskDTO = _taskServise.GetTask(id);
             _taskServise.DeleteTask(id);
             return Ok(taskDTO);
+        }
+
+        // get additional const tables: states, priorities
+        [HttpGet]
+        [Route("/api/[controller]/getStates")]
+        public IEnumerable<TaskStateDTO> GetStates()
+        {
+            var states = _taskServise.GetStates();
+            return states;
+        }
+
+        [HttpGet]
+        [Route("/api/[controller]/getPriorities")]
+        public IEnumerable<PriorityDTO> GetPriorities()
+        {
+            var priorities = _taskServise.GetPriorities();
+            return priorities;
         }
     }
 }

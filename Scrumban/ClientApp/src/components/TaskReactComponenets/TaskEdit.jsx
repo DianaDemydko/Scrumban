@@ -6,8 +6,8 @@ const data = require('../../GlobalData.json'); // json file with stable tables (
 const updateTaskUrl = "/api/TaskGrid/editTask";
 
 // consts of stable tables
-const priorityTable = data.priority;
-const stateTable = data.taskState;
+//const priorityTable = data.priority;
+//const stateTable = data.taskState;
 
 export class TaskEdit extends React.Component {
 
@@ -60,14 +60,14 @@ export class TaskEdit extends React.Component {
     onPriorityChanged(e) {
         this.setState({
             priorityName: e.target.value,
-            priorityId: priorityTable.find(x => x.name === e.target.value).id
+            priorityId: this.props.priorities.find(x => x.name === e.target.value).id
         });
     }
 
     onStateChanged(e) {
         this.setState({
             taskStateName: e.target.value,
-            taskStateId: stateTable.find(x => x.name === e.target.value).id
+            taskStateId: this.props.states.find(x => x.name === e.target.value).id
         });
     }
 
@@ -126,77 +126,67 @@ export class TaskEdit extends React.Component {
     }
 
     render() {
-        return <tr className="current-row">
+        return <tr>
             <td colSpan="4">
-            <form>
-                <div className="form-group ">
-                    <div className="col-md-7">
+                <div className="form-group col-12">
+                    <div>
                         <label for="name">Name</label>
-                            <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name}/>
+                        <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name}/>
 
                     </div>
                 </div>
-                <div className="form-group">
-                    <div className="col-md-7">
+                <div className="form-group col-12">
+                    <div>
                         <label for="description">Description</label>
-                            <textarea rows="3" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="description" placeholder="task description" defaultValue={this.props.item.description}/>
+                        <textarea rows="3" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="description" placeholder="task description" defaultValue={this.props.item.description}/>
+                    </div>
+                </div>
+                <div className="form-group col-4">
+                    <div>
+                        <label for="startDate">Start Date</label><br />
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.onStartDateChange}
+                            dateFormat="MMMM d, yyyy"
+                            timeCaption="time"
+                            id="startDate"
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        />
+                    </div>
+                </div>
+                <div className="form-group col-4">
+                    <div >
+                        <label for="finishDate">Finish Date</label><br />
+                        <DatePicker
+                            selected={this.state.finishDate}
+                            onChange={this.onFinishDateChange}
+                            dateFormat="MMMM d, yyyy"
+                            timeCaption="time"
+                            id="finishDate"
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        />
                     </div>
                 </div>
                 <div className="form-group">
-                    <div className="col-md-7">
-                        <label for="description">Start Date</label>
-                            <DatePicker
-                                selected={this.state.startDate}
-                                onChange={this.onStartDateChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                dateFormat="MMMM d, yyyy h:mm aa"
-                                timeCaption="time"
-                                className="datePickerStyle btn btn-sm btn-outline-secondary"
-                            />
-                    </div>
-                </div>
-                <div className="form-group">
-                    <div className="col-md-7">
-                        <label for="description">Finish Date</label>
-                            <DatePicker
-                                selected={this.state.finishDate}
-                                onChange={this.onFinishDateChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                dateFormat="MMMM d, yyyy h:mm aa"
-                                timeCaption="time"
-                                className="datePickerStyle btn btn-sm btn-outline-secondary"
-                            />
-
-                    </div>
-                </div>
-                <div className="form-group">
-                    <div className="col-md-7">
+                    <div className="col-4">
                         <label for="priorityName">Priority</label>
-                            <select class="form-control form-control-sm" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
-
-                            {priorityTable.map((item) => <option>{item.name}</option> )}
+                        <select class="form-control form-control-sm" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
+                            {this.props.priorities.map((item) => <option>{item.name}</option> )}
                         </select>
                     </div>
                 </div>
                 <div className="form-group">
-                    <div className="col-md-7">
+                    <div className="col-4">
                         <label for="taskStateName">State</label>
-                            <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
-
-                            {stateTable.map((item) => <option>{item.name}</option>)}
+                        <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
+                            {this.props.states.map((item) => <option>{item.name}</option>)}
                         </select>
                     </div>
                 </div>
-            </form>
-            </td>
-            <td>
-                <button type="submit" onClick={this.onSubmit} className="btn btn-outline-danger button-fixed">Save</button>
-
-                <button type="submit" onClick={this.props.edit} className="btn btn-danger button-fixed">Cancel</button>
+                <div className="col-12">
+                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-info button-fixed">Save</button>
+                    <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-info button-fixed">Cancel</button>
+                </div>
             </td>
         </tr>;
     }

@@ -1,4 +1,5 @@
 ﻿using Scrumban.ServiceLayer.DTO;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Scrumban.ServiceLayer.Interfaces
@@ -11,5 +12,7 @@ namespace Scrumban.ServiceLayer.Interfaces
         void DeleteTask(int? id);
         void UpdateTask(TaskDTO taskDTO);
 
+        IEnumerable<TaskStateDTO> GetStates();
+        IEnumerable<PriorityDTO> GetPriorities();
     }
 }

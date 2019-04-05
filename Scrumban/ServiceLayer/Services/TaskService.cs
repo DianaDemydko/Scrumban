@@ -108,5 +108,20 @@ namespace Scrumban.BusinessLogicLayer
             _unitOfWork.Save();
         }
 
+        public IEnumerable<TaskStateDTO> GetStates()
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<TaskStateDAL, TaskStateDTO>();
+            }).CreateMapper();
+            return mapper.Map<IEnumerable<TaskStateDAL>, IEnumerable<TaskStateDTO>>(_unitOfWork.Tasks.GetAllStates());
+        }
+
+        public IEnumerable<PriorityDTO> GetPriorities()
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<PriorityDAL, PriorityDTO>();
+            }).CreateMapper();
+            return mapper.Map<IEnumerable<PriorityDAL>, IEnumerable<PriorityDTO>>(_unitOfWork.Tasks.GetAllPriorities());
+        }
     }
 }

@@ -28,8 +28,6 @@ namespace Scrumban
       
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
@@ -54,7 +52,6 @@ namespace Scrumban
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
-
         }
 
        

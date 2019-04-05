@@ -44,19 +44,18 @@ namespace Scrumban.ServiceLayer.Sevices
                 if (entity != null)
                 {
 
-                    user.UserID = entity.UserID;
+                    user.Id = entity.Id;
                     user.FirstName = entity.FirstName;
                     user.Surname = entity.Surname;
                     user.Email = entity.Email;
                     user.Password = entity.Password;
-                    user.RoleID = entity.RoleID;
-                    user.PictureID = entity.PictureID;
+                    user.RoleId = entity.RoleId;
+                    user.PictureId = entity.PictureId;
                 }
-                    
-                    _unitOfWork.UserRepository.Create(user);
-                    _unitOfWork.Save();
-                    return 1;
                 
+                _unitOfWork.UserRepository.Create(user);
+                _unitOfWork.Save();
+                return 1;
             }
             catch
             {
@@ -72,13 +71,13 @@ namespace Scrumban.ServiceLayer.Sevices
                 if (entity != null)
                 {
 
-                    user.UserID = entity.UserID;
+                    user.Id = entity.Id;
                     user.FirstName = entity.FirstName;
                     user.Surname = entity.Surname;
                     user.Email = entity.Email;
                     user.Password = entity.Password;
-                    user.RoleID = entity.RoleID;
-                    user.PictureID = entity.PictureID;
+                    user.RoleId = entity.RoleId;
+                    user.PictureId = entity.PictureId;
                 }
                 _unitOfWork.UserRepository.Update(user);
                 _unitOfWork.Save();
@@ -97,13 +96,13 @@ namespace Scrumban.ServiceLayer.Sevices
                 UsersDAL user = _unitOfWork.UserRepository.GetByID(id);
                 UserDTO userDTO = new UserDTO
                 {
-                    UserID = user.UserID,
+                    Id = user.Id,
                     FirstName = user.FirstName,
                     Surname = user.Surname,
                     Email = user.Email,
                     Password = user.Password,
-                    RoleID = user.RoleID,
-                    PictureID = user.PictureID
+                    RoleId = user.RoleId,
+                    PictureId = user.PictureId
                 };
                 
                 return userDTO;
@@ -147,13 +146,13 @@ namespace Scrumban.ServiceLayer.Sevices
                 UsersDAL user = _unitOfWork.UserRepository.GetUserAccount(email, password);
                 UserDTO userDTO = new UserDTO
                 {
-                    UserID = user.UserID,
+                    Id = user.Id,
                     FirstName = user.FirstName,
                     Surname = user.Surname,
                     Email = user.Email,
                     Password = user.Password,
-                    RoleID = user.RoleID,
-                    PictureID = user.PictureID
+                    RoleId = user.RoleId,
+                    PictureId = user.PictureId
                 };
 
                 return userDTO;
@@ -162,7 +161,6 @@ namespace Scrumban.ServiceLayer.Sevices
             {
                 throw;
             }
-
         }
     }
 }
