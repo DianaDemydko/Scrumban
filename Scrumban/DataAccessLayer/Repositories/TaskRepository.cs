@@ -4,6 +4,7 @@ using Scrumban.DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -62,7 +63,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override TaskDAL GetByID(int id)
         {
-            return _dbContext.Tasks.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Tasks.Include(x => x.Priority).Include( x => x.TaskState).FirstOrDefault(x => x.Id == id);
         }
 
         public override void Update(TaskDAL item)

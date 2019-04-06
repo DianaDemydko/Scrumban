@@ -29,7 +29,7 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<RoleDAL>().HasData(
                 new RoleDAL[]
                 {
-                    new RoleDAL{ Id = 1, Name = "Team Memeber" },
+                    new RoleDAL{ Id = 1, Name = "Team Member" },
                     new RoleDAL{ Id = 2, Name = "Scrum Master" },
                     new RoleDAL{ Id = 3, Name = "Product Owner" },
                     new RoleDAL{ Id = 4, Name = "Tester" }
@@ -103,7 +103,7 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<StoryStateDAL>().HasData(
                 new StoryStateDAL[]
                 {
-                    new StoryStateDAL{Id=1,Name = "Non Started"},
+                    new StoryStateDAL{Id=1,Name ="Non Started"},
                     new StoryStateDAL{Id=2,Name="In Progress"},
                     new StoryStateDAL{Id=3,Name="Rejected"},
                     new StoryStateDAL{Id=4,Name="In Complete"},

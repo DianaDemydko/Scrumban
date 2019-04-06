@@ -2,6 +2,7 @@
 using Scrumban.DataAccessLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -58,7 +59,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                 bool checkAvailability = CheckAvailability(email, password);
                 if (checkAvailability)
                 {
-                    UsersDAL user = _dbContext.Users.First(user_item => user_item.Email == email);
+                    UsersDAL user = _dbContext.Users.Include(x => x.Role).First(user_item => user_item.Email == email);
                     return user;
                 }
                 else return null;

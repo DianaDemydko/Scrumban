@@ -5,10 +5,11 @@ using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Scrumban.Controllers
 {
-    
+
     [Route("api/[controller]")]
     public class TaskGridController : Controller
     {
@@ -19,6 +20,10 @@ namespace Scrumban.Controllers
             _taskServise = taskService;
         }
 
+        //"Team Member"
+        //"Scrum Master"
+        //"Product Owner"
+        //"Tester"
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getTasks")]
@@ -29,6 +34,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("/api/[controller]/addTask")]
         public IActionResult Add([FromBody]TaskDTO taskDTO)
         {
@@ -36,6 +42,7 @@ namespace Scrumban.Controllers
             return Ok(taskDTO);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("/api/[controller]/editTask")]
         public IActionResult Edit([FromBody]TaskDTO taskDTO)
@@ -45,6 +52,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         [Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int? id)
         {

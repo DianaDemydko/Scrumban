@@ -3,9 +3,9 @@ using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
 using System.Collections.Generic;
 using AutoMapper;
-using Scrumban.ServiceLayer.Entities.DTO;
 using Scrumban.DataAccessLayer.Models;
 using Scrumban.ServiceLayer.Interfaces;
+using Scrumban.ServiceLayer.DTO;
 
 namespace Scrumban.ServiceLayer.Sevices
 {
@@ -152,6 +152,11 @@ namespace Scrumban.ServiceLayer.Sevices
                     Email = user.Email,
                     Password = user.Password,
                     RoleId = user.RoleId,
+                    Role = new RoleDTO
+                    {
+                        Id = user.Role.Id,
+                        Name = user.Role.Name
+                    },
                     PictureId = user.PictureId
                 };
 

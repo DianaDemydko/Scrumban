@@ -59,31 +59,47 @@ export class Login extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        if (this.handleValidation()) {
-            fetch('api/users/Check', {
-                method: 'post',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
+        //if (this.handleValidation()) {
+        if (true) {
+            //fetch('api/users/Check', {
+            //    method: 'post',
+            //    headers: { "Content-Type": "application/json" },
+            //    body: JSON.stringify({
+            //        email: this.state.email,
+            //        password: this.state.password
 
-                })
-            }).then((resp) => resp.json())
-                .then(data => {
-                    this.setState({ isAuth: data });
-                })
+            //    })
+            //}).then((resp) => resp.json())
+            //    .then(data => {
+            //        this.setState({ isAuth: data });
+            //    })
 
-            fetch('api/users/GetUserAccount', {
-                method: 'post',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                })
-            }).then((resp) => resp.json()).then(data => { this.setState({ user: data }) });
+            //fetch('api/users/GetUserAccount', {
+            //    method: 'post',
+            //    headers: { "Content-Type": "application/json" },
+            //    body: JSON.stringify({
+            //        email: this.state.email,
+            //        password: this.state.password
+            //    })
+            //}).then((resp) => resp.json()).then(data => { this.setState({ user: data }) });
 
-            this.props.parentOnLoginStatusCallBack(true, this.state.user);
+            //this.props.parentOnLoginStatusCallBack(true, this.state.user);
             //window.location.replace("/Sprints");
+
+            fetch('api/users/token', {
+                method: 'post',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    grant_type: 'password',
+                    login: this.state.email,
+                    password: this.state.password
+                })
+            }).then((response) => response.json())
+                .then((response) => {
+                    sessionStorage.setItem("tokenKey", response.access_token)
+                    alert(sessionStorage.getItem("tokenKey"))
+                    window.history.back()
+                });
         }
         else {
 

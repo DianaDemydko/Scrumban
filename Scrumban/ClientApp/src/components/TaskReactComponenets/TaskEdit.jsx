@@ -81,21 +81,42 @@ export class TaskEdit extends React.Component {
                 "finishDate": task.finishDate,
 
                 "priorityId": task.priorityId,
+                "priority": task.priority,
+
                 "taskStateId": task.taskStateId,
+                "taskState": task.taskState,
 
                 "programmerId": null,
                 "storyId": null
             });
-            var xhr = new XMLHttpRequest();
 
-            xhr.open("post", updateTaskUrl, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status == 200) {
-
-                }
-            }.bind(this);
-            xhr.send(data);
+            fetch(updateTaskUrl, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+                },
+                body: data
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    }
+                    else if (response.status == 401) {
+                        var answer = window.confirm("You are not authorized. Move to Login page ?");
+                        if (answer == true) {
+                            window.location.replace("/login");
+                        }
+                    }
+                    else {
+                        alert("ERROR! Status code: " + response.status)
+                    }
+                })
+                .then(data => {
+                    if (data != null) {
+                        this.props.changed(data)
+                    }
+                })
         }
     }
 
@@ -122,7 +143,6 @@ export class TaskEdit extends React.Component {
         };
         this.onUpdate(task);
         this.props.edit();
-        this.props.changed(task);
     }
 
     render() {

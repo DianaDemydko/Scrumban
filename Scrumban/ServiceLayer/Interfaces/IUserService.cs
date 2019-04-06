@@ -1,4 +1,4 @@
-﻿using Scrumban.ServiceLayer.Entities.DTO;
+﻿using Scrumban.ServiceLayer.DTO;
 using System.Collections.Generic;
 
 namespace Scrumban.ServiceLayer.Interfaces

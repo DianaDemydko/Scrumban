@@ -46,8 +46,24 @@ export class TaskGrid extends React.Component {
 
     // Load data
     loadData(filter) {
-        fetch(apiUrlGet + filter)
-            .then(response => response.json())
+        fetch(apiUrlGet + filter, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function(response){
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    alert("Not Authorized")
+                    window.location.replace("/login");
+                }
+                else {
+                    alert(response.status + "Get tasks error")
+                }
+            })
             .then(data => {
                 this.setState({
                     tasks: data,
@@ -165,7 +181,7 @@ export class TaskGrid extends React.Component {
             <div className=" p-1">
 
                 {/* render filter form */}
-                <TaskFilter changeFilter={this.startFiltration} states={this.state.states} priorities={this.state.priorities}/>
+                <TaskFilter changeFilter={this.startFiltration} states={this.state.states} priorities={this.state.priorities} />
                 <br />
                 <br />
 
@@ -199,7 +215,7 @@ export class TaskGrid extends React.Component {
                         <th className="col-1">{/* For button Edit   */}</th>
                         <th className="col-1">{/* For button Delete */}</th>
                     </thead>
-                    {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} states={states} priorities={priorities}/> })}
+                    {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} states={states} priorities={priorities} /> })}
                 </table>
                 <div>
                     <Link to='/addTask'><button className="btn btn-sm btn-outline-info button-fixed">Add</button></Link>

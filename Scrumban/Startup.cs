@@ -13,6 +13,7 @@ using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Scrumban
 {
@@ -31,6 +32,25 @@ namespace Scrumban
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = AuthOptions.ISSUER,
+
+                        ValidateAudience = true,
+                        ValidAudience = AuthOptions.AUDIENCE,
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true
+                    };
+                }
+            );
 
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -70,10 +90,14 @@ namespace Scrumban
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseAuthentication();
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.Filter().OrderBy().Count().Expand().Select();
             });
+
+            
 
             app.UseMvc(routes =>
             {

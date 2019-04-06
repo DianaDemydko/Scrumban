@@ -11,13 +11,17 @@ namespace Scrumban.DataAccessLayer.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public string Email { get; set; }
-        public string Token { get; set; }
 
-        public int RoleId { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
 
-        public int PictureId { get; set; }
+        public string Token { get; set; }
 
+        public int RoleId { get; set; } = 1;
+        public RoleDAL Role { get; set; }
+        
+        public int? PictureId { get; set; }
     }
 }
