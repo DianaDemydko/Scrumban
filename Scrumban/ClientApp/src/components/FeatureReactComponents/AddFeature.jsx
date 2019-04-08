@@ -1,24 +1,22 @@
-﻿
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
+import '../../GridStyles/StyleForGrid.css';
 
 export class AddFeature extends React.Component {
-
-
     constructor(props) {
         super(props);
         this.state = {
             name: 'Default Name',
             description: 'Default Description',
             priority: 1,
-            date: new Date(),
+            start: new Date(),
 
         };
         this.handleClick = this.handleClick.bind(this);
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescrioptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
-        this.onDateChanged = this.onDateChanged.bind(this);
+        this.onStartDateChanged = this.onStartDateChanged.bind(this);
     }
 
     handleClick(e) {
@@ -27,7 +25,7 @@ export class AddFeature extends React.Component {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 name: this.state.name, description: this.state.description,
-                priority: this.state.priority, time: this.state.date
+                priority: this.state.priority, time: this.state.start
             })
         });
         window.location = "/feature";
@@ -41,18 +39,19 @@ export class AddFeature extends React.Component {
     onPriorityChanged(e) {
         this.setState({ priority: e.target.value });
     }
-    onDateChanged(newDate) {
-        this.setState({ date: newDate });
+    onStartDateChanged(newDate) {
+        this.setState({ start: newDate });
     }
+   
 
     render() {
         return (
-            <div >
+            <div className= "componentBackground" >
                 <label> Name: </label>
-                <input type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
+                <input className="input" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
                 <div />
                 <label> Description: </label>
-                <input type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
+                <input className = "input" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
                 <div />
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name ="owners">Ownres</button>*/}
                 <div />
@@ -66,9 +65,10 @@ export class AddFeature extends React.Component {
                 </select>
                 <div />
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name = "state">States</button>*/}
-                <label >Statrt Date</label>
-                <DatePicker selected={this.state.date} onChange={this.onDateChanged} dateFormat="yyyy/MM/dd" />
+                <label >Start Date</label>
+                <DatePicker selected={this.state.start} onChange={this.onStartDateChanged} dateFormat="yyyy/MM/dd" />
                 <div />
+                
                 <button class="btn btn-dark" onClick={this.handleClick} > Submit </button>
 
 

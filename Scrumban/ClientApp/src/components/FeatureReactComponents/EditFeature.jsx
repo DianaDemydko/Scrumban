@@ -57,17 +57,19 @@ export class EditFeature extends Component {
 
         return <tr>
             <td>
-                <form>
+               
                     <div>
                         <label for="name">Name</label>
                         <input type="text" class="form-control" onChange={e => this.onNameChanged(e)} defaultValue={this.props.featuretoEdit.name} />
                     </div>
-
+            </td>
+                <td>
                     <div>
                         <label for="description">Description</label>
                         <input type="text" class="form-control" onChange={e => this.onDescriptionChanged(e)} defaultValue={this.props.featuretoEdit.description} />
                     </div>
-
+                </td>
+                    <td>
                     <div>
                         <label for="priority">Priority</label>
                         <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onPriorityChanged(e)} value={this.props.featuretoEdit.priority} >
@@ -77,18 +79,22 @@ export class EditFeature extends Component {
                             <option>4</option>
                             <option>5</option>
                         </select>
-                    </div>
+                        </div>
+                    </td>
+                        <td>
                     <div>
                         <label for='date'> Start Date</label>
                         <DatePicker todayButton={"Today"} selected={this.state.date} onChange={this.onDateChange} dateFormat="yyyy/MM/dd" />
 
                     </div>
-                </form>
+               
             </td>
+            <td/>
             <td>
+
                 <button type="submit" onClick={this.onSubmit} class="btn btn-dark">Save</button>
                 <button type="submit" onClick={this.onCancel} class="btn btn-dark">Cancel</button>
-            </td>
+</td>
         </tr>;
 
     }
