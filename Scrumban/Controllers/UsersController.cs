@@ -37,16 +37,16 @@ namespace Scrumban.Controllers
         [HttpPost("/api/[controller]/token")]
         public IActionResult Token([FromBody]LoginDTO login)
         {
-            var identity = GetIdentity(login.Login, login.Password);
-            if (identity == null)
+            UserDTO userDTO = _userService.GetUserAccount(login.Login, login.Password);
+            if (userDTO == null)
             {
                 Response.StatusCode = 400;
                 //await Response.WriteAsync("Invalid username & password");
                 return StatusCode(401);
             }
 
+            var identity = GetIdentity(userDTO);
             var now = DateTime.Now;
-
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,
                     audience: AuthOptions.AUDIENCE,
@@ -57,19 +57,18 @@ namespace Scrumban.Controllers
                 );
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            
+
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                user = userDTO
             };
 
             return Ok(response);
         }
 
-        private ClaimsIdentity GetIdentity(string email, string password)
+        private ClaimsIdentity GetIdentity(UserDTO user)
         {
-            UserDTO user = _userService.GetUserAccount(email, password);
             if(user != null)
             {
                 var claims = new List<Claim>
@@ -174,9 +173,9 @@ namespace Scrumban.Controllers
         }
         [HttpPost]
         [Route("GetUserAccount")]
-        public UserDTO GetUseAccount([FromBody]UserDTO user)
+        public UserDTO GetUseAccount([FromBody]LoginDTO user)
         {
-            return _userService.GetUserAccount(user.Email, user.Password);
+            return _userService.GetUserAccount(user.Login, user.Password);
         }
     }
 }

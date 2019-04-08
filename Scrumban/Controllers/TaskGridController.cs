@@ -42,8 +42,9 @@ namespace Scrumban.Controllers
             return Ok(taskDTO);
         }
 
-        [Authorize]
+        
         [HttpPost]
+        [Authorize]
         [Route("/api/[controller]/editTask")]
         public IActionResult Edit([FromBody]TaskDTO taskDTO)
         {

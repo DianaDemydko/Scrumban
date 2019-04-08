@@ -150,17 +150,31 @@ export class TaskGrid extends React.Component {
     }
 
     onRemoveTask(id) {
-        var url = apiUrlDelete + "/" + id;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("delete", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onload = function () {
-            if (xhr.status == 200) {
-                this.loadData(this.state.filter);
+        var url = apiUrlDelete + "/" + id
+        fetch(url, {
+            method: "delete",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
             }
-        }.bind(this);
-        xhr.send();
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    this.loadData(this.state.filter.toString());
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?")
+                    if (answer == true) {
+                        window.location.replace("/login");
+                    }
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            }.bind(this))
     }
 
     startFiltration(filtParam) {

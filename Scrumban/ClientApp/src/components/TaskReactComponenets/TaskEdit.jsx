@@ -108,6 +108,9 @@ export class TaskEdit extends React.Component {
                             window.location.replace("/login");
                         }
                     }
+                    else if (response.status == 403) {
+                        alert("ERROR! You have not permission !")
+                    }
                     else {
                         alert("ERROR! Status code: " + response.status)
                     }

@@ -85,7 +85,7 @@ export class Login extends React.Component {
 
             //this.props.parentOnLoginStatusCallBack(true, this.state.user);
             //window.location.replace("/Sprints");
-
+            
             fetch('api/users/token', {
                 method: 'post',
                 headers: { "Content-Type": "application/json" },
@@ -94,51 +94,65 @@ export class Login extends React.Component {
                     login: this.state.email,
                     password: this.state.password
                 })
-            }).then((response) => response.json())
-                .then((response) => {
-                    sessionStorage.setItem("tokenKey", response.access_token)
-                    alert(sessionStorage.getItem("tokenKey"))
-                    window.history.back()
+            }).then(function (response) {
+                if (response.status == 200) {
+                    return response.json();
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status + "\nAuthorization failed. Invalid email or password:-(")
+                    return "error"
+                }
+                }).then((data) => {
+                    sessionStorage.setItem("tokenKey", data.access_token);
+                    alert(data.access_token)
+                    this.setState({ isAuth: true, user: data.user });
+                    this.props.parentOnLoginStatusCallBack(true, data.user, "tasks");
                 });
+
+            //this.props.parentOnLoginStatusCallBack(true, us, "tasks");
+            //this.props.moveToComponent2("tasks");
         }
         else {
-
-            alert("Authorization failed. Invalid email or password:-(")
+            //alert("ERROR! Status code: ")
         }
     }
 
     render() {
+
+        var user = "__";
+        if (this.state.user != null) {
+            user += this.state.user.firstName
+        }
         return (
             <div className="Login">
-                
-                      
-                        <FormGroup controlId="email" bsSize="large">
-                            <ControlLabel>Email</ControlLabel>
-                            <FormControl
-                                autoFocus
-                                type="email"
-                                value={this.state.email}
-                                onChange={this.emailChanged}
-                            />
-                        </FormGroup>
-                        <FormGroup controlId="password" bsSize="large">
-                            <ControlLabel>Password</ControlLabel>
-                            <FormControl
-                                value={this.state.password}
-                                onChange={this.passwordChanged}
-                                type="password"
-                            />
-                        </FormGroup>
-                        <Button
-                            block
-                            bsSize="large"
-                            disabled={!this.validateForm()}
-                            type="button"
-                            onClick={this.handleSubmit}
-                            className="btn btn-primary"
-                         >
-                            Login
-                        </Button>
+                <div>{user}</div>
+                <FormGroup controlId="email" bsSize="large">
+                    <ControlLabel>Email</ControlLabel>
+                    <FormControl
+                        autoFocus
+                        type="email"
+                        value={this.state.email}
+                        onChange={this.emailChanged}
+                    />
+                </FormGroup>
+                <FormGroup controlId="password" bsSize="large">
+                    <ControlLabel>Password</ControlLabel>
+                    <FormControl
+                        value={this.state.password}
+                        onChange={this.passwordChanged}
+                        type="password"
+                    />
+                </FormGroup>
+                <Button
+                    block
+                    bsSize="large"
+                    disabled={!this.validateForm()}
+                    type="button"
+                    onClick={this.handleSubmit}
+                    className="btn btn-primary"
+                 >
+                    Login
+                </Button>
             </div>
         );
     }
