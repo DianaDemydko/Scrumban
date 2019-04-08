@@ -8,6 +8,7 @@
     "odata-query": "^5.6.0",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
+    "react-burger-menu": "^2.6.8",
     "react-datepicker": "^2.3.0",
     "react-dom": "^16.0.0",
     "react-moment": "^0.8.4",

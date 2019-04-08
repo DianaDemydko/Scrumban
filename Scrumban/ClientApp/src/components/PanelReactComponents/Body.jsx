@@ -8,6 +8,9 @@ import { Register } from './Register';
 import { About } from './About';
 //import { Logout } from './Logout';
 
+import { SideBar } from "./SideBar";
+import './SideBar.css';
+
 export class Body extends React.Component {
     constructor(props) {
         super(props);
@@ -33,14 +36,13 @@ export class Body extends React.Component {
 
         return (<Grid fluid>
             <Row>
-                <Col sm={3}>
-                    <Menu />
-                </Col>
-                <Col sm={9}>
+                 <Col>
+                        <SideBar />
+                    </Col>
+                
+                <Col sm={10}>
                     {renderedComponent}
                     
-                    
-                   
                 </Col>
             </Row>
         </Grid>

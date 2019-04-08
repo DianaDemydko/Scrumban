@@ -3,6 +3,7 @@ import './Panel.css';
 
 
 
+
 export class Panel extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +38,8 @@ export class Panel extends React.Component {
  
         return (
             <div>
-                    <ul className="panelUl">
+                <ul className="panelUl">
+
                     <li className="panelLi">
                         {this.state.loginStatus ?
                             (<button className="panelBtn" onClick={() => this.onLogOut()}>Log Out</button>)
