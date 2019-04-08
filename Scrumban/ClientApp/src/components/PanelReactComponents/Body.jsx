@@ -7,7 +7,6 @@ import { Col, Grid, Row } from 'react-bootstrap';
 import { Login } from './Login';
 import { Register } from './Register';
 import { About } from './About';
-
 import { TaskGrid } from '../TaskReactComponenets/TaskGrid';
 //import { Logout } from './Logout';
 
@@ -70,9 +69,10 @@ export class Body extends React.Component {
 
         return (<Grid fluid>
             <Row>
-                <Col>
+                <Col>  
                     <SideBar moveToComponent={this.props.moveToComponent} />
                 </Col>
+                
                 <Col sm={10}>
                     {renderedComponent}
                 </Col>
