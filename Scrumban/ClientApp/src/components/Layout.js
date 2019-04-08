@@ -5,47 +5,67 @@ import { Panel } from './PanelReactComponents/Panel'
 import { Body } from './PanelReactComponents/Body'
 
 
-
 export class Layout extends Component {
     displayName = Layout.name
 
     constructor(props) {
         super(props);
 
-        this.state = {            
-            panelSatus: "",
+        this.state = {
+            renderedComponentName: "", // name of current active component
             panelLoginStatus: false,
             user: null,
             childRefresh: true
         }
-        this.onLogIn = this.onLogIn.bind(this);
+        this.setRenderedComponentName = this.setRenderedComponentName.bind(this);
         this.onLoginStatusCallBack = this.onLoginStatusCallBack.bind(this);
     }
 
-    onLogIn(childrenPanelStatus) {
-        this.setState({ panelSatus: childrenPanelStatus })
+    setRenderedComponentName(renderedComponent) {   // set name of rendered component in Content
+        this.setState({ renderedComponentName: renderedComponent })
     }
 
-    onLoginStatusCallBack(loginOrlogout, userCallBack) {
-        this.setState({ panelLoginStatus: loginOrlogout, user: userCallBack, childRefresh: !this.state.childRefresh })
+    onLoginStatusCallBack(loginOrlogout, currentUser, componentName) {
+        this.setState({
+            panelLoginStatus: loginOrlogout,
+            user: currentUser,
+            childRefresh: !this.state.childRefresh,
+            renderedComponentName: componentName
+        })
     }
 
     render() {
-        var param = "Hell"
+        var user = "layout_user:  "
+        var renderedComponentName = "layout_renderedComponentName:     ";
+        var panelLoginStatus = "layout_loginStatus:     ";
+
         if (this.state.user != null) {
-            param = this.state.user;
+            user += this.state.user.firstName
         }
-    return (
+        if (this.state.renderedComponentName != null) {
+            renderedComponentName += this.state.renderedComponentName.toString()
+        }
+        if (this.state.panelLoginStatus != null) {
+            panelLoginStatus += this.state.panelLoginStatus.toString()
+        }
 
-        <div>
-            <span>
-                <Panel key={this.state.childRefresh} login={this.onLogIn} loginStatusCallBack={this.state.panelLoginStatus} currentUser={this.state.user} />
-            </span>
+        //<div>{renderedComponentName}</div>
+        //    <div>{panelLoginStatus}</div>
+        //    <div>{panelLoginStatus}</div>
+        //    <div>{user}</div>
 
-            <Body children={this.props.children} panelStatus={this.state.panelSatus} parentOnLoginStatusCallBack={this.onLoginStatusCallBack} /> 
+        return (
+            <div>
 
-        </div>
 
-    );
-  }
+                <span>
+                    <Panel key={this.state.childRefresh} moveToComponent={this.setRenderedComponentName} loginStatusCallBack={this.state.panelLoginStatus} currentUser={this.state.user} />
+                </span>
+
+                <Body children={this.props.children} renderedComponentName={this.state.renderedComponentName} moveToComponent={this.setRenderedComponentName} parentOnLoginStatusCallBack={this.onLoginStatusCallBack} />
+
+            </div>
+
+        );
+    }
 }

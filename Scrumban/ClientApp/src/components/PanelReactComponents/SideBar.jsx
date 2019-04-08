@@ -4,35 +4,28 @@ import { slide as Menu } from "react-burger-menu";
 export class SideBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            sideStatus: ""
-        }
-        this.onSideAction = this.onSideAction.bind(this);
     }
-    onSideAction(param) {
-        this.setState({ sideStatus: param });
-        //this.props.login(this.state.sideStatus);
-    }
+    
 
     render() {
         return (
             <Menu>
-                <a className="menu-item" onClick={() => this.onSideAction("home")}>
+                <a className="menu-item" onClick={() => this.props.moveToComponent("home")}>
                     Home
                 </a>
-                <a className="menu-item" href="/Sprints">
+                <a className="menu-item" onClick={() => this.props.moveToComponent("sprints")}>
                     Sprints
                 </a>
-                <a className="menu-item" href="/feature">
+                <a className="menu-item" onClick={() => this.props.moveToComponent("feature")}>
                     Features
                 </a>
-                <a className="menu-item" href="/stories">
+                <a className="menu-item" onClick={() => this.props.moveToComponent("stories")}>
                     Stories
                 </a>
-                <a className="menu-item" href="/tasks">
+                <a className="menu-item" onClick={() => this.props.moveToComponent("tasks")}>
                     Tasks
                 </a>
-                <a className="menu-item" href="/defects">
+                <a className="menu-item" onClick={() => this.props.moveToComponent("defects")}>
                     Defects
                 </a>
             </Menu>

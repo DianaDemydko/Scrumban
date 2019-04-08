@@ -1,5 +1,4 @@
-﻿
-import React, { Component } from "react";
+﻿import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { Route } from 'react-router';
@@ -10,7 +9,7 @@ export class Login extends React.Component {
 
         this.state = {
             email: "",
-            
+
             password: "",
             isAuth: false,
             user: null,
@@ -59,70 +58,100 @@ export class Login extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        if (this.handleValidation()) {
-            fetch('api/users/Check', {
-                method: 'post',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
+        //if (this.handleValidation()) {
+        if (true) {
+            //fetch('api/users/Check', {
+            //    method: 'post',
+            //    headers: { "Content-Type": "application/json" },
+            //    body: JSON.stringify({
+            //        email: this.state.email,
+            //        password: this.state.password
 
-                })
-            }).then((resp) => resp.json())
-                .then(data => {
-                    this.setState({ isAuth: data });
-                })
+            //    })
+            //}).then((resp) => resp.json())
+            //    .then(data => {
+            //        this.setState({ isAuth: data });
+            //    })
 
-            fetch('api/users/GetUserAccount', {
-                method: 'post',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                })
-            }).then((resp) => resp.json()).then(data => { this.setState({ user: data }) });
+            //fetch('api/users/GetUserAccount', {
+            //    method: 'post',
+            //    headers: { "Content-Type": "application/json" },
+            //    body: JSON.stringify({
+            //        email: this.state.email,
+            //        password: this.state.password
+            //    })
+            //}).then((resp) => resp.json()).then(data => { this.setState({ user: data }) });
 
-            this.props.parentOnLoginStatusCallBack(true, this.state.user);
+            //this.props.parentOnLoginStatusCallBack(true, this.state.user);
             //window.location.replace("/Sprints");
+
+            fetch('api/users/token', {
+                method: 'post',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    grant_type: 'password',
+                    login: this.state.email,
+                    password: this.state.password
+                })
+            }).then(function (response) {
+                if (response.status == 200) {
+                    return response.json();
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status + "\nAuthorization failed. Invalid email or password:-(")
+                    return "error"
+                }
+            }).then((data) => {
+                sessionStorage.setItem("tokenKey", data.access_token);
+                alert(data.access_token)
+                this.setState({ isAuth: true, user: data.user });
+                this.props.parentOnLoginStatusCallBack(true, data.user, "tasks");
+            });
+
+            //this.props.parentOnLoginStatusCallBack(true, us, "tasks");
+            //this.props.moveToComponent2("tasks");
         }
         else {
-
-            alert("Authorization failed. Invalid email or password:-(")
+            //alert("ERROR! Status code: ")
         }
     }
 
     render() {
+
+        var user = "__";
+        if (this.state.user != null) {
+            user += this.state.user.firstName
+        }
         return (
             <div className="Login">
-                
-                      
-                        <FormGroup controlId="email" bsSize="large">
-                            <ControlLabel>Email</ControlLabel>
-                            <FormControl
-                                autoFocus
-                                type="email"
-                                value={this.state.email}
-                                onChange={this.emailChanged}
-                            />
-                        </FormGroup>
-                        <FormGroup controlId="password" bsSize="large">
-                            <ControlLabel>Password</ControlLabel>
-                            <FormControl
-                                value={this.state.password}
-                                onChange={this.passwordChanged}
-                                type="password"
-                            />
-                        </FormGroup>
-                        <Button
-                            block
-                            bsSize="large"
-                            disabled={!this.validateForm()}
-                            type="button"
-                            onClick={this.handleSubmit}
-                            className="btn btn-primary"
-                         >
-                            Login
-                        </Button>
+                <div>{user}</div>
+                <FormGroup controlId="email" bsSize="large">
+                    <ControlLabel>Email</ControlLabel>
+                    <FormControl
+                        autoFocus
+                        type="email"
+                        value={this.state.email}
+                        onChange={this.emailChanged}
+                    />
+                </FormGroup>
+                <FormGroup controlId="password" bsSize="large">
+                    <ControlLabel>Password</ControlLabel>
+                    <FormControl
+                        value={this.state.password}
+                        onChange={this.passwordChanged}
+                        type="password"
+                    />
+                </FormGroup>
+                <Button
+                    block
+                    bsSize="large"
+                    disabled={!this.validateForm()}
+                    type="button"
+                    onClick={this.handleSubmit}
+                    className="btn btn-primary"
+                >
+                    Login
+                </Button>
             </div>
         );
     }
