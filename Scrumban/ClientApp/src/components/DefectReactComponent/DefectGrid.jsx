@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { DefectTable } from './DefectTable';
-import { DefectEdit } from './DefectEdit';
+import { DefectRow } from './DefectRow';
 import buildQuery from 'odata-query'
 
 
@@ -15,55 +14,13 @@ const severityOption = data.severity;
 const statusOption = data.status;
 
 
-class Defect extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: props.defect,
-            index: true
-        };
-
-        this.onRemoveDefect = this.onRemoveDefect.bind(this);
-        this.onEditDefect = this.onEditDefect.bind(this);
-        this.onChangedDefect = this.onChangedDefect.bind(this);
-
-    }
-
-    onRemoveDefect() {
-        this.props.onRemove(this.state.data.defectId);
-
-    }
-
-    onEditDefect() {
-        this.setState({ index: this.state.index === true ? false : true });
-    }
-
-    onChangedDefect(item) {
-        this.props.onChanged(item);
-        this.setState({ data: item });
-    }
-
-    render() {
-        const isEdit = this.state.index;
-        return (<tbody>
-            {
-                isEdit ?
-                    (<DefectTable key={this.props.key} item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} />)
-                    : (<DefectEdit item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} changed={this.onChangedDefect} />)
-            }
-        </tbody>
-
-        );
-    }
-}
-
 export class DefectGrid extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             defects: [],
-            //OData filter
+            //filter
             nameSearch: "",
             descriptionSearch: "",
             stateSearch: "All",
@@ -71,7 +28,7 @@ export class DefectGrid extends React.Component {
             storyIdSearch: "",
             severitySearch: "All",
             statusSearch: "All",
-            //OData sorting
+            //sorting
             currentSort:
             {
                 columnName: '',
@@ -83,7 +40,7 @@ export class DefectGrid extends React.Component {
         this.onChanged = this.onChanged.bind(this);
         this.onRemoveDefect = this.onRemoveDefect.bind(this);
 
-        //oData filter
+        //filter
         this.onNameSearchChanged = this.onNameSearchChanged.bind(this);
         this.onDescriptionSearchChanged = this.onDescriptionSearchChanged.bind(this);
         this.onStateSearchChanged = this.onStateSearchChanged.bind(this);
@@ -94,7 +51,7 @@ export class DefectGrid extends React.Component {
         this.onFiltersApply = this.onFiltersApply.bind(this)
         this.onFiltersClear = this.onFiltersClear.bind(this)
 
-        //oData sorting
+        //sorting
         this.sortData = this.sortData.bind(this)
         this.sortByName = this.sortByName.bind(this)
         this.sortByDescription = this.sortByDescription.bind(this)
@@ -444,6 +401,22 @@ export class DefectGrid extends React.Component {
             xhr.send();
         }
     }
+
+    renderCaret(columnName) {
+        if (this.state.currentSort.columnName == columnName) {
+            if (this.state.currentSort.sortingOrder == 'ascending') {
+                return (<span class="fa fa-caret-up" id="active-caret" /*style={{ color: '#2adc29' }}*/></span>)
+            }
+            else {
+                return (<span class="fa fa-caret-down" id="active-caret" /*style={{ color: '#2adc29' }}*/></span>)
+            }
+        }
+        else {
+            return (<span class="fa fa-caret-down"></span>)
+        }
+    }
+
+
     render() {
         var changed = this.onChanged;
         var remove = this.onRemoveDefect;
@@ -455,47 +428,49 @@ export class DefectGrid extends React.Component {
             <table className="table table-hover">
                 <thead className="bg-light">
                     <tr>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> StoryId</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status</th>
-
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description {this.renderCaret('description')}</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> StoryId {this.renderCaret('storyId')}</th>
+                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status {this.renderCaret('status')}</th>
+                        <th></th>
+                        <th></th>
                     </tr>
+
                     <tr>
-                     <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></th>
-                     <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></th>
-                     <th><select class="form-control" placeholder="Search..." onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
+                    <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></th>
+                    <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></th>
+                    <th><select class="form-control" placeholder="Search..." onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
                             <option value="All">All</option>
                             {stateOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
-                     <th><select class="form-control" placeholder="Search..." onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
+                    <th><select class="form-control" placeholder="Search..." onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
                             <option value="All">All</option>
                             {priorityOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
-                     <th><select class="form-control" placeholder="Search..." onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
+                    <th><select class="form-control" placeholder="Search..." onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
                             <option value="All">All</option>
                             {severityOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
                         <th style={{ width: '10%' }}><input type="text" class="form-control" placeholder="Search..." onChange={this.onStoryIdSearchChanged} value={this.state.storyIdSearch} /></th>
-                     <th>
+                    <th>
                         <select class="form-control" placeholder="Search..." onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                         <option value="All">All</option>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                         </select>
                     </th>
-                     <th style={{ width: '15%' }}>
-                        <div>
-                                <button style={{ width: '50%' }} type="button" class="btn btn-primary" onClick={this.onFiltersApply}>Search</button>
-                                <button style={{ width: '50%' }} type="button" class="btn btn-primary" onClick={this.onFiltersClear}>Clear</button>
-                        </div>
+                    <th >
+                        <button style={{ width: '100%' }} type="button" class="btn btn-primary" onClick={this.onFiltersApply}>Search</button>  
                     </th>
-                        </tr>
+                    <th >
+                        <button style={{ width: '100%' }} type="button" class="btn btn-primary" onClick={this.onFiltersClear}>Clear</button>
+                    </th>
+                 </tr>
                 </thead>
                 {(this.state.defects.length > 0)
-                ? this.state.defects.map(function (defect) { return <Defect key={defect.defectId} defect={defect} onRemove={remove} onChanged={changed} /> })
+                ? this.state.defects.map(function (defect) { return <DefectRow key={defect.defectId} defect={defect} onRemove={remove} onChanged={changed} /> })
                     : (<tbody>
                             <td>
                                 No results

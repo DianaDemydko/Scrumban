@@ -161,6 +161,8 @@ export class DefectEdit extends React.Component {
             </td>
             <td>
                 <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Save</button>
+            </td>
+            <td>
                 <button type="submit" onClick={this.props.editDefect} className="btn btn-primary">Cancel</button>
             </td>
         </tr>;

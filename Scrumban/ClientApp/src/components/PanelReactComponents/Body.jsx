@@ -1,5 +1,4 @@
-﻿
-import React from 'react';
+﻿import React from 'react';
 import { Menu } from './Menu';
 import { Switch, Route } from 'react-router';
 import { Content } from './Content';
@@ -35,11 +34,10 @@ export class Body extends React.Component {
     }
 
     render() {
-
         var renderedComponent;
         switch (this.props.renderedComponentName) {
             case 'login':
-                    renderedComponent = < Login parentOnLoginStatusCallBack={this.parentOnLoginStatusCallBack} />
+                    renderedComponent = <Login parentOnLoginStatusCallBack={this.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
                 renderedComponent = <Register moveToComponent2={this.props.moveToComponent} />
