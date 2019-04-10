@@ -21,6 +21,8 @@ import { Login } from './components/PanelReactComponents/Login';
 import { SprintMain } from './components/Sprint/SprintMain';
 import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
 
+import { Chat } from './components/Chat';
+
 
 export default class App extends Component {
     displayName = App.name
@@ -46,6 +48,7 @@ export default class App extends Component {
                 <Route path='/editfeature' component={EditFeature} />
             <Route path='/panel' component={Panel} />
             <Route path='/login' component={Login} />
+            <Route path='/chat' component={Chat}/>
            
       </Layout>
     );

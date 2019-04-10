@@ -13,6 +13,7 @@ using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.Services;
+using Scrumban.Hubs;
 
 namespace Scrumban
 {
@@ -40,7 +41,7 @@ namespace Scrumban
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -49,11 +50,13 @@ namespace Scrumban
 
 
             services.AddOptions();
-            
-           services.AddODataQueryFilter();
+            services.AddSignalR();
+            services.AddODataQueryFilter();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
+            
+            
 
         }
 
@@ -87,6 +90,10 @@ namespace Scrumban
                 routes.Expand().Select().Count().OrderBy().Filter(); 
                 
             });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
 
             app.UseSpa(spa =>
             {
@@ -97,6 +104,14 @@ namespace Scrumban
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+            app.UseWebSockets();
+            
+            //app.UseSignalR(routes =>
+            //{
+            //     routes.MapHub<PollHub>("/pollHub");
+            //});
+
+            
         }
     }
 }
