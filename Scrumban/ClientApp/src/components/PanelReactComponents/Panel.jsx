@@ -8,71 +8,47 @@ export class Panel extends React.Component {
         this.state = {
             user: { ...props.currentUser },
             loginStatus: props.loginStatusCallBack, // false - Not logined, true - logined
-            panelStatus: "", 
-            loginStatusName: "Log In",
+            //loginStatusName: "Log In",
             contact: "contact",
             about: "about"
         }
-        this.onPanelAction = this.onPanelAction.bind(this);
+        this.onLogin = this.onLogin.bind(this);
+        this.onLogOut = this.onLogOut.bind(this);
     }
 
-
-    onPanelAction(param) {
-        this.props.moveToComponent(this.state.panelStatus)
-        this.setState({ panelStatus: param })
+    onLogin(param) {
+        this.setState({ loginStatus: true, loginStatusName: "Log out" })
+        this.props.moveToComponent(param)
     }
     onLogOut() {
         localStorage.clear();
-        this.setState({ loginStatus: false, user: null });
+        this.setState({ loginStatus: false, user: null, loginStatusName: "Log in" });
         this.props.moveToComponent(false, null, "login");
     }
 
     render() {
-
-        //var user = "panel_user";
-        var loginStatus =     "panel_loginStatus:     ";
-        var panelStatus =     "panel_panelStatus:     ";
-        var loginStatusName = "panel_loginStatusName  ";
-
-        //if (this.state.user != null) {
-        //    user = { name: this.state.user.name }
-        //}
-        if (this.state.loginStatus != null) {
-            loginStatus += this.state.loginStatus.toString()
-        }
-        if (this.state.panelStatus != null) {
-            panelStatus += this.state.panelStatus.toString()
-        }
-        if (this.state.loginStatusName != null) {
-            loginStatusName += this.state.loginStatusName.toString()
-        }
-
-        //<div>{loginStatus}</div>
-        //    <div>{panelStatus}</div>
-        //    <div>{loginStatusName}</div>
  
         return (
             <div>
+                
                 <ul className="panelUl">
                     <li className="panelLi">
                         {this.state.loginStatus ?
-                            (  <button className="panelBtn" onClick={() => this.onLogOut()}>            Log Out </button>)
-                            : (<button className="panelBtn" onClick={() => this.onPanelAction("login")}>Log In  </button>)
+                            (  <button className="panelBtn" onClick={() => this.onLogOut("login")}>            Log Out </button>)
+                            : (<button className="panelBtn" onClick={() => this.onLogin("login")}>Log In  </button>)
                         }
                     </li >
                     <li className="panelLi">
                         {this.state.loginStatus ?
-                            (<button className="panelBtn">{this.state.user.firstName} </button>)
-                            :
-                            (<button className="panelBtn" onClick={() => this.onPanelAction("signup")}>Sign Up</button>)
+                            (<button className="panelBtn" onClick={() => this.props.moveToComponent("profile")} >{this.state.user} </button>)
+                            : (<button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>Sign Up</button>)
                          }
                     </li>
                     <li className="panelLi">
-                        <button className="panelBtn" onClick={() => this.onPanelAction("about")}>About</button>
+                        <button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>About</button>
                     </li>
                 </ul>
             </div>
         )
     }
 }
-

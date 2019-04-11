@@ -30,6 +30,7 @@ export class TaskAdd extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
+        this.onAdd = this.onAdd.bind(this);
 
     }
 
@@ -79,12 +80,14 @@ export class TaskAdd extends React.Component {
                 })
                 .then(function (response) {
                     if (response.status == 200) {
-                        window.location.replace("/tasks");
+                        //window.location.replace("/tasks");
+                        //this.props.moveToComponent("tasks")
                     }
                     else if (response.status == 401) {
                         var answer = window.confirm("You are not authorized. Move to Login page ?")
                         if (answer == true) {
-                            window.location.replace("/login")
+                            //window.location.replace("/login")
+                            this.props.moveToComponent("login")
                         }
                     }
                     else if (response.status == 403) {
@@ -98,7 +101,7 @@ export class TaskAdd extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        //e.preventDefault();
 
         let task = {
             name: this.state.name,
@@ -109,8 +112,8 @@ export class TaskAdd extends React.Component {
             taskStateId: stateTable.find(x => x.name === this.state.taskState).id
         };
         this.onAdd(task);
-        this.setState({ name: "", description: "", startDate: "", finishDate: "", priorityId: "", taskStateId: "" });
-        window.location.replace("/tasks");
+        //this.setState({ name: "", description: "", startDate: "", finishDate: "", priorityId: "", taskStateId: "" });
+        this.props.moveToComponent("tasks")
     }
 
     render() {
@@ -179,9 +182,7 @@ export class TaskAdd extends React.Component {
                 </div>
 
                 <button type="submit" onClick={this.onSubmit} className="btn btn-outline-info button-fixed">Submit</button>
-                <Link to={cancelUrl}>
-                    <button type="submit" className="btn btn-outline-danger button-fixed">Cancel</button>
-                </Link>
+                <button type="submit" onClick={() => this.props.moveToComponent("tasks")} className="btn btn-outline-danger button-fixed">Cancel</button>
             </div>
         );
     }

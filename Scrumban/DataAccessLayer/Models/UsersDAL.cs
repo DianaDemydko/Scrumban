@@ -17,11 +17,9 @@ namespace Scrumban.DataAccessLayer.Models
         [Required]
         public string Password { get; set; }
 
-        public string Token { get; set; }
-
         public int RoleId { get; set; } = 1;
         public RoleDAL Role { get; set; }
         
-        public int? PictureId { get; set; }
+        public PictureDAL Picture { get; set; }
     }
 }

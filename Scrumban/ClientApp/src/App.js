@@ -16,10 +16,11 @@ import { DefectAdd } from './components/DefectReactComponent/DefectAdd';
 import { StoryGrid } from './components/StoryReactComponents/StoryGrid';
 import { StoryAdd } from './components/StoryReactComponents/StoryAdd';
 
-
-import { Login } from './components/PanelReactComponents/Login';
 import { SprintMain } from './components/Sprint/SprintMain';
 import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
+
+import { Login } from './components/PanelReactComponents/Login';
+import { ProfilePage } from './components/PanelReactComponents/UserProfileComponents/ProfilePage'
 
 
 export default class App extends Component {
@@ -28,7 +29,7 @@ export default class App extends Component {
     return (
       <Layout>
 
-        <Route exact path='/' component={Home} />
+            <Route exact path='/' component={Login} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/defects' component={DefectGrid} />
@@ -46,7 +47,7 @@ export default class App extends Component {
                 <Route path='/editfeature' component={EditFeature} />
             <Route path='/panel' component={Panel} />
             <Route path='/login' component={Login} />
-           
+            <Route path='/profile' component={ProfilePage} />
       </Layout>
     );
   }

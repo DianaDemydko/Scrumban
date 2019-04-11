@@ -1,11 +1,12 @@
 ﻿using Scrumban.ServiceLayer.DTO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Scrumban.ServiceLayer.Interfaces
 {
     interface IUserService
     {
-        List<UserDTO> GetAllUsers();
+        IQueryable<UserDTO> GetAllUsers();
         //To Add new user   
         int AddUser(UserDTO user);
         //To Update user  

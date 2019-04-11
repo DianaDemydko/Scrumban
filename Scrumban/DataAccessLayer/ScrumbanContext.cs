@@ -14,6 +14,7 @@ namespace Scrumban.DataAccessLayer
         public DbSet<DefectDAL> Defects { get; set; }
         public DbSet<UsersDAL> Users { get; set; }
         public DbSet<RoleDAL> Roles { get; set; }
+        public DbSet<PictureDAL> Pictures { get; set; }
         public DbSet<StoryDAL> Stories { get; set; }
         public DbSet<StoryStateDAL> StoryStates { get; set; }
         public DbSet<StateDAL> States { get; set; }
@@ -120,6 +121,12 @@ namespace Scrumban.DataAccessLayer
                 }
             );
             base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<UsersDAL>()
+            //    .HasOne(e => e.Picture).WithOne(e => e.User)
+            //    .HasForeignKey<PictureDAL>(e => e.Id);
+            //modelBuilder.Entity<UsersDAL>().ToTable("Users");
+            //modelBuilder.Entity<PictureDAL>().ToTable("Users");
         }
     }
 }

@@ -95,7 +95,8 @@ export class TaskGrid extends React.Component {
     }
 
     onAdded(item) {
-        this.setState({ tasks: this.state.tasks.push(item) });
+        //this.setState({ tasks: this.state.tasks.push(item) });
+
     }
 
     onChanged(item) {
@@ -232,7 +233,12 @@ export class TaskGrid extends React.Component {
                     {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} states={states} priorities={priorities} /> })}
                 </table>
                 <div>
-                    <Link to='/addTask'><button className="btn btn-sm btn-outline-info button-fixed">Add</button></Link>
+                    <button
+                        onClick={() => this.props.moveToComponent("addTask")}
+                        className="btn btn-sm btn-outline-info button-fixed"
+                    >
+                        Add
+                    </button>
                 </div>
             </div>
         </div>;

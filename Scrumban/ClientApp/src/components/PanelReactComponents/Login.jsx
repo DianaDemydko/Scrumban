@@ -58,34 +58,8 @@ export class Login extends React.Component {
         this.setState({ password: e.target.value });
     }
     handleSubmit(e) {
-        e.preventDefault();
-        //if (this.handleValidation()) {
-        if (true) {
-            //fetch('api/users/Check', {
-            //    method: 'post',
-            //    headers: { "Content-Type": "application/json" },
-            //    body: JSON.stringify({
-            //        email: this.state.email,
-            //        password: this.state.password
-
-            //    })
-            //}).then((resp) => resp.json())
-            //    .then(data => {
-            //        this.setState({ isAuth: data });
-            //    })
-
-            //fetch('api/users/GetUserAccount', {
-            //    method: 'post',
-            //    headers: { "Content-Type": "application/json" },
-            //    body: JSON.stringify({
-            //        email: this.state.email,
-            //        password: this.state.password
-            //    })
-            //}).then((resp) => resp.json()).then(data => { this.setState({ user: data }) });
-
-            //this.props.parentOnLoginStatusCallBack(true, this.state.user);
-            //window.location.replace("/Sprints");
-            
+        //e.preventDefault();
+        if (this.handleValidation()) {
             fetch('api/users/token', {
                 method: 'post',
                 headers: { "Content-Type": "application/json" },
@@ -104,28 +78,19 @@ export class Login extends React.Component {
                 }
                 }).then((data) => {
                     sessionStorage.setItem("tokenKey", data.access_token);
-                    alert(data.access_token)
-                    this.setState({ isAuth: true, user: data.user });
-                    this.props.parentOnLoginStatusCallBack(true, data.user, "tasks");
+                    //this.setState({ isAuth: true, user: data.user });
+                    this.props.moveToComponent(true, data.user, "tasks");
                 });
-
-            //this.props.parentOnLoginStatusCallBack(true, us, "tasks");
-            //this.props.moveToComponent2("tasks");
         }
         else {
-            //alert("ERROR! Status code: ")
+            alert("ERROR! Status code: ")
         }
     }
 
     render() {
 
-        var user = "__";
-        if (this.state.user != null) {
-            user += this.state.user.firstName
-        }
         return (
             <div className="Login">
-                <div>{user}</div>
                 <FormGroup controlId="email" bsSize="large">
                     <ControlLabel>Email</ControlLabel>
                     <FormControl

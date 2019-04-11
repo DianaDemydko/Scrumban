@@ -10,11 +10,11 @@ namespace Scrumban.ServiceLayer.DTO
 
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Token { get; set; }
 
-        public int RoleId { get; set; }
+        public int RoleId { get; set; } = 1;
         public RoleDTO Role{get;set;}
 
         public int? PictureId { get; set; }
+        public PictureDTO Picture { get; set; }
     }
 }

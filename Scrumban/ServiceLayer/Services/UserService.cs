@@ -6,6 +6,8 @@ using AutoMapper;
 using Scrumban.DataAccessLayer.Models;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
+using System.Linq;
+using System;
 
 namespace Scrumban.ServiceLayer.Sevices
 {
@@ -17,18 +19,16 @@ namespace Scrumban.ServiceLayer.Sevices
             _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
         }
      
-        public List<UserDTO> GetAllUsers()
+        public IQueryable<UserDTO> GetAllUsers()
         {
             try
             {
                 var mapper = new MapperConfiguration(cfg =>
-               {
-                   cfg.CreateMap<UsersDAL, UserDTO>();
-               }).CreateMapper();
-
-
-                //return _unitOfWork.UserRepository.GetAllUsers().ToList();
-                return mapper.Map<IEnumerable<UsersDAL>, List<UserDTO>>(_unitOfWork.UserRepository.GetAllUsers());
+                {
+                    cfg.CreateMap<UsersDAL, UserDTO>();
+                })
+                .CreateMapper();
+                return mapper.Map<IQueryable<UsersDAL>, IQueryable<UserDTO>>(_unitOfWork.UserRepository.GetAllUsers());
             }
             catch
             {
@@ -36,24 +36,27 @@ namespace Scrumban.ServiceLayer.Sevices
             }
         }
         //To Add new user   
-        public int AddUser(UserDTO entity)
+        public int AddUser(UserDTO userEntity)
         {
             try
             {
                 UsersDAL user = new UsersDAL();
-                if (entity != null)
+                PictureDAL picture = new PictureDAL();
+                if (userEntity != null)
                 {
-
-                    user.Id = entity.Id;
-                    user.FirstName = entity.FirstName;
-                    user.Surname = entity.Surname;
-                    user.Email = entity.Email;
-                    user.Password = entity.Password;
-                    user.RoleId = entity.RoleId;
-                    user.PictureId = entity.PictureId;
+                    user.Id = userEntity.Id;
+                    user.FirstName = userEntity.FirstName;
+                    user.Surname = userEntity.Surname;
+                    user.Email = userEntity.Email;
+                    user.Password = userEntity.Password;
+                    user.RoleId = userEntity.RoleId == 0 ? 1 : userEntity.RoleId;
+                    
+                    if(userEntity.Picture != null)
+                    {
+                        picture.Image = userEntity.Picture.Image;
+                    }
                 }
-                
-                _unitOfWork.UserRepository.Create(user);
+                _unitOfWork.UserRepository.Create(user, picture);
                 _unitOfWork.Save();
                 return 1;
             }
@@ -68,6 +71,7 @@ namespace Scrumban.ServiceLayer.Sevices
             try
             {
                 UsersDAL user = new UsersDAL();
+                PictureDAL picture = new PictureDAL();
                 if (entity != null)
                 {
 
@@ -76,10 +80,15 @@ namespace Scrumban.ServiceLayer.Sevices
                     user.Surname = entity.Surname;
                     user.Email = entity.Email;
                     user.Password = entity.Password;
-                    user.RoleId = entity.RoleId;
-                    user.PictureId = entity.PictureId;
+                    user.RoleId = entity.RoleId == 0 ? 1 : entity.RoleId;
+
+                    if (entity.Picture != null)
+                    {
+                        picture.Image = entity.Picture.Image;
+                        picture.UserId = entity.Id;
+                    }
                 }
-                _unitOfWork.UserRepository.Update(user);
+                _unitOfWork.UserRepository.Update(user, picture);
                 _unitOfWork.Save();
                 return 1;
             }
@@ -102,7 +111,6 @@ namespace Scrumban.ServiceLayer.Sevices
                     Email = user.Email,
                     Password = user.Password,
                     RoleId = user.RoleId,
-                    PictureId = user.PictureId
                 };
                 
                 return userDTO;
@@ -157,7 +165,11 @@ namespace Scrumban.ServiceLayer.Sevices
                         Id = user.Role.Id,
                         Name = user.Role.Name
                     },
-                    PictureId = user.PictureId
+                    Picture = new PictureDTO
+                    {
+                        Id = user.Picture.Id,
+                        Image = user.Picture.Image
+                    }
                 };
 
                 return userDTO;
