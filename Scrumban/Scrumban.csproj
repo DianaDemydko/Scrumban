@@ -57,6 +57,7 @@
 
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\components\TeamReactComponent\" />
     <Folder Include="ClientApp\src\Icons\" />
   </ItemGroup>
 

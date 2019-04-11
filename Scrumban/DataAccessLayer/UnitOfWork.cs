@@ -15,6 +15,7 @@ namespace Scrumban.DataAccessLayer
         private ITaskRepository taskRepository;
         private IFeatureRepository feature_repository;
         private IUserRepository _userRepository;
+        private ITeamRepository _teamRepository;
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
@@ -106,6 +107,20 @@ namespace Scrumban.DataAccessLayer
                 }
 
                 return _userRepository;
+            }
+        }
+
+
+        public ITeamRepository TeamRepository
+        {
+            get
+            {
+                if (_teamRepository == null)
+                {
+                    _teamRepository = new TeamRepository(_scrumbanContext);
+                }
+
+                return _teamRepository;
             }
         }
 

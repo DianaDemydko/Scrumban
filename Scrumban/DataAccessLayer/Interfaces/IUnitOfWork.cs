@@ -11,6 +11,7 @@ namespace Scrumban.DataAccessLayer.Interfaces
         ISprintRepository SprintRepository { get; }
         ISprintStatusRepository SprintStatusRepository { get; }
         IUserRepository UserRepository { get; }
+        ITeamRepository TeamRepository { get; }
 
         int Save();
         void Dispose();

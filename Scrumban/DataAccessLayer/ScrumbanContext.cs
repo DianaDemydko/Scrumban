@@ -21,7 +21,8 @@ namespace Scrumban.DataAccessLayer
         public DbSet<PriorityDAL> Priorities { get; set; }
         public DbSet<SprintDAL> Sprints { get; set; }
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
-        
+        public DbSet<TeamDAL> Teams { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TaskStateDAL>().HasData(
@@ -101,6 +102,13 @@ namespace Scrumban.DataAccessLayer
                     new StoryDAL{Id=1,Name="Story1",Description = "Description1"},
                     new StoryDAL{Id=2,Name="Story2",Description = "Description2"},
                     new StoryDAL{Id=3,Name="Story3",Description = "Description3"}
+                }
+            );
+            modelBuilder.Entity<TeamDAL>().HasData(
+                new TeamDAL[]
+                {
+                    new TeamDAL{TeamID = 1, Name = "Lv-396.1 .Net", Project = "Scrumban"},
+                    new TeamDAL{TeamID = 2, Name = "New Team", Project = "New Project"}
                 }
             );
             base.OnModelCreating(modelBuilder);
