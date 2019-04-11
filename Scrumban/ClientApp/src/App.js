@@ -29,7 +29,7 @@ export default class App extends Component {
     return (
       <Layout>
 
-            <Route exact path='/' component={Login} />
+            <Route exact path='/' component={Layout} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/defects' component={DefectGrid} />

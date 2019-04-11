@@ -12,7 +12,7 @@ export class Layout extends Component {
         super(props);
 
         this.state = {
-            renderedComponentName: "", // name of current active component
+            renderedComponentName: "login", // name of current active component
             panelLoginStatus: false,
             user: null,
             childRefresh: true
@@ -27,7 +27,7 @@ export class Layout extends Component {
     }
 
     setRenderedComponentName(renderedComponent) {   // set name of rendered component in Content
-        this.setState({ renderedComponentName: renderedComponent })
+        this.setState({ renderedComame: renderedComponent })
     }
 
     onLoginStatusCallBack(loginOrlogout, currentUser, componentName) {
@@ -44,10 +44,11 @@ export class Layout extends Component {
     return (
         <div>
             <Panel
-                key={this.state.childRefresh} 
+                key={this.state.childRefresh}
                 moveToComponent={this.setRenderedComponentName} // set name of rendered component
-                loginStatusCallBack={this.state.panelLoginStatus}
-                currentUser={this.state.user}
+                loginStatusCallBack={this.state.panelLoginStatus == true ? "true" : "false"}
+                currentUser={this.state.user ? this.state.user.firstName : "_"}
+                onLogOut={this.onLoginStatusCallBack}
             />
             <Body
                 children={this.props.children}
