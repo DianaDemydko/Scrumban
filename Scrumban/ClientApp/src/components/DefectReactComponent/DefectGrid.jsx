@@ -438,23 +438,23 @@ export class DefectGrid extends React.Component {
                     </tr>
 
                     <tr>
-                    <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></th>
-                    <th><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></th>
-                    <th><select class="form-control" placeholder="Search..." onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
+                    <th><input type="text" class="form-control" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></th>
+                    <th><input type="text" class="form-control" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></th>
+                    <th><select class="form-control" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
                             <option value="All">All</option>
                             {stateOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
-                    <th><select class="form-control" placeholder="Search..." onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
+                    <th><select class="form-control" placeholder="Search" onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
                             <option value="All">All</option>
                             {priorityOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
-                    <th><select class="form-control" placeholder="Search..." onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
+                    <th><select class="form-control" placeholder="Search" onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
                             <option value="All">All</option>
                             {severityOption.map((item) => <option>{item.name}</option>)}
                         </select></th>
-                        <th style={{ width: '10%' }}><input type="text" class="form-control" placeholder="Search..." onChange={this.onStoryIdSearchChanged} value={this.state.storyIdSearch} /></th>
+                        <th style={{ width: '10%' }}><input type="text" class="form-control" placeholder="Search" onChange={this.onStoryIdSearchChanged} value={this.state.storyIdSearch} /></th>
                     <th>
-                        <select class="form-control" placeholder="Search..." onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
+                        <select class="form-control" placeholder="Search" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                         <option value="All">All</option>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                         </select>
