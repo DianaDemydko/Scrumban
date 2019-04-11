@@ -5,8 +5,7 @@ export class SideBar extends React.Component {
     constructor(props) {
         super(props);
     }
-    
-
+  
     render() {
         return (
             <Menu>

@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { DefectRow } from './DefectRow';
 import buildQuery from 'odata-query'
 
@@ -421,10 +420,9 @@ export class DefectGrid extends React.Component {
         var changed = this.onChanged;
         var remove = this.onRemoveDefect;
         return (<div>
+            <br />
             <h2>Defects</h2>
-
-            <Link to={{ pathname: '/defect_add' }} ><button className="btn btn-primary">Add defect</button></Link>
-
+            <br />
             <table className="table table-hover">
                 <thead className="bg-light">
                     <tr>
@@ -462,10 +460,10 @@ export class DefectGrid extends React.Component {
                         </select>
                     </th>
                     <th >
-                        <button style={{ width: '100%' }} type="button" class="btn btn-primary" onClick={this.onFiltersApply}>Search</button>  
+                            <button style={{ width: '100%' }} type="button" className="btn btn-outline-dark" onClick={this.onFiltersApply}>Search</button>  
                     </th>
                     <th >
-                        <button style={{ width: '100%' }} type="button" class="btn btn-primary" onClick={this.onFiltersClear}>Clear</button>
+                            <button style={{ width: '100%' }} type="button" className="btn btn-outline-dark" onClick={this.onFiltersClear}>Clear</button>
                     </th>
                  </tr>
                 </thead>
@@ -477,7 +475,8 @@ export class DefectGrid extends React.Component {
                             </td>
                        </tbody>)
                 }
-                </table>
+            </table>
+            <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent2("defectAdd")}>Add defect</button>
         </div>
         )
     }

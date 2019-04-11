@@ -15,6 +15,7 @@ import { DefectGrid } from '../DefectReactComponent/DefectGrid';
 import { FeatureTable } from '../FeatureReactComponents/FeatureTable';
 import { SprintMain } from '../Sprint/SprintMain';
 import { StoryGrid } from '../StoryReactComponents/StoryGrid';
+import { DefectAdd } from '../DefectReactComponent/DefectAdd';
 
 
 export class Body extends React.Component {
@@ -37,7 +38,7 @@ export class Body extends React.Component {
         var renderedComponent;
         switch (this.props.renderedComponentName) {
             case 'login':
-                    renderedComponent = <Login parentOnLoginStatusCallBack={this.parentOnLoginStatusCallBack} />
+                renderedComponent = <Login parentOnLoginStatusCallBack={this.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
                 renderedComponent = <Register moveToComponent2={this.props.moveToComponent} />
@@ -48,9 +49,6 @@ export class Body extends React.Component {
             case 'tasks':
                 renderedComponent = <TaskGrid moveToComponent2={this.props.moveToComponent} />
                 break
-            case 'defects':
-                renderedComponent = <DefectGrid moveToComponent2={this.props.moveToComponent} />
-                break
             case 'feature':
                 renderedComponent = <FeatureTable moveToComponent2={this.props.moveToComponent} />
                 break
@@ -60,11 +58,18 @@ export class Body extends React.Component {
             case 'sprints':
                 renderedComponent = <SprintMain moveToComponent2={this.props.moveToComponent} />
                 break 
+            case 'defects':
+                renderedComponent = <DefectGrid moveToComponent2={this.props.moveToComponent} />
+                break
+            case 'defectAdd':
+                renderedComponent = <DefectAdd moveToComponent2={this.props.moveToComponent} />
+                break 
+            
+
             default:
                 renderedComponent = this.props.children
         }
-
-
+        
         return (<Grid fluid>
             <Row>
                 <Col>  
