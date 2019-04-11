@@ -139,7 +139,8 @@ class KanbanColumn extends React.Component {
         this.state = ({
             stories: props.stories,
             name: props.name,
-            column_id: props.column_id
+            column_id: props.column_id,
+            isOpen: false,
         })
         this.renderStories = this.renderStories.bind(this)
     }
@@ -157,7 +158,7 @@ class KanbanColumn extends React.Component {
             return (
                 this.state.stories.map((story) => {
                     return (
-                        <KanbanItem
+                        <KanbanCard
                             story={story}
                             key={story.id}
                             onDragStart={this.props.onDragStart}
@@ -178,6 +179,9 @@ class KanbanColumn extends React.Component {
             >
                 <div className="column-header" id={this.state.column_id}>
                     <div className="column-header-text">{this.state.name}</div>
+                    <div>
+                        
+                    </div>
                     
                 </div>
                 <div>
@@ -189,23 +193,51 @@ class KanbanColumn extends React.Component {
     }
 }
 
-class KanbanItem extends React.Component {
+class KanbanCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            story: props.story
+            story: props.story,
+            moreInformation: false,
         });
+
+        this.moreInformationHandler = this.moreInformationHandler.bind(this)
+        this.renderMoreInformationButton = this.renderMoreInformationButton.bind(this)
     }
 
+    moreInformationHandler() {
+        this.setState({ moreInformation: !this.state.moreInformation })
+    }
+
+    renderMoreInformationButton() {
+        return this.state.moreInformation ?
+            <div className="card-toggle card-toggle-collapse">
+                <button className="card-button-collapse" data-toggle="collapse" data-target={"#card_data" + this.state.story.id} onClick={this.moreInformationHandler} >-</button>
+            </div>
+            :
+            <div className="card-toggle">
+                <button className="card-button-expand" data-toggle="collapse" data-target={"#card_data" + this.state.story.id} onClick={this.moreInformationHandler} >+</button>
+            </div>
+    }   
+        
+    
     render() {
         return (
             <div
-                className="kanban-item"
+                className="kanban-card"
                 draggable='true'
                 onDragStart={(e) => this.props.onDragStart(e, this.state.story.id)}
             >
-                <h2>{this.state.story.name}</h2>
-                <p>{this.state.story.description}</p>
+                <div className="card-name-text">{this.state.story.name}</div>
+
+                {this.renderMoreInformationButton()}
+
+                <div class="collapse" id={"card_data" + this.state.story.id}>
+                    <div class="card-description-header">Description</div>
+                    <div className="card-description-text">
+                        {this.state.story.description}
+                    </div>
+                </div>
             </div>
         )
     }

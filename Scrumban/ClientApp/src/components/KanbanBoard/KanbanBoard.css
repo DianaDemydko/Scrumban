@@ -8,26 +8,19 @@
 
 .kanban-column {
     display: inline-block;
-    background-color: #f1f1f1;
+    background-color: #eef2f9;
     vertical-align: top;
     width: 18%;
     margin-top: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
     margin-left: 5px;
+
+    padding-left: 7px;
+    padding-right: 7px;
+
     height: 700px;
     overflow: auto;
-}
-
-.kanban-item {
-    background-color: azure;
-    margin-top: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    border: black solid;
-    width: auto;
-    display: inline-block;
 }
 
 .column-header {
@@ -75,3 +68,107 @@
     height: auto;
 }
 
+.kanban-card {
+    background-color: #fffbf0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid grey;
+    width: 100%;
+    display: inline-block;
+    font-family: "Roboto", sans-serif;
+}
+.kanban-card:hover {
+    cursor:default;
+}
+
+.card-name-text {
+    color: black;
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.card-toggle {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-toggle-collapse {
+    border-bottom: 1px dashed grey;
+    margin-left: 10px;
+    margin-right: 10px;
+    justify-content:flex-end;
+}
+
+.card-button-expand {
+    font-size: 14px;
+    font-weight: bold;
+    background: #ed1c5b;
+    border-radius: 100%;
+    border: none;
+    height: 30px;
+    width: 30px;
+    background-image: linear-gradient(to bottom right, #3CA55C 0%, #B5AC49 100%);
+}
+
+.card-button-expand:focus {
+    outline: none;
+}
+.card-button-collapse {
+    font-size: 14px;
+    font-weight: bold;
+    background: #ed1c5b;
+    border-radius: 15px;
+    border: none;
+    height: 22px;
+    width: 22px;
+    background-image: linear-gradient(to bottom right, #fa5757 0%, #EA384D 100%);
+}
+.card-button-collapse:focus {
+    outline: none;
+}
+
+.card-description-header {
+    color: #225072;
+    background-color: burlywood;
+    display: inline-block;
+    width: auto;
+    padding: 1px 3px 1px 3px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid grey;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.card-description-text {
+    color: black;
+    display: flex;
+    background-image: linear-gradient(to bottom right, #ccffff 20%, #ccffcc);
+    font-size: 14px;
+    text-align: justify;
+    font-weight: 500;
+    padding: 1px 3px 1px 3px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid grey;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
