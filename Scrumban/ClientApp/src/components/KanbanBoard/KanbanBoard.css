@@ -11,14 +11,9 @@
     background-color: #eef2f9;
     vertical-align: top;
     width: 18%;
-    margin-top: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    margin-left: 5px;
-
+    margin: 5px;
     padding-left: 7px;
     padding-right: 7px;
-
     height: 700px;
     overflow: auto;
 }
@@ -55,14 +50,6 @@
     background-image: linear-gradient( to bottom right, #65fd4d 20%, #02be5d);
 }
 
-.column-header-options {
-    border: none;
-    display: inline-block;
-    background-color: transparent;
-    cursor: pointer;
-    float: right;
-}
-
 .column-options-button-icon {
     font-size: 24px;
     height: auto;
@@ -81,8 +68,47 @@
     display: inline-block;
     font-family: "Roboto", sans-serif;
 }
+
 .kanban-card:hover {
     cursor:default;
+}
+
+.kanban-card-header {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: flex;
+}
+
+.card-header-priority {
+    
+    height: 20px;
+    width: 70px;
+}
+
+.card-priority-color-low {
+    background: linear-gradient(90deg, #9ea7fc 17%, #6eb4f7 83%);
+}
+
+.card-priority-color-medium {
+    background: linear-gradient(138.6789deg, #81d5ee 17%, #7ed492 83%);
+}
+
+.card-priority-color-high {
+    background: linear-gradient(138.6789deg, #c781ff 17%, #e57373 83%);
+}
+
+.card-header-priority-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.card-header-rank {
+    margin-left: auto;
+    font-weight: 600;
 }
 
 .card-name-text {
@@ -125,6 +151,7 @@
 .card-button-expand:focus {
     outline: none;
 }
+
 .card-button-collapse {
     font-size: 14px;
     font-weight: bold;
@@ -152,6 +179,8 @@
     font-weight: 600;
     margin-left: 10px;
     margin-right: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .card-description-text {

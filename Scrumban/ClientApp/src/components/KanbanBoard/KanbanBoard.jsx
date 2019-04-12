@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import "./KanbanBoard.css";
+import buildQuery from 'odata-query';
 
-const apiUrlGet = "/api/storyGrid/getStories";
+const apiUrlGet = "api/storyGrid/GetStories";
 
 
 export class Kanban extends React.Component {
@@ -23,6 +24,7 @@ class KanbanBoard extends React.Component {
             isLoading: true,
             stories: [],
             columns: [],
+            maxRank: 0,
         }
 
         this.state.columns = [
@@ -38,22 +40,42 @@ class KanbanBoard extends React.Component {
         this.onDragOver = this.onDragOver.bind(this)
 
         this.getStoriesData = this.getStoriesData.bind(this)
-        this.setColumns = this.setColumns.bind(this)
+        this.setAdditionalData = this.setAdditionalData.bind(this)
+        this.getMaxRank = this.getMaxRank.bind(this)
+
+        //for testing
+        this.createStory = this.createStory.bind(this)
     }
 
     componentDidMount() {
-        this.getStoriesData("")
+        var orderBy = ['rank desc']
+        var query = buildQuery({ orderBy })
+
+        this.getStoriesData(query)
     }
 
     getStoriesData(query) {
         fetch(apiUrlGet + query)
             .then(response => response.json())
             .then(data => {
-                this.setState({ stories: data, isLoading: false }, this.setColumns)
+                this.setState({ stories: data, isLoading: false }, this.setAdditionalData)
             })
     }
 
-    setColumns() {
+    createStory() {
+        fetch("api/storyGrid/CreateStory", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: 'POST',
+            body: JSON.stringify({
+
+            })
+        })
+    }
+
+    setAdditionalData() {
+        //Set columns
         if (this.state.stories.length > 0) {
             this.setState({
                 stories: this.state.stories.map((story) => {
@@ -83,6 +105,17 @@ class KanbanBoard extends React.Component {
                 }, this)
             })
         }
+
+        //Set Max for all stories rank value
+        this.setState({ maxRank: this.getMaxRank() })
+    }
+
+    getMaxRank() {
+        var maxRank = 0
+        this.state.stories.map(story => {
+            if (story.rank > maxRank) maxRank = story.rank
+        })
+        return maxRank
     }
 
     onDragStart(e, item_id) {
@@ -95,7 +128,7 @@ class KanbanBoard extends React.Component {
 
         if (item_id !== undefined && item_id != "") {
             let updatedStories = this.state.stories.slice();
-            updatedStories.find((story) => { return story.id == item_id }).column_id = column_id
+            updatedStories.find((story) => { return story.story_id == item_id }).column_id = column_id
 
             this.setState({ stories: updatedStories });
         }
@@ -124,6 +157,7 @@ class KanbanBoard extends React.Component {
                             onDragStart={this.onDragStart}
                             onDrop={this.onDrop}
                             onDragOver={this.onDragOver}
+                            maxRank={this.state.maxRank}
                          />
                         
                     );
@@ -140,7 +174,6 @@ class KanbanColumn extends React.Component {
             stories: props.stories,
             name: props.name,
             column_id: props.column_id,
-            isOpen: false,
         })
         this.renderStories = this.renderStories.bind(this)
     }
@@ -160,8 +193,9 @@ class KanbanColumn extends React.Component {
                     return (
                         <KanbanCard
                             story={story}
-                            key={story.id}
+                            key={story.story_id}
                             onDragStart={this.props.onDragStart}
+                            maxRank={this.props.maxRank}
                         />
                     )
                 })
@@ -179,9 +213,7 @@ class KanbanColumn extends React.Component {
             >
                 <div className="column-header" id={this.state.column_id}>
                     <div className="column-header-text">{this.state.name}</div>
-                    <div>
-                        
-                    </div>
+                    
                     
                 </div>
                 <div>
@@ -203,6 +235,7 @@ class KanbanCard extends React.Component {
 
         this.moreInformationHandler = this.moreInformationHandler.bind(this)
         this.renderMoreInformationButton = this.renderMoreInformationButton.bind(this)
+        this.renderPriority = this.renderPriority.bind(this)
     }
 
     moreInformationHandler() {
@@ -212,27 +245,42 @@ class KanbanCard extends React.Component {
     renderMoreInformationButton() {
         return this.state.moreInformation ?
             <div className="card-toggle card-toggle-collapse">
-                <button className="card-button-collapse" data-toggle="collapse" data-target={"#card_data" + this.state.story.id} onClick={this.moreInformationHandler} >-</button>
+                <button className="card-button-collapse" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >-</button>
             </div>
             :
             <div className="card-toggle">
-                <button className="card-button-expand" data-toggle="collapse" data-target={"#card_data" + this.state.story.id} onClick={this.moreInformationHandler} >+</button>
+                <button className="card-button-expand" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >+</button>
             </div>
     }   
-        
+
+    renderPriority() {
+        if (this.state.story.rank <= this.props.maxRank / 3)
+            return <div className="card-header-priority-text card-priority-color-low">Low Priority</div>
+        if (this.state.story.rank <= this.props.maxRank * 2 / 3)
+            return <div className="card-header-priority-text card-priority-color-medium">Med Priority</div>
+        return <div className="card-header-priority-text card-priority-color-high">High Priority</div>
+    }
     
     render() {
         return (
             <div
                 className="kanban-card"
                 draggable='true'
-                onDragStart={(e) => this.props.onDragStart(e, this.state.story.id)}
+                onDragStart={(e) => this.props.onDragStart(e, this.state.story.story_id)}
             >
+                <div className="kanban-card-header">
+                    <div className="card-header-priority">
+                        {this.renderPriority()}
+                    </div>
+                    <div className="card-header-rank">
+                        {this.state.story.rank}
+                    </div>
+                </div>
                 <div className="card-name-text">{this.state.story.name}</div>
 
                 {this.renderMoreInformationButton()}
 
-                <div class="collapse" id={"card_data" + this.state.story.id}>
+                <div class="collapse" id={"card_data" + this.state.story.story_id}>
                     <div class="card-description-header">Description</div>
                     <div className="card-description-text">
                         {this.state.story.description}

@@ -47,7 +47,7 @@ export default class App extends Component {
                 <Route path='/editfeature' component={EditFeature} />
             <Route path='/panel' component={Panel} />
             <Route path='/login' component={Login} />
-            <Route path='/KanbanTable' component={Kanban} />
+            <Route path='/KanbanBoard' component={Kanban} />
 
            
       </Layout>

@@ -3,112 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
+using Scrumban.ServiceLayer.Interfaces;
+using Scrumban.ServiceLayer.Services;
+using Microsoft.EntityFrameworkCore;
+using Scrumban.ServiceLayer.DTO;
 using Scrumban.DataAccessLayer;
-using Scrumban.DataAccessLayer.Interfaces;
-using Scrumban.DataAccessLayer.Repositories;
-using Scrumban.DataAccessLayer.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
     public class StoryGridController : Controller
     {
-        ScrumbanContext db;
-        IStoryRepository _repo;
-        IUnitOfWork _unitOfWork;
+        IStoryService _storyService;
 
-        public StoryGridController(ScrumbanContext context)
+        public StoryGridController(DbContextOptions<ScrumbanContext> options)
         {
-            db = context;
-            _repo = new StoryRepository(context);
-            _unitOfWork = new UnitOfWork(context);
+            _storyService = new StoryService(options);
         }
 
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
-        }
-
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
-
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
-        }
 
         [HttpGet]
-        [EnableQuery()]
-        [Route("/api/[controller]/getStories")]
-        public IQueryable<StoryDAL> Stories()
+        [EnableQuery]
+        [Route("GetStories")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetStories()
         {
-            return _unitOfWork.Stories.GetAll();
-        }
-
-        //[HttpGet]
-        //[EnableQuery()]
-        //[Route("/api/[controller]/getStories")]
-        //public IEnumerable<Models.Story> Stories()
-        //{
-        //    return db.Stories.Include(x => x.StoryState).Include(x => x.Priority).ToList();
-        //}
-
-        [HttpPost]
-        [Route("/api/[controller]/addStory")]
-        public IActionResult Add([FromBody]StoryDAL story)
-        {
-            StoryDAL added = new StoryDAL { Name = story.Name, Description = story.Description, PriorityId = story.PriorityId, StoryStateId = story.StoryStateId };
-            db.Add(added);
-            db.SaveChanges();
-            return Ok(story);
-        }
-
-        [HttpPost]
-        [Route("/api/[controller]/editStory")]
-        public IActionResult Edit([FromBody]StoryDAL story)
-        {
-            StoryDAL edited = db.Stories.FirstOrDefault(x => x.Id == story.Id);
-
-            edited.Name = story.Name;
-            edited.Description = story.Description;
-            edited.PriorityId = story.PriorityId;
-            edited.StoryStateId = story.StoryStateId;
-            db.SaveChanges();
-
-            return Ok(story);
-        }
-
-        [HttpDelete("{id}")]
-        //[Route("/api/[controller]/deleteStory")]
-        public IActionResult Delete(int id)
-        {
-            StoryDAL story = db.Stories.FirstOrDefault(x => x.Id == id);
-            if (story == null)
+            try
+            {
+                IQueryable<StoryDTO> stories = _storyService.GetStories();
+                return Ok(stories);
+            }
+            catch
             {
                 return NotFound();
             }
-            db.Stories.Remove(story);
-            db.SaveChanges();
-            return Ok(story);
+            
         }
+
+        [HttpPost]
+        [Route("CreateStory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult CreateStory([FromBody]StoryDTO story)
+        {
+            _storyService.CreateStory(story);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Delete(int story_id)
+        {
+            _storyService.DeleteStory(story_id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("Edit")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Edit([FromBody]StoryDTO story)
+        {
+            _storyService.UpdateStory(story);
+            return Ok();
+        }
+
+        
     }
 }
