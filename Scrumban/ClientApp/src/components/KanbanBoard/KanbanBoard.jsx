@@ -209,14 +209,11 @@ class KanbanColumn extends React.Component {
                 className="kanban-column"
                 onDrop={(e) => this.props.onDrop(e, this.state.column_id)}
                 onDragOver={(e) => { this.props.onDragOver(e) }}
-                draggable={false}
             >
                 <div className="column-header" id={this.state.column_id}>
                     <div className="column-header-text">{this.state.name}</div>
-                    
-                    
                 </div>
-                <div>
+                <div className="column-container">
                     {this.renderStories()}
                 </div>
             </div>
@@ -235,7 +232,7 @@ class KanbanCard extends React.Component {
 
         this.moreInformationHandler = this.moreInformationHandler.bind(this)
         this.renderMoreInformationButton = this.renderMoreInformationButton.bind(this)
-        this.renderPriority = this.renderPriority.bind(this)
+        this.renderRank = this.renderRank.bind(this)
     }
 
     moreInformationHandler() {
@@ -253,12 +250,9 @@ class KanbanCard extends React.Component {
             </div>
     }   
 
-    renderPriority() {
-        if (this.state.story.rank <= this.props.maxRank / 3)
-            return <div className="card-header-priority-text card-priority-color-low">Low Priority</div>
-        if (this.state.story.rank <= this.props.maxRank * 2 / 3)
-            return <div className="card-header-priority-text card-priority-color-medium">Med Priority</div>
-        return <div className="card-header-priority-text card-priority-color-high">High Priority</div>
+    renderRank() {
+
+        return <div className="card-header-rank-text">{"Rank: " + this.state.story.rank}</div>
     }
     
     render() {
@@ -269,11 +263,8 @@ class KanbanCard extends React.Component {
                 onDragStart={(e) => this.props.onDragStart(e, this.state.story.story_id)}
             >
                 <div className="kanban-card-header">
-                    <div className="card-header-priority">
-                        {this.renderPriority()}
-                    </div>
                     <div className="card-header-rank">
-                        {this.state.story.rank}
+                        {this.renderRank()}
                     </div>
                 </div>
                 <div className="card-name-text">{this.state.story.name}</div>

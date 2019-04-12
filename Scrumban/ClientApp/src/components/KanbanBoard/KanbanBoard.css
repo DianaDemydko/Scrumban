@@ -8,14 +8,10 @@
 
 .kanban-column {
     display: inline-block;
-    background-color: #eef2f9;
+    
     vertical-align: top;
-    width: 18%;
+    width: 19%;
     margin: 5px;
-    padding-left: 7px;
-    padding-right: 7px;
-    height: 700px;
-    overflow: auto;
 }
 
 .column-header {
@@ -28,6 +24,13 @@
     font-family: Georgia, serif;
     font-weight: 500;
     font-size: 20px;
+}
+
+.column-container {
+    background-color: #eef2f9;
+    padding: 7px;
+    overflow-y: auto;
+    height: 500px;
 }
 
 #Tasks.column-header {
@@ -80,35 +83,19 @@
     display: flex;
 }
 
-.card-header-priority {
-    
+.card-header-rank {
     height: 20px;
     width: 70px;
+    text-align:center;
 }
 
-.card-priority-color-low {
-    background: linear-gradient(90deg, #9ea7fc 17%, #6eb4f7 83%);
-}
-
-.card-priority-color-medium {
-    background: linear-gradient(138.6789deg, #81d5ee 17%, #7ed492 83%);
-}
-
-.card-priority-color-high {
-    background: linear-gradient(138.6789deg, #c781ff 17%, #e57373 83%);
-}
-
-.card-header-priority-text {
+.card-header-rank-text {
     color: white;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 600;
     border-radius: 5px;
     padding: 2px;
-}
-
-.card-header-rank {
-    margin-left: auto;
-    font-weight: 600;
+    background-image: linear-gradient(to right bottom, #041932, #003351, #004f61, #006a5c, #008344, #388033, #517c25, #64771a, #4c5d1c, #37431b, #242b17, #131411);
 }
 
 .card-name-text {
