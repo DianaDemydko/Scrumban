@@ -21,8 +21,10 @@ namespace Scrumban.ServiceLayer.Services
             _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
 
             var configuration = new MapperConfiguration(config => {
-                config.CreateMap<StoryDAL, StoryDTO>();
-                config.CreateMap<StoryDTO, StoryDAL>();
+                config.CreateMap<StoryDAL, StoryDTO>()
+                .ForMember(dest => dest.StoryState, opt => opt.MapFrom(src => src.StoryState.Name));
+                config.CreateMap<StoryDTO, StoryDAL>()
+                .ForPath(dest => dest.StoryState, opt => opt.Ignore());
             });
             _mapper = configuration.CreateMapper();
         }
@@ -52,7 +54,7 @@ namespace Scrumban.ServiceLayer.Services
         public void CreateStory(StoryDTO storyDTO)
         {
             StoryDAL storyDAL = _mapper.Map<StoryDAL>(storyDTO);
-            //storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition()
+            storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == storyDTO.StoryState).StoryState_id;
 
             _unitOfWork.StoryRepository.Create(storyDAL);
             _unitOfWork.Save();
@@ -76,7 +78,9 @@ namespace Scrumban.ServiceLayer.Services
 
         public void UpdateStory(StoryDTO storyDTO)
         {
-            _unitOfWork.StoryRepository.Update(_mapper.Map<StoryDAL>(storyDTO));
+            StoryDAL storyDAL = _mapper.Map<StoryDAL>(storyDTO);
+            storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == storyDTO.StoryState).StoryState_id;
+            _unitOfWork.StoryRepository.Update(storyDAL);
             _unitOfWork.Save();
         }
     }

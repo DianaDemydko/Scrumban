@@ -1,30 +1,19 @@
-﻿import React, { Component } from 'react';
-import "./KanbanBoard.css";
+﻿import React from 'react';
+import KanbanColumn from './KanbanColumn';
 import buildQuery from 'odata-query';
 
-const apiUrlGet = "api/storyGrid/GetStories";
+import "./css/KanbanBoard.css";
+
+const apiUrlGet = "api/Story/GetStories";
 
 
-export class Kanban extends React.Component {
-    render() {
-
-        return (
-            <div>
-                <h1>Kanban Board</h1>
-                <KanbanBoard />
-            </div>
-        );
-    }
-}
-
-class KanbanBoard extends React.Component {
+export default class KanbanBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
             stories: [],
             columns: [],
-            maxRank: 0,
         }
 
         this.state.columns = [
@@ -41,10 +30,7 @@ class KanbanBoard extends React.Component {
 
         this.getStoriesData = this.getStoriesData.bind(this)
         this.setAdditionalData = this.setAdditionalData.bind(this)
-        this.getMaxRank = this.getMaxRank.bind(this)
 
-        //for testing
-        this.createStory = this.createStory.bind(this)
     }
 
     componentDidMount() {
@@ -62,24 +48,12 @@ class KanbanBoard extends React.Component {
             })
     }
 
-    createStory() {
-        fetch("api/storyGrid/CreateStory", {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            method: 'POST',
-            body: JSON.stringify({
-
-            })
-        })
-    }
-
     setAdditionalData() {
         //Set columns
         if (this.state.stories.length > 0) {
             this.setState({
                 stories: this.state.stories.map((story) => {
-                    switch (story.storyState.name) {
+                    switch (story.storyState) {
                         case "Not Selected":
                             story.column_id = this.state.columns[0].column_id
                             return story
@@ -105,17 +79,6 @@ class KanbanBoard extends React.Component {
                 }, this)
             })
         }
-
-        //Set Max for all stories rank value
-        this.setState({ maxRank: this.getMaxRank() })
-    }
-
-    getMaxRank() {
-        var maxRank = 0
-        this.state.stories.map(story => {
-            if (story.rank > maxRank) maxRank = story.rank
-        })
-        return maxRank
     }
 
     onDragStart(e, item_id) {
@@ -126,7 +89,7 @@ class KanbanBoard extends React.Component {
         let item_id = e.dataTransfer.getData("item")
         e.preventDefault();
 
-        if (item_id !== undefined && item_id != "") {
+        if (item_id !== undefined && item_id != "" && item_id != null) {
             let updatedStories = this.state.stories.slice();
             updatedStories.find((story) => { return story.story_id == item_id }).column_id = column_id
 
@@ -148,7 +111,7 @@ class KanbanBoard extends React.Component {
             <div id="kanban-board">
                 {this.state.columns.map((column) => {
                     return (
-                       
+
                         <KanbanColumn
                             name={column.name}
                             column_id={column.column_id}
@@ -157,127 +120,11 @@ class KanbanBoard extends React.Component {
                             onDragStart={this.onDragStart}
                             onDrop={this.onDrop}
                             onDragOver={this.onDragOver}
-                            maxRank={this.state.maxRank}
-                         />
-                        
+                        />
+
                     );
                 })}
             </div>
         );
-    }
-}
-
-class KanbanColumn extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = ({
-            stories: props.stories,
-            name: props.name,
-            column_id: props.column_id,
-        })
-        this.renderStories = this.renderStories.bind(this)
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.state = ({
-            stories: newProps.stories,
-            name: newProps.name,
-            column_id: newProps.column_id
-        });
-    }
-
-    renderStories() {
-        if (this.state.stories.length > 0) {
-            return (
-                this.state.stories.map((story) => {
-                    return (
-                        <KanbanCard
-                            story={story}
-                            key={story.story_id}
-                            onDragStart={this.props.onDragStart}
-                            maxRank={this.props.maxRank}
-                        />
-                    )
-                })
-            )
-        }
-    }
-
-    render() {
-        return (
-            <div
-                className="kanban-column"
-                onDrop={(e) => this.props.onDrop(e, this.state.column_id)}
-                onDragOver={(e) => { this.props.onDragOver(e) }}
-            >
-                <div className="column-header" id={this.state.column_id}>
-                    <div className="column-header-text">{this.state.name}</div>
-                </div>
-                <div className="column-container">
-                    {this.renderStories()}
-                </div>
-            </div>
-            
-        )
-    }
-}
-
-class KanbanCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = ({
-            story: props.story,
-            moreInformation: false,
-        });
-
-        this.moreInformationHandler = this.moreInformationHandler.bind(this)
-        this.renderMoreInformationButton = this.renderMoreInformationButton.bind(this)
-        this.renderRank = this.renderRank.bind(this)
-    }
-
-    moreInformationHandler() {
-        this.setState({ moreInformation: !this.state.moreInformation })
-    }
-
-    renderMoreInformationButton() {
-        return this.state.moreInformation ?
-            <div className="card-toggle card-toggle-collapse">
-                <button className="card-button-collapse" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >-</button>
-            </div>
-            :
-            <div className="card-toggle">
-                <button className="card-button-expand" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >+</button>
-            </div>
-    }   
-
-    renderRank() {
-
-        return <div className="card-header-rank-text">{"Rank: " + this.state.story.rank}</div>
-    }
-    
-    render() {
-        return (
-            <div
-                className="kanban-card"
-                draggable='true'
-                onDragStart={(e) => this.props.onDragStart(e, this.state.story.story_id)}
-            >
-                <div className="kanban-card-header">
-                    <div className="card-header-rank">
-                        {this.renderRank()}
-                    </div>
-                </div>
-                <div className="card-name-text">{this.state.story.name}</div>
-
-                {this.renderMoreInformationButton()}
-
-                <div class="collapse" id={"card_data" + this.state.story.story_id}>
-                    <div class="card-description-header">Description</div>
-                    <div className="card-description-text">
-                        {this.state.story.description}
-                    </div>
-                </div>
-            </div>
-        )
     }
 }

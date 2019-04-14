@@ -20,7 +20,7 @@ import { StoryAdd } from './components/StoryReactComponents/StoryAdd';
 import { Login } from './components/PanelReactComponents/Login';
 import { SprintMain } from './components/Sprint/SprintMain';
 import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
-import { Kanban } from './components/KanbanBoard/KanbanBoard';
+import KanbanMain from './components/KanbanBoard/KanbanMain';
 
 
 export default class App extends Component {
@@ -47,7 +47,7 @@ export default class App extends Component {
                 <Route path='/editfeature' component={EditFeature} />
             <Route path='/panel' component={Panel} />
             <Route path='/login' component={Login} />
-            <Route path='/KanbanBoard' component={Kanban} />
+            <Route path='/KanbanBoard' component={KanbanMain} />
 
            
       </Layout>
