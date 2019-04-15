@@ -2,7 +2,7 @@
 {
     public class StoryStateDTO
     {
-        public int Id { get; set; }
+        public int StoryState_id { get; set; }
         public string Name { get; set; }
     }
 }

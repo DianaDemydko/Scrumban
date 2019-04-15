@@ -14,7 +14,6 @@ namespace Scrumban.Controllers
     public class FeatureDataController : Controller
     {
         private IFeatureService featureService;
-
         public FeatureDataController(ScrumbanContext context)
         {
             featureService = new FeatureService(context);
@@ -38,7 +37,9 @@ namespace Scrumban.Controllers
         [HttpPut]
         public void Put([FromBody] FeatureDTO feature)
         {
+            
             featureService.Put(feature);
+
 
         }
 

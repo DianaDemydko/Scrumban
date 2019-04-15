@@ -11,11 +11,12 @@ export class EditFeature extends Component {
             priorityID: this.props.featuretoEdit.priority.id,
             stateID: this.props.featuretoEdit.state.id,
             date: this.props.featuretoEdit.time,
+            stories: this.props.featuretoEdit.stories,
             clicked: 'false', 
             priorities: [], 
             allStates: [], 
             allStories: [], 
-            allStoriesPrint:[]
+            allStoriesStated:[]
         };
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
@@ -27,30 +28,31 @@ export class EditFeature extends Component {
        // this.getFeatureStories = this.getFeatureStories(this);
         this.onCancel = this.onCancel.bind(this);
     }
-
-
-    getFeatureStories() {
+    getStatedStories() {
         var array = [];
-        var tmp = this.props.featuretoEdit.stories;
+        var tmp = this.state.stories;
         this.state.allStories.forEach(function (i) {
             var item = tmp.find(function (j) {
-                return j.id==i.id;
+                return j.id == i.id;
             });
-            if (item != null)
-            {
-                alert(item.name);
+            if (item != null) {
                 array.push({ story: item, state: true });
-               
+
             }
-                else {
-                alert(i.name);
+            else {
                 array.push({ story: i, state: false });
             }
-            });
+        });
+        return array;
+    }
 
-    
-        return (<select class="btn btn-light dropdown-toggle w-100"> 
-            {array.map((item, index) => (<option key={index}><input type="checkbox" value={item.state} /> <label value={item.story.name} />  </option>))}
+    getFeatureStories() {
+
+        var array = this.getStatedStories();
+        return (<select class="btn btn-light dropdown-toggle w-100" value="Stories" onChange={this.onStoriesChanged} > 
+            {array.map((item) =>
+                (item.state ? <option key={item.id} style={{ 'background': 'blue', 'color':'white' }}> {item.story.name} </option> :
+                    <option key={item.id} > {item.story.name} </option>  ))}
             </select>);
      
     }
@@ -95,7 +97,18 @@ export class EditFeature extends Component {
         this.setState({ stateID: i });
     }
     onStoriesChanged(e) {
-
+        var newStories = [];
+        var arrayStories = this.getStatedStories();
+        var item = arrayStories.find(function (j) {
+            return j.story.name == e.target.value;
+        });
+        if (item.state == true) {
+            newStories= this.state.stories.filter(i => i != item.story);
+        }
+        else {
+            newStories.push(item.story);
+        }
+        this.setState({ stories: newStories })
     }
 
   
@@ -104,11 +117,13 @@ export class EditFeature extends Component {
             method: 'put',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id: this.props.featuretoEdit.id, name: this.state.name,
-                description: this.state.description,
-                priorityID: this.state.priorityID,
-                time: this.state.date,
-                stateID: this.state.stateID
+                    id: this.props.featuretoEdit.id, name: this.state.name,
+                    description: this.state.description,
+                    priorityID: this.state.priorityID,
+                    time: this.state.date,
+                    stateID: this.state.stateID, stories: this.state.stories
+               
+
             })
         });
         this.props.onStateUpdating(false);

@@ -113,7 +113,7 @@ export class FeatureTable extends Component {
                 break
 
             case 'priority':
-                query += 'priority' + ' ' + this.state.currentSort.sortingOrder;
+                query += 'priorityid' + ' ' + this.state.currentSort.sortingOrder;
                 if (this.state.currentSort.sortingOrder == 'asc') {
                     this.setState({ sortByPriority: icon_up });
                 }

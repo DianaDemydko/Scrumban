@@ -6,11 +6,16 @@ namespace Scrumban.ServiceLayer.Interfaces
 {
     public interface IStoryService
     {
-        StoryDTO GetStory(int? id);
-        //TO DELETE !!!!!!!!!!!!!!!!
         IQueryable<StoryDTO> GetStories();
+        IEnumerable<StoryStateDTO> GetStates();
 
-        //TO SAVE !!!!!!!!!!!!!!!
-        //IEnumerable<StoryDTO> GetStories();  
+        StoryDTO GetStory(int id);
+
+        void CreateStory(StoryDTO entity);
+
+        void DeleteStory(int id);
+        void DeleteStory(StoryDTO entity);
+
+        void UpdateStory(StoryDTO entity);
     }
 }

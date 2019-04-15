@@ -3,112 +3,110 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
+using Scrumban.ServiceLayer.Interfaces;
+using Scrumban.ServiceLayer.Services;
+using Microsoft.EntityFrameworkCore;
+using Scrumban.ServiceLayer.DTO;
 using Scrumban.DataAccessLayer;
-using Scrumban.DataAccessLayer.Interfaces;
-using Scrumban.DataAccessLayer.Repositories;
-using Scrumban.DataAccessLayer.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
-    public class StoryGridController : Controller
+    public class StoryController : Controller
     {
-        ScrumbanContext db;
-        IStoryRepository _repo;
-        IUnitOfWork _unitOfWork;
+        IStoryService _storyService;
 
-        public StoryGridController(ScrumbanContext context)
+        public StoryController(DbContextOptions<ScrumbanContext> options)
         {
-            db = context;
-            _repo = new StoryRepository(context);
-            _unitOfWork = new UnitOfWork(context);
+            _storyService = new StoryService(options);
         }
 
-        private static string[] Summaries = new[]
+        [HttpGet]
+        [EnableQuery]
+        [Route("GetStories")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetStories()
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
-        }
-
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
-
-            public int TemperatureF
+                IQueryable<StoryDTO> stories = _storyService.GetStories();
+                return Ok(stories);
+            }
+            catch
             {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
+                return NotFound();
             }
         }
 
         [HttpGet]
-        [EnableQuery()]
-        [Route("/api/[controller]/getStories")]
-        public IQueryable<StoryDAL> Stories()
+        [Route("GetStory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetStory(int id)
         {
-            return _unitOfWork.Stories.GetAll();
-        }
-
-        //[HttpGet]
-        //[EnableQuery()]
-        //[Route("/api/[controller]/getStories")]
-        //public IEnumerable<Models.Story> Stories()
-        //{
-        //    return db.Stories.Include(x => x.StoryState).Include(x => x.Priority).ToList();
-        //}
-
-        [HttpPost]
-        [Route("/api/[controller]/addStory")]
-        public IActionResult Add([FromBody]StoryDAL story)
-        {
-            StoryDAL added = new StoryDAL { Name = story.Name, Description = story.Description, PriorityId = story.PriorityId, StoryStateId = story.StoryStateId };
-            db.Add(added);
-            db.SaveChanges();
-            return Ok(story);
-        }
-
-        [HttpPost]
-        [Route("/api/[controller]/editStory")]
-        public IActionResult Edit([FromBody]StoryDAL story)
-        {
-            StoryDAL edited = db.Stories.FirstOrDefault(x => x.Id == story.Id);
-
-            edited.Name = story.Name;
-            edited.Description = story.Description;
-            edited.PriorityId = story.PriorityId;
-            edited.StoryStateId = story.StoryStateId;
-            db.SaveChanges();
-
-            return Ok(story);
-        }
-
-        [HttpDelete("{id}")]
-        //[Route("/api/[controller]/deleteStory")]
-        public IActionResult Delete(int id)
-        {
-            StoryDAL story = db.Stories.FirstOrDefault(x => x.Id == id);
-            if (story == null)
+            try
+            {
+                StoryDTO story = _storyService.GetStory(id);
+                return Ok(story);
+            }
+            catch
             {
                 return NotFound();
             }
-            db.Stories.Remove(story);
-            db.SaveChanges();
-            return Ok(story);
+        }
+
+
+        [HttpPost]
+        [Route("CreateStory")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult CreateStory([FromBody] StoryDTO story)
+        {
+            try
+            {
+                _storyService.CreateStory(story);
+
+                return Created(nameof(GetStory), story);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("DeleteStory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteStory([FromBody] int story_id)
+        {
+            try
+            {
+                _storyService.DeleteStory(story_id);
+                return Ok();
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateStory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult UpdateStory([FromBody] StoryDTO story)
+        {
+            try
+            {
+                _storyService.UpdateStory(story);
+                return Ok();
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }
