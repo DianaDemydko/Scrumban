@@ -4,7 +4,8 @@ import buildQuery from 'odata-query';
 
 import "./css/KanbanBoard.css";
 
-const apiUrlGet = "api/Story/GetStories";
+const apiUrlGetStories = "api/Story/GetStories";
+const apiUrlUpdateStory = "api/Story/UpdateStory";
 
 
 export default class KanbanBoard extends React.Component {
@@ -30,7 +31,7 @@ export default class KanbanBoard extends React.Component {
 
         this.getStoriesData = this.getStoriesData.bind(this)
         this.setAdditionalData = this.setAdditionalData.bind(this)
-
+        this.ChangeColumnAllowed = this.ChangeColumnAllowed.bind(this)
     }
 
     componentDidMount() {
@@ -41,7 +42,7 @@ export default class KanbanBoard extends React.Component {
     }
 
     getStoriesData(query) {
-        fetch(apiUrlGet + query)
+        fetch(apiUrlGetStories + query)
             .then(response => response.json())
             .then(data => {
                 this.setState({ stories: data, isLoading: false }, this.setAdditionalData)
@@ -70,10 +71,7 @@ export default class KanbanBoard extends React.Component {
                             story.column_id = this.state.columns[4].column_id
                             return story
                         case "Rejected":
-                            story.column_id = this.state.columns[0].column_id
-                            return story
-                        default:
-                            story.column_id = this.state.columns[0].column_id
+                            story.column_id = this.state.columns[1].column_id
                             return story
                     }
                 }, this)
@@ -90,11 +88,78 @@ export default class KanbanBoard extends React.Component {
         e.preventDefault();
 
         if (item_id !== undefined && item_id != "" && item_id != null) {
-            let updatedStories = this.state.stories.slice();
-            updatedStories.find((story) => { return story.story_id == item_id }).column_id = column_id
 
-            this.setState({ stories: updatedStories });
+            let story = this.state.stories.find(story => story.story_id == item_id)
+
+            let updatedStoryState = this.ChangeColumnAllowed(story.column_id, column_id)
+
+            if (updatedStoryState != null) {
+                let storyToUpdate = {
+                    story_id: story.story_id,
+                    name: story.name,
+                    description: story.description,
+                    rank: story.rank,
+                    storyState: updatedStoryState
+                }
+
+                fetch(apiUrlUpdateStory,
+                    {
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(storyToUpdate),
+                        method: 'put'
+                    })
+                    .then(function (response) {
+                        let responseStatus = response.status
+                        switch (responseStatus) {
+                            case 404:
+                                alert("Updaiting element went wrong!")
+                                break
+                            case 200:
+                                let updatedStories = this.state.stories.slice();
+                                updatedStories.find((story) => { return story.story_id == item_id }).column_id = column_id
+                                this.setState({ stories: updatedStories });
+                                break
+                        }
+                    }.bind(this))
+                    .catch((e) => alert(e + "Unexpected error occured."))
+            }
+            else {
+                alert("Drop not allowed")
+            }
         }
+    }
+
+    ChangeColumnAllowed(prevColumnID, nextColumnID) {
+        if (prevColumnID == nextColumnID) return null
+
+        if (nextColumnID == 'Tasks') {
+            return null
+        }
+
+        if (nextColumnID == 'To_Do') {
+            switch (prevColumnID) {
+                case 'Tasks': return 'Selected'
+                case 'Testing': return 'Rejected'
+                default: return null
+            }
+        }
+
+        if (nextColumnID == 'In_Progress') {
+            if (prevColumnID == 'To_Do') { return 'In Progress' }
+            else { return null }
+        }
+
+        if (nextColumnID == 'Testing') {
+            if (prevColumnID == 'In_Progress') { return 'Testing' }
+            else { return null }
+        }
+
+        if (nextColumnID == 'Done') {
+            if (prevColumnID == 'Testing') { return 'Done' }
+            else { return null }
+        }
+
+        return null;
     }
 
     onDragOver(e) {
