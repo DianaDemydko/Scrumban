@@ -26,6 +26,9 @@ namespace Scrumban.DataAccessLayer.Models
         public int TaskId { get; set; }
         //public Task Task { get; set; }
 
+        public int? FeatureId { get; set; }
+        public FeatureDAL Feature { get; set; }
+
 
     }
 }

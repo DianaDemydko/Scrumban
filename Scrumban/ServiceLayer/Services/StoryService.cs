@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Models;
@@ -22,10 +23,21 @@ namespace Scrumban.ServiceLayer.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<StoryDTO> GetStories()
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StoryDTO, StoryDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<StoryDAL>, List<StoryDTO>>(_unitOfWork.Stories.GetAll());
+
+        //TO DELETE !!!!!!!!!!!!!!!!!!!!!!!!
+        public IQueryable<StoryDTO> GetStories() { 
+        var mapper = new MapperConfiguration(cfg => {
+            cfg.CreateMap<FeatureDAL, FeatureDTO>();
+            cfg.CreateMap<StoryDAL, StoryDTO>();
+        }).CreateMapper();
+            return mapper.Map<IQueryable<StoryDAL>, List<StoryDTO>>(_unitOfWork.Stories.GetAll()).AsQueryable();
         }
+
+        //TO SAVE !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //public IEnumerable<StoryDTO> GetStories()
+        //{
+        //    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<StoryDTO, StoryDTO>()).CreateMapper();
+        //    return mapper.Map<IEnumerable<StoryDAL>, List<StoryDTO>>(_unitOfWork.Stories.GetAll());
+        //}
     }
 }

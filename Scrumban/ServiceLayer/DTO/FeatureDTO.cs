@@ -1,5 +1,6 @@
 ﻿using Scrumban.DataAccessLayer.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Scrumban.ServiceLayer.DTO
 {
@@ -13,9 +14,12 @@ namespace Scrumban.ServiceLayer.DTO
 
         public int? OwnerID { set; get; }
         public OwnerDAL Owner { get; set; }
-        public int? ReleaseID { set; get; }
-        public int? Priority { set; get; }
-        //  public List<Story> Stories { set; get; }
+       // public int? ReleaseID { set; get; }
+        public int? PriorityID { set; get; }
+        public PriorityDTO Priority { get; set; }
+
+
+        public List<StoryDAL> Stories { set; get; }
         public DateTime Time { set; get; }
     }
 }

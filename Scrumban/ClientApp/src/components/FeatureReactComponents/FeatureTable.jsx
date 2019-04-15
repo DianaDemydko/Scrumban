@@ -32,12 +32,13 @@ export class FeatureTable extends Component {
         super(props);
         this.state = {
             features: [],
+            fea: null,
             editState: false,
             sortByName: icon_up,
             sortByDescription: icon_up,
             sortByPriority: icon_up,
             sortBySDate: icon_up,
-            sortByFDate: icon_up,
+            sortByState : icon_up,
             currentSort:
             {
                 columnName: '',
@@ -120,6 +121,15 @@ export class FeatureTable extends Component {
                     this.setState({ sortByPriority: icon_down });
                 }
                 break
+            case 'state':
+                query += 'stateid' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByState: icon_up });
+                }
+                else {
+                    this.setState({ sortByState: icon_down });
+                }
+                break
         }
 
         fetch('api/FeatureData/' + query)
@@ -136,17 +146,20 @@ export class FeatureTable extends Component {
 
     componentDidMount() {
         fetch('api/FeatureData/')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({ features: json })
-            });
+            .then(function (res) {
+                return res.json()
+            })
+            .then(data => 
+                this.setState({ features: data})
+            );
     }
 
 
     render() {
-        return < div>
+        return <div>
+            <label style={{ 'fontSize': '40px' }}> Feature </label>
             <FeatureFilter changeFindData={this.findData} />
-
+            <div className="tablePosition">
             <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
                 <thead>
                     <tr>
@@ -158,7 +171,10 @@ export class FeatureTable extends Component {
                             <label>Description</label>
                             <ion-icon src={this.state.sortByDescription} />
                         </th>
-                        <th class="col" > State  </th>
+                        <th class="col" onClick={() => this.sortData('state')}>
+                            <label>State</label>
+                            <ion-icon src={this.state.sortByState} />
+                        </th>
                         <th class="col"  > Owner  </th>
                         <th class="col" onClick={() => this.sortData('priority')}>
                             <label>Priority</label>
@@ -179,7 +195,8 @@ export class FeatureTable extends Component {
                         <FeatureRow key={feature.id} feature={feature} />)
                     )}
                 </tbody>
-            </table>
+                </table>
+                </div>
             <div />
             <AddButton />
 

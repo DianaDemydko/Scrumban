@@ -2,14 +2,19 @@
 import DatePicker from 'react-datepicker';
 import '../../GridStyles/StyleForGrid.css';
 
+
+
 export class AddFeature extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: 'Default Name',
             description: 'Default Description',
-            priority: 1,
+            priorityID: 1,
+            stateID: 1,
             start: new Date(),
+            priorities: [],
+            states: []
 
         };
         this.handleClick = this.handleClick.bind(this);
@@ -17,6 +22,20 @@ export class AddFeature extends React.Component {
         this.onDescrioptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
         this.onStartDateChanged = this.onStartDateChanged.bind(this);
+        this.onCancelClick = this.onCancelClick.bind(this);
+        this.onStateChanged = this.onStateChanged.bind(this);
+    }
+    componentDidMount() {
+        fetch('api/FeatureData/getPriorities')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ priorities: json })
+            });
+        fetch('api/FeatureData/getStates')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ states: json })
+            });
     }
 
     handleClick(e) {
@@ -25,7 +44,8 @@ export class AddFeature extends React.Component {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 name: this.state.name, description: this.state.description,
-                priority: this.state.priority, time: this.state.start
+                priorityid: this.state.priorityID, time: this.state.start,
+                stateid: this.state.stateID
             })
         });
         window.location = "/feature";
@@ -37,42 +57,72 @@ export class AddFeature extends React.Component {
         this.setState({ description: e.target.value });
     }
     onPriorityChanged(e) {
-        this.setState({ priority: e.target.value });
+        var i = this.state.priorities.find(x => x.name === e.target.value).id;
+        this.setState({ priorityID: i });
+    }
+    onStateChanged(e) {
+        var i = this.state.states.find(x => x.name === e.target.value).id;
+        this.setState({ stateID: i });
     }
     onStartDateChanged(newDate) {
         this.setState({ start: newDate });
+    }
+    onCancelClick() {
+        window.location = "/feature";
     }
    
 
     render() {
         return (
-            <div className= "componentBackground" >
-                <label> Name: </label>
-                <input className="input" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
+            <div className="addComponentBackground" >
+                <label style={{ 'fontSize': '40px' }} > Create New Feature</label>
                 <div />
-                <label> Description: </label>
-                <input className = "input" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
-                <div />
+                <div className = "addContent">
+                <label class = "col-2"> Name: </label>
+                <input className="inputAdd" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
+<div/>
+                </div>
+                
+                <div className="addContent">
+                    <label class="col-2"> Description: </label>
+                    <input className="inputAdd" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
+                    <div />
+                </div>
+                
+                <div className="addContent">
+                    <label class="col-2"> State: </label>
+                <select class="btn btn-light dropdown-toggle" name="state" onChange={e => this.onStateChanged(e)} >
+                    {this.state.states.map(state => (
+                        <option> {state.name}</option>))}
+
+                    </select>
+                    </div>
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name ="owners">Ownres</button>*/}
                 <div />
-                <label> Priority</label>
+                <div className="addContent">
+                    <label class="col-2"> Priority: </label>
                 <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
+                    {this.state.priorities.map(priority => (
+                        <option> { priority.name }</option>))}
+           
+                    </select>
+                </div>
                 <div />
-                {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name = "state">States</button>*/}
-                <label >Start Date</label>
-                <DatePicker selected={this.state.start} onChange={this.onStartDateChanged} dateFormat="yyyy/MM/dd" />
-                <div />
+                <div className="addContent">
+                    <label class="col-2" >Start Date: </label>
+                    <DatePicker selected={this.state.start} onChange={this.onStartDateChanged} dateFormat="yyyy/MM/dd" />
+                    <div />
+                </div>
                 
-                <button class="btn btn-dark" onClick={this.handleClick} > Submit </button>
+                <div className="addContent">
+                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'15%' }} onClick={this.handleClick} > Submit </button>
+                
+                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}  onClick={this.onCancelClick} > Cancel </button>
+                    </div>
 
 
-            </div>
+                </div>
+                
 
         );
     }

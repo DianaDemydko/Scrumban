@@ -10,6 +10,11 @@
     border: 1px solid slategrey;
     border-radius: 4px;
 }
+.inputAdd {
+    width: 25%;
+    border: 1px solid slategrey;
+    border-radius: 4px;
+}
 .dropdown-content {
     display: none;
     position: absolute;
@@ -33,3 +38,28 @@
     table-layout: fixed;
    width: 100%;
 }
+
+.wrapper {
+    border: 1px solid slategrey;
+    border-radius: 4px;
+}
+.tablePosition {
+    padding-top: 50px;
+}
+.addComponentBackground {
+    background-color: #efefef;
+    width: 70%;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative
+}
+.addContent {
+    left: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+}
+
+

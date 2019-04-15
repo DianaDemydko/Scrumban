@@ -15,6 +15,8 @@ export class FeatureRow extends Component {
     onStateChanged(editState) {
         this.setState({ edit: editState });
     }
+
+   
     render() {
         return (this.state.edit ? <EditFeature featuretoEdit={this.props.feature} onStateUpdating={this.onStateChanged} /> :
             <FeaturePrint onStateUpdating={this.onStateChanged} feature={this.props.feature} />

@@ -15,5 +15,8 @@
         public int? ProgrammerId { get; set; }
        
         public int TaskId { get; set; }
+
+        public int? FeatueId { get; set; }
+        public FeatureDTO Feature { get; set; }
     }
 }

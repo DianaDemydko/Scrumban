@@ -24,7 +24,8 @@ namespace Scrumban.Controllers
         [EnableQuery()]
         public IEnumerable<FeatureDTO> Get()
         {
-            return featureService.Get();
+            var result = featureService.Get();
+            return result;
 
         }
 
@@ -47,6 +48,28 @@ namespace Scrumban.Controllers
             featureService.Post(feature);
 
 
+        }
+
+        [HttpGet]
+        [Route("/api/[controller]/getPriorities")]
+        public IEnumerable<PriorityDTO> GetPriorities()
+        {
+            var priorities = featureService.GetPriorities();
+            return priorities;
+        }
+        [HttpGet]
+        [Route("/api/[controller]/getAllStories")]
+        public IEnumerable<StoryDTO> GetAllStories()
+        {
+            var stories = featureService.GetAllStories();
+            return stories;
+        }
+        [HttpGet]
+        [Route("/api/[controller]/getStates")]
+        public IEnumerable<StateDTO> GetStates()
+        {
+            var states = featureService.GetStates();
+            return states;
         }
         private static string[] Summaries = new[]
         {

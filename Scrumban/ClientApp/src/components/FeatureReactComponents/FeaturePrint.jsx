@@ -3,6 +3,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
 import '../../GridStyles/StyleForGrid.css';
 
+const icon_up = require("./sort-arrow-up.svg")
+const icon_down = require("./sort-arrow-down.svg")
 
 class DeleteButton extends Component {
 
@@ -37,15 +39,17 @@ export class FeaturePrint extends Component {
         this.state = {
             feature: this.props.feature,
             editState: false,
-            firstDescriptionWord: ''
+            firstDescriptionWord: '', 
+            listOpen: false
         }
+        this.toggleList = this.toggleList.bind(this);
+
         this.onEditButtonClick = this.onEditButtonClick.bind(this);
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);
     }
     getFirstDescriptionWord() {
         var descriptionString = this.state.feature.description;
         var index = descriptionString.indexOf(" ");
-        //   this.setState({ firstDescriptionWord: descriptionString.slice(0, index) });
         return descriptionString.slice(0, index);
     }
     onEditButtonClick(e) {
@@ -53,6 +57,12 @@ export class FeaturePrint extends Component {
         this.setState({ editState: !this.state.editState });
         this.props.onStateUpdating(this.state.editState);
 
+    }
+
+    toggleList() {
+        this.setState(prevState => ({
+            listOpen: !prevState.listOpen
+        }))
     }
     render() {
 
@@ -69,21 +79,34 @@ export class FeaturePrint extends Component {
                         </div>
                     </div>
                 </td>
-                {/* <td class="col" > {this.state.state} </td>*/}
+                <td class="col" > {this.state.feature.state.name} </td>
                 {/*<td class="col" > {this.state.feature.owner.name } </td>*/}
-                <td class="col"> States </td>
                 <td class="col"> Owner </td>
-                <td class="col"> {this.state.feature.priority} </td>
-                {/*<td class="col col-primary dropdown-toggle" type="divider" data-toggle="dropdown"> {feature.stories} </td>*/}
+                <td class="col"> {this.state.feature.priority.name} </td>
 
-                {/* <td class="col" > {this.state.feature.stories} </td>*/}
-                <td class="col"> Stories </td>
+                <td class="col"> 
+                    <div>
+                        <div className="dd-header" onClick={() => this.toggleList()}>
+                            <div className="dd-header-title">Stories
+                            {this.state.listOpen
+                                ? <ion-icon src={icon_up}  />
+                                : <ion-icon src={icon_down}  />
+                                }
+                            </div>
+                        </div>
+                        {this.state.listOpen && <ul className="dd-list">
+                            {this.state.feature.stories.map((item) => (
+                                <li className="dd-list-item" key={item.id} >{item.name}</li>
+                            ))}
+                        </ul>}
+                    </div>
+                    </td>
                 <td class="col">
                     <Moment class="col" parse="YYYY/MM/DD" format="YYYY/MM/DD" > {this.state.feature.time} </Moment>
                 </td>
                 
                 <td class="col">
-                    <button class="btn btn-sm btn-outline-dark w-100" id='editButton' onClick={e => this.onEditButtonClick(e)} >
+                    <button className="btn btn-sm btn-outline-dark w-100" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit
                                 </button>
                     <DeleteButton featureIDtoDelete={this.state.feature.id} />
