@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "mdbreact": "file:node_modules/mdbreact",
     "moment": "^2.24.0",
     "odata-query": "^5.6.0",
     "react": "^16.0.0",

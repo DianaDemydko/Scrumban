@@ -365,13 +365,16 @@ export class DefectGrid extends React.Component {
         this.loadData("");
     }
     loadData(query) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("get", apiGetUrl + query, true);
-        xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            this.setState({ defects: data });
-        }.bind(this);
-        xhr.send();
+        fetch(apiGetUrl + query)
+            .then(response => response.json())
+            .then(data => { this.setState({ defects: data }) });
+        //var xhr = new XMLHttpRequest();
+        //xhr.open("get", apiGetUrl + query, true);
+        //xhr.onload = function () {
+        //    var data = JSON.parse(xhr.responseText);
+        //    this.setState({ defects: data });
+        //}.bind(this);
+        //xhr.send();
     }
 
     onChanged(item) {
