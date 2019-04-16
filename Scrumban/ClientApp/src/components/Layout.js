@@ -23,11 +23,11 @@ export class Layout extends Component {
     }
 
     updateUser(newUser) {
-        this.setState({user: newUser })
+        this.setState({ user: newUser, childRefresh: !this.state.childRefresh })
     }
 
     setRenderedComponentName(renderedComponent) {   // set name of rendered component in Content
-        this.setState({ renderedComame: renderedComponent })
+        this.setState({ renderedComponentName: renderedComponent })
     }
 
     onLoginStatusCallBack(loginOrlogout, currentUser, componentName) {

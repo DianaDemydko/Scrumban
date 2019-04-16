@@ -155,7 +155,6 @@ export class TaskEdit extends React.Component {
                     <div>
                         <label for="name">Name</label>
                         <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name}/>
-
                     </div>
                 </div>
                 <div className="form-group col-12">

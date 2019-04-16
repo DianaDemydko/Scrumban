@@ -77,9 +77,13 @@ export class Login extends React.Component {
                     return "error"
                 }
                 }).then((data) => {
-                    sessionStorage.setItem("tokenKey", data.access_token);
-                    //this.setState({ isAuth: true, user: data.user });
-                    this.props.moveToComponent(true, data.user, "tasks");
+                    if (data == "error") {
+                        //this.props.moveToComponent(true, data.user, "tasks");
+                    }
+                    else {
+                        sessionStorage.setItem("tokenKey", data.access_token);
+                        this.props.moveToComponent(true, data.user, "tasks");
+                    }
                 });
         }
         else {

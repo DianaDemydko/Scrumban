@@ -15,6 +15,10 @@ import { TaskAdd } from '../TaskReactComponenets/TaskAdd';
 export class Body extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            i: 1
+        }
     }
 
     render() {
@@ -31,7 +35,7 @@ export class Body extends React.Component {
         } else if(this.props.renderedComponentName === "addTask") {
             renderedComponent = <TaskAdd moveToComponent={this.props.moveToComponent} />
         } else if (this.props.renderedComponentName === "profile") {
-            renderedComponent = <ProfilePage moveToComponent2={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+            renderedComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
         }
 
         else { renderedComponent = this.props.children }
