@@ -1,0 +1,129 @@
+﻿
+.kanban-card {
+    background-color: #fffbf0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid grey;
+    width: 100%;
+    display: inline-block;
+    font-family: "Roboto", sans-serif;
+}
+
+    .kanban-card:hover {
+        cursor: default;
+    }
+
+.kanban-card-header {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: flex;
+}
+
+.card-header-rank {
+    height: 20px;
+    width: 70px;
+    text-align: center;
+}
+
+.card-header-rank-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 2px;
+    background-image: linear-gradient(to right bottom, #041932, #003351, #004f61, #006a5c, #008344, #388033, #517c25, #64771a, #4c5d1c, #37431b, #242b17, #131411);
+}
+
+.card-name-text {
+    color: black;
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px;
+    word-wrap: break-word;
+}
+
+.card-toggle {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-toggle-collapse {
+    border-bottom: 1px dashed grey;
+    margin-left: 10px;
+    margin-right: 10px;
+    justify-content: flex-end;
+}
+
+.card-button-expand {
+    font-size: 14px;
+    font-weight: bold;
+    background: #ed1c5b;
+    border-radius: 100%;
+    border: none;
+    height: 30px;
+    width: 30px;
+    background-image: linear-gradient(to bottom right, #3CA55C 0%, #B5AC49 100%);
+}
+
+    .card-button-expand:focus {
+        outline: none;
+    }
+
+.card-button-collapse {
+    font-size: 14px;
+    font-weight: bold;
+    background: #ed1c5b;
+    border-radius: 15px;
+    border: none;
+    height: 22px;
+    width: 22px;
+    background-image: linear-gradient(to bottom right, #fa5757 0%, #EA384D 100%);
+}
+
+    .card-button-collapse:focus {
+        outline: none;
+    }
+
+.card-description-header {
+    color: black;
+    background-color: burlywood;
+    display: inline-flex;
+    width: auto;
+    padding: 1px 5px 1px 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid grey;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 10px;
+    word-wrap: break-word;
+}
+
+.card-description-text {
+    color: black;
+    display: flex;
+    width: auto;
+    background-image: linear-gradient(to bottom right, #ccffff 20%, #ccffcc);
+    font-size: 14px;
+    text-align: justify;
+    font-weight: 500;
+    padding: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid grey;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}

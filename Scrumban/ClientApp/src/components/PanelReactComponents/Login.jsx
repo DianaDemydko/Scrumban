@@ -1,5 +1,4 @@
-﻿
-import React, { Component } from "react";
+﻿import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { Route } from 'react-router';
@@ -10,7 +9,7 @@ export class Login extends React.Component {
 
         this.state = {
             email: "",
-            
+
             password: "",
             isAuth: false,
             user: null,

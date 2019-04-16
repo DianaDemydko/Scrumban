@@ -84,85 +84,66 @@ export class DefectEdit extends React.Component {
     }
 
     render() {
-        return <tr className="current-row">
-            <td colSpan="4">
-                <form>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="name">Name</label>
-
-                            <input type="text"
-                                placeholder="defect name"
-                                defaultValue={this.props.item.name}
-                                onChange={this.onNameChange}
-                                class="form-control"
-                                id="name"
-                                autoComplete="false"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="description">Description</label>
-                            <textarea rows="3"
-                                type="text"
-                                placeholder="defect description"
-                                defaultValue={this.props.item.description}
-                                onChange={this.onDescriptionChange}
-                                class="form-control"
-                                id="description" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="state">State</label>
-                            <select onChange={this.onStateChange} class="form-control" id="state" defaultValue={this.props.item.state}>
-                                {stateOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="priority">Priority</label>
-                            <select onChange={this.onPriorityChange} class="form-control" id="priority" defaultValue={this.props.item.priority}>
-                                {priorityOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="severity">Severity</label>
-                            <select onChange={this.onSeverityChange} class="form-control" id="severity" defaultValue={this.props.item.severity}>
-                                {severityOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="storyId">StoryId</label>
-                            <input type="text"
-                                placeholder="StoryId"
-                                defaultValue={this.props.item.storyId}
-                                onChange={this.onStoryIdChange}
-                                class="form-control"
-                                id="storyId" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="status">Status</label>
-                            <select onChange={this.onStatusChange} class="form-control" id="status" defaultValue={this.props.item.status}>
-                                {statusOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </td>
-            <td>
-                <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Save</button>
-                <button type="submit" onClick={this.props.editDefect} className="btn btn-primary">Cancel</button>
-            </td>
-        </tr>;
+        return <tr>
+                    <td>  
+                        <label for="name">Name</label>
+                        <input type="text"
+                        placeholder="defect name"
+                        defaultValue={this.props.item.name}
+                        onChange={this.onNameChange}
+                        class="form-control"
+                        id="name"
+                        autoComplete="false"/>
+                    </td>
+                    <td>
+                        <label for="description">Description</label>
+                        <textarea rows="3"
+                        type="text"
+                        placeholder="defect description"
+                        defaultValue={this.props.item.description}
+                        onChange={this.onDescriptionChange}
+                        class="form-control"
+                        id="description" />
+                    </td>
+                    <td>
+                        <label for="state">State</label>
+                        <select onChange={this.onStateChange} class="form-control" id="state" defaultValue={this.props.item.state}>
+                            {stateOption.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </td>
+                    <td>             
+                        <label for="priority">Priority</label>
+                        <select onChange={this.onPriorityChange} class="form-control" id="priority" defaultValue={this.props.item.priority}>
+                            {priorityOption.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </td>
+                    <td>             
+                        <label for="severity">Severity</label>
+                        <select onChange={this.onSeverityChange} class="form-control" id="severity" defaultValue={this.props.item.severity}>
+                            {severityOption.map((item) => <option>{item.name}</option>)}
+                        </select>          
+                    </td>
+                    <td>      
+                        <label for="storyId">StoryId</label>
+                        <input type="text"
+                        placeholder="StoryId"
+                        defaultValue={this.props.item.storyId}
+                        onChange={this.onStoryIdChange}
+                        class="form-control"
+                        id="storyId" />
+                    </td>
+                    <td>
+                        <label for="status">Status</label>
+                        <select onChange={this.onStatusChange} class="form-control" id="status" defaultValue={this.props.item.status}>
+                            {statusOption.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </td>
+                    <td>
+                <button type="submit" onClick={this.onSubmit} style={{ width: '100%' }} className="btn btn-outline-primary">Save</button>
+                    </td>
+                    <td>
+                <button type="submit" onClick={this.props.editDefect} style={{ width: '100%' }} className="btn btn-outline-primary">Cancel</button>
+                    </td>
+            </tr>;
     }
 }

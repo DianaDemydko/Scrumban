@@ -1,11 +1,7 @@
 ﻿import React from 'react';
 import DatePicker from 'react-datepicker';
-import { Link } from 'react-router-dom';
 
 import './SprintCreateForm.css'; 
-
-const successCreateUrl = "/Sprints";
-const cancelUrl = "/Sprints";
 
 
 export class SprintCreateForm extends React.Component {
@@ -14,12 +10,12 @@ export class SprintCreateForm extends React.Component {
 
         this.state =
         {
-            statuses: this.props.location.state.statuses,
+            statuses: [{ sprintStatus: 'Not Started'}],// this.props.location.state.statuses,
             name: "",
             description: "",
             startDate: new Date(),
             endDate: new Date(),
-            sprintStatus: this.props.location.state.statuses[0].sprintStatus
+            sprintStatus: 'Not Started' //this.props.location.state.statuses[0].sprintStatus
             }
         this.state.endDate.setMonth(this.state.startDate.getMonth() + 1)
 
@@ -49,7 +45,19 @@ export class SprintCreateForm extends React.Component {
                       })
                     
             })
-        window.location.replace(successCreateUrl)
+            .then(function (response) {
+                let responseStatus = response.status
+                switch (responseStatus) {
+                    case 400:
+                        alert("Creating element went wrong!")
+                        break
+                    case 200:
+                        this.props.moveToComponent2("sprints");
+                        break
+                }
+            }.bind(this))
+        
+       
     }
 
     onStartDateChanged(startDate)
@@ -132,7 +140,7 @@ export class SprintCreateForm extends React.Component {
                     </div>
 
                     <div class="form-group">
-                        <label>End Date:*</label>
+                        <label>Status:*</label>
                         <select class="form-control" onChange={this.onStatusChanged}>
                             {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                         </select>
@@ -142,9 +150,7 @@ export class SprintCreateForm extends React.Component {
                 </form>
                     <div>
                         <button type="button" class="btn btn-primary" id="create-button" onClick={this.addNewSprint.bind(this)}>Create Sprint</button>
-                        <Link to={cancelUrl}>
-                            <button type="button" class="btn btn-danger" id="create-form-cancel-button" >Cancel</button>
-                        </Link>
+                    <button type="button" class="btn btn-danger" id="create-form-cancel-button" onClick={() => this.props.moveToComponent2("sprints")} >Cancel</button>
                     </div>
             </div>
         )

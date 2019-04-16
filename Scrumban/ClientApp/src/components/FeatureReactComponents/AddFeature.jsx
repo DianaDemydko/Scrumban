@@ -67,7 +67,7 @@ export class AddFeature extends React.Component {
                 <div />
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name = "state">States</button>*/}
                 <label >Statrt Date</label>
-                <DatePicker onChange={this.onDateChanged} dateFormat="yyyy/MM/dd" />
+                <DatePicker selected={this.state.date} onChange={this.onDateChanged} dateFormat="yyyy/MM/dd" />
                 <div />
                 <button class="btn btn-dark" onClick={this.handleClick} > Submit </button>
 

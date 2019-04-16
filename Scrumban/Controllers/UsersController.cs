@@ -114,17 +114,6 @@ namespace Scrumban.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         // JWT generation
         [HttpPost("/api/[controller]/token")]
         public IActionResult Token([FromBody]LoginDTO login)
@@ -171,6 +160,5 @@ namespace Scrumban.Controllers
             }
             return null;
         }
-
     }
 }

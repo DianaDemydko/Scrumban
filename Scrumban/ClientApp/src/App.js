@@ -18,6 +18,7 @@ import { StoryAdd } from './components/StoryReactComponents/StoryAdd';
 
 import { SprintMain } from './components/Sprint/SprintMain';
 import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateForm';
+import KanbanMain from './components/KanbanBoard/KanbanMain';
 
 import { Login } from './components/PanelReactComponents/Login';
 import { ProfilePage } from './components/PanelReactComponents/UserProfileComponents/ProfilePage'
@@ -28,8 +29,7 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
-
-            <Route exact path='/' component={Layout} />
+        <Route exact path='/' component={Layout} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetchdata' component={FetchData} />
         <Route path='/defects' component={DefectGrid} />
@@ -39,15 +39,16 @@ export default class App extends Component {
 		    <Route path='/stories' component={StoryGrid} />
 		    <Route path='/addStory' component={StoryAdd} />
         <Route path='/tasks'        component={TaskGrid} />
-            <Route path='/addTask' component={TaskAdd} />
-            <Route path='/Sprints' component={SprintMain} />
-            <Route path='/CreateNewSprint' component={SprintCreateForm} />
-<Route path='/feature' component={FeatureTable} />
-                <Route path='/addfeature' component={AddFeature} />
-                <Route path='/editfeature' component={EditFeature} />
-            <Route path='/panel' component={Panel} />
-            <Route path='/login' component={Login} />
-            <Route path='/profile' component={ProfilePage} />
+        <Route path='/addTask' component={TaskAdd} />
+        <Route path='/Sprints' component={SprintMain} />
+        <Route path='/CreateNewSprint' component={SprintCreateForm} />
+        <Route path='/feature' component={FeatureTable} />
+        <Route path='/addfeature' component={AddFeature} />
+        <Route path='/editfeature' component={EditFeature} />
+        <Route path='/panel' component={Panel} />
+        <Route path='/login' component={Login} />
+        <Route path='/profile' component={ProfilePage} />
+        <Route path='/KanbanBoard' component={KanbanMain} />
       </Layout>
     );
   }

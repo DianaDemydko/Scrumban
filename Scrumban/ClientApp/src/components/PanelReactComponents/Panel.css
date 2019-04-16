@@ -1,4 +1,8 @@
 ﻿.panelUl {
+    /*position:fixed;
+    z-index:1000;
+    width:100%;*/
+
     list-style-type: none;
     margin: 0;
     padding: 0;

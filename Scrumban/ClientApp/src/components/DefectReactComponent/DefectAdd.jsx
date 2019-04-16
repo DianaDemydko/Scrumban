@@ -1,6 +1,4 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { DefectGrid } from './DefectGrid.jsx';
 const apiAddUrl = "/api/DefectData/addDefect";
 
 
@@ -60,7 +58,7 @@ export class DefectAdd extends React.Component {
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    //   this.loadData();
+                    this.props.moveToComponent2("defects");
                 }
             }.bind(this);
             xhr.send(data);
@@ -78,10 +76,11 @@ export class DefectAdd extends React.Component {
         let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
         this.onAddDefect(defect);
         this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
-        window.location.replace("/defects");
+        
+        //window.location.replace("/defects");
     }
 
-    render() {
+    render() {  
         return (
             <div>
                 <h2> Add defect </h2>
@@ -155,9 +154,8 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Add</button>
-                            <Link to={{ pathname: "/defects" }}>
-                                <button type="submit" className="btn btn-primary">Cancel</button>
-                            </Link>
+                            <button type="submit" onClick={() => this.props.moveToComponent2("defects")} className="btn btn-primary">Cancel</button>
+                          
                         </div>
                     </div>
                 </form>

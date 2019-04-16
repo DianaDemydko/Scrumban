@@ -33,7 +33,9 @@ namespace Scrumban.Controllers
             try
             {
                 IQueryable<SprintDTO> sprints = _sprintService.GetAllSprints();
-                return Ok(sprints);
+
+                //var spr = sprints.ToList();
+                    return Ok(sprints);
             }
             catch
             {

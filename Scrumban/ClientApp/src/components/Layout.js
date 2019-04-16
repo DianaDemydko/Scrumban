@@ -24,6 +24,7 @@ export class Layout extends Component {
 
     updateUser(newUser) {
         this.setState({ user: newUser, childRefresh: !this.state.childRefresh })
+        this.setState({ user: newUser })
     }
 
     setRenderedComponentName(renderedComponent) {   // set name of rendered component in Content

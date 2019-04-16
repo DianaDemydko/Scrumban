@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
 import { EditFeature } from './EditFeature';
+import buildQuery from 'odata-query'
 
 
 
@@ -92,10 +93,11 @@ class FeaturePrint extends Component {
                 <td class="col" > {this.state.feature.description} </td>
                 {/* <td class="col" > {this.state.state} </td>*/}
                 {/*<td class="col" > {this.state.feature.owner.name } </td>*/}
-                 <td class="col" > {this.state.state} </td>
+                <td class="col" > States </td>
                 <td class="col" > Owner </td>
                 <td class="col" > {this.state.feature.priority} </td>
                 {/*<td class="col col-primary dropdown-toggle" type="divider" data-toggle="dropdown"> {feature.stories} </td>*/}
+                
                 {/* <td class="col" > {this.state.feature.stories} </td>*/}
                 <td class="col" > Stories </td>
                 <Moment class="col" parse="YYYY-MM-DD" format="YYYY-MM-DD" > {this.state.feature.time} </Moment>
@@ -126,234 +128,249 @@ export class FeatureTable extends Component {
             findName: '',
             findDescription: '',
             findPriority: 0,
-            findDate: new Date(),
+            findDate: null,
 
 
         };
         //   this.sort = this.sort.bind(this);
         this.sortData = this.sortData.bind(this)
-        this.sortByName = this.sortByName.bind(this)
-        this.sortByDescription = this.sortByDescription.bind(this)
-        this.sortByDate = this.sortByDate.bind(this)
-        this.sortByPriority = this.sortByPriority.bind(this)
+        //this.sortByName = this.sortByName.bind(this)
+        //this.sortByDescription = this.sortByDescription.bind(this)
+        //this.sortByDate = this.sortByDate.bind(this)
+        //this.sortByPriority = this.sortByPriority.bind(this)
 
         this.onFindNameChange = this.onFindNameChange.bind(this);
         this.onFindDescriptionChange = this.onFindDescriptionChange.bind(this);
         this.onFindPriorityChange = this.onFindPriorityChange.bind(this);
-        //this.onFindDateChange = this.onFindDateChange.bind(this);
+        this.onFindDateChange = this.onFindDateChange.bind(this);
 
-        //this.findData = this.findData.bind(this);
+        this.findData = this.findData.bind(this);
 
     }
 
 
+  
+   
+    findData() {
 
-    onFindNameChange(e) {
-        //this.setState({ findName: e.target.value });
-        fetch('api/FeatureData/' + '?$filter=contains(name,%27' + e.target.value + '%27)')
+        var filter = []
+        if (this.state.findName != '') {
+            filter.push({ 'tolower(Name)': { contains: this.state.findName.toLowerCase() } })
+        }
+
+        if (this.state.findDescription != '') {
+            filter.push({ 'tolower(Description)': { contains: this.state.findDescription } })
+        }
+
+        if (this.state.findDate != null) {
+            filter.push({ time: { gt: this.state.findDate} })
+        }
+        if (this.state.findPriority != 0) {
+            filter.push({ priority: parseInt(this.state.findPriority)  })
+        }
+
+
+        
+        var query = buildQuery({ filter })
+
+        fetch('api/FeatureData/' + query)
             .then(res => res.json())
             .then(json => {
                 this.setState({ features: json })
             });
-    }
-    //findData() {
-    //    fetch('api/FeatureData/' + '?$filter=contains(time,%27' + e.target.value + '%27)')
-    //        .then(res => res.json())
-    //        .then(json => {
-    //            this.setState({ features: json })
-    //        });
-    //}
 
+        
+
+    }
+        
+        
+
+
+  onFindNameChange(e) {
+        this.setState({ findName: e.target.value }); 
+    }
     onFindDescriptionChange(e) {
-        fetch('api/FeatureData/' + '?$filter=contains(description,%27' + e.target.value + '%27)')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({ features: json })
-            });}
-    onFindPriorityChange(e) {
-        if (e.target.value != '') {
-            fetch('api/FeatureData/' + '?$filter=priority%20eq%20' + e.target.value)
-            .then(res => res.json())
-            .then(json => {
-                this.setState({ features: json })
-            });
-        }
+        this.setState({ findDescription: e.target.value });
+       
     }
-    //onFindDateChange(e) {
+    onFindPriorityChange(e) {
+        this.setState({ findPriority: e.target.value });
+       
+    }
+    onFindDateChange(dateToFind) {
+        this.setState({ findDate: dateToFind});
+
+    }
+
+    //sortByPriority(sortingOrder, columnName) {
+    //    switch (sortingOrder) {
+    //        case 'ascending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction)
+    //            })
+    //            break
+    //        case 'descending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction).reverse()
+    //            })
+    //            break
+    //    }
 
     //}
 
-    sortByPriority(sortingOrder, columnName) {
-        let compareFunction = function (a, b) {
+    //sortByName(sortingOrder, columnName) {
+    //    let compareFunction = function (a, b) {
+    //        let aName = a[columnName].toLowerCase()
+    //        let bName = b[columnName].toLowerCase()
+    //        if (aName < bName) {
+    //            return -1;
+    //        }
+    //        if (aName > bName) {
+    //            return 1;
+    //        }
+    //        return 0;
+    //    }
 
-            if (a < b) {
-                return -1;
-            }
-            if (a > b) {
-                return 1;
-            }
-            return 0;
-        }
+    //    switch (sortingOrder) {
+    //        case 'ascending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction)
+    //            })
+    //            break
+    //        case 'descending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction).reverse()
+    //            })
+    //            break
+    //    }
+    //}
 
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction).reverse()
-                })
-                break
-        }
+    //sortByDescription(sortingOrder, columnName) {
+    //    let compareFunction = function (a, b) {
+    //        let aDescriptionLength = a[columnName].length
+    //        let bDescriptionLength = b[columnName].length
+    //        if (aDescriptionLength < bDescriptionLength) {
+    //            return -1;
+    //        }
+    //        if (aDescriptionLength > bDescriptionLength) {
+    //            return 1;
+    //        }
+    //        return 0;
+    //    }
 
-    }
+    //    switch (sortingOrder) {
+    //        case 'ascending':
+    //            this.setState({
+    //                sprints: this.state.features.sort(compareFunction)
+    //            })
+    //            break
+    //        case 'descending':
+    //            this.setState({
+    //                sprints: this.state.features.sort(compareFunction).reverse()
+    //            })
+    //            break
+    //    }
+    //}
 
-    sortByName(sortingOrder, columnName) {
+    //sortByDate(sortingOrder, columnName) {
 
-        let compareFunction = function (a, b) {
-            let aName = a[columnName].toLowerCase()
-            let bName = b[columnName].toLowerCase()
-            if (aName < bName) {
-                return -1;
-            }
-            if (aName > bName) {
-                return 1;
-            }
-            return 0;
-        }
+    //    let compareFunction = function (a, b) {
+    //        if (a[columnName] < b[columnName]) {
+    //            return -1;
+    //        }
+    //        if (a[columnName] > b[columnName]) {
+    //            return 1;
+    //        }
+    //        return 0;
+    //    }
 
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
+    //    switch (sortingOrder) {
+    //        case 'ascending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction)
+    //            })
+    //            break
+    //        case 'descending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction).reverse()
+    //            })
+    //            break
+    //    }
+    //}
 
-    sortByDescription(sortingOrder, columnName) {
-        let compareFunction = function (a, b) {
-            let aDescriptionLength = a[columnName].length
-            let bDescriptionLength = b[columnName].length
-            if (aDescriptionLength < bDescriptionLength) {
-                return -1;
-            }
-            if (aDescriptionLength > bDescriptionLength) {
-                return 1;
-            }
-            return 0;
-        }
+    //sortByStatus(sortingOrder, columnName) {
 
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    sprints: this.state.features.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    sprints: this.state.features.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
+    //    let compareFunction = function (a, b) {
 
-    sortByDate(sortingOrder, columnName) {
+    //        if (a[columnName] < b[columnName]) {
+    //            return -1;
+    //        }
+    //        if (a[columnName] > b[columnName]) {
+    //            return 1;
+    //        }
+    //        return 0;
+    //    }
 
-        let compareFunction = function (a, b) {
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-
-    sortByStatus(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    features: this.state.features.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
+    //    switch (sortingOrder) {
+    //        case 'ascending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction)
+    //            })
+    //            break
+    //        case 'descending':
+    //            this.setState({
+    //                features: this.state.features.sort(compareFunction).reverse()
+    //            })
+    //            break
+    //    }
+    //}
 
 
     sortData(columnName) {
         let currentSort = this.state.currentSort
+        var query = '?$orderby='
 
         if (currentSort.columnName == columnName) {
-            if (currentSort.sortingOrder == 'ascending') {
-                currentSort.sortingOrder = 'descending'
+            if (currentSort.sortingOrder == 'asc') {
+                currentSort.sortingOrder = 'desc'
             }
             else {
-                currentSort.sortingOrder = 'ascending'
+                currentSort.sortingOrder = 'asc'
             }
         }
         else {
             currentSort.columnName = columnName
-            currentSort.sortingOrder = 'ascending'
+            currentSort.sortingOrder = 'asc'
         }
 
         this.setState({ currentSort: currentSort })
 
         switch (columnName) {
             case 'name':
-                this.sortByName(currentSort.sortingOrder, columnName)
+                query += 'name' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'description':
-                this.sortByDescription(currentSort.sortingOrder, columnName)
+                query += 'description' + ' ' + this.state.currentSort.sortingOrder;
                 break
-            case 'date':
-                this.sortByDate(currentSort.sortingOrder, columnName)
+            case 'time':
+                query += 'time' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'priority':
-                this.sortByPriority(currentSort.sortingOrder, columnName)
+                query += 'priority' + ' ' + this.state.currentSort.sortingOrder;
                 break
-            //case 'sprintStatus':
-            //    this.sortByStatus(currentSort.sortingOrder, columnName)
-            //    break
+           
+
+
+
+
         }
+     
+
+                fetch('api/FeatureData/' + query)
+                    .then(res => res.json())
+                    .then(json => {
+                        this.setState({ features: json })
+                    });
     }
 
     onEditButtonClick(e) {
@@ -376,48 +393,45 @@ export class FeatureTable extends Component {
 
     render() {
 
-        return <div>
+        return < div class="panel-heading">
 
             <table class=" table table-bordered">
                 <tr>
-                    <th class="col" > Name
+                    <th class="col" onClick={() => this.sortData('name')}> Name
                         <div />
-                        <button class="btn btn-dark" onClick={() => this.sortData('name')}>
-                            Sort
-                        </button>
-                        <input id='nameFindInput' type='text' onChange={e => this.onFindNameChange(e)} />
-
                     </th>
-                    <th class="col"> Description
+                    <th class="col" onClick={() => this.sortData('description')}> Description
                         <div />
-                        <button class="btn btn-dark" onClick={() => this.sortData('description')}>
-                            Sort
-                        </button>
-                        <input type='text' onChange={e => this.onFindDescriptionChange(e)} />
                     </th>
                     <th class="col" > State  </th>
                     <th class="col" > Owner  </th>
-                    <th class="col"> Priority
-                         <button class="btn btn-dark" onClick={() => this.sortData('priority')}>
-                            Sort
-                         </button>
-                         <input type='text' onChange={e => this.onFindPriorityChange(e)} />
+                    <th class="col" onClick={() => this.sortData('priority')}> Priority
                     </th>
                     <th class="col"> Stories </th>
-                    <th class="col" > Time
-                         <button class="btn btn-dark" onClick={() => this.sortData('date')}>
-                            Sort
-                         </button>
-                        {/* <input type='text' onChange={e => this.onFindDateChange(e)} />*/}
+                    <th class="col" onClick={() => this.sortData('time')} > Time
                     </th>
-                 
+                   
                 </tr>
+                <tr>
+                    <th> <input type='text' onChange={e => this.onFindNameChange(e)}/> </th>
+                    <th><input type='text' onChange={e => this.onFindDescriptionChange(e)} /></th>
+                    <th><input type='text' /></th>
+                    <th><input type='text' /></th>
+                    <th><input type ='text' onChange={e => this.onFindPriorityChange(e)} /></th>
+                    <th><input type='text' /></th>
+                    <th><DatePicker selected={this.state.findDate} onChange={this.onFindDateChange} dateFormat="yyyy/MM/dd" /> </th >
+                    
+                    <th><button class="btn btn-dark" onClick={this.findData}>
+                        Find
+                        </button></th>
+                    </tr>
 
                 {this.state.features.map(feature => (
                     <FeatureRow key={feature.id} feature={feature} />
                 )
                 )}
             </table>
+            <div/>
             <AddButton />
 
         </div>;

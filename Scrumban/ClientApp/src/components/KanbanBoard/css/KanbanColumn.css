@@ -1,0 +1,47 @@
+﻿
+.kanban-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 19%;
+    margin: 5px;
+}
+
+.column-header {
+    height: auto;
+    text-align: center;
+}
+
+.column-header-text {
+    display: inline-block;
+    font-family: Georgia, serif;
+    font-weight: 500;
+    font-size: 20px;
+    word-wrap: break-word;
+}
+
+.column-container {
+    background-color: #eef2f9;
+    padding: 7px;
+    overflow-y: auto;
+    height: 500px;
+}
+
+#Tasks.column-header {
+    background-image: linear-gradient(to bottom right, #d7dfe4 20%, #abb5bf);
+}
+
+#To_Do.column-header {
+    background-image: linear-gradient(to bottom right, #00f2fe 20%, #4facfe);
+}
+
+#In_Progress.column-header {
+    background-image: linear-gradient(to bottom right, #ce89f0 20%, #ad3de6);
+}
+
+#Testing.column-header {
+    background-image: linear-gradient(to bottom right,#F9D423 20%, #e65c00);
+}
+
+#Done.column-header {
+    background-image: linear-gradient( to bottom right, #65fd4d 20%, #02be5d);
+}
