@@ -9,11 +9,16 @@
     overflow: hidden;
     background-color: #333;
 }
-
 .panelLi {
     float: right;
-    
 }
+
+.panelBtn .picture {
+    height: 25px;
+    width: auto;
+    display: block;
+}
+
 .panelBtn {
     display: block;
     color: white;
@@ -22,8 +27,6 @@
     text-decoration: none;
     background-color: #333;
     border: none;
-
-
 }
 .panelBtn:hover, .panelBtn:focus {
     background-color: #4189C7;

@@ -85,7 +85,7 @@ export class Body extends React.Component {
                 <Col>  
                     <SideBar moveToComponent={this.props.moveToComponent} />
                 </Col>
-                <Col sm={10}>
+                <Col className="container">
                     {renderedComponent}
                 </Col>
             </Row>

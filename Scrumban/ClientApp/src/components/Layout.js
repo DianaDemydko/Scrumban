@@ -24,7 +24,6 @@ export class Layout extends Component {
 
     updateUser(newUser) {
         this.setState({ user: newUser, childRefresh: !this.state.childRefresh })
-        this.setState({ user: newUser })
     }
 
     setRenderedComponentName(renderedComponent) {   // set name of rendered component in Content
@@ -48,7 +47,8 @@ export class Layout extends Component {
                     key={this.state.childRefresh}
                     moveToComponent={this.setRenderedComponentName} // set name of rendered component
                     loginStatusCallBack={this.state.panelLoginStatus == true ? "true" : "false"}
-                    currentUser={this.state.user ? this.state.user.firstName : "_"}
+                    currentUser={this.state.user ? this.state.user.firstName : ""}
+                    currentUserPicture={this.state.user ? this.state.user.picture.image : "" }
                     onLogOut={this.onLoginStatusCallBack}
                 />
                 <Body
