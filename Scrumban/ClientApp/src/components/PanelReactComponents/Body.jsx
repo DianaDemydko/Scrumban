@@ -38,13 +38,13 @@ export class Body extends React.Component {
 
         switch (this.props.renderedComponentName) {
             case 'login':
-                renderedComponent = <Login parentOnLoginStatusCallBack={this.props.parentOnLoginStatusCallBack} />
+                renderedComponent = <Login moveToComponent={this.props.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
                 renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
                 break
             case 'profile':
-                renderComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+                renderedComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />

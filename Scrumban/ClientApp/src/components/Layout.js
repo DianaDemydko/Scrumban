@@ -42,24 +42,24 @@ export class Layout extends Component {
 
     render() {
 
-    return (
-        <div>
-            <Panel
-                key={this.state.childRefresh}
-                moveToComponent={this.setRenderedComponentName} // set name of rendered component
-                loginStatusCallBack={this.state.panelLoginStatus == true ? "true" : "false"}
-                currentUser={this.state.user ? this.state.user.firstName : "_"}
-                onLogOut={this.onLoginStatusCallBack}
-            />
-            <Body
-                children={this.props.children}
-                renderedComponentName={this.state.renderedComponentName}
-                moveToComponent={this.setRenderedComponentName}
-                parentOnLoginStatusCallBack={this.onLoginStatusCallBack}
-                user={this.state.user}
-                updateUser={this.updateUser}
-            />
-        </div>
+        return (
+            <div>
+                <Panel
+                    key={this.state.childRefresh}
+                    moveToComponent={this.setRenderedComponentName} // set name of rendered component
+                    loginStatusCallBack={this.state.panelLoginStatus == true ? "true" : "false"}
+                    currentUser={this.state.user ? this.state.user.firstName : "_"}
+                    onLogOut={this.onLoginStatusCallBack}
+                />
+                <Body
+                    children={this.props.children}
+                    renderedComponentName={this.state.renderedComponentName}
+                    moveToComponent={this.setRenderedComponentName}
+                    parentOnLoginStatusCallBack={this.onLoginStatusCallBack}
+                    user={this.state.user}
+                    updateUser={this.updateUser}
+                />
+            </div>
     );
   }
 }
