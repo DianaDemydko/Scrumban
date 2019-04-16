@@ -91,15 +91,20 @@ export default class KanbanBoard extends React.Component {
 
             let story = this.state.stories.find(story => story.story_id == item_id)
 
+            if (story.column_id == column_id) return
+
             let updatedStoryState = this.ChangeColumnAllowed(story.column_id, column_id)
 
             if (updatedStoryState != null) {
-                let storyToUpdate = {
-                    story_id: story.story_id,
-                    name: story.name,
-                    description: story.description,
-                    rank: story.rank,
-                    storyState: updatedStoryState
+                let storyToUpdate = { ...story }
+                storyToUpdate.storyState = updatedStoryState
+
+                if (column_id == 'In_Progress' && story.startDate == null) {
+                    storyToUpdate.StartDate = new Date();
+                }
+
+                if (column_id == 'Done') {
+                    storyToUpdate.EndDate = new Date();
                 }
 
                 fetch(apiUrlUpdateStory,
@@ -116,7 +121,9 @@ export default class KanbanBoard extends React.Component {
                                 break
                             case 200:
                                 let updatedStories = this.state.stories.slice();
-                                updatedStories.find((story) => { return story.story_id == item_id }).column_id = column_id
+                                storyToUpdate.column_id = column_id
+                                let index = updatedStories.findIndex(story => story.story_id == storyToUpdate.story_id)
+                                updatedStories[index] = storyToUpdate
                                 this.setState({ stories: updatedStories });
                                 break
                         }
@@ -130,7 +137,6 @@ export default class KanbanBoard extends React.Component {
     }
 
     ChangeColumnAllowed(prevColumnID, nextColumnID) {
-        if (prevColumnID == nextColumnID) return null
 
         if (nextColumnID == 'Tasks') {
             return null

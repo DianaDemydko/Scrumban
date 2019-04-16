@@ -1,4 +1,6 @@
-﻿namespace Scrumban.ServiceLayer.DTO
+﻿using System;
+
+namespace Scrumban.ServiceLayer.DTO
 {
     public class StoryDTO
     {
@@ -7,5 +9,7 @@
         public string Description { get; set; }
         public int Rank { get; set; }
         public string StoryState { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

@@ -37,11 +37,6 @@ namespace Scrumban.ServiceLayer.Services
             return storiesDTO;
         }
 
-        public IEnumerable<StoryStateDTO> GetStates()
-        {
-            throw new NotImplementedException();
-        }
-
         public StoryDTO GetStory(int id)
         {
             StoryDAL storyDAL = _unitOfWork.StoryRepository.GetByID(id);

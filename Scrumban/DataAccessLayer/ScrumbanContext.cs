@@ -87,12 +87,12 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<StoryStateDAL>().HasData(
                 new StoryStateDAL[]
                 {
-                    new StoryStateDAL{StoryState_id=1, Name = "Non Started"},
-                    new StoryStateDAL{StoryState_id=2, Name="In Progress"},
-                    new StoryStateDAL{StoryState_id=3, Name="Rejected"},
-                    new StoryStateDAL{StoryState_id=4, Name="In Complete"},
-                    new StoryStateDAL{StoryState_id=5, Name="Done"},
-                    new StoryStateDAL{StoryState_id=6, Name="Accepted"}
+                    new StoryStateDAL{StoryState_id=1, Name = "Not Selected"},
+                    new StoryStateDAL{StoryState_id=2, Name = "Selected"},
+                    new StoryStateDAL{StoryState_id=3, Name = "In Progress"},
+                    new StoryStateDAL{StoryState_id=4, Name = "Testing"},
+                    new StoryStateDAL{StoryState_id=5, Name = "Done"},
+                    new StoryStateDAL{StoryState_id=6, Name = "Rejected"}
                 }
             );
             modelBuilder.Entity<StoryDAL>().HasData(
