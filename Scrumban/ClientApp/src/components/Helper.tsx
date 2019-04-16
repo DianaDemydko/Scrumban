@@ -1,5 +1,5 @@
 
-﻿import React, { Component } from "react";
+import React, { Component } from "react";
 
 export class UserData {
     userId: number = 0;

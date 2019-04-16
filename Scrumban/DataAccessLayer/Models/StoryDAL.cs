@@ -1,31 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System;
 
 namespace Scrumban.DataAccessLayer.Models
 {
+    [Table("Story")]
     public class StoryDAL
     {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int Story_id { get; set; }
+
+        [ForeignKey("StoryState")]
+        public int StoryState_id { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public int Rank { get; set; }
+        
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
-        public int StoryStateId { get; set; } = 1;
+        //Navigation properties
         public StoryStateDAL StoryState { get; set; }
-
-        public int PriorityId { get; set; } = 2;
-        public PriorityDAL Priority { get; set; }
-
-        public int? ProgrammerId { get; set; }
-        //public Programmer Programmer { get; set; }
-
-        public int TaskId { get; set; }
-        //public Task Task { get; set; }
-
-
     }
 }
