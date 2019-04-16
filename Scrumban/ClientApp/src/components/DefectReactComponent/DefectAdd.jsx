@@ -58,7 +58,7 @@ export class DefectAdd extends React.Component {
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    this.props.moveToComponent2("defects");
+                    this.props.moveToComponent("defects");
                 }
             }.bind(this);
             xhr.send(data);
@@ -154,7 +154,7 @@ export class DefectAdd extends React.Component {
                     <div className="form-group">
                         <div className="col-md-7">
                             <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Add</button>
-                            <button type="submit" onClick={() => this.props.moveToComponent2("defects")} className="btn btn-primary">Cancel</button>
+                            <button type="submit" onClick={() => this.props.moveToComponent("defects")} className="btn btn-primary">Cancel</button>
                           
                         </div>
                     </div>

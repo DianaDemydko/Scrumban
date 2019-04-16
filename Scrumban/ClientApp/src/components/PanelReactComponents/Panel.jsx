@@ -21,7 +21,7 @@ export class Panel extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="panelDiv">
                 <ul className="panelUl">
                     <li className="panelLi">
                         {this.state.loginStatus == "true" ?
@@ -32,7 +32,7 @@ export class Panel extends React.Component {
                     <li className="panelLi">
                         {this.state.loginStatus == "true" ?
                             (<button className="panelBtn" onClick={() => this.props.moveToComponent("profile")} >{this.state.user} </button>)
-                            : (<button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>Sign Up</button>)
+                            : (<button className="panelBtn" onClick={() => this.props.moveToComponent("signup")}>Sign Up</button>)
                          }
 
                     </li>

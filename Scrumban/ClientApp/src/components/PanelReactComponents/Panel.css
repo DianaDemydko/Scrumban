@@ -1,8 +1,10 @@
-﻿.panelUl {
-    /*position:fixed;
-    z-index:1000;
-    width:100%;*/
-
+﻿.panelDiv {
+    height: 52px;
+}
+.panelUl {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
     list-style-type: none;
     margin: 0;
     padding: 0;

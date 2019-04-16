@@ -479,7 +479,7 @@ export class DefectGrid extends React.Component {
                        </tbody>)
                 }
             </table>
-            <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent2("defectAdd")}>Add defect</button>
+            <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
         </div>
         )
     }

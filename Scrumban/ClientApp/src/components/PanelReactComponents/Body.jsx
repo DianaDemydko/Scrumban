@@ -22,6 +22,7 @@ import { StoryGrid } from '../StoryReactComponents/StoryGrid';
 import { DefectAdd } from '../DefectReactComponent/DefectAdd';
 import Kanban  from '../KanbanBoard/KanbanMain';
 import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
+import { Home } from '../Home';
 
 
 export class Body extends React.Component {
@@ -38,16 +39,19 @@ export class Body extends React.Component {
 
         switch (this.props.renderedComponentName) {
             case 'login':
-                renderedComponent = <Login parentOnLoginStatusCallBack={this.props.parentOnLoginStatusCallBack} />
+                renderedComponent = <Login moveToComponent={this.props.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
                 renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
                 break
             case 'profile':
-                renderComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+                renderedComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />
+                break
+            case 'home':
+                renderedComponent = <Home />
                 break
             case 'tasks':
                 renderedComponent = <TaskGrid moveToComponent={this.props.moveToComponent} />
@@ -83,7 +87,7 @@ export class Body extends React.Component {
         return (<Grid fluid>
             <Row>
                 <Col>  
-                    <SideBar moveToComponent={this.props.moveToComponent} />
+                    <SideBar moveToComponent={this.props.moveToComponent}  />
                 </Col>
                 <Col sm={10}>
                     {renderedComponent}
