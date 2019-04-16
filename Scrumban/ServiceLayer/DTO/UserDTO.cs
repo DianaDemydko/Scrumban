@@ -1,13 +1,20 @@
-﻿namespace Scrumban.ServiceLayer.Entities.DTO
+﻿using Scrumban.ServiceLayer.DTO;
+
+namespace Scrumban.ServiceLayer.DTO
 {
     public class UserDTO
     {
-        public int UserID { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
+
         public string Email { get; set; }
-        public int RoleID { get; set; }
         public string Password { get; set; }
-        public int PictureID { get; set; }
+
+        public int RoleId { get; set; } = 1;
+        public RoleDTO Role{get;set;}
+
+        public int? PictureId { get; set; }
+        public PictureDTO Picture { get; set; }
     }
 }

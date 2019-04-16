@@ -6,14 +6,13 @@ export class Panel extends React.Component {
 
         super(props);
         this.state = {
-            user: props.currentUser,
+            user:  props.currentUser,
             loginStatus: props.loginStatusCallBack, // false - Not logined, true - logined
             contact: "contact",
             about: "about"
         }
         this.onLogOut = this.onLogOut.bind(this);
     }
-
 
     onLogOut() {
         //localStorage.clear();
@@ -25,17 +24,17 @@ export class Panel extends React.Component {
             <div>
                 <ul className="panelUl">
                     <li className="panelLi">
-                        {this.state.loginStatus =="true" ?
-                            (<button className="panelBtn" onClick={() => this.onLogOut("login")}>            Log Out </button>)
+                        {this.state.loginStatus == "true" ?
+                            (  <button className="panelBtn" onClick={() => this.onLogOut("login")}>             Log Out </button>)
                             : (<button className="panelBtn" onClick={() => this.props.moveToComponent("login")}>Log In  </button>)
                         }
                     </li >
                     <li className="panelLi">
-                        {this.state.loginStatus == true ?
-                            (<button className="panelBtn">{this.state.user.firstName} </button>)
-                            :
-                            (<button className="panelBtn" onClick={() => this.props.moveToComponent("signup")}>Sign Up</button>)
-                        }
+                        {this.state.loginStatus == "true" ?
+                            (<button className="panelBtn" onClick={() => this.props.moveToComponent("profile")} >{this.state.user} </button>)
+                            : (<button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>Sign Up</button>)
+                         }
+
                     </li>
                     <li className="panelLi">
                         <button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>About</button>

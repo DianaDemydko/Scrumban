@@ -31,17 +31,21 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\Icons\**" />
     <Compile Remove="ServiceLayer\Infrastructure\**" />
     <Compile Remove="ViewModels\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\Icons\**" />
     <Content Remove="ServiceLayer\Infrastructure\**" />
     <Content Remove="ViewModels\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\Icons\**" />
     <EmbeddedResource Remove="ServiceLayer\Infrastructure\**" />
     <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="ClientApp\src\Icons\**" />
     <None Remove="ServiceLayer\Infrastructure\**" />
     <None Remove="ViewModels\**" />
   </ItemGroup>
@@ -51,11 +55,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\components\Helper.tsx" />
     <None Remove="ClientApp\src\components\Helper.tsx" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\Icons\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

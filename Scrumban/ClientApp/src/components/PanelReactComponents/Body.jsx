@@ -5,8 +5,12 @@ import { Content } from './Content';
 import { Col, Grid, Row } from 'react-bootstrap';
 import { Login } from './Login';
 import { Register } from './Register';
+import { ProfilePage } from './UserProfileComponents/ProfilePage';
 import { About } from './About';
+
 import { TaskGrid } from '../TaskReactComponenets/TaskGrid';
+import { TaskAdd } from '../TaskReactComponenets/TaskAdd';
+
 //import { Logout } from './Logout';
 
 import { SideBar } from "./SideBar";
@@ -23,58 +27,55 @@ import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
 export class Body extends React.Component {
     constructor(props) {
         super(props);
-
-        this.parentOnLoginStatusCallBack = this.parentOnLoginStatusCallBack.bind(this);
-        this.moveToComponent = this.moveToComponent.bind(this);
-    }
-
-    parentOnLoginStatusCallBack(param, user, path) {
-        this.props.parentOnLoginStatusCallBack(param, user, path);
-    }
-
-    moveToComponent(param) {
-        this.props.moveToComponent(param);
+      
+        this.state = {
+            i: 1
+        }
     }
 
     render() {
         var renderedComponent;
+
         switch (this.props.renderedComponentName) {
             case 'login':
-                renderedComponent = <Login parentOnLoginStatusCallBack={this.parentOnLoginStatusCallBack} />
+                renderedComponent = <Login parentOnLoginStatusCallBack={this.props.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
-                renderedComponent = <Register moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
+                break
+            case 'profile':
+                renderComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
-                renderedComponent = <About moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <About moveToComponent={this.props.moveToComponent} />
                 break
             case 'tasks':
-                renderedComponent = <TaskGrid moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <TaskGrid moveToComponent={this.props.moveToComponent} />
+                break
+            case 'taskAdd':
+                renderedComponent = <TaskAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'feature':
-                renderedComponent = <FeatureTable moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <FeatureTable moveToComponent={this.props.moveToComponent} />
                 break
             case 'stories':
-                renderedComponent = <StoryGrid moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} />
                 break
             case 'sprints':
-                renderedComponent = <SprintMain moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <SprintMain moveToComponent={this.props.moveToComponent} />
                 break 
             case 'sprintAdd':
-                renderedComponent = <SprintCreateForm moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <SprintCreateForm moveToComponent={this.props.moveToComponent} />
                 break 
-
             case 'defects':
-                renderedComponent = <DefectGrid moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <DefectGrid moveToComponent={this.props.moveToComponent} />
                 break
             case 'defectAdd':
-                renderedComponent = <DefectAdd moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <DefectAdd moveToComponent={this.props.moveToComponent} />
                 break 
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
-                break 
-            
-
+                break
             default:
                 renderedComponent = this.props.children
         }
@@ -84,7 +85,6 @@ export class Body extends React.Component {
                 <Col>  
                     <SideBar moveToComponent={this.props.moveToComponent} />
                 </Col>
-                
                 <Col sm={10}>
                     {renderedComponent}
                 </Col>

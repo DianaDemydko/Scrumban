@@ -8,12 +8,15 @@ namespace Scrumban.DataAccessLayer.Interfaces
 {
     public interface IUserRepository : IBaseRepository<UsersDAL>
     {
-        IEnumerable<UsersDAL> GetAllUsers();
+        IQueryable<UsersDAL> GetAllUsers();
         List<UsersDAL> GetUsers();
         //To check if user is registered
         bool CheckAvailability(string email, string password);
         //To get user 
         UsersDAL GetUserAccount(string email, string password);
+
+        void Create(UsersDAL user, PictureDAL picture);
+        void Update(UsersDAL user, PictureDAL picture);
     }
 }
 

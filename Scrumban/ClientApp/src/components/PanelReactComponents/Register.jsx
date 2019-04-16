@@ -22,6 +22,9 @@ export class Register extends React.Component {
         password: "",
         confirmpassword: "",
         //fields: {},
+        picture: null,
+        pictureUrl: null,
+        pivtureBinary: null,
         errors: []
     };
     constructor(props) {
@@ -32,6 +35,7 @@ export class Register extends React.Component {
         this.emailChanged = this.emailChanged.bind(this);
         this.passwordChanged = this.passwordChanged.bind(this);
         this.confirmpasswordChanged = this.confirmpasswordChanged.bind(this);
+        this.onFileChanged = this.onFileChanged.bind(this);
     }
     handleValidation() {
         //let fields = this.state.fields;
@@ -132,7 +136,10 @@ export class Register extends React.Component {
                     email: this.state.email,
                     password: this.state.password,
                     pictureId: 0,
-                    roleId: 0
+                    roleId: 1,
+                    picture: {
+                        "image":this.state.pictureUrl
+                    }
                 })
 
             }).then(function (response) {
@@ -156,6 +163,21 @@ export class Register extends React.Component {
             alert(erText);
         }
         
+    }
+
+    onFileChanged(e) {
+        var file = e.target.files[0]
+        var reader = new FileReader()
+        reader.onloadend = () => {
+            this.setState({ picture: file, pictureUrl: reader.result })
+        }
+        reader.readAsDataURL(file);
+
+        var reader2 = new FileReader()
+        reader2.onloadend = () => {
+            this.setState({ picture: file, pictureBinary: reader2.result })
+        }
+        reader2.readAsArrayBuffer(file);
     }
 
     render() {
@@ -205,6 +227,16 @@ export class Register extends React.Component {
                         type="password"
                     />
                 </FormGroup>
+
+                <div className="row">
+                    <div>{this.state.picture ? this.state.picture.name : "__"}</div>
+                    <img src={this.state.pictureUrl} alt="Image" width="100%" />
+                </div>
+                <div className="row">
+                    <input type="file" onChange={this.onFileChanged} />
+                    <button onClick={this.uploadFile}>Upload</button>
+                </div>
+
                 <Button
                     block
                     bsSize="large"

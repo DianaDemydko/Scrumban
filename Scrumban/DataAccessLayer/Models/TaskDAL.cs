@@ -22,7 +22,7 @@ namespace Scrumban.DataAccessLayer.Models
         public PriorityDAL Priority { get; set; }
 
         public int? ProgrammerId { get; set; }
-        //public Programmer Programmer { get; set; }
+        //public User User { get; set; }
 
         public int? StoryId { get; set; }
         //public Story Story { get; set; }

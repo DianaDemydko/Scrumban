@@ -57,9 +57,8 @@ export class Login extends React.Component {
         this.setState({ password: e.target.value });
     }
     handleSubmit(e) {
-        e.preventDefault();
+        //e.preventDefault();
         if (this.handleValidation()) {
-        //if (true) {
             fetch('api/users/token', {
                 method: 'post',
                 headers: { "Content-Type": "application/json" },
@@ -76,11 +75,15 @@ export class Login extends React.Component {
                     alert("ERROR! Status code: " + response.status + "\nAuthorization failed. Invalid email or password:-(")
                     return "error"
                 }
-            }).then((data) => {
-                sessionStorage.setItem("tokenKey", data.access_token);
-                this.props.moveToComponent(true, data.user, "home");
-            });
-            
+                }).then((data) => {
+                    if (data == "error") {
+                        //this.props.moveToComponent(true, data.user, "tasks");
+                    }
+                    else {
+                        sessionStorage.setItem("tokenKey", data.access_token);
+                        this.props.moveToComponent(true, data.user, "tasks");
+                    }
+                });
         }
         else {
             alert("ERROR! Status code: ")
@@ -88,6 +91,7 @@ export class Login extends React.Component {
     }
 
     render() {
+
         return (
             <div className="Login">
                 <FormGroup controlId="email" bsSize="large">
@@ -114,7 +118,7 @@ export class Login extends React.Component {
                     type="button"
                     onClick={this.handleSubmit}
                     className="btn btn-primary"
-                >
+                 >
                     Login
                 </Button>
             </div>

@@ -17,8 +17,8 @@ export class TaskAdd extends React.Component {
         this.state = {
             name: "",
             description: "",
-            startDate: "",
-            finishDate: "",
+            startDate: null,
+            finishDate: null,
             priority: priorityTable[0].name,
             taskState: stateTable[0].name
         };
@@ -30,6 +30,7 @@ export class TaskAdd extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
+        this.onAdd = this.onAdd.bind(this);
 
     }
 
@@ -68,21 +69,39 @@ export class TaskAdd extends React.Component {
                 "priorityId": task.priorityId,
                 "taskStateId": task.taskStateId
             });
-            var xhr = new XMLHttpRequest();
 
-            xhr.open("post", addTaskUrl, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status == 200) {
-                    
-                }
-            }.bind(this);
-            xhr.send(data);
+            fetch(addTaskUrl, {
+                method: "post",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": "Bearer " + sessionStorage.getItem("tokenKey")
+                },
+                body: data
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        //window.location.replace("/tasks");
+                        //this.props.moveToComponent("tasks")
+                    }
+                    else if (response.status == 401) {
+                        var answer = window.confirm("You are not authorized. Move to Login page ?")
+                        if (answer == true) {
+                            //window.location.replace("/login")
+                            this.props.moveToComponent("login")
+                        }
+                    }
+                    else if (response.status == 403) {
+                        alert("ERROR! You have not permission !")
+                    }
+                    else {
+                        alert("ERROR! Status code: " + response.status)
+                    }
+                })
         }
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        //e.preventDefault();
 
         let task = {
             name: this.state.name,
@@ -93,80 +112,77 @@ export class TaskAdd extends React.Component {
             taskStateId: stateTable.find(x => x.name === this.state.taskState).id
         };
         this.onAdd(task);
-        this.setState({ name: "", description: "", startDate: "", finishDate: "", priorityId: "", taskStateId: "" });
-        window.location.replace("/tasks");
+        //this.setState({ name: "", description: "", startDate: "", finishDate: "", priorityId: "", taskStateId: "" });
+        this.props.moveToComponent("tasks")
     }
 
     render() {
         return (
             <div>
                 <h2>Add task</h2>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false"/>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="description">Description</label>
-                            <textarea rows="3" class="form-control" onChange={this.onDescriptionChanged} id="description" placeholder="task description" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="description">Start Date</label>
-                            <DatePicker
-                                selected={this.state.startDate}
-                                onChange={this.onStartDateChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                dateFormat="MMMM d, yyyy h:mm aa"
-                                timeCaption="time"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label for="description">Finish Date</label>
-                            <DatePicker
-                                selected={this.state.finishDate}
-                                onChange={this.onFinishDateChange}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                dateFormat="MMMM d, yyyy h:mm aa"
-                                timeCaption="time"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="priority">Priority</label>
-                            <select class="form-control" onChange={this.onPriorityChanged} id="priority" placeholder="task priority" defaultValue={priorityTable[0].name}>
-                                {priorityTable.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="taskState">State</label>
-                            <select class="form-control" onChange={this.onStateChanged} id="taskState" placeholder="task state" defaultValue={stateTable[0].name}>
-                                {stateTable.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    
-                        <button type="submit" className="btn btn-primary button-fixed">Submit</button>
-                    
+                <div className="form-group col-12">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false"/>
 
-                    <Link to={cancelUrl}>
-                        <button type="submit" className="btn btn-danger  button-fixed">Cancel</button>
-                    </Link>
-                </form>
-                
+                    </div>
+                </div>
+                <div className="form-group col-12">
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea rows="3" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="description" placeholder="task description"/>
+                    </div>
+                </div>
+                <div className="form-group col-4">
+                    <div>
+                        <label for="description">Start Date</label><br />
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.onStartDateChange}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                            dateFormat="MMMM d, yyyy h:mm aa"
+                            timeCaption="time"
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        />
+                    </div>
+                </div>
+                <div className="form-group col-4">
+                    <div >
+                        <label for="finishDate">Finish Date</label><br />
+                        <DatePicker
+                            selected={this.state.finishDate}
+                            onChange={this.onFinishDateChange}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                            dateFormat="MMMM d, yyyy h:mm aa"
+                            timeCaption="time"
+                            id="finishDate"
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-4">
+                        <label for="priorityName">Priority</label>
+                        <select class="form-control form-control-sm" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
+                            {priorityTable.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-4">
+                        <label for="taskStateName">State</label>
+                        <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
+                            {stateTable.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" onClick={this.onSubmit} className="btn btn-outline-info button-fixed">Submit</button>
+                <button type="submit" onClick={() => this.props.moveToComponent("tasks")} className="btn btn-outline-danger button-fixed">Cancel</button>
             </div>
         );
     }

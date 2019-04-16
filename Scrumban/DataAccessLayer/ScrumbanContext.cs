@@ -13,6 +13,8 @@ namespace Scrumban.DataAccessLayer
         public DbSet<FeatureDAL> Features { get; set;}
         public DbSet<DefectDAL> Defects { get; set; }
         public DbSet<UsersDAL> Users { get; set; }
+        public DbSet<RoleDAL> Roles { get; set; }
+        public DbSet<PictureDAL> Pictures { get; set; }
         public DbSet<StoryDAL> Stories { get; set; }
         public DbSet<StoryStateDAL> StoryStates { get; set; }
         public DbSet<StateDAL> States { get; set; }
@@ -24,6 +26,26 @@ namespace Scrumban.DataAccessLayer
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // User Identity
+            modelBuilder.Entity<RoleDAL>().HasData(
+                new RoleDAL[]
+                {
+                    new RoleDAL{ Id = 1, Name = "Team Member" },
+                    new RoleDAL{ Id = 2, Name = "Scrum Master" },
+                    new RoleDAL{ Id = 3, Name = "Product Owner" },
+                    new RoleDAL{ Id = 4, Name = "Tester" }
+                }
+            );
+
+            // Task Entities
+            modelBuilder.Entity<TaskDAL>().HasData(
+                new TaskDAL[]
+                {
+                    new TaskDAL { Id = 1, Name = "Task1", StartDate = DateTime.Now },
+                    new TaskDAL { Id = 2, Name = "Task2", StartDate = DateTime.Now },
+                    new TaskDAL { Id = 3, Name = "Task3", StartDate = DateTime.Now }
+                }
+            );
             modelBuilder.Entity<TaskStateDAL>().HasData(
                 new TaskStateDAL[]
                 {
@@ -32,6 +54,8 @@ namespace Scrumban.DataAccessLayer
                     new TaskStateDAL{Id = 3, Name = "Completed"}
                 }
             );
+
+            //
             modelBuilder.Entity<StateDAL>().HasData(
                 new StateDAL[]
                 {
@@ -73,14 +97,6 @@ namespace Scrumban.DataAccessLayer
                     new PriorityDAL{Id = 2, Name = "Medium"},
                     new PriorityDAL{Id = 3, Name = "Heigh"},
                     new PriorityDAL{Id = 4, Name = "Immediate"}
-                }
-            );
-            modelBuilder.Entity<TaskDAL>().HasData(
-                new TaskDAL[]
-                {
-                    new TaskDAL { Id = 1, Name = "Task1" },
-                    new TaskDAL { Id = 2, Name = "Task2" },
-                    new TaskDAL { Id = 3, Name = "Task3" }
                 }
             );
 
