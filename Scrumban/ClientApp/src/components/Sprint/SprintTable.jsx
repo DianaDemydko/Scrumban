@@ -59,6 +59,8 @@ export class SprintTable extends React.Component
         this.fetchSprintData("")
     }
 
+    
+
     fetchSprintData(query) {
         this.setState({ loading: true })
         fetch('api/Sprint/Index' + query)
@@ -441,13 +443,7 @@ export class SprintTable extends React.Component
                 </tbody>
             </table>
                 <div>
-                    <Link to={{
-                        pathname: CreateSprintURL,
-                        state:
-                        {
-                            statuses: this.state.statuses
-                        }
-                    }}><button className="btn btn btn-info">Create New Sprint</button></Link>
+                    <button onClick={() => this.props.moveToComponent2("sprintAdd")} className="btn btn btn-info">Create New Sprint</button>
                 </div>
             </div>
             )

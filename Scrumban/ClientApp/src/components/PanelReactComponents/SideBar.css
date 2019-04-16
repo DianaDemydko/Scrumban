@@ -1,4 +1,5 @@
-﻿/* Individual item */
+﻿
+/* Individual item */
 .bm-item {
     display: inline-block;
     /* Our sidebar item styling */
@@ -18,10 +19,17 @@
     }
 
 /* The rest copied directly from react-burger-menu docs */
+/* Styling of overlay */
+.bm-overlay {
+    position: absolute !important;
+}
 
+.bm-menu-wrap {
+    position: absolute !important;
+}
 /* Position and sizing of burger button */
 .bm-burger-button {
-    position: fixed;
+    position: absolute;
     width: 24px;
     height: 20px;
     left: 15px;
@@ -47,7 +55,7 @@
 
 /* General sidebar styles */
 .bm-menu {
-
+    position: absolute;
     background: #373a47;
     padding: 2.5em 1.5em 0;
     font-size: 1.5em;
@@ -65,42 +73,9 @@
     font-size: 20px;
 }
 
-/* Styling of overlay */
-.bm-overlay {
-    background: rgba(0, 0, 0, 0.3);
-}
-
-#sidebar {
-    position:fixed;
-    width:200px;
-    height:100%;
-    background:#151719;
-    left:-200px;
-}
-#sidebar.active {
-    left:0px;
-}
-#sidebar ul li {
-    color:rgba(230,230,230,0.9);
-    list-style:none;
-    padding: 15px 10px;
-    border-bottom:1px solid rgba(100,100,100,0.3);
-}
-#sidebar .toggle-btn{
-    position:absolute;
-    left:230px;
-    top: 20px;
-}
-#sidebar .toggle-btn span{
-    display:block;
-    width:30px;
-    height:5px;
-    background:#151719;
-    margin:3px 0px;
-}
 
 .dropdown {
-   /* float: left; */
+    /* float: left; */
     /*overflow: hidden;*/
 }
 
@@ -116,7 +91,6 @@
 
     .navbar a:hover, .dropdown:hover .dropbtn {
         background-color: #373a47;
-
     }
 
 .dropdown-content {
@@ -128,7 +102,6 @@
 }
 
     .dropdown-content a {
-       
         color: black;
         padding: 1px 16px;
         text-decoration: none;
@@ -143,4 +116,3 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
-

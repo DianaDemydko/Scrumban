@@ -28,7 +28,7 @@ export class SideBar extends React.Component {
                     </div>
                 </a> 
 
-                <a className="menu-item" /*onClick={() => this.props.moveToComponent("home")}*/>Kanban</a>
+                <a className="menu-item" onClick={() => this.props.moveToComponent("kanbanBoard")}>Kanban</a>
                 
             </Menu>
         );

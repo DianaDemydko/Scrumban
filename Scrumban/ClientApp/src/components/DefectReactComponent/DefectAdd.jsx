@@ -58,7 +58,7 @@ export class DefectAdd extends React.Component {
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    //   this.loadData();
+                    this.props.moveToComponent2("defects");
                 }
             }.bind(this);
             xhr.send(data);
@@ -76,7 +76,7 @@ export class DefectAdd extends React.Component {
         let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
         this.onAddDefect(defect);
         this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
-        this.props.moveToComponent2("defects");
+        
         //window.location.replace("/defects");
     }
 

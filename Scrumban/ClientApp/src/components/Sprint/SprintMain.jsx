@@ -8,7 +8,7 @@ export class SprintMain extends React.Component {
   render() {
       return (
           <div>
-              <SprintTable />
+              <SprintTable moveToComponent2={this.props.moveToComponent2} />
          </div>
     );
   }

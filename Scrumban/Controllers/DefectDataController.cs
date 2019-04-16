@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNet.OData;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace Scrumban.Controllers
 {
@@ -27,12 +28,14 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/addDefect")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Add([FromBody] DefectDTO defectDTO)
         {
             try
             {
                 _defectService.AddDefect(defectDTO);
-                return Ok(defectDTO);
+                return Ok();
             }
             catch
             {
