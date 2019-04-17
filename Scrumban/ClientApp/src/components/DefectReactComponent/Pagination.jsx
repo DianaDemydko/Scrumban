@@ -11,7 +11,7 @@ const propTypes = {
 
 const defaultProps = {
     initialPage: 1,
-    pageSize: 3
+    pageSize: 5
 }
 
 export class Pagination extends React.Component {
@@ -119,7 +119,7 @@ export class Pagination extends React.Component {
         }
 
         return (
-            <ul className="pagination">
+            <ul className="pagination" >
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
                     <a onClick={() => this.setPage(1)}>First</a>
                 </li>

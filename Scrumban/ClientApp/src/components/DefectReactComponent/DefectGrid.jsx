@@ -157,12 +157,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -184,12 +184,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -211,12 +211,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -238,12 +238,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -265,12 +265,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -292,12 +292,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -319,12 +319,12 @@ export class DefectGrid extends React.Component {
         switch (sortingOrder) {
             case 'ascending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction)
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction)
                 })
                 break
             case 'descending':
                 this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
+                    pageOfItems: this.state.pageOfItems.sort(compareFunction).reverse()
                 })
                 break
         }
@@ -495,9 +495,11 @@ export class DefectGrid extends React.Component {
                        </tbody>)
                 }
             </table>
-
+            <div>
+                <Pagination items={this.state.defects} onChangePage={this.onChangePage} />
+            </div>
             <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
-            <Pagination items={this.state.defects} onChangePage={this.onChangePage} />
+            
 
 
         </div>

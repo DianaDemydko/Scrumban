@@ -84,16 +84,15 @@ export class Body extends React.Component {
                 renderedComponent = this.props.children
         }
         
-        return (<Grid fluid>
-            <Row>
-                <Col>  
+        return (<div>
+            <div> 
                     <SideBar moveToComponent={this.props.moveToComponent}  />
-                </Col>
-                <Col sm={10}>
+            </div>
+            <div> 
+               
                     {renderedComponent}
-                </Col>
-            </Row>
-        </Grid>
+                </div> 
+        </div>
         )
     }
 }
