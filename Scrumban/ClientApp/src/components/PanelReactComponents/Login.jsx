@@ -81,7 +81,7 @@ export class Login extends React.Component {
                     }
                     else {
                         sessionStorage.setItem("tokenKey", data.access_token);
-                        this.props.moveToComponent(true, data.user, "tasks");
+                        this.props.moveToComponent(true, data.user, "kanbanBoard");
                     }
                 });
         }

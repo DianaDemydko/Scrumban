@@ -50,9 +50,6 @@ export class Body extends React.Component {
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />
                 break
-            case 'home':
-                renderedComponent = <Home />
-                break
             case 'tasks':
                 renderedComponent = <TaskGrid moveToComponent={this.props.moveToComponent} />
                 break
@@ -81,12 +78,14 @@ export class Body extends React.Component {
                 renderedComponent = <Kanban/>
                 break
             default:
-                renderedComponent = this.props.children
+                renderedComponent = <Home />
         }
         
         return (<div>
             <div> 
-                    <SideBar moveToComponent={this.props.moveToComponent}  />
+                {this.props.panelLoginStatus == true ?
+                    (<SideBar moveToComponent={this.props.moveToComponent} />) :
+                    ""}
             </div>
             <div> 
                

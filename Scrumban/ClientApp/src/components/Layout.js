@@ -57,6 +57,7 @@ export class Layout extends Component {
                 moveToComponent={this.setRenderedComponentName}
                 parentOnLoginStatusCallBack={this.onLoginStatusCallBack}
                 user={this.state.user}
+                panelLoginStatus={this.state.panelLoginStatus}
                 updateUser={this.updateUser}
             />
         </div>
