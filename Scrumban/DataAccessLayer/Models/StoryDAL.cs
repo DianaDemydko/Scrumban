@@ -15,6 +15,10 @@ namespace Scrumban.DataAccessLayer.Models
         [ForeignKey("StoryState")]
         public int StoryState_id { get; set; }
 
+        [ForeignKey("Sprint")]
+        public int sprint_id { get; set; }
+
+        public int StoryPoints { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Rank { get; set; }

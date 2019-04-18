@@ -80,13 +80,8 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<SprintDAL>().HasData(
                 new SprintDAL[]
                 {
-                    new SprintDAL(){ Sprint_id=1, SprintStatus_id=1, Description="HUGE desc ======== ============== ========= ===============",
-                        EndDate =new DateTime(2019,4,20), StartDate=new DateTime(2019,1,12), Name="AAaSprint"},
-                    new SprintDAL(){ Sprint_id=2, SprintStatus_id=1, Description="empty", EndDate=new DateTime(2019,9,2), StartDate=new DateTime(2019,8,9), Name="bbbb Sprint"},
-                    new SprintDAL(){ Sprint_id=3, SprintStatus_id=1, Description="-", EndDate=new DateTime(2019,10,27), StartDate=new DateTime(2019,8,2), Name="anonimous"},
-                    new SprintDAL(){ Sprint_id=4, SprintStatus_id=1, Description="desc", EndDate=new DateTime(2019,12,3), StartDate=new DateTime(2019,8,17), Name="nameless"},
-                    new SprintDAL(){ Sprint_id=5, SprintStatus_id=1, Description="666 Don't delete this 666", EndDate=new DateTime(2018,4,7), StartDate=new DateTime(2018,3,13), Name="Evil Sprint 666"},
-                    new SprintDAL(){ Sprint_id=6, SprintStatus_id=1, Description="some desc", EndDate=new DateTime(2018,5,22), StartDate=new DateTime(2018,1,20), Name="XXXX"}
+                     new SprintDAL(){ Sprint_id=1, SprintStatus_id=3, Description="Description", EndDate=new DateTime(2019,5,22), StartDate=new DateTime(2019,5,1), Name="SPRINT 1"},
+                     new SprintDAL(){ Sprint_id=2, SprintStatus_id=2, Description="Description", EndDate=new DateTime(2019,6,11), StartDate=new DateTime(2019,5,24), Name="SPRINT 2"}
                 }
                 );
 
@@ -141,6 +136,60 @@ namespace Scrumban.DataAccessLayer
                     }
                 }
             );
+            //modelBuilder.Entity<StoryDAL>().HasData(
+            //    new StoryDAL[]
+            //    {
+            //        new StoryDAL
+            //        {
+            //            Story_id =1,
+            //            sprint_id =1,
+            //            StoryPoints = 40,
+            //            Name ="Add something usefull",
+            //            Description = "Long longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong long description",
+            //            Rank = 12,
+            //            StartDate = new DateTime(2019, 5,1),
+            //            EndDate = new DateTime(2019, 5, 3),
+            //            StoryState_id = 5
+            //        },
+
+            //        new StoryDAL
+            //        {
+            //            Story_id =2,
+            //             sprint_id =1,
+            //            StoryPoints = 30,
+            //            Name ="Fix very bad bug",
+            //            Description = "The shortest description",
+            //            Rank = 4,
+            //            StartDate = new DateTime(2019, 5,1),
+            //            EndDate = new DateTime(2019, 5, 10),
+            //            StoryState_id = 5
+            //        },
+            //        new StoryDAL
+            //        {
+            //            Story_id =3,
+            //            sprint_id =1,
+            //            StoryPoints = 25,
+            //            Name ="Test something",
+            //            Description = "Description3",
+            //            Rank = 40,
+            //            StartDate = new DateTime(2019, 5,1),
+            //            EndDate = new DateTime(2019, 5, 12),
+            //            StoryState_id=2
+            //        },
+            //        new StoryDAL
+            //        {
+            //            Story_id =3,
+            //            sprint_id =1,
+            //            StoryPoints = 25,
+            //            Name ="Test something",
+            //            Description = "Description3",
+            //            Rank = 40,
+            //            StartDate = new DateTime(2019, 5,1),
+            //            EndDate = new DateTime(2019, 5, 20),
+            //            StoryState_id=2
+            //        }
+            //    }
+            //);
             base.OnModelCreating(modelBuilder);
         }
     }
