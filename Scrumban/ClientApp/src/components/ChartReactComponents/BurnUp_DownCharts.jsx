@@ -74,7 +74,7 @@ function UpdateXaxes(startDate, endDate, duration) {
             }
             break;
     }
-    for (var i = 0; i < (duration); i++) {
+    for (var i = 0; i < (duration + 1); i++) {
         if (sDay <= daysInStartMonth) {
             var a = sDay.toString();
             var b = sMonth.toString();
@@ -100,7 +100,48 @@ function SumOfStoryPoints(stories) {
     }
     return sum;
 }
-/*=====Function fpr forming array of data for Total */
+/*=====Function for forming array of data for Ideal Task Remaining(Burn Down)=====*/
+function IdealTaskRemeaning(duration, sumOfAllPoints) {
+    var resault_array = [];
+    var step = sumOfAllPoints / duration;
+    for (var i = 0; i <= duration; i++) {
+        resault_array.push(sumOfAllPoints);
+        sumOfAllPoints -= step;
+    }
+    return resault_array;
+}
+/*=====Function for forming array of data for Actual Task Remaining(Burn Down)=====*/
+function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllPoints) {
+    var resault_array = [];
+    resault_array.push(sumOfAllPoints);
+    var datesOfDoneStories = [];
+    if (doneStories.length > 0) {
+        for (var i = 0; i < doneStories.length; i++) {
+            var eDay = Number(doneStories[i].endDate.substring(8, 10));
+            var eMonth = Number(doneStories[i].endDate.substring(5, 7));
+            var year = Number(doneStories[i].endDate.substring(0, 4));
+            var a = eDay.toString();
+            var b = eMonth.toString();
+            var s = a + '.' + b + '.' + year;
+            datesOfDoneStories.push(s);
+        }
+        var pointer_for_stories = 0;
+        for (var i = 1; i <= duration; i++) {
+            if (arrayOfSprintDays[i] === datesOfDoneStories[pointer_for_stories]) {
+                var storyPoint = doneStories[pointer_for_stories].storyPoints;
+                resault_array.push(sumOfAllPoints - storyPoint);
+                sumOfAllPoints -= storyPoint;
+                pointer_for_stories += 1;
+            } else {
+                resault_array.push(sumOfAllPoints);
+            }
+
+        }
+    }
+    return resault_array;
+
+}
+/*=====Function fpr forming array of data for Total (Burn Up) */
 function FormTotalLine(duration, sumOfAllPoints) {
     var resault_array = [];
     for (var i = 0; i <= duration; i++) {
@@ -108,7 +149,7 @@ function FormTotalLine(duration, sumOfAllPoints) {
     }
     return resault_array;
 }
-/*=====Function fpr forming array of data for Completed */
+/*=====Function fpr forming array of data for Completed  (Burn Up) */
 function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
     var resault_array = [];
     var value = 0;
@@ -139,18 +180,19 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
     }
     return resault_array;
 }
-/*=====Function fpr forming array of data for Ideal */
+/*=====Function fpr forming array of data for Ideal  (Burn Up) */
 function FormIdealLine(duration, sumOfAllPoints) {
     var resault_array = [];
     var step = sumOfAllPoints / duration;
     var value = 0;
-    for (var i = 0; i <= (duration+1); i++) {
+    for (var i = 0; i <= (duration + 1); i++) {
         resault_array.push(value);
         value += step;
     }
     return resault_array;
 }
-export class BurnUpChart extends React.Component {
+
+export class BurnUp_DownCharts extends React.Component {
     constructor(props) {
         super(props);
 
@@ -162,10 +204,13 @@ export class BurnUpChart extends React.Component {
             currentSprint: null,
             sprintDays: ['0', '1.1.19', '2.1.19', '3.1.19'],
             durationOfSprint: 0,
+            idealTaskRemainingArray: [],
+            actualTaskRemainingArray: [],
             totalArray: [],
             completedArray: [],
-            idealArray:[]
+            idealArray: []
         };
+
         this.onSprintChanged = this.onSprintChanged.bind(this);
     }
     componentDidMount() {
@@ -183,14 +228,16 @@ export class BurnUpChart extends React.Component {
         var sprint_id = CurentSprint.sprint_id;
         var duration = GetDurationOfSprint(CurentSprint.startDate, CurentSprint.endDate);
         var arrayOfLabels = UpdateXaxes(CurentSprint.startDate, CurentSprint.endDate, duration);
-        //getting all stories which belong to current sprint
+        ///getting all stories which belong to current sprint
         var responce = await fetch('api/Chart/GetAllStoriesOfCurrentSprint/' + sprint_id);
         var stories = await responce.json();
         var sumOfpoints = SumOfStoryPoints(stories);
-        var dataForIdeal = FormIdealLine(duration, sumOfpoints);
+        var dataForIdealTaskRemeaning = IdealTaskRemeaning(duration, sumOfpoints);
         ///getting all stories that are done and which belong to current sprint
         var responcee = await fetch('api/Chart/GetDoneStoriesOfCurrentSprint/' + sprint_id);
         var doneStories = await responcee.json();
+        var dataForActualTaskRemaining = ActualTaskRemaining(duration, doneStories, arrayOfLabels, sumOfpoints);
+        var dataForIdeal = FormIdealLine(duration, sumOfpoints);
         var dataForCompleted = FormCompletedLine(duration, doneStories, arrayOfLabels);
         var dataForTotal = FormTotalLine(duration, sumOfpoints);
         this.setState({
@@ -200,18 +247,52 @@ export class BurnUpChart extends React.Component {
             allStoriesOfCurrentSprint: stories,
             sumOfAllStoryPoints: sumOfpoints,
             durationOfSprint: duration,
+            idealTaskRemainingArray: dataForIdealTaskRemeaning,
+            actualTaskRemainingArray: dataForActualTaskRemaining,
             completedArray: dataForCompleted,
             idealArray: dataForIdeal,
             totalArray: dataForTotal
         });
     }
+
     render() {
-        const data = {
+        const dataBurnDown = {
+            labels: this.state.sprintDays,
+            datasets: [
+                {
+                    label: 'Ideal Tasks Remaining',
+                    data: this.state.idealTaskRemainingArray,
+                    lineTension: 0,
+                    fill: false,
+                    borderColor: 'blue'
+                },
+                {
+                    label: 'Actual Tasks Remaining',
+                    data: this.state.actualTaskRemainingArray,
+                    lineTension: 0,
+                    fill: false,
+                    borderColor: 'red'
+                }
+
+            ]
+        }
+        const optionsBurnDown = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: this.state.sumOfAllStoryPoints,
+                        min: 0,
+                        stepSize: 5
+                    }
+                }]
+            },
+        }
+        const dataBurnUp = {
             labels: this.state.sprintDays,
             datasets: [
                 {
                     label: 'Total',
-                    data:  this.state.totalArray,
+                    data: this.state.totalArray,
                     lineTension: 0,
                     fill: false,
                     borderColor: 'blue'
@@ -234,7 +315,7 @@ export class BurnUpChart extends React.Component {
 
             ]
         }
-        const options = {
+        const optionsBurnUp = {
             scales: {
                 yAxes: [{
                     ticks: {
@@ -252,7 +333,10 @@ export class BurnUpChart extends React.Component {
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>
-                <Line data={data} options={options} />
+                <div>Burn Down</div>
+                <Line data={dataBurnDown} options={optionsBurnDown} />
+                <div>Burn Up</div>
+                <Line data={dataBurnUp} options={optionsBurnUp} />
             </article>
         );
     }

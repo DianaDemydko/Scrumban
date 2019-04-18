@@ -22,8 +22,7 @@ import { StoryGrid } from '../StoryReactComponents/StoryGrid';
 import { DefectAdd } from '../DefectReactComponent/DefectAdd';
 import Kanban  from '../KanbanBoard/KanbanMain';
 import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
-import { BurnDownChart } from '../ChartReactComponents/BurnDownChart';
-import { BurnUpChart } from '../ChartReactComponents/BurnUpChart';
+import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 
 export class Body extends React.Component {
     constructor(props) {
@@ -77,11 +76,8 @@ export class Body extends React.Component {
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
                 break
-            case 'burnDown':
-                renderedComponent = <BurnDownChart />
-                break
-            case 'burnUp':
-                renderedComponent = <BurnUpChart />
+            case 'burnDown_Up':
+                renderedComponent = <BurnUp_DownCharts />
                 break
             default:
                 renderedComponent = this.props.children

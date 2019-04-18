@@ -29,15 +29,7 @@ export class SideBar extends React.Component {
                 </a> 
 
                 <a className="menu-item" onClick={() => this.props.moveToComponent("kanbanBoard")}>Kanban</a>
-                <a className="dropdown">
-                    <a className="dropbtn">Charts
-                    <i className="fa fa-caret-down"></i>
-                    </a>
-                <div className="dropdown-content">
-                    <a className="menu-item" onClick={() => this.props.moveToComponent("burnDown")}>Burn down chart</a>
-                    <a className="menu-item" onClick={() => this.props.moveToComponent("burnUp")}>Burn up chart</a>
-                    </div>
-                </a>
+                <a className="menu-item" onClick={() => this.props.moveToComponent("burnDown_Up")}>Burn Up and Burn Down charts</a>
                 
             </Menu>
         );
