@@ -5,7 +5,7 @@ using Scrumban.ServiceLayer.DTO;
 
 namespace Scrumban.ServiceLayer.Interfaces
 {
-    interface ISprintService
+    public interface ISprintService
     {
         IQueryable<SprintDTO> GetAllSprints();
         IList<SprintStatusDTO> GetAllStatuses();

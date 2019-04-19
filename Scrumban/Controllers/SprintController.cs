@@ -2,26 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using Scrumban.DataAccessLayer;
 using Microsoft.AspNet.OData;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.Services;
+using Microsoft.EntityFrameworkCore;
 using Scrumban.ServiceLayer.DTO;
+using Scrumban.DataAccessLayer;
+using Microsoft.AspNetCore.Http;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
     public class SprintController : Controller
     {
-        private ISprintService _sprintService;
+        ISprintService _sprintService;
 
-        public SprintController(DbContextOptions<ScrumbanContext> options)
+        public SprintController(ISprintService sprintService)
         {
-            _sprintService = new SprintService(options);
+            _sprintService = sprintService;
         }
-
         //Get all sprints
         [HttpGet]
         [EnableQuery]

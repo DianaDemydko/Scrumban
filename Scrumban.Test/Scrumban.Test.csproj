@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Scrumban\Scrumban.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers.Tests\" />
+  </ItemGroup>
+
 </Project>

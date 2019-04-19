@@ -55,6 +55,11 @@ namespace Scrumban
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDefectRepository, DefectRepository>();
+            services.AddTransient<ISprintRepository, SprintRepository>();
+            services.AddTransient<ISprintService, SprintService>();
+            services.AddTransient<ISprintStatusRepository, SprintStatusRepository>();
+            services.AddTransient<IStoryRepository, StoryRepository>();
+            services.AddTransient<IStoryService, StoryService>();
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
 
