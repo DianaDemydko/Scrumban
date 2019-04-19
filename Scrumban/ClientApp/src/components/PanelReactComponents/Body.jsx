@@ -22,7 +22,7 @@ import { StoryGrid } from '../StoryReactComponents/StoryGrid';
 import { DefectAdd } from '../DefectReactComponent/DefectAdd';
 import Kanban  from '../KanbanBoard/KanbanMain';
 import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
-
+import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 
 export class Body extends React.Component {
     constructor(props) {
@@ -38,13 +38,13 @@ export class Body extends React.Component {
 
         switch (this.props.renderedComponentName) {
             case 'login':
-                renderedComponent = <Login parentOnLoginStatusCallBack={this.props.parentOnLoginStatusCallBack} />
+                renderedComponent = <Login moveToComponent={this.props.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
                 renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
                 break
             case 'profile':
-                renderComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+                renderedComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />
@@ -75,6 +75,9 @@ export class Body extends React.Component {
                 break 
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
+                break
+            case 'burnDown_Up':
+                renderedComponent = <BurnUp_DownCharts />
                 break
             default:
                 renderedComponent = this.props.children
