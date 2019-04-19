@@ -1,0 +1,12 @@
+﻿
+.centered {
+margin-left: 150px;
+margin-top: 30px;
+}
+select{
+    width: 100%;
+}
+h3.header{
+    text-align: center;
+    padding:0;
+}

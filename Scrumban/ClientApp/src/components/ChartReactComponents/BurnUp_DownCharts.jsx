@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import { Line } from "react-chartjs-2";
+import './css/BurnUp_DownCharts.css'
 
 
 /*=====Function for calculating duration of sprint=====*/
@@ -256,6 +257,7 @@ export class BurnUp_DownCharts extends React.Component {
     }
 
     render() {
+        //Data and Options for BURN DOWN CHART
         const dataBurnDown = {
             labels: this.state.sprintDays,
             datasets: [
@@ -264,14 +266,21 @@ export class BurnUp_DownCharts extends React.Component {
                     data: this.state.idealTaskRemainingArray,
                     lineTension: 0,
                     fill: false,
-                    borderColor: 'blue'
+                    borderColor: 'blue',
+                    borderDash: [5, 5],
+                    pointRadius: 0
                 },
                 {
                     label: 'Actual Tasks Remaining',
                     data: this.state.actualTaskRemainingArray,
                     lineTension: 0,
                     fill: false,
-                    borderColor: 'red'
+                    borderColor: 'red',
+                    pointRadius: 3,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 30,
+                    pointBorderWidth: 2,
+                    pointStyle: 'rectRounded'
                 }
 
             ]
@@ -283,10 +292,28 @@ export class BurnUp_DownCharts extends React.Component {
                         max: this.state.sumOfAllStoryPoints,
                         min: 0,
                         stepSize: 5
+                    },
+                    gridLines: {
+                        color: "black",
+                        borderDash: [2, 5],
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Story points",
+                        fontColor: "green"
                     }
-                }]
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Sprint's duration",
+                        fontColor: "green"
+                    }
+                }
+                ]
             },
         }
+        //Data and Options for BURN UP CHART
         const dataBurnUp = {
             labels: this.state.sprintDays,
             datasets: [
@@ -302,14 +329,21 @@ export class BurnUp_DownCharts extends React.Component {
                     data: this.state.completedArray,
                     lineTension: 0,
                     fill: false,
-                    borderColor: 'red'
+                    borderColor: 'red',
+                    pointRadius: 3,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 30,
+                    pointBorderWidth: 2,
+                    pointStyle: 'rectRounded'
                 },
                 {
                     label: 'Ideal',
                     data: this.state.idealArray,
                     lineTension: 0,
                     fill: false,
-                    borderColor: 'green'
+                    borderColor: 'green',
+                    borderDash: [5, 5],
+                    pointRadius: 0
 
                 }
 
@@ -322,22 +356,39 @@ export class BurnUp_DownCharts extends React.Component {
                         max: this.state.sumOfAllStoryPoints,
                         min: 0,
                         stepSize: 5
+                    },
+                    gridLines: {
+                        color: "black",
+                        borderDash: [2, 5],
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Story points",
+                        fontColor: "green"
                     }
-                }]
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Sprint's duration",
+                        fontColor: "green"
+                    }
+                }
+                ]
             },
         }
 
         return (
-            <article>
-                <select class="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
+            <div className='centered'>
+                <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>
-                <div>Burn Down</div>
+                <h3 className='header'>Burn Down</h3>
                 <Line data={dataBurnDown} options={optionsBurnDown} />
-                <div>Burn Up</div>
+                <h3 className='header'>Burn Up</h3>
                 <Line data={dataBurnUp} options={optionsBurnUp} />
-            </article>
+            </div>
         );
     }
 }
