@@ -16,6 +16,7 @@ namespace Scrumban.DataAccessLayer
         private ITaskRepository taskRepository;
         private IFeatureRepository feature_repository;
         private IUserRepository _userRepository;
+        private ITokenRefreshRepository _tokenRefreshRepository;
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
@@ -119,6 +120,18 @@ namespace Scrumban.DataAccessLayer
                 }
 
                 return _userRepository;
+            }
+        }
+
+        public ITokenRefreshRepository TokenRefreshRepository
+        {
+            get
+            {
+                if(_tokenRefreshRepository == null)
+                {
+                    _tokenRefreshRepository = new TokenRefreshRepository(_scrumbanContext);
+                }
+                return _tokenRefreshRepository;
             }
         }
 

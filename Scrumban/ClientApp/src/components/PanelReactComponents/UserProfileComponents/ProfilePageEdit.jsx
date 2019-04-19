@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import "../../../index.css"
 
-const apiUrlGetUser = "/api/users/getUserAccount";
 const apiUrlEditUser = "/api/users/Edit";
 const apiUrlCheckUser = "/api/users/Check";
 
@@ -241,6 +240,15 @@ export class ProfilePageEdit extends Component {
                 alert(response.status)
                 if (response.status == 200) {
                     return response.json();
+                }
+                else if (response.status == 401) {
+                    alert("You are not authenticated !  " + response.status)
+                }
+                else if (response.status == 403) {
+                    alert("You are not authorizated !  " + response.status)
+                }
+                else{
+                    alert(response.status)
                 }
             })
             .then(data => {

@@ -43,6 +43,21 @@ export class Layout extends Component {
 
         return (
             <div>
+                <div className="container">
+                    <div className="col-12">
+                        Token: {sessionStorage.getItem("tokenKey")}
+                    </div>
+                    <div className="col-12">
+                        RefreshToken: {sessionStorage.getItem("refreshTokenKey")}
+                    </div>
+                    <div className="col-12">
+                        E
+                    </div>
+                    <div className="col-12">
+                        Expires: {sessionStorage.getItem("expires")}
+                    </div>
+                    
+                </div>
                 <Panel
                     key={this.state.childRefresh}
                     moveToComponent={this.setRenderedComponentName} // set name of rendered component

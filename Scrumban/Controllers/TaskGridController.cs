@@ -6,10 +6,10 @@ using Scrumban.ServiceLayer.DTO;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Scrumban.Controllers
 {
-
     [Route("api/[controller]")]
     public class TaskGridController : Controller
     {
@@ -20,10 +20,7 @@ namespace Scrumban.Controllers
             _taskServise = taskService;
         }
 
-        //"Team Member"
-        //"Scrum Master"
-        //"Product Owner"
-        //"Tester"
+        //"Team Member", "Scrum Master", "Product Owner", "Tester"
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getTasks")]
@@ -38,16 +35,22 @@ namespace Scrumban.Controllers
         [Route("/api/[controller]/addTask")]
         public IActionResult Add([FromBody]TaskDTO taskDTO)
         {
+            if(taskDTO == null)
+            {
+                return StatusCode(400);
+            }
             _taskServise.AddTask(taskDTO);
             return Ok(taskDTO);
         }
-
         
-        [HttpPost]
-        [Authorize]
         [Route("/api/[controller]/editTask")]
+        [HttpPost]
         public IActionResult Edit([FromBody]TaskDTO taskDTO)
         {
+            if (taskDTO == null)
+            {
+                return StatusCode(400);
+            }
             _taskServise.UpdateTask(taskDTO);
             return Ok(taskDTO);
         }
@@ -57,9 +60,12 @@ namespace Scrumban.Controllers
         [Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int? id)
         {
-            TaskDTO taskDTO = _taskServise.GetTask(id);
-            _taskServise.DeleteTask(id);
-            return Ok(taskDTO);
+            if(id == null)
+            {
+                return StatusCode(400);
+            }
+            _taskServise.DeleteTask(id.Value);
+            return Ok();
         }
 
         // get additional const tables: states, priorities

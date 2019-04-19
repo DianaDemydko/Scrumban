@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { TaskRow } from './TaskRow';
 import { TaskFilter } from './TaskFilter';
+import { checkToken } from '../Helpers'
 
 const data = require('../../GlobalData.json'); // json file with const tables (priority, state)
 // consts of stable tables
@@ -46,6 +47,8 @@ export class TaskGrid extends React.Component {
 
     // Load data
     loadData(filter) {
+        checkToken()
+
         fetch(apiUrlGet + filter, {
             headers: {
                 'Content-Type': 'application/json',
@@ -75,6 +78,8 @@ export class TaskGrid extends React.Component {
     }
 
     fetchStates() {
+
+
         fetch(apiUrlGetStates)
             .then(response => response.json())
             .then(data => {
@@ -96,7 +101,6 @@ export class TaskGrid extends React.Component {
 
     onAdded(item) {
         //this.setState({ tasks: this.state.tasks.push(item) });
-
     }
 
     onChanged(item) {
@@ -151,6 +155,8 @@ export class TaskGrid extends React.Component {
     }
 
     onRemoveTask(id) {
+        checkToken()
+
         var url = apiUrlDelete + "/" + id
         fetch(url, {
             method: "delete",
@@ -188,6 +194,7 @@ export class TaskGrid extends React.Component {
         var changed = this.onChanged
         var states = this.state.states
         var priorities = this.state.priorities
+        var moveToComponentVar = this.props.moveToComponent
 
         return <div>
             <br />
@@ -230,11 +237,11 @@ export class TaskGrid extends React.Component {
                         <th className="col-1">{/* For button Edit   */}</th>
                         <th className="col-1">{/* For button Delete */}</th>
                     </thead>
-                    {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} states={states} priorities={priorities} /> })}
+                    {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} states={states} priorities={priorities} moveToComponent={moveToComponentVar}/> })}
                 </table>
                 <div>
                     <button
-                        onClick={() => this.props.moveToComponent("addTask")}
+                        onClick={() => this.props.moveToComponent("taskAdd")}
                         className="btn btn-sm btn-outline-info button-fixed"
                     >
                         Add

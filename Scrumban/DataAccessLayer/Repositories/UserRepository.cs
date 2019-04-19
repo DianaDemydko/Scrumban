@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -33,15 +34,27 @@ namespace Scrumban.DataAccessLayer.Repositories
         // Register user
         public void Create(UsersDAL user, PictureDAL picture)
         {
-            //user.PictureId = picture.Id;
-            //user.Password = generatePasswordHash(user.Password);
-            //_dbContext.Set<UsersDAL>().Add(user);
-            //_dbContext.Set<PictureDAL>().Add(picture);
             user.Password = generatePasswordHash(user.Password);
             _dbContext.Users.Add(user);
             picture.UserId = user.Id;
             _dbContext.Pictures.Add(picture);
-            
+        }
+
+        public override UsersDAL GetByID(int id)
+        {
+            try
+            {
+                var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
+                var role = _dbContext.Roles.FirstOrDefault(x => x.Id == user.RoleId);
+                user.Role = role;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+                var z = x;
+                return null;
+            }
         }
 
         public override void Update(UsersDAL user)

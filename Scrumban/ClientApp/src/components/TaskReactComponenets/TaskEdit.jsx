@@ -1,13 +1,12 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { checkToken } from '../Helpers'
 
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 const updateTaskUrl = "/api/TaskGrid/editTask";
 
-// consts of stable tables
-//const priorityTable = data.priority;
-//const stateTable = data.taskState;
+
 
 export class TaskEdit extends React.Component {
 
@@ -28,8 +27,7 @@ export class TaskEdit extends React.Component {
             storyId: this.props.item.storyId,
             programmerId: this.props.item.programmerId
         };
-
-
+        
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
@@ -38,7 +36,6 @@ export class TaskEdit extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
-
     }
 
     onNameChanged(e) {
@@ -72,23 +69,26 @@ export class TaskEdit extends React.Component {
     }
 
     onUpdate(task) {
+        var data = JSON.stringify({
+            "id": task.id,
+            "name": task.name,
+            "description": task.description,
+            "startDate": task.startDate,
+            "finishDate": task.finishDate,
+
+            "priorityId": task.priorityId,
+            "priority": task.priority,
+
+            "taskStateId": task.taskStateId,
+            "taskState": task.taskState,
+
+            "programmerId": null,
+            "storyId": null
+        });
+
+        
         if (task) {
-            var data = JSON.stringify({
-                "id": task.id,
-                "name": task.name,
-                "description": task.description,
-                "startDate": task.startDate,
-                "finishDate": task.finishDate,
-
-                "priorityId": task.priorityId,
-                "priority": task.priority,
-
-                "taskStateId": task.taskStateId,
-                "taskState": task.taskState,
-
-                "programmerId": null,
-                "storyId": null
-            });
+            checkToken()
 
             fetch(updateTaskUrl, {
                 method: "post",
@@ -97,29 +97,30 @@ export class TaskEdit extends React.Component {
                     'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
                 },
                 body: data
-                })
-                .then(function (response) {
-                    if (response.status == 200) {
-                        return response.json()
+            })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
                     }
-                    else if (response.status == 401) {
-                        var answer = window.confirm("You are not authorized. Move to Login page ?");
-                        if (answer == true) {
-                            window.location.replace("/login");
-                        }
-                    }
-                    else if (response.status == 403) {
-                        alert("ERROR! You have not permission !")
-                    }
-                    else {
-                        alert("ERROR! Status code: " + response.status)
-                    }
-                })
-                .then(data => {
-                    if (data != null) {
-                        this.props.changed(data)
-                    }
-                })
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            })
+            .then(data => {
+                if (data != null) {
+                    this.props.changed(data)
+                    //this.props.moveToComponent("tasks")
+                }
+            })
         }
     }
 
@@ -206,7 +207,7 @@ export class TaskEdit extends React.Component {
                     </div>
                 </div>
                 <div className="col-12">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-info button-fixed">Save</button>
+                    <button type="submit" onClick={this.onSubmit}   className="btn btn-sm btn-outline-info button-fixed">Save  </button>
                     <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-info button-fixed">Cancel</button>
                 </div>
             </td>

@@ -23,6 +23,7 @@ namespace Scrumban.DataAccessLayer
         public DbSet<PriorityDAL> Priorities { get; set; }
         public DbSet<SprintDAL> Sprints { get; set; }
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
+        public DbSet<TokenRefreshDAL> TokenRefresh { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

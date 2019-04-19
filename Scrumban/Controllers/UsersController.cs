@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Scrumban.DataAccessLayer;
 using Scrumban.ServiceLayer.DTO;
@@ -16,10 +19,12 @@ namespace Scrumban.Controllers
     public class UsersController : Controller
     {
         IUserService _userService;
+        private readonly IOptions<JWTAuthentication> _jwtAuthentication;
 
-        public UsersController(DbContextOptions<ScrumbanContext> options)
+        public UsersController(DbContextOptions<ScrumbanContext> options, IOptions<JWTAuthentication> jwtAuthentication)
         {
-            _userService = new UserService(options);
+            _userService = new UserService(options, jwtAuthentication);
+            _jwtAuthentication = jwtAuthentication ?? throw new ArgumentNullException(nameof(jwtAuthentication));
         }
 
         //Create user 
@@ -31,7 +36,7 @@ namespace Scrumban.Controllers
             {
                 if (_userService.AddUser(user) == 1)
                 {
-                    return StatusCode(401);
+                    return Ok();
                 }
             }
             catch(Exception ex)
@@ -80,14 +85,6 @@ namespace Scrumban.Controllers
             return Ok();
         }
 
-        //Details about users
-        //[HttpGet]
-        //[Route("Details/{id}")]
-        //public UserDTO Details(int id)
-        //{
-        //    return _userService.GetUserData(id);
-        //}
-
         //Check availability 
         [HttpPost]
         [Route("Check")]
@@ -106,59 +103,74 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("GetUserAccount")]
-        public UserDTO GetUseAccount([FromBody]LoginDTO user)
+        public UserDTO GetUseAccount([FromBody]UserDTO user)
         {
-            UserDTO response = _userService.GetUserAccount(user.Login, user.Password);
+            UserDTO response = _userService.GetUserAccount(user.Email, user.Password);
             return response;
         }
 
-
-
         // JWT generation
         [HttpPost("/api/[controller]/token")]
-        public IActionResult Token([FromBody]LoginDTO login)
+        [AllowAnonymous]
+        public IActionResult getTokens([FromBody]UserDTO login)
         {
-            UserDTO userDTO = _userService.GetUserAccount(login.Login, login.Password);
+            UserDTO userDTO = _userService.GetUserAccount(login.Email, login.Password);
             if (userDTO == null)
             {
-                Response.StatusCode = 400;
                 return StatusCode(401);
             }
+            var claims = new[] {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userDTO.Email),
+                new Claim(ClaimTypes.Role, userDTO.Role.Name)
+            };
+            var tokenExpires = DateTime.Now.Add(TimeSpan.FromMinutes(_jwtAuthentication.Value.Lifetime));
+            var token = _userService.createToken(claims, tokenExpires);
+            var refreshToken = _userService.createRefreshToken(userDTO.Id, 5);
 
-            var identity = GetIdentity(userDTO);
-            var now = DateTime.Now;
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
-                );
-
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             var response = new
             {
-                access_token = encodedJwt,
+                access_token = token,
+                refresh_token = refreshToken,
+                expires = tokenExpires,
                 user = userDTO
             };
             return Ok(response);
         }
 
-        private ClaimsIdentity GetIdentity(UserDTO user)
+        [HttpPost("/api/[controller]/updateToken")]
+        [AllowAnonymous]
+        public IActionResult updateTokens([FromBody]TokenRefreshDTO tokenRefreshDTO)
         {
-            if (user != null)
+            if(tokenRefreshDTO.Token == null)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
-                };
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
+                return StatusCode(401);
             }
-            return null;
+            string refreshToken = _userService.updateTokens(tokenRefreshDTO.Token, tokenRefreshDTO.UserId);
+            if(refreshToken == null)
+            {
+                return StatusCode(401);
+            }
+
+            UserDTO userDTO = _userService.GetUserData(tokenRefreshDTO.UserId);//_userService.GetUserAccount(userDTO.Email, userDTO.Password);
+            if (userDTO == null)
+            {
+                return StatusCode(401);
+            }
+            var claims = new[] {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userDTO.Email),
+                new Claim(ClaimTypes.Role, userDTO.Role.Name)
+            };
+            var tokenExpires = DateTime.Now.Add(TimeSpan.FromMinutes(_jwtAuthentication.Value.Lifetime));
+            var token = _userService.createToken(claims, tokenExpires);
+
+            var response = new
+            {
+                access_token = token,
+                refresh_token = refreshToken,
+                expires = tokenExpires,
+                user = userDTO
+            };
+            return Ok(response);
         }
     }
 }

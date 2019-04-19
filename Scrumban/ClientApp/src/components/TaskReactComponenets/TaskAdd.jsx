@@ -1,6 +1,8 @@
-﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
+﻿import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import DatePicker from 'react-datepicker'
+import { checkToken } from '../Helpers'
+
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 
 // consts of urls
@@ -61,6 +63,8 @@ export class TaskAdd extends React.Component {
 
     onAdd(task) {
         if (task) {
+            checkToken()
+
             var data = JSON.stringify({
                 "name": task.name,
                 "description": task.description,
@@ -69,7 +73,7 @@ export class TaskAdd extends React.Component {
                 "priorityId": task.priorityId,
                 "taskStateId": task.taskStateId
             });
-
+            var moveToComponentVar = this.props.moveToComponent;
             fetch(addTaskUrl, {
                 method: "post",
                 headers: {
@@ -79,15 +83,14 @@ export class TaskAdd extends React.Component {
                 body: data
                 })
                 .then(function (response) {
+                    alert(response.status)
                     if (response.status == 200) {
-                        //window.location.replace("/tasks");
-                        //this.props.moveToComponent("tasks")
+                        moveToComponentVar("tasks")
                     }
                     else if (response.status == 401) {
                         var answer = window.confirm("You are not authorized. Move to Login page ?")
                         if (answer == true) {
-                            //window.location.replace("/login")
-                            this.props.moveToComponent("login")
+                            moveToComponentVar("login")
                         }
                     }
                     else if (response.status == 403) {

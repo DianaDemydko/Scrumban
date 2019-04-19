@@ -8,15 +8,29 @@ using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Scrumban.ServiceLayer.Sevices
 {
     public class UserService: IUserService
     {
         private IUnitOfWork _unitOfWork;
-        public UserService(DbContextOptions<ScrumbanContext> options)
+        private readonly IOptions<JWTAuthentication> _jwtAuthentication;
+        IMapper _mapper { get; set; }
+
+        public UserService(DbContextOptions<ScrumbanContext> options, IOptions<JWTAuthentication> jwtAuthentication)
         {
             _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
+            _jwtAuthentication = jwtAuthentication ?? throw new ArgumentNullException(nameof(jwtAuthentication));
+            _mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<RoleDAL, RoleDTO>();
+                cfg.CreateMap<UsersDAL, UserDTO>();
+                cfg.CreateMap<PictureDAL, PictureDTO>();
+            }
+            ).CreateMapper();
         }
      
         public IQueryable<UserDTO> GetAllUsers()
@@ -110,6 +124,11 @@ namespace Scrumban.ServiceLayer.Sevices
                     Surname = user.Surname,
                     Email = user.Email,
                     Password = user.Password,
+                    Role = new RoleDTO
+                    {
+                        Id = user.Role.Id,
+                        Name = user.Role.Name
+                    },
                     RoleId = user.RoleId,
                 };
                 
@@ -177,6 +196,61 @@ namespace Scrumban.ServiceLayer.Sevices
             catch
             {
                 throw;
+            }
+        }
+        
+        // get token
+        public string createToken(IEnumerable<Claim> claims, DateTime tokenExpire)
+        {
+            var jwt = new JwtSecurityToken(
+                    issuer: _jwtAuthentication.Value.Issuer,
+                    audience: _jwtAuthentication.Value.Audience,
+                    notBefore: DateTime.Now,
+                    claims: claims,
+                    expires: tokenExpire,//DateTime.Now.Add(TimeSpan.FromMinutes(_jwtAuthentication.Value.Lifetime)),
+                    signingCredentials: _jwtAuthentication.Value.SigningCredentials
+                );
+            var access_token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            return access_token;
+        }
+
+        public string createRefreshToken(int userId, int lifetime)
+        {
+            TokenRefreshDAL tokenRefreshDAL = new TokenRefreshDAL
+            {
+                UserId = userId,
+                Token = Guid.NewGuid().ToString(),
+                IssuedTime = DateTime.Now,
+                ExpiresTime = DateTime.Now.AddMinutes(lifetime)
+            };
+            try
+            {
+                _unitOfWork.TokenRefreshRepository.createRefreshToken(tokenRefreshDAL);
+                _unitOfWork.Save();
+                return tokenRefreshDAL.Token;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string updateTokens(string oldRefreshToken, int userId)
+        {
+            var checkTokenDAL = new TokenRefreshDAL
+            {
+                UserId = userId,
+                Token = oldRefreshToken
+            };
+
+            if (_unitOfWork.TokenRefreshRepository.checkRefreshToken(checkTokenDAL) == true)
+            {
+                string token = createRefreshToken(userId, 5);
+                return token;
+            }
+            else
+            {
+                return null;
             }
         }
     }

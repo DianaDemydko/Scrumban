@@ -14,6 +14,11 @@ using Scrumban.DataAccessLayer.Repositories;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace Scrumban
 {
@@ -23,34 +28,38 @@ namespace Scrumban
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
       
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
+            services.AddOptions();
 
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //{
+            //        options.RequireHttpsMetadata = false;
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidIssuer = Configuration.GetSection("JwtAuthentication:Issuer").Value,
+
+            //            ValidateAudience = true,
+            //            ValidAudience = Configuration.GetSection("JwtAuthentication:Audience").Value,
+
+            //            ValidateLifetime = true,
+            //            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+
+            //            ValidateIssuerSigningKey = true
+            //        };
+            //    }
+            //);
+            services.Configure<JWTAuthentication>(Configuration.GetSection("JwtAuthentication"));
+            services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = AuthOptions.ISSUER,
-
-                        ValidateAudience = true,
-                        ValidAudience = AuthOptions.AUDIENCE,
-                        ValidateLifetime = true,
-
-                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                        ValidateIssuerSigningKey = true
-                    };
-                }
-            );
+                .AddJwtBearer();
 
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -58,17 +67,12 @@ namespace Scrumban
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-
-            services.AddOptions();
             
-           services.AddODataQueryFilter();
+            services.AddODataQueryFilter();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
@@ -96,9 +100,7 @@ namespace Scrumban
             {
                 routeBuilder.Filter().OrderBy().Count().Expand().Select();
             });
-
             
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -118,6 +120,40 @@ namespace Scrumban
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+
+        private class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
+        {
+            private readonly IOptions<JWTAuthentication> _jwtAuthentication;
+
+            public ConfigureJwtBearerOptions(IOptions<JWTAuthentication> jwtAuthentication)
+            {
+                _jwtAuthentication = jwtAuthentication ?? throw new System.ArgumentNullException(nameof(jwtAuthentication));
+            }
+
+            public void PostConfigure(string name, JwtBearerOptions options)
+            {
+                var jwtAuthentication = _jwtAuthentication.Value;
+
+                options.ClaimsIssuer = jwtAuthentication.Issuer;
+                options.IncludeErrorDetails = true;
+                options.RequireHttpsMetadata = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    //ValidateActor = true,
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtAuthentication.Issuer,
+
+                    ValidateAudience = true,
+                    ValidAudience = jwtAuthentication.Audience,
+
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey,
+
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
+            }
         }
     }
 }

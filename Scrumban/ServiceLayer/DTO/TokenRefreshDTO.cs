@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace Scrumban.ServiceLayer.DTO
 {
-    public class PictureDTO
+    public class TokenRefreshDTO
     {
-        public int Id { get; set; }
-        public string Image { get; set; }
-
         public int UserId { get; set; }
-        public UserDTO User { get; set; }
+        public string Token { get; set; }
+        public DateTime IssuedTime { get; set; }
+        public DateTime ExpiresTime { get; set; }
     }
 }
