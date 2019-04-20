@@ -44,7 +44,7 @@ export class Body extends React.Component {
                 renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
                 break
             case 'profile':
-                renderedComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+                renderedComponent = <ProfilePage moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />

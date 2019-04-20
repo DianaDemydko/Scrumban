@@ -17,6 +17,7 @@ namespace Scrumban.DataAccessLayer
         private IFeatureRepository feature_repository;
         private IUserRepository _userRepository;
         private ITokenRefreshRepository _tokenRefreshRepository;
+        private ITaskChangeHistoryRepository _taskChangeHistoryRepository;
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
@@ -134,7 +135,18 @@ namespace Scrumban.DataAccessLayer
                 return _tokenRefreshRepository;
             }
         }
-
+        
+        public ITaskChangeHistoryRepository TaskChangeHistoryRepository
+        {
+            get
+            {
+                if(_taskChangeHistoryRepository == null)
+                {
+                    _taskChangeHistoryRepository = new TaskChangeHistoryRepository(_scrumbanContext);
+                }
+                return _taskChangeHistoryRepository;
+            }
+        }
 
         public int Save()
         {

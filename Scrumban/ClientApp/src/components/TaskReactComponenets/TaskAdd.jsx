@@ -6,7 +6,9 @@ import { checkToken } from '../Helpers'
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 
 // consts of urls
-const addTaskUrl = "/api/TaskGrid/addTask";
+const addTaskUrl = "/api/TaskGrid/addTaskDetailed";
+const addTaskDetailedUrl = "/api/TaskGrid/addTask";
+
 const cancelUrl = "/tasks";
 // consts of stable tables
 const priorityTable = data.priority;
@@ -33,7 +35,6 @@ export class TaskAdd extends React.Component {
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
         this.onAdd = this.onAdd.bind(this);
-
     }
 
     onNameChanged(e) {
@@ -52,7 +53,6 @@ export class TaskAdd extends React.Component {
         this.setState({ finishDate: date });
     }
 
-
     onPriorityChanged(e){
         this.setState({ priority: e.target.value });
     }
@@ -66,12 +66,17 @@ export class TaskAdd extends React.Component {
             checkToken()
 
             var data = JSON.stringify({
-                "name": task.name,
-                "description": task.description,
-                "startDate": task.startDate,
-                "finishDate": task.finishDate,
-                "priorityId": task.priorityId,
-                "taskStateId": task.taskStateId
+                "userId": sessionStorage.getItem("userId"),
+                "description": "description",
+                "operation": "Created",
+                "tasK": {
+                    "name": task.name,
+                    "description": task.description,
+                    "startDate": task.startDate,
+                    "finishDate": task.finishDate,
+                    "priorityId": task.priorityId,
+                    "taskStateId": task.taskStateId
+                }
             });
             var moveToComponentVar = this.props.moveToComponent;
             fetch(addTaskUrl, {
@@ -83,9 +88,11 @@ export class TaskAdd extends React.Component {
                 body: data
                 })
                 .then(function (response) {
-                    alert(response.status)
                     if (response.status == 200) {
                         moveToComponentVar("tasks")
+                    }
+                    else if (response.status == 400) {
+                        alert("ERROR! Incorrect data !")
                     }
                     else if (response.status == 401) {
                         var answer = window.confirm("You are not authorized. Move to Login page ?")
@@ -103,9 +110,7 @@ export class TaskAdd extends React.Component {
         }
     }
 
-    onSubmit(e) {
-        //e.preventDefault();
-
+    onSubmit() {
         let task = {
             name: this.state.name,
             description: this.state.description,
@@ -114,8 +119,9 @@ export class TaskAdd extends React.Component {
             priorityId: priorityTable.find(x => x.name === this.state.priority).id,
             taskStateId: stateTable.find(x => x.name === this.state.taskState).id
         };
+        // send on server
         this.onAdd(task);
-        //this.setState({ name: "", description: "", startDate: "", finishDate: "", priorityId: "", taskStateId: "" });
+        // back to tasks
         this.props.moveToComponent("tasks")
     }
 

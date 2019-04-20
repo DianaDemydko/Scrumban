@@ -5,6 +5,7 @@ import { checkToken } from '../Helpers'
 
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 const updateTaskUrl = "/api/TaskGrid/editTask";
+const updateTaskDetailedUrl = "/api/TaskGrid/editTaskDetailed";
 
 
 
@@ -70,27 +71,31 @@ export class TaskEdit extends React.Component {
 
     onUpdate(task) {
         var data = JSON.stringify({
-            "id": task.id,
-            "name": task.name,
-            "description": task.description,
-            "startDate": task.startDate,
-            "finishDate": task.finishDate,
+            "userId": sessionStorage.getItem("userId"),
+            "description": "description",
+            "operation": "Updated",
+            "task": {
+                "id": task.id,
+                "name": task.name,
+                "description": task.description,
+                "startDate": task.startDate,
+                "finishDate": task.finishDate,
 
-            "priorityId": task.priorityId,
-            "priority": task.priority,
+                "priorityId": task.priorityId,
+                "priority": task.priority,
 
-            "taskStateId": task.taskStateId,
-            "taskState": task.taskState,
+                "taskStateId": task.taskStateId,
+                "taskState": task.taskState,
 
-            "programmerId": null,
-            "storyId": null
+                "programmerId": null,
+                "storyId": null
+            }
         });
-
         
         if (task) {
             checkToken()
 
-            fetch(updateTaskUrl, {
+            fetch(updateTaskDetailedUrl, {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
@@ -100,7 +105,7 @@ export class TaskEdit extends React.Component {
             })
             .then(function (response) {
                 if (response.status == 200) {
-                    return response.json()
+                    return "Ok"
                 }
                 else if (response.status == 401) {
                     var answer = window.confirm("You are not authorized. Move to Login page ?");
@@ -116,7 +121,7 @@ export class TaskEdit extends React.Component {
                 }
             })
             .then(data => {
-                if (data != null) {
+                if (data == "Ok") {
                     this.props.changed(data)
                     //this.props.moveToComponent("tasks")
                 }

@@ -15,7 +15,8 @@ export class Layout extends Component {
             renderedComponentName: "login", // name of current active component
             panelLoginStatus: false,
             user: null,
-            childRefresh: true
+            childRefresh: 1,
+
         }
         this.setRenderedComponentName = this.setRenderedComponentName.bind(this);
         this.onLoginStatusCallBack = this.onLoginStatusCallBack.bind(this);
@@ -23,11 +24,11 @@ export class Layout extends Component {
     }
 
     updateUser(newUser) {
-        this.setState({ user: newUser, childRefresh: !this.state.childRefresh })
+        this.setState({ user: newUser, childRefresh: ++this.state.childRefresh })
     }
 
     setRenderedComponentName(renderedComponent) {   // set name of rendered component in Content
-        this.setState({ renderedComponentName: renderedComponent })
+        this.setState({ renderedComponentName: renderedComponent, childRefresh: ++this.state.childRefresh })
     }
 
     onLoginStatusCallBack(loginOrlogout, currentUser, componentName) {
@@ -42,22 +43,22 @@ export class Layout extends Component {
     render() {
 
         return (
+            //<div className="container">
+            //    <div className="col-12">
+            //        Token: {sessionStorage.getItem("tokenKey")}
+            //    </div>
+            //    <div className="col-12">
+            //        RefreshToken: {sessionStorage.getItem("refreshTokenKey")}
+            //    </div>
+            //    <div className="col-12">
+            //        E
+            //        </div>
+            //    <div className="col-12">
+            //        Expires: {sessionStorage.getItem("expires")}
+            //    </div>
+
+            //</div>
             <div>
-                <div className="container">
-                    <div className="col-12">
-                        Token: {sessionStorage.getItem("tokenKey")}
-                    </div>
-                    <div className="col-12">
-                        RefreshToken: {sessionStorage.getItem("refreshTokenKey")}
-                    </div>
-                    <div className="col-12">
-                        E
-                    </div>
-                    <div className="col-12">
-                        Expires: {sessionStorage.getItem("expires")}
-                    </div>
-                    
-                </div>
                 <Panel
                     key={this.state.childRefresh}
                     moveToComponent={this.setRenderedComponentName} // set name of rendered component

@@ -129,12 +129,12 @@ export class TaskFilter extends React.Component {
                 <tr>
                     <td>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="inputTitle" aria-describedby="emailHelp" placeholder="Search" autocomplete="off" />
+                            <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="inputTitle" aria-describedby="emailHelp" placeholder="Search" value={this.state.name} autocomplete="off" />
                         </div>
                     </td>
                     <td>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder="Search" autocomplete="off" />
+                            <input type="text" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder="Search" value={this.state.description} autocomplete="off" />
                         </div>
                     </td>
                     <td>
@@ -163,7 +163,7 @@ export class TaskFilter extends React.Component {
                     </td>
                     <td>
                         <div>
-                            <select class="form-control form-control-sm" onChange={this.onPriorityChanged} id="priority" placeholder="task priority">
+                            <select class="form-control form-control-sm" onChange={this.onPriorityChanged} id="priority" placeholder="task priority" value={this.state.priorityName}>
                                 <option>All</option>
                                 {this.props.priorities.map((item) => <option>{item.name}</option>)}
                             </select>
@@ -171,7 +171,7 @@ export class TaskFilter extends React.Component {
                     </td>
                     <td>
                         <div>
-                            <select class="form-control form-control-sm" onChange={this.onStateChanged} id="state" placeholder="task state">
+                            <select class="form-control form-control-sm" onChange={this.onStateChanged} id="state" placeholder="task state" value={this.state.taskStateName}>
                                 <option>All</option>
                                 {this.props.states.map((item) => <option>{item.name}</option>)}
                             </select>

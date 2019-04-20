@@ -18,6 +18,12 @@ export class TaskRow extends React.Component {
         this.onChangedTask = this.onChangedTask.bind(this);
     }
 
+    componentWillReceiveProps(newProps) {
+        if (this.props.task != newProps.task) {
+            this.setState({task: newProps.task})
+        }
+    }
+
     onRemoveTask() {
         this.props.onRemove(this.state.task.id);
     }

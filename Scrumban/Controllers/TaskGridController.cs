@@ -42,7 +42,20 @@ namespace Scrumban.Controllers
             _taskServise.AddTask(taskDTO);
             return Ok(taskDTO);
         }
-        
+
+        [HttpPost]
+        [Authorize]
+        [Route("/api/[controller]/addTaskDetailed")]
+        public IActionResult Add([FromBody]TaskChangeHistoryDTO taskChangeHistoryDTO)
+        {
+            if (taskChangeHistoryDTO == null)
+            {
+                return StatusCode(400);
+            }
+            _taskServise.AddTask(taskChangeHistoryDTO);
+            return Ok(taskChangeHistoryDTO);
+        }
+
         [Route("/api/[controller]/editTask")]
         [HttpPost]
         public IActionResult Edit([FromBody]TaskDTO taskDTO)
@@ -53,6 +66,18 @@ namespace Scrumban.Controllers
             }
             _taskServise.UpdateTask(taskDTO);
             return Ok(taskDTO);
+        }
+
+        [Route("/api/[controller]/editTaskDetailed")]
+        [HttpPost]
+        public IActionResult Edit([FromBody]TaskChangeHistoryDTO taskChangeHistoryDTO)
+        {
+            if (taskChangeHistoryDTO == null)
+            {
+                return StatusCode(400);
+            }
+            _taskServise.UpdateTask(taskChangeHistoryDTO);
+            return Ok(taskChangeHistoryDTO.Task);
         }
 
         [HttpDelete("{id}")]

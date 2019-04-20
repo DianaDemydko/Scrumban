@@ -1,10 +1,7 @@
 ﻿import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { TaskRow } from './TaskRow';
 import { TaskFilter } from './TaskFilter';
 import { checkToken } from '../Helpers'
-
-const data = require('../../GlobalData.json'); // json file with const tables (priority, state)
 // consts of stable tables
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
@@ -31,7 +28,7 @@ export class TaskGrid extends React.Component {
             sortByPriority: icon_down,
             sortByState: icon_down,
 
-            filter: null
+            filter: ""
         };
 
         this.loadData = this.loadData.bind(this);
@@ -39,7 +36,6 @@ export class TaskGrid extends React.Component {
         this.fetchPriorities = this.fetchPriorities.bind(this);
 
         this.onRemoveTask = this.onRemoveTask.bind(this);
-        this.onAdded = this.onAdded.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.sort = this.sort.bind(this);
         this.startFiltration = this.startFiltration.bind(this);
@@ -54,10 +50,10 @@ export class TaskGrid extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
             }
-        })
-            .then(function(response){
+        }).then(function (response) {
                 if (response.status == 200) {
-                    return response.json()
+                    var res = response.json()
+                    return res;
                 }
                 else if (response.status == 401) {
                     alert("Not Authorized")
@@ -66,20 +62,14 @@ export class TaskGrid extends React.Component {
                 else {
                     alert(response.status + "Get tasks error")
                 }
-            })
-            .then(data => {
-                this.setState({
+            }).then(data => this.setState({
                     tasks: data,
                     filter: filter
                 })
-            });
-        this.fetchStates();
-        this.fetchPriorities();
+            )
     }
 
     fetchStates() {
-
-
         fetch(apiUrlGetStates)
             .then(response => response.json())
             .then(data => {
@@ -96,27 +86,27 @@ export class TaskGrid extends React.Component {
     }
 
     componentDidMount() {
-        this.loadData("");
+        this.loadData(this.state.filter);
+        this.fetchStates();
+        this.fetchPriorities();
     }
 
-    onAdded(item) {
-        //this.setState({ tasks: this.state.tasks.push(item) });
-    }
-
-    onChanged(item) {
-        var arr = this.state.tasks;
-        var index = arr.findIndex(x => x.id === item.id);
-
-        arr[index].name = item.name;
-        arr[index].description = item.description;
-        arr[index].startDate = item.startDate;
-        arr[index].finishDate = item.finishDate;
-        arr[index].priority = item.priority;
-        arr[index].priorityId = item.priorityId;
-        arr[index].taskState = item.taskState;
-        arr[index].taskStateId = item.taskStateId;
-
-        this.setState({ tasks: arr });
+    onChanged(newTask) {
+        this.loadData(this.state.filter)
+        //const list = this.state.tasks.map((task) => {
+        //    if (task.id === newTask.id) {
+        //        task.name = newTask.name;
+        //        task.description = newTask.description;
+        //        task.startDate = newTask.startDate;
+        //        task.finishDate = newTask.finishDate;
+        //        task.priority = newTask.priority;
+        //        task.priorityId = newTask.priorityId;
+        //        task.taskState = newTask.taskState;
+        //        task.taskStateId = newTask.taskStateId;
+        //    }
+        //    return task
+        //})
+        //this.setState({ tasks: list});
     }
 
     sort(param1, param2) {
@@ -186,7 +176,6 @@ export class TaskGrid extends React.Component {
 
     startFiltration(filtParam) {
         this.loadData(filtParam);
-        this.setState({ filter: filtParam })
     }
 
     render() {

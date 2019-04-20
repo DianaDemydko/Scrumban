@@ -25,6 +25,8 @@ namespace Scrumban.BusinessLogicLayer
                     cfg.CreateMap<PriorityDAL, PriorityDTO>();
                     cfg.CreateMap<PictureDAL, PictureDTO>();
                     cfg.CreateMap<UsersDAL, UserDTO>();
+                    cfg.CreateMap<TaskChangeHistoryDAL, TaskChangeHistoryDTO>();
+                    cfg.CreateMap<IQueryable<TaskChangeHistoryDAL>, List<TaskChangeHistoryDTO>>();
                 }
             ).CreateMapper();
         }
@@ -53,36 +55,30 @@ namespace Scrumban.BusinessLogicLayer
             }
             TaskDTO taskDTO = _mapper.Map<TaskDTO>(taskDAL);
             return taskDTO;
-            //return new TaskDTO
-            //{
-            //    Id = task.Id,
-            //    Name = task.Name,
-            //    Description = task.Description,
-            //    StartDate = task.StartDate,
-            //    FinishDate = task.FinishDate,
-            //    TaskStateId = task.TaskStateId,
-            //    PriorityId = task.PriorityId,
-            //    ProgrammerId = task.ProgrammerId,
-            //    StoryId = task.StoryId
-            //};
         }
 
-        public void AddTask(TaskDTO taskDTO)
+        public void AddTask(TaskDTO task)
         {
-            TaskDAL taskDAL = _mapper.Map<TaskDAL>(taskDTO);
-            //TaskDAL task = new TaskDAL
-            //{
-            //    Id = taskDTO.Id,
-            //    Name = taskDTO.Name,
-            //    Description = taskDTO.Description,
-            //    StartDate = taskDTO.StartDate,
-            //    FinishDate = taskDTO.FinishDate,
-            //    TaskStateId = taskDTO.TaskStateId,
-            //    PriorityId = taskDTO.PriorityId,
-            //    ProgrammerId = taskDTO.ProgrammerId,
-            //    StoryId = taskDTO.StoryId
-            //};
+            TaskDAL taskDAL = _mapper.Map<TaskDAL>(task);
             _unitOfWork.Tasks.Create(taskDAL);
+            _unitOfWork.Save();
+        }
+
+        public void AddTask(TaskChangeHistoryDTO taskChangeHistory)
+        {
+            TaskDAL taskDAL = _mapper.Map<TaskDAL>(taskChangeHistory.Task);
+            _unitOfWork.Tasks.Create(taskDAL);
+            TaskChangeHistoryDTO taskChangeHistoryDTO = new TaskChangeHistoryDTO
+            {
+                Description = taskChangeHistory.Description,
+                Operation = "Created",
+                DateTime = DateTime.Now,
+                UserId = taskChangeHistory.UserId,
+                TaskId = -1
+            };
+            TaskChangeHistoryDAL taskChangeHistoryDAL = _mapper.Map<TaskChangeHistoryDAL>(taskChangeHistoryDTO);
+            taskChangeHistoryDAL.Task = taskDAL;
+            _unitOfWork.TaskChangeHistoryRepository.Create(taskChangeHistoryDAL);
             _unitOfWork.Save();
         }
 
@@ -95,21 +91,29 @@ namespace Scrumban.BusinessLogicLayer
         public void UpdateTask(TaskDTO taskDTO)
         {
             TaskDAL taskDAL = _mapper.Map<TaskDAL>(taskDTO);
-            //TaskDAL task = new TaskDAL
-            //{
-            //    Id = taskDTO.Id,
-            //    Name = taskDTO.Name,
-            //    Description = taskDTO.Description,
-            //    StartDate = taskDTO.StartDate,
-            //    FinishDate = taskDTO.FinishDate,
-            //    TaskStateId = taskDTO.TaskStateId,
-            //    PriorityId = taskDTO.PriorityId,
-            //    ProgrammerId = taskDTO.ProgrammerId,
-            //    StoryId = taskDTO.StoryId
-            //};
             _unitOfWork.Tasks.Update(taskDAL);
+
             _unitOfWork.Save();
         }
+
+        public void UpdateTask(TaskChangeHistoryDTO taskChangeHistory)
+        {
+            TaskDAL taskDAL = _mapper.Map<TaskDAL>(taskChangeHistory.Task);
+            _unitOfWork.Tasks.Update(taskDAL);
+            TaskChangeHistoryDTO taskChangeHistoryDTO = new TaskChangeHistoryDTO
+            {
+                Description = taskChangeHistory.Description,
+                Operation = "Updated",
+                DateTime = DateTime.Now,
+                UserId = taskChangeHistory.UserId,
+                TaskId = taskDAL.Id
+            };
+            TaskChangeHistoryDAL taskChangeHistoryDAL = _mapper.Map<TaskChangeHistoryDAL>(taskChangeHistoryDTO);
+            taskChangeHistoryDAL.Task = taskDAL;
+            _unitOfWork.TaskChangeHistoryRepository.Create(taskChangeHistoryDAL);
+            _unitOfWork.Save();
+        }
+        
 
         public IEnumerable<TaskStateDTO> GetStates()
         {

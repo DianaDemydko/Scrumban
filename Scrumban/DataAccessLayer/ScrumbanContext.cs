@@ -24,6 +24,7 @@ namespace Scrumban.DataAccessLayer
         public DbSet<SprintDAL> Sprints { get; set; }
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
         public DbSet<TokenRefreshDAL> TokenRefresh { get; set; }
+        public DbSet<TaskChangeHistoryDAL> TaskChangeHistories { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
