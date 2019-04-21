@@ -234,7 +234,7 @@ export class TaskGrid extends React.Component {
                 </table>
                 <div>
                     <button
-                        onClick={() => this.props.moveToComponent("addTask")}
+                        onClick={() => this.props.moveToComponent("taskAdd")}
                         className="btn btn-sm btn-outline-info button-fixed"
                     >
                         Add

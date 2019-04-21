@@ -21,7 +21,7 @@ export class Panel extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="panelDiv">
                 <ul className="panelUl">
                     <li className="panelLi">
                         {this.state.loginStatus == "true" ?

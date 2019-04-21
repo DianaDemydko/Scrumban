@@ -7,12 +7,8 @@ import { Login } from './Login';
 import { Register } from './Register';
 import { ProfilePage } from './UserProfileComponents/ProfilePage';
 import { About } from './About';
-
 import { TaskGrid } from '../TaskReactComponenets/TaskGrid';
 import { TaskAdd } from '../TaskReactComponenets/TaskAdd';
-
-//import { Logout } from './Logout';
-
 import { SideBar } from "./SideBar";
 import './SideBar.css';
 import { DefectGrid } from '../DefectReactComponent/DefectGrid';
@@ -22,7 +18,9 @@ import { StoryGrid } from '../StoryReactComponents/StoryGrid';
 import { DefectAdd } from '../DefectReactComponent/DefectAdd';
 import Kanban  from '../KanbanBoard/KanbanMain';
 import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
+import { Home } from '../Home';
 import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
+
 
 export class Body extends React.Component {
     constructor(props) {
@@ -80,19 +78,20 @@ export class Body extends React.Component {
                 renderedComponent = <BurnUp_DownCharts />
                 break
             default:
-                renderedComponent = this.props.children
+                renderedComponent = <Home />
         }
         
-        return (<Grid fluid>
-            <Row>
-                <Col>  
-                    <SideBar moveToComponent={this.props.moveToComponent} />
-                </Col>
-                <Col sm={10}>
+        return (<div>
+            <div> 
+                {this.props.panelLoginStatus == true ?
+                    (<SideBar moveToComponent={this.props.moveToComponent} />) :
+                    ""}
+            </div>
+            <div> 
+               
                     {renderedComponent}
-                </Col>
-            </Row>
-        </Grid>
+                </div> 
+        </div>
         )
     }
 }

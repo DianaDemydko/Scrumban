@@ -443,7 +443,7 @@ export class SprintTable extends React.Component
                 </tbody>
             </table>
                 <div>
-                    <button onClick={() => this.props.moveToComponent2("sprintAdd")} className="btn btn btn-info">Create New Sprint</button>
+                    <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn btn btn-info">Create New Sprint</button>
                 </div>
             </div>
             )
