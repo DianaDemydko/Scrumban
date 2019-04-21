@@ -190,6 +190,7 @@ export class ProfilePageEdit extends Component {
             },
             "pictureId": this.props.user.pictureId,
             "picture": {
+                "id": this.props.user.picture.id,
                 "image": this.state.pictureUrl
             }
         })

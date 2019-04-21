@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Interfaces;
-using System.Collections.Generic;
 using AutoMapper;
 using Scrumban.DataAccessLayer.Models;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
-using System.Linq;
 using System;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Scrumban.ServiceLayer.Sevices
 {
@@ -37,12 +37,8 @@ namespace Scrumban.ServiceLayer.Sevices
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<UsersDAL, UserDTO>();
-                })
-                .CreateMapper();
-                return mapper.Map<IQueryable<UsersDAL>, IQueryable<UserDTO>>(_unitOfWork.UserRepository.GetAllUsers());
+                var res = _mapper.Map<IQueryable<UsersDAL>, List<UserDTO>>(_unitOfWork.UserRepository.GetAllUsers()).AsQueryable();
+                return res;
             }
             catch
             {
@@ -64,13 +60,8 @@ namespace Scrumban.ServiceLayer.Sevices
                     user.Email = userEntity.Email;
                     user.Password = userEntity.Password;
                     user.RoleId = userEntity.RoleId == 0 ? 1 : userEntity.RoleId;
-                    
-                    if(userEntity.Picture != null)
-                    {
-                        picture.Image = userEntity.Picture.Image;
-                    }
                 }
-                _unitOfWork.UserRepository.Create(user, picture);
+                _unitOfWork.UserRepository.Create(user);
                 _unitOfWork.Save();
                 return 1;
             }
@@ -80,29 +71,17 @@ namespace Scrumban.ServiceLayer.Sevices
             }
         }
         //To Update user  
-        public int UpdateUser(UserDTO entity)
+        public int UpdateUser(UserDTO user)
         {
             try
             {
-                UsersDAL user = new UsersDAL();
-                PictureDAL picture = new PictureDAL();
-                if (entity != null)
+                UsersDAL userDAL = _mapper.Map<UsersDAL>(user);
+                _unitOfWork.UserRepository.Update(userDAL);
+                if(userDAL.Picture != null)
                 {
-
-                    user.Id = entity.Id;
-                    user.FirstName = entity.FirstName;
-                    user.Surname = entity.Surname;
-                    user.Email = entity.Email;
-                    user.Password = entity.Password;
-                    user.RoleId = entity.RoleId == 0 ? 1 : entity.RoleId;
-
-                    if (entity.Picture != null)
-                    {
-                        picture.Image = entity.Picture.Image;
-                        picture.UserId = entity.Id;
-                    }
+                    userDAL.Picture.User = userDAL;
+                    _unitOfWork.UserRepository.PictureUpdate(userDAL.Picture);
                 }
-                _unitOfWork.UserRepository.Update(user, picture);
                 _unitOfWork.Save();
                 return 1;
             }
@@ -116,22 +95,22 @@ namespace Scrumban.ServiceLayer.Sevices
         {
             try
             {
-                UsersDAL user = _unitOfWork.UserRepository.GetByID(id);
-                UserDTO userDTO = new UserDTO
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    Surname = user.Surname,
-                    Email = user.Email,
-                    Password = user.Password,
-                    Role = new RoleDTO
-                    {
-                        Id = user.Role.Id,
-                        Name = user.Role.Name
-                    },
-                    RoleId = user.RoleId,
-                };
-                
+                UsersDAL userDAL = _unitOfWork.UserRepository.GetByID(id);
+                UserDTO userDTO = _mapper.Map<UserDTO>(userDAL);
+                //UserDTO userDTO = new UserDTO
+                //{
+                //    Id = user.Id,
+                //    FirstName = user.FirstName,
+                //    Surname = user.Surname,
+                //    Email = user.Email,
+                //    Password = user.Password,
+                //    Role = new RoleDTO
+                //    {
+                //        Id = user.Role.Id,
+                //        Name = user.Role.Name
+                //    },
+                //    RoleId = user.RoleId,
+                //};
                 return userDTO;
             }
             catch
@@ -170,26 +149,27 @@ namespace Scrumban.ServiceLayer.Sevices
         {
             try
             {
-                UsersDAL user = _unitOfWork.UserRepository.GetUserAccount(email, password);
-                UserDTO userDTO = new UserDTO
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    Surname = user.Surname,
-                    Email = user.Email,
-                    Password = user.Password,
-                    RoleId = user.RoleId,
-                    Role = new RoleDTO
-                    {
-                        Id = user.Role.Id,
-                        Name = user.Role.Name
-                    },
-                    Picture = new PictureDTO
-                    {
-                        Id = user.Picture.Id,
-                        Image = user.Picture.Image
-                    }
-                };
+                UsersDAL userDAL = _unitOfWork.UserRepository.GetUserAccount(email, password);
+                UserDTO userDTO = _mapper.Map<UserDTO>(userDAL);
+                //UserDTO userDTO = new UserDTO
+                //{
+                //    Id = user.Id,
+                //    FirstName = user.FirstName,
+                //    Surname = user.Surname,
+                //    Email = user.Email,
+                //    Password = user.Password,
+                //    RoleId = user.RoleId,
+                //    Role = new RoleDTO
+                //    {
+                //        Id = user.Role.Id,
+                //        Name = user.Role.Name
+                //    },
+                //    Picture = new PictureDTO
+                //    {
+                //        Id = user.Picture.Id,
+                //        Image = user.Picture.Image
+                //    }
+                //};
 
                 return userDTO;
             }

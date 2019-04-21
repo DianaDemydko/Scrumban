@@ -17,7 +17,7 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
             try
             {
-                return _dbContext.Set<UsersDAL>();
+                return _dbContext.Users.Include(x => x.Role).AsQueryable();
             }
             catch
             {
@@ -28,16 +28,10 @@ namespace Scrumban.DataAccessLayer.Repositories
         public override void Create(UsersDAL user)
         {
             user.Password = generatePasswordHash(user.Password);
-            _dbContext.Set<UsersDAL>().Add(user);
-        }
-
-        // Register user
-        public void Create(UsersDAL user, PictureDAL picture)
-        {
-            user.Password = generatePasswordHash(user.Password);
-            _dbContext.Users.Add(user);
-            picture.UserId = user.Id;
+            PictureDAL picture = new PictureDAL();
             _dbContext.Pictures.Add(picture);
+            user.Picture = picture;
+            _dbContext.Set<UsersDAL>().Add(user);
         }
 
         public override UsersDAL GetByID(int id)
@@ -51,8 +45,6 @@ namespace Scrumban.DataAccessLayer.Repositories
             }
             catch (Exception ex)
             {
-                var x = ex;
-                var z = x;
                 return null;
             }
         }
@@ -64,27 +56,14 @@ namespace Scrumban.DataAccessLayer.Repositories
             {
                 user.Password = generatePasswordHash(user.Password);
             }
+            _dbContext.Entry(oldUser).State = EntityState.Detached;
             _dbContext.Entry(user).State = EntityState.Modified;
         }
 
-        public void Update(UsersDAL user, PictureDAL picture)
+        public void PictureUpdate(PictureDAL picture)
         {
-            UsersDAL oldUser = _dbContext.Users.Find(user.Id);
-            PictureDAL oldPicture = _dbContext.Pictures.FirstOrDefault(x => x.UserId == user.Id);
-            user.Picture = oldPicture;
-            if (user.Password != oldUser.Password)
-            {
-                user.Password = generatePasswordHash(user.Password);
-            }
-            _dbContext.Entry(oldUser).State = EntityState.Detached;
-            _dbContext.Entry(oldPicture).State = EntityState.Detached;
-            _dbContext.Entry(user).State = EntityState.Modified;
-            //PictureDAL oldPicture = _dbContext.Pictures.FirstOrDefault(x => x.UserId == user.Id);
-            if(oldPicture != null && picture != null)
-            {
-                oldPicture.Image = picture.Image;
-            }
-            _dbContext.Entry(oldPicture).State = EntityState.Modified;
+            PictureDAL pictureDAL = _dbContext.Pictures.Find(picture.Id);
+            pictureDAL.Image = picture.Image;
         }
 
         //To Get the list of Users    
