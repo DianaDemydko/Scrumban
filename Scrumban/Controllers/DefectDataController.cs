@@ -4,6 +4,7 @@ using Microsoft.AspNet.OData;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNet.OData.Query;
 
 namespace Scrumban.Controllers
 {

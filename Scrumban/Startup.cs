@@ -105,7 +105,7 @@ namespace Scrumban
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
                 routes.EnableDependencyInjection();
-                routes.Expand().Select().Count().OrderBy().Filter(); 
+                routes.Expand().Select().Count().OrderBy().Filter().MaxTop(null);  //MaxTop(null) for top oData
                 
             });
 

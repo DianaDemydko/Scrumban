@@ -68,7 +68,10 @@ export class DefectGrid extends React.Component {
     }
     onChangePage(pageOfItems) {
         // update state with new page of items
-        this.setState({ pageOfItems: pageOfItems });
+        this.setState({
+            pageOfItems: pageOfItems
+        });
+       
     }
 
     onNameSearchChanged(e) {
@@ -374,17 +377,13 @@ export class DefectGrid extends React.Component {
     componentDidMount() {
         this.loadData("");
     }
+
     loadData(query) {
+
         fetch(apiGetUrl + query)
             .then(response => response.json())
             .then(data => { this.setState({ defects: data }) });
-        //var xhr = new XMLHttpRequest();
-        //xhr.open("get", apiGetUrl + query, true);
-        //xhr.onload = function () {
-        //    var data = JSON.parse(xhr.responseText);
-        //    this.setState({ defects: data });
-        //}.bind(this);
-        //xhr.send();
+       
     }
 
     onChanged(item) {
@@ -483,8 +482,8 @@ export class DefectGrid extends React.Component {
 
 
 
-                {(this.state.pageOfItems.length > 0)
-                    ? this.state.pageOfItems.map((defect) => {
+                {(this.state.pageOfItems.length > 0)//pageOfItems
+                    ? this.state.pageOfItems.map((defect) => {//pageOfItems
                        
                             return <DefectRow key={defect.defectId} defect={defect} onRemove={remove} onChanged={changed} />
                         })
@@ -496,7 +495,7 @@ export class DefectGrid extends React.Component {
                 }
             </table>
             <div>
-                <Pagination items={this.state.defects} onChangePage={this.onChangePage} />
+                <Pagination items={this.state.defects}  onChangePage={this.onChangePage} />
             </div>
             <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
             
