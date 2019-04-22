@@ -20,6 +20,7 @@ import Kanban  from '../KanbanBoard/KanbanMain';
 import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
 import { Home } from '../Home';
 import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
+import { AddFeature } from '../FeatureReactComponents/AddFeature';
 
 
 export class Body extends React.Component {
@@ -53,6 +54,9 @@ export class Body extends React.Component {
             case 'feature':
                 renderedComponent = <FeatureTable moveToComponent={this.props.moveToComponent} />
                 break
+            case 'featureAdd':
+                renderedComponent = <AddFeature moveToComponent={this.props.moveToComponent} />
+                break;
             case 'stories':
                 renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} />
                 break

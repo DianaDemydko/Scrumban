@@ -6,7 +6,6 @@ namespace Scrumban.ServiceLayer.DTO
     {
         public int Story_id { get; set; }
         public int sprint_id { get; set; }
-
         public int StoryPoints { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -14,5 +13,6 @@ namespace Scrumban.ServiceLayer.DTO
         public string StoryState { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public int? FeatureId { get; set; }
     }
 }

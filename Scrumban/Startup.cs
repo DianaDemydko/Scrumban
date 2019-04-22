@@ -79,6 +79,7 @@ namespace Scrumban
             
             services.AddODataQueryFilter();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
         }

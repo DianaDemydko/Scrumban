@@ -19,6 +19,7 @@ namespace Scrumban.DataAccessLayer
         private ITokenRefreshRepository _tokenRefreshRepository;
         private ITaskChangeHistoryRepository _taskChangeHistoryRepository;
 
+
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
             _scrumbanContext = scrumbanContext;
@@ -34,7 +35,17 @@ namespace Scrumban.DataAccessLayer
                 return _feature_repository;
             }
         }
-      
+        public IStoryStateRepository StoryStateRepository
+        {
+            get
+            {
+                if (_storyStateRepository == null)
+                {
+                    _storyStateRepository = new StoryStateRepository(_scrumbanContext);
+                }
+                return _storyStateRepository;
+            }
+        }
 
         public ISprintRepository SprintRepository
         {
@@ -94,6 +105,7 @@ namespace Scrumban.DataAccessLayer
                     _storyStateRepository = new StoryStateRepository(_scrumbanContext);
                 }
                 return _storyStateRepository;
+
             }
         }
 

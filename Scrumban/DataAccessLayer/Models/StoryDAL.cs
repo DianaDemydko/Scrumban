@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Collections.Generic;
 
+
 namespace Scrumban.DataAccessLayer.Models
 {
     [Table("Story")]
@@ -31,5 +32,14 @@ namespace Scrumban.DataAccessLayer.Models
         public StoryStateDAL StoryState { get; set; }
 
         public IEnumerable<TaskDAL> Tasks { get; set; }
+
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        //Navigation properties
+        public StoryStateDAL StoryState { get; set; }
+
+        public int? FeatureId { get; set; }
+        public FeatureDAL Feature { get; set; }
     }
 }
