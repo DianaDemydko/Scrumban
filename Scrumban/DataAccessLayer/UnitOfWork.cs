@@ -10,10 +10,10 @@ namespace Scrumban.DataAccessLayer
 
         private ISprintRepository _sprintRepository;
         private ISprintStatusRepository _sprintStatusRepository;
-        private IDefectRepository defectRepository;
+        private IDefectRepository _defectRepository;
         private IStoryRepository _storyRepository;
         private IStoryStateRepository _storyStateRepository;
-        private ITaskRepository taskRepository;
+        private ITaskRepository _taskRepository;
         private IFeatureRepository feature_repository;
         private IUserRepository _userRepository;
         private ITokenRefreshRepository _tokenRefreshRepository;
@@ -24,7 +24,7 @@ namespace Scrumban.DataAccessLayer
             _scrumbanContext = scrumbanContext;
         }
 
-         public IFeatureRepository Feature
+        public IFeatureRepository Feature
         {
             get
             {
@@ -66,11 +66,11 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (defectRepository == null)
+                if (_defectRepository == null)
                 {
-                    defectRepository = new DefectRepository(_scrumbanContext);
+                    _defectRepository = new DefectRepository(_scrumbanContext);
                 }
-                return defectRepository;
+                return _defectRepository;
             }
         }
         public IStoryRepository StoryRepository
@@ -101,11 +101,11 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (taskRepository == null)
+                if (_taskRepository == null)
                 {
-                    taskRepository = new TaskRepository(_scrumbanContext);
+                    _taskRepository = new TaskRepository(_scrumbanContext);
                 }
-                return taskRepository;
+                return _taskRepository;
             }
         }
 

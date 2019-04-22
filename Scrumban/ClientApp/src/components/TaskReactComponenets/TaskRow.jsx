@@ -39,8 +39,24 @@ export class TaskRow extends React.Component {
     render() {
         return <tbody>
             {this.state.printOrEdit ?
-                (<TaskPrint item={this.state.task} edit={this.onPrintOrEdit} delete={this.onRemoveTask} moveToComponent={this.props.moveToComponent} />)
-                : (<TaskEdit item={this.state.task} edit={this.onPrintOrEdit} delete={this.onRemoveTask} changed={this.onChangedTask} states={this.props.states} priorities={this.props.priorities} moveToComponent={this.props.moveToComponent} />)
+                (<TaskPrint
+                    item={this.state.task}
+                    edit={this.onPrintOrEdit}
+                    delete={this.onRemoveTask}
+                    moveToComponent={this.props.moveToComponent}
+                />)
+
+                : (<TaskEdit
+                    item={this.state.task}
+                    edit={this.onPrintOrEdit}
+                    delete={this.onRemoveTask}
+                    changed={this.onChangedTask}
+                    states={this.props.states}
+                    priorities={this.props.priorities}
+                    users={this.props.users}
+                    stories={this.props.stories}
+                    moveToComponent={this.props.moveToComponent}
+                />)
             }
         </tbody>;
     }

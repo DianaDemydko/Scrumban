@@ -21,6 +21,8 @@ namespace Scrumban.ServiceLayer.Interfaces
         //To get user 
         UserDTO GetUserAccount(string email, string password);
 
+        IEnumerable<RoleDTO> GetRoles();
+
         string createToken(IEnumerable<Claim> claims, DateTime tokenExpire);
 
         string createRefreshToken(int userId, int lifetime);

@@ -73,6 +73,11 @@ namespace Scrumban.DataAccessLayer.Repositories
             lstUsers = (from UsersList in _dbContext.Set<UsersDAL>() select UsersList).ToList();
             return lstUsers;
         }
+
+        public IEnumerable<RoleDAL> GetRoles()
+        {
+            return _dbContext.Roles;
+        }
         //To check if user is registered
         public bool CheckAvailability(string email, string password)
         {

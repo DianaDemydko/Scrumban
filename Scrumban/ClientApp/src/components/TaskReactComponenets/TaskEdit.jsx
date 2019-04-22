@@ -8,7 +8,6 @@ const updateTaskUrl = "/api/TaskGrid/editTask";
 const updateTaskDetailedUrl = "/api/TaskGrid/editTaskDetailed";
 
 
-
 export class TaskEdit extends React.Component {
 
     constructor(props) {
@@ -208,6 +207,24 @@ export class TaskEdit extends React.Component {
                         <label for="taskStateName">State</label>
                         <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
                             {this.props.states.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-8">
+                        <label for="userAssign">Assign to</label>
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                            <option>--Nobody--</option>
+                            {this.props.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-8">
+                        <label for="userAssign">Assign to</label>
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                            <option>--Independent--</option>
+                            {this.props.stories.map((item) => <option>{item.name}</option>)}
                         </select>
                     </div>
                 </div>

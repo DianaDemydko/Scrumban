@@ -18,6 +18,8 @@ namespace Scrumban.DataAccessLayer.Interfaces
         void Create(UsersDAL user);
         void Update(UsersDAL user);
         void PictureUpdate(PictureDAL picture);
+
+        IEnumerable<RoleDAL> GetRoles();
     }
 }
 

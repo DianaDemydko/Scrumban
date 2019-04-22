@@ -165,7 +165,20 @@ namespace Scrumban.Controllers
             {
                 return StatusCode(404);
             }
-            
+        }
+
+        [HttpGet("/api/[controller]/getRoles")]
+        public IActionResult GetRoles()
+        {
+            try
+            {
+                var roles = _userService.GetRoles();
+                return Ok(roles);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(404);
+            }
         }
 
         [HttpPost("/api/[controller]/updateToken")]

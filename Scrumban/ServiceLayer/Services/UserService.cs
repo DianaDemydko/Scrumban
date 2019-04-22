@@ -178,6 +178,19 @@ namespace Scrumban.ServiceLayer.Sevices
                 throw;
             }
         }
+
+        public IEnumerable<RoleDTO> GetRoles()
+        {
+            try
+            {
+                return _mapper.Map<IEnumerable<RoleDAL>, IEnumerable<RoleDTO>>(_unitOfWork.UserRepository.GetRoles());
+            }
+            catch
+            {
+                throw;
+            }
+            
+        }
         
         // get token
         public string createToken(IEnumerable<Claim> claims, DateTime tokenExpire)

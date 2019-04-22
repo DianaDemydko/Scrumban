@@ -26,6 +26,7 @@ namespace Scrumban.BusinessLogicLayer
                     cfg.CreateMap<PictureDAL, PictureDTO>();
                     cfg.CreateMap<UsersDAL, UserDTO>();
                     cfg.CreateMap<TaskChangeHistoryDAL, TaskChangeHistoryDTO>();
+                    cfg.CreateMap<StoryDAL, StoryDTO>();
                     cfg.CreateMap<IQueryable<TaskChangeHistoryDAL>, List<TaskChangeHistoryDTO>>();
                 }
             ).CreateMapper();

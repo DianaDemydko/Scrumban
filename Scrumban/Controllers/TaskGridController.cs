@@ -19,7 +19,6 @@ namespace Scrumban.Controllers
         {
             _taskServise = taskService;
         }
-
         //"Team Member", "Scrum Master", "Product Owner", "Tester"
         [HttpGet]
         [EnableQuery()]
@@ -28,19 +27,6 @@ namespace Scrumban.Controllers
         {
             IQueryable<TaskDTO> tasks = _taskServise.GetTasks();
             return tasks;
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Route("/api/[controller]/addTask")]
-        public IActionResult Add([FromBody]TaskDTO taskDTO)
-        {
-            if(taskDTO == null)
-            {
-                return StatusCode(400);
-            }
-            _taskServise.AddTask(taskDTO);
-            return Ok(taskDTO);
         }
 
         [HttpPost]
@@ -56,18 +42,7 @@ namespace Scrumban.Controllers
             return Ok(taskChangeHistoryDTO);
         }
 
-        [Route("/api/[controller]/editTask")]
-        [HttpPost]
-        public IActionResult Edit([FromBody]TaskDTO taskDTO)
-        {
-            if (taskDTO == null)
-            {
-                return StatusCode(400);
-            }
-            _taskServise.UpdateTask(taskDTO);
-            return Ok(taskDTO);
-        }
-
+        [Authorize(Roles = "Tester")]
         [Route("/api/[controller]/editTaskDetailed")]
         [HttpPost]
         public IActionResult Edit([FromBody]TaskChangeHistoryDTO taskChangeHistoryDTO)

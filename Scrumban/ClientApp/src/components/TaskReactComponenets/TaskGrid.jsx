@@ -10,6 +10,8 @@ const apiUrlGet = "/api/TaskGrid/getTasks";
 const apiUrlGetStates = "/api/TaskGrid/getStates";
 const apiUrlGetPriorities = "/api/TaskGrid/getPriorities";
 const apiUrlDelete = "/api/TaskGrid";
+const getStoriesUrl = "/api/story/getstories"
+const getUsersUrl = "/api/users/getUsers"
 
 export class TaskGrid extends React.Component {
 
@@ -20,6 +22,8 @@ export class TaskGrid extends React.Component {
             tasks: [],
             priorities: [],
             states: [],
+            users: [],
+            stories: [],
 
             sortByTitle: icon_down,
             sortByDescription: icon_down,
@@ -27,6 +31,8 @@ export class TaskGrid extends React.Component {
             sortByFinishDate: icon_down,
             sortByPriority: icon_down,
             sortByState: icon_down,
+            sortByUser: icon_down,
+            sortByStory: icon_down,
 
             filter: ""
         };
@@ -34,6 +40,9 @@ export class TaskGrid extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.fetchStates = this.fetchStates.bind(this);
         this.fetchPriorities = this.fetchPriorities.bind(this);
+        this.fetchStories = this.fetchStories.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
+
 
         this.onRemoveTask = this.onRemoveTask.bind(this);
         this.onChanged = this.onChanged.bind(this);
@@ -85,10 +94,58 @@ export class TaskGrid extends React.Component {
             });
     }
 
+    fetchStories() {
+        fetch(getStoriesUrl, {
+            meethod: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    alert("Not Authorized")
+                    window.location.replace("/login");
+                }
+                else {
+                    alert("ERROR ! " + response.status)
+                }
+            })
+            .then(data => this.setState({ stories: data }))
+    }
+    
+    fetchUsers() {
+        fetch(getUsersUrl, {
+            meethod: "get",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    alert("Not Authorized")
+                    window.location.replace("/login");
+                }
+                else {
+                    alert("ERROR ! " + response.status)
+                }
+            })
+            .then(data => this.setState({ users: data }))
+    }
+
     componentDidMount() {
         this.loadData(this.state.filter);
         this.fetchStates();
         this.fetchPriorities();
+        this.fetchStories();
+        this.fetchUsers();
     }
 
     onChanged(newTask) {
@@ -137,6 +194,14 @@ export class TaskGrid extends React.Component {
                 (sort_order = "asc", this.setState({ sortByState: icon_down }))
                 : (sort_order = "desc", this.setState({ sortByState: icon_up }));
                 break;
+            case "user": this.state.sortByUser == icon_up ?
+                (sort_order = "asc", this.setState({ sortByUser: icon_down }))
+                : (sort_order = "desc", this.setState({ sortByUser: icon_up }));
+                break;
+            case "story": this.state.sortByStory == icon_up ?
+                (sort_order = "asc", this.setState({ sortByStory: icon_down }))
+                : (sort_order = "desc", this.setState({ sortByStory: icon_up }));
+                break;
             default:
                 break;
         }
@@ -183,6 +248,8 @@ export class TaskGrid extends React.Component {
         var changed = this.onChanged
         var states = this.state.states
         var priorities = this.state.priorities
+        var users = this.state.users
+        var stories = this.state.stories
         var moveToComponentVar = this.props.moveToComponent
 
         return <div>
@@ -203,7 +270,7 @@ export class TaskGrid extends React.Component {
                             <span>Title</span>
                             <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
                         </th>
-                        <th className="col-3">
+                        <th className="col-1">
                             <span>Description</span>
                             <ion-icon src={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
                         </th>
@@ -223,10 +290,28 @@ export class TaskGrid extends React.Component {
                             <span>State</span>
                             <ion-icon src={this.state.sortByState} onClick={() => this.sort("taskState", "id")} />
                         </th>
+                        <th className="col-1">
+                            <span>Assigned To</span>
+                            <ion-icon src={this.state.sortByState} onClick={() => this.sort("user", "firstName")} />
+                        </th>
+                        <th className="col-1">
+                            <span>Story</span>
+                            <ion-icon src={this.state.sortByState} onClick={() => this.sort("story", "name")} />
+                        </th>
                         <th className="col-1">{/* For button Edit   */}</th>
                         <th className="col-1">{/* For button Delete */}</th>
                     </thead>
-                    {this.state.tasks.map(function (task) { return <TaskRow key={task.id} task={task} onRemove={remove} onChanged={changed} states={states} priorities={priorities} moveToComponent={moveToComponentVar}/> })}
+                    {this.state.tasks.map(function (task) {
+                        return <TaskRow key={task.id}
+                            task={task} onRemove={remove}
+                            onChanged={changed}
+                            moveToComponent={moveToComponentVar}
+                            states={states}
+                            priorities={priorities}
+                            users={users}
+                            stories={stories}
+                        />
+                    })}
                 </table>
                 <div>
                     <button
