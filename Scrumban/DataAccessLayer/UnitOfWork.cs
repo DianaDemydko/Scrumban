@@ -10,11 +10,11 @@ namespace Scrumban.DataAccessLayer
 
         private ISprintRepository _sprintRepository;
         private ISprintStatusRepository _sprintStatusRepository;
-        private IDefectRepository defectRepository;
+        private IDefectRepository _defectRepository;
         private IStoryRepository _storyRepository;
         private IStoryStateRepository _storyStateRepository;
-        private ITaskRepository taskRepository;
-        private IFeatureRepository feature_repository;
+        private ITaskRepository _taskRepository;
+        private IFeatureRepository _feature_repository;
         private IUserRepository _userRepository;
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
@@ -26,10 +26,10 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (feature_repository == null)
-                    feature_repository = new FeatureRepository(_scrumbanContext);
+                if (_feature_repository == null)
+                    _feature_repository = new FeatureRepository(_scrumbanContext);
 
-                return feature_repository;
+                return _feature_repository;
             }
         }
       
@@ -64,11 +64,11 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (defectRepository == null)
+                if (_defectRepository == null)
                 {
-                    defectRepository = new DefectRepository(_scrumbanContext);
+                    _defectRepository = new DefectRepository(_scrumbanContext);
                 }
-                return defectRepository;
+                return _defectRepository;
             }
         }
         public IStoryRepository StoryRepository
@@ -99,11 +99,11 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (taskRepository == null)
+                if (_taskRepository == null)
                 {
-                    taskRepository = new TaskRepository(_scrumbanContext);
+                    _taskRepository = new TaskRepository(_scrumbanContext);
                 }
-                return taskRepository;
+                return _taskRepository;
             }
         }
 

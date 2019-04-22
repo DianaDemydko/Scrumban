@@ -11,11 +11,11 @@ namespace Scrumban.ServiceLayer.Services
 {
     public class SprintService: ISprintService
     {
-        private IUnitOfWork _unitOfWork;
+        IUnitOfWork _unitOfWork;
 
-        public SprintService(DbContextOptions<ScrumbanContext> options)
+        public SprintService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(new ScrumbanContext(options));
+            this._unitOfWork = unitOfWork;
         }
 
         public void Create(SprintDTO sprint)
