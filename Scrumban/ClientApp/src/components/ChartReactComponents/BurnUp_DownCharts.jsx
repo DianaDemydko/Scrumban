@@ -12,7 +12,7 @@ function GetDurationOfSprint(startDate, endDate) {
     var year = Number(startDate.substring(0, 4));
     var duration;
     if (sMonth == eMonth) {
-        duration = eDay - sDay;
+        duration = eDay - sDay+1;
         return duration;
     } else {
         switch (sMonth) {
@@ -23,13 +23,13 @@ function GetDurationOfSprint(startDate, endDate) {
             case 8:
             case 10:
             case 12:
-                duration = (31 - sDay) + eDay + 1;
+                duration = (31 - sDay) + eDay+1;
                 break;
             case 4:
             case 6:
             case 9:
             case 11:
-                duration = (30 - sDay) + eDay + 1;
+                duration = (30 - sDay) + eDay+1;
                 break;
             case 2:
                 if ((year % 4) === 0) {
@@ -75,7 +75,7 @@ function UpdateXaxes(startDate, endDate, duration) {
             }
             break;
     }
-    for (var i = 0; i < (duration + 1); i++) {
+    for (var i = 0; i <duration; i++) {
         if (sDay <= daysInStartMonth) {
             var a = sDay.toString();
             var b = sMonth.toString();
@@ -104,8 +104,8 @@ function SumOfStoryPoints(stories) {
 /*=====Function for forming array of data for Ideal Task Remaining(Burn Down)=====*/
 function IdealTaskRemeaning(duration, sumOfAllPoints) {
     var resault_array = [];
-    var step = sumOfAllPoints / duration;
-    for (var i = 0; i <= duration; i++) {
+    var step = sumOfAllPoints / (duration -1);
+    for (var i = 0; i < duration; i++) {
         resault_array.push(sumOfAllPoints);
         sumOfAllPoints -= step;
     }
@@ -114,7 +114,7 @@ function IdealTaskRemeaning(duration, sumOfAllPoints) {
 /*=====Function for forming array of data for Actual Task Remaining(Burn Down)=====*/
 function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllPoints) {
     var resault_array = [];
-    resault_array.push(sumOfAllPoints);
+   // resault_array.push(sumOfAllPoints);
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
         for (var i = 0; i < doneStories.length; i++) {
@@ -127,11 +127,11 @@ function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllP
             datesOfDoneStories.push(s);
         }
         var pointer_for_stories = 0;
-        for (var i = 1; i <= duration; i++) {
+        for (var i = 0 ; i < duration; i++) {
             if (arrayOfSprintDays[i] === datesOfDoneStories[pointer_for_stories]) {
                 var storyPoint = doneStories[pointer_for_stories].storyPoints;
-                resault_array.push(sumOfAllPoints - storyPoint);
                 sumOfAllPoints -= storyPoint;
+                resault_array.push(sumOfAllPoints);
                 pointer_for_stories += 1;
             } else {
                 resault_array.push(sumOfAllPoints);
@@ -154,7 +154,7 @@ function FormTotalLine(duration, sumOfAllPoints) {
 function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
     var resault_array = [];
     var value = 0;
-    resault_array.push(value);
+    //resault_array.push(value);
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
         for (var i = 0; i < doneStories.length; i++) {
@@ -166,12 +166,14 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
             var s = a + '.' + b + '.' + year;
             datesOfDoneStories.push(s);
         }
+
+        //datesOfDoneStories.sort();
         var pointer_for_stories = 0;
-        for (var i = 1; i < duration; i++) {
+        for (var i = 0 ; i < duration; i++) {
             if (arrayOfSprintDays[i] === datesOfDoneStories[pointer_for_stories]) {
                 var storyPoint = doneStories[pointer_for_stories].storyPoints;
-                resault_array.push(value + storyPoint);
                 value += storyPoint;
+                resault_array.push(value);
                 pointer_for_stories += 1;
             } else {
                 resault_array.push(value);
@@ -184,15 +186,14 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
 /*=====Function fpr forming array of data for Ideal  (Burn Up) */
 function FormIdealLine(duration, sumOfAllPoints) {
     var resault_array = [];
-    var step = sumOfAllPoints / duration;
+    var step = sumOfAllPoints / (duration-1);
     var value = 0;
-    for (var i = 0; i <= (duration + 1); i++) {
+    for (var i = 0; i < duration; i++) {
         resault_array.push(value);
         value += step;
     }
     return resault_array;
-}
-
+} 
 export class BurnUp_DownCharts extends React.Component {
     constructor(props) {
         super(props);
@@ -230,12 +231,12 @@ export class BurnUp_DownCharts extends React.Component {
         var duration = GetDurationOfSprint(CurentSprint.startDate, CurentSprint.endDate);
         var arrayOfLabels = UpdateXaxes(CurentSprint.startDate, CurentSprint.endDate, duration);
         ///getting all stories which belong to current sprint
-        var responce = await fetch('api/Chart/GetAllStoriesOfCurrentSprint/' + sprint_id);
+        var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
         var stories = await responce.json();
         var sumOfpoints = SumOfStoryPoints(stories);
         var dataForIdealTaskRemeaning = IdealTaskRemeaning(duration, sumOfpoints);
         ///getting all stories that are done and which belong to current sprint
-        var responcee = await fetch('api/Chart/GetDoneStoriesOfCurrentSprint/' + sprint_id);
+        var responcee = await fetch('api/Chart/GetDoneStories/' + sprint_id);
         var doneStories = await responcee.json();
         var dataForActualTaskRemaining = ActualTaskRemaining(duration, doneStories, arrayOfLabels, sumOfpoints);
         var dataForIdeal = FormIdealLine(duration, sumOfpoints);
