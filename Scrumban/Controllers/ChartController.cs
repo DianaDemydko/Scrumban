@@ -20,10 +20,10 @@ namespace Scrumban.Controllers
         private ISprintService _sprintService;
         private IStoryService _storyService;
 
-        public ChartController(DbContextOptions<ScrumbanContext> options)
+        public ChartController(ISprintService sprintService, IStoryService storyService)
         {
-            _sprintService = new SprintService(options);
-            _storyService = new StoryService(options);
+            _sprintService =sprintService;
+            _storyService = storyService;
         }
         [HttpGet]
         [Route("GetSprint/{id}")]
