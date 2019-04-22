@@ -81,14 +81,14 @@ export class EditFeature extends Component {
     }
     onPriorityChanged(e) {
         var i = this.state.priorities.find(x => x.name === e.target.value).id;
-        this.setState({ priorityid: i });
+        this.setState({ priorityID: i });
     }
     onDateChange(newDate) {
         this.setState({ date: newDate });
     }
     onStateChanged(e) {
         var i = this.state.allStates.find(x => x.name === e.target.value).id;
-        this.setState({ stateid: i });
+        this.setState({ stateID: i });
     }
     onStoriesChanged(e) {
         var newStories = this.state.stories;
@@ -106,8 +106,8 @@ export class EditFeature extends Component {
     }
 
   
-    onSubmit() {
-        fetch('api/FeatureData/', {
+     onSubmit() {
+         fetch('api/FeatureData/', {
             method: 'put',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -122,25 +122,21 @@ export class EditFeature extends Component {
             switch (responseStatus) {
                 case 200:
                     this.props.onStateUpdating(false);
-                    this.props.moveToComponent("feature");
                     break
             }
         }.bind(this))
 
-
-
+        this.props.onEditFeature();
     }
     onCancel() {
 
         this.props.onStateUpdating(false);
     }
 
-
     render() {
 
         return <tr>
             <td>
-               
                     <div>
                     <label for="name">Name</label>
                     <input type="text" class="form-control" onChange={e => this.onNameChanged(e)} defaultValue={this.state.name} />
@@ -182,19 +178,19 @@ export class EditFeature extends Component {
                     </div>
                 </div>
             </td>
-                        <td>
+            <td>
                     <div>
                         <label for='date'> Start Date</label>
                         <DatePicker todayButton={"Today"} selected={this.state.date} onChange={this.onDateChange} dateFormat="yyyy/MM/dd" />
 
-                    </div>
+            </div>
                
             </td>
             <td/>
             <td>
 
-                <button className="btn btn-sm btn-outline-dark w-100"  type="submit" onClick={this.onSubmit} >Save</button>
-                <button className="btn btn-sm btn-outline-dark w-100" type="submit" onClick={this.onCancel} >Cancel</button>
+                <button className="btn btn-sm btn-outline-dark w-100 m-1"  type="submit" onClick={this.onSubmit} >Save</button>
+                <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit" onClick={this.onCancel} >Cancel</button>
 </td>
         </tr>;
 

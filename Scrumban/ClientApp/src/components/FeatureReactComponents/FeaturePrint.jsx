@@ -54,6 +54,9 @@ export class FeaturePrint extends Component {
             listOpen: !prevState.listOpen
         }))
     }
+    componentWillReceiveProps(newProps) {
+        this.setState({ feature: newProps.feature });
+    }
     render() {
 
         var v = this.getFirstDescriptionWord();
@@ -79,8 +82,8 @@ export class FeaturePrint extends Component {
                         <div className="dd-header" onClick={() => this.toggleList()}>
                             <div className="dd-header-title">Stories
                             {this.state.listOpen
-                                ? <ion-icon src={icon_up}  />
-                                : <ion-icon src={icon_down}  />
+                                    ? <span class="fa fa-caret-up" id="active-caret"/>
+                                : <span class="fa fa-caret-down" id="active-caret"/>
                                 }
                             </div>
                         </div>
@@ -96,10 +99,10 @@ export class FeaturePrint extends Component {
                 </td>
                 
                 <td class="col">
-                    <button className="btn btn-sm btn-outline-dark w-100" id='editButton' onClick={e => this.onEditButtonClick(e)} >
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit
                                 </button>
-                    <button className="btn btn-sm btn-outline-dark w-100" onClick={e=>this.onDeleteClick(e)}>Delete</button>                </td>
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={e=>this.onDeleteClick(e)}>Delete</button>                </td>
             </tr>);
     }
 }

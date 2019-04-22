@@ -14,7 +14,6 @@ export class FeatureTable extends Component {
         super(props);
         this.state = {
             features: [],
-            fea: null,
             editState: false,
             sortByName: icon_up,
             sortByDescription: icon_up,
@@ -26,33 +25,38 @@ export class FeatureTable extends Component {
                 columnName: '',
                 sortingOrder: ''
             },
-
-
         };
         this.sortData = this.sortData.bind(this)
         this.findData = this.findData.bind(this);
         this.onDeleteItem = this.onDeleteItem.bind(this);
+        this.renderCaret = this.renderCaret.bind(this);
+        this.loadData = this.loadData.bind(this);
         this.onEditItem = this.onEditItem.bind(this);
     }
 
-    findData(query) {
+    renderCaret(columnName) {
+        if (this.state.currentSort.columnName == columnName) {
+            if (this.state.currentSort.sortingOrder == 'asc') {
+                return (<span class="fa fa-caret-up" id="active-caret"/>)
+            }
+            else {
+                return (<span class="fa fa-caret-down" id="active-caret"/>)
+            }
+        }
+        else {
+            return (<span class="fa fa-caret-down"></span>)
+        }
+    }
 
+    findData(query) {
         fetch('api/FeatureData/' + query)
             .then(res => res.json())
             .then(json => {
                 this.setState({ features: json })
             });
-
-
-
     }
-    onEditItem(editedItem) {
-        var featureToEdit = this.state.features.filter(function (x) {
-            return x.id != editedItem.id;
-        });
-        featureToEdit.push(editedItem);
-        this.setState({ features: featureToEdit });
-
+    onEditItem() {
+        this.loadData();
     }
     onDeleteItem(deletedItem) {
         var newFeatures = this.state.features.filter(function (x) {
@@ -135,18 +139,19 @@ export class FeatureTable extends Component {
             });
     }
 
-    onEditButtonClick(e) {
-        this.setState({ editState: !this.state.editState });
-    }
+
 
     componentDidMount() {
-        fetch('api/FeatureData/')
+        this.loadData();
+    }
+    loadData() {
+         fetch('api/FeatureData/')
             .then(function (res) {
                 return res.json()
             })
-            .then(data => 
-                this.setState({ features: data})
-            );
+            .then(data =>
+                this.setState({ features: data })
+        );
     }
 
 
@@ -158,27 +163,22 @@ export class FeatureTable extends Component {
             <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
                 <thead>
                     <tr>
-                        <th className="col" onClick={() => this.sortData('name')}>
-                            <label>Name</label>
-                            <ion-icon src={this.state.sortByName} />
+                            <th className="col" onClick={() => this.sortData('name')}>
+                                Name {this.renderCaret('name')}
                         </th>
                         <th class="col" min-width="100px" onClick={() => this.sortData('description')}>
-                            <label>Description</label>
-                            <ion-icon src={this.state.sortByDescription} />
+                                Description {this.renderCaret('description')}                           
                         </th>
                         <th class="col" onClick={() => this.sortData('state')}>
-                            <label>State</label>
-                            <ion-icon src={this.state.sortByState} />
+                                State {this.renderCaret('state')}
                         </th>
                         <th class="col"  > Owner  </th>
                         <th class="col" onClick={() => this.sortData('priority')}>
-                            <label>Priority</label>
-                            <ion-icon src={this.state.sortByPriority} />
+                                Priority {this.renderCaret('priority')}                          
                         </th>
                         <th class="col" > Stories </th>
                         <th class="col" onClick={() => this.sortData('time')} >
-                            <label>Start Date</label>
-                            <ion-icon src={this.state.sortBySDate} />
+                                Start Date {this.renderCaret('time')}
                         </th>
 
                         <th class="col" />
@@ -187,14 +187,14 @@ export class FeatureTable extends Component {
                 <tbody>
 
                         {this.state.features.map(feature => (
-                            <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem}/>)
+                            <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem}/>)
                     )}
                 </tbody>
                 </table>
                 </div>
             <div />
             <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("featureAdd")} >
-                Add
+                Create New
                     </button>
 
         </div>;

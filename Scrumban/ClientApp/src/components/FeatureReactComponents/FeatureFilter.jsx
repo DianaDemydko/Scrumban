@@ -15,16 +15,31 @@ export class FeatureFilter extends Component {
             filterQuery: null,
             findName: '',
             findDescription: '',
-            findPriority: '',
+            findPriorityID: 0,
             findDate: null,
+            findStateID: 0,
+            priorities: [], 
+            states:[]
         };
         this.onFindNameChange = this.onFindNameChange.bind(this);
         this.onFindDescriptionChange = this.onFindDescriptionChange.bind(this);
         this.onFindPriorityChange = this.onFindPriorityChange.bind(this);
         this.onFindDateChange = this.onFindDateChange.bind(this);
-
+        this.onFindStateChange = this.onFindStateChange.bind(this);
         this.findData = this.findData.bind(this);
         this.clearData = this.clearData.bind(this);
+    }
+    componentDidMount() {
+        fetch('api/FeatureData/getPriorities')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ priorities: json })
+            });
+        fetch('api/FeatureData/getStates')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ states: json })
+            });
     }
     findData() {
 
@@ -32,7 +47,6 @@ export class FeatureFilter extends Component {
         if (this.state.findName != '') {
             filter.push({ 'tolower(Name)': { contains: this.state.findName.toLowerCase() } })
         }
-
         if (this.state.findDescription != '') {
             filter.push({ 'tolower(Description)': { contains: this.state.findDescription } })
         }
@@ -40,18 +54,14 @@ export class FeatureFilter extends Component {
         if (this.state.findDate != null) {
             filter.push({ time: { gt: this.state.findDate } })
         }
-        if (this.state.findPriority != '') {
-            filter.push({ priority: parseInt(this.state.findPriority) })
+        if (this.state.findPriorityID != 0) {
+            filter.push({ priorityid: parseInt(this.state.findPriorityID) })
         }
-
-
-
+        if (this.state.findstateID != 0) {
+            filter.push({ stateid: parseInt(this.state.findstateID) })
+        }
         var query = buildQuery({ filter })
         this.props.changeFindData(query);
-
-
-
-
     }
 
     clearData() {
@@ -67,12 +77,15 @@ export class FeatureFilter extends Component {
 
     }
     onFindPriorityChange(e) {
-        this.setState({ findPriority: e.target.value });
-
+        var i = this.state.priorities.find(x => x.name === e.target.value).id;
+        this.setState({ findPriorityID: i });
     }
     onFindDateChange(dateToFind) {
         this.setState({ findDate: dateToFind });
-
+    }
+    onFindStateChange(e) {
+        var i = this.state.states.find(x => x.name === e.target.value).id;
+        this.setState({ findstateID: i });
     }
 
     render() {
@@ -94,9 +107,6 @@ export class FeatureFilter extends Component {
                     <label>Priority</label>
                 </div>
                 <div class="col-sm">
-                    <label>Stories</label>
-                </div>
-                <div class="col-sm">
                     <label>Date</label>
                 </div>
                 <div class="col-sm" />
@@ -116,18 +126,20 @@ export class FeatureFilter extends Component {
                         value={this.state.findDescription} />
                 </div>
                 <div class="col-sm">
-                    <input className="input" type='text' />
+                    <select class="btn btn-light dropdown-toggle w-100" name="state" onChange={e => this.onFindStateChange(e)} >
+                        {this.state.states.map(state => (
+                            <option>{state.name}
+                            </option>))}
+                    </select>
                 </div>
                 <div class="col-sm">
                     <input className="input" type='text' />
                 </div>
                 <div class="col-sm">
-                    <input className="input" type='text'
-                        onChange={e => this.onFindPriorityChange(e)}
-                        value={this.state.findPriority} />
-                </div>
-                <div class="col-sm">
-                    <input className="input" type='text' />
+                    <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onFindPriorityChange(e)}>
+                        {this.state.priorities.map(priority => (
+                            <option> {priority.name}</option>))}
+                    </select>
                 </div>
                 <div class="col-sm">
                     <DatePicker className="input" dateFormat="yyyy/MM/dd"

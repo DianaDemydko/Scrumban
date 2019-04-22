@@ -90,7 +90,7 @@ export class AddFeature extends React.Component {
                 
                 <div className="addContent">
                     <label class="col-2"> Description: </label>
-                    <input className="inputAdd" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
+                    <textarea className="inputAdd" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
                     <div />
                 </div>
                 
