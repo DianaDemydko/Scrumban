@@ -12,6 +12,12 @@ export default class KanbanCard extends React.Component {
         this.moreInformationHandler = this.moreInformationHandler.bind(this)
         this.renderMoreInformationButton = this.renderMoreInformationButton.bind(this)
         this.renderRank = this.renderRank.bind(this)
+        this.onDragStart = this.onDragStart.bind(this)
+    }
+
+    onDragStart(e) {
+        e.dataTransfer.setData("story_id", this.state.story.story_id)
+        e.dataTransfer.setData("column_id", this.state.story.column_id)
     }
 
     moreInformationHandler() {
@@ -38,8 +44,9 @@ export default class KanbanCard extends React.Component {
         return (
             <div
                 className="kanban-card"
+                id={'card-'+this.state.story.story_id}
                 draggable='true'
-                onDragStart={(e) => this.props.onDragStart(e, this.state.story.story_id)}
+                onDragStart={this.onDragStart}
             >
                 <div className="kanban-card-header">
                     <div className="card-header-rank">

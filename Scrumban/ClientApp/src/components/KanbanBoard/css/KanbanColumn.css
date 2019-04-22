@@ -3,7 +3,7 @@
     display: inline-block;
     vertical-align: top;
     width: 19%;
-    margin: 5px;
+    margin: 0.5%;
 }
 
 .column-header {
@@ -44,4 +44,18 @@
 
 #Done.column-header {
     background-image: linear-gradient( to bottom right, #65fd4d 20%, #02be5d);
+}
+
+.card-place {
+    border: 2px dashed grey;
+    margin-top:5px;
+    margin-bottom:5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

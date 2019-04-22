@@ -108,5 +108,17 @@ namespace Scrumban.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPatch("Patch")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult MultipleUpdate()
+        {
+            
+
+            
+
+            return Ok();
+        }
     }
 }
