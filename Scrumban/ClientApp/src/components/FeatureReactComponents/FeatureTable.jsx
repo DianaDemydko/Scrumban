@@ -9,24 +9,6 @@ const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
 
 
-class AddButton extends Component {
-    constructor(props, context) {
-        super(props, context);
-    }
-    render() {
-        return (
-            <Link to="/addfeature">
-                <button class="btn btn-sm btn-outline-dark">
-                    Add
-                    </button>
-            </Link>);
-    }
-
-
-
-}
-
-
 export class FeatureTable extends Component {
     constructor(props) {
         super(props);
@@ -49,7 +31,8 @@ export class FeatureTable extends Component {
         };
         this.sortData = this.sortData.bind(this)
         this.findData = this.findData.bind(this);
-
+        this.onDeleteItem = this.onDeleteItem.bind(this);
+        this.onEditItem = this.onEditItem.bind(this);
     }
 
     findData(query) {
@@ -63,7 +46,20 @@ export class FeatureTable extends Component {
 
 
     }
+    onEditItem(editedItem) {
+        var featureToEdit = this.state.features.filter(function (x) {
+            return x.id != editedItem.id;
+        });
+        featureToEdit.push(editedItem);
+        this.setState({ features: featureToEdit });
 
+    }
+    onDeleteItem(deletedItem) {
+        var newFeatures = this.state.features.filter(function (x) {
+            return x.id != deletedItem.id;
+        });
+        this.setState({ features: newFeatures });
+    }
     sortData(columnName) {
         let currentSort = this.state.currentSort
         var query = '?$orderby='
@@ -143,7 +139,6 @@ export class FeatureTable extends Component {
         this.setState({ editState: !this.state.editState });
     }
 
-
     componentDidMount() {
         fetch('api/FeatureData/')
             .then(function (res) {
@@ -191,14 +186,16 @@ export class FeatureTable extends Component {
                 </thead>
                 <tbody>
 
-                    {this.state.features.map(feature => (
-                        <FeatureRow key={feature.id} feature={feature} />)
+                        {this.state.features.map(feature => (
+                            <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem}/>)
                     )}
                 </tbody>
                 </table>
                 </div>
             <div />
-            <AddButton />
+            <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("featureAdd")} >
+                Add
+                    </button>
 
         </div>;
 

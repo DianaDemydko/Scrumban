@@ -12,7 +12,8 @@ namespace Scrumban.ServiceLayer.Interfaces
         void Post(FeatureDTO feature);
         IEnumerable<PriorityDTO> GetPriorities();
         IEnumerable<StateDTO> GetStates();
-        IEnumerable<StoryDTO> GetAllStories();
+      //  IQueryable<StoryDTO> GetAllStories();
+        FeatureDTO GetByID(int _id);
 
     }
 }

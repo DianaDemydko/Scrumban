@@ -1,5 +1,4 @@
-﻿
-using Scrumban.DataAccessLayer.Models;
+﻿using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.DataAccessLayer.Interfaces
 {

@@ -17,6 +17,7 @@ import { DefectGrid } from '../DefectReactComponent/DefectGrid';
 import { FeatureTable } from '../FeatureReactComponents/FeatureTable';
 import { SprintMain } from '../Sprint/SprintMain';
 import { StoryGrid } from '../StoryReactComponents/StoryGrid';
+import { AddFeature } from '../FeatureReactComponents/AddFeature';
 
 
 export class Body extends React.Component {
@@ -55,8 +56,11 @@ export class Body extends React.Component {
                 renderedComponent = <DefectGrid moveToComponent2={this.props.moveToComponent} />
                 break
             case 'feature':
-                renderedComponent = <FeatureTable moveToComponent2={this.props.moveToComponent} />
+                renderedComponent = <FeatureTable moveToComponent={this.props.moveToComponent} />
                 break
+            case 'featureAdd':
+                renderedComponent = <AddFeature moveToComponent={this.props.moveToComponent} />
+                break;
             case 'stories':
                 renderedComponent = <StoryGrid moveToComponent2={this.props.moveToComponent} />
                 break

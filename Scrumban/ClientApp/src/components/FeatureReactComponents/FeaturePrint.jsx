@@ -6,33 +6,6 @@ import '../../GridStyles/StyleForGrid.css';
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
 
-class DeleteButton extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.onClick = this.onClick.bind(this);
-    }
-    onClick(e) {
-        fetch('api/FeatureData/', {
-            method: 'delete',
-            headers: { "Content-Type": "application/json" },
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: this.props.featureIDtoDelete })
-        });
-
-        window.location.reload();
-    }
-    render() {
-        return (
-            <button onClick={e => this.onClick(e)} class="btn btn-sm btn-outline-dark w-100">
-                Delete
-            </button>
-        );
-    }
-}
-
-
 export class FeaturePrint extends Component {
     constructor(props) {
         super(props);
@@ -46,6 +19,23 @@ export class FeaturePrint extends Component {
 
         this.onEditButtonClick = this.onEditButtonClick.bind(this);
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);
+        this.onDeleteClick = this.onDeleteClick.bind(this);
+    }
+    onDeleteClick() {
+        fetch('api/FeatureData/', {
+            method: 'delete',
+            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: this.state.feature.id, stories: this.state.feature.stories })
+        }).then(function (response) {
+            let responseStatus = response.status
+            switch (responseStatus) {
+                case 200:
+                    this.props.DeleteStatusChanged(true);
+                    break
+            }
+        }.bind(this))
+       
     }
     getFirstDescriptionWord() {
         var descriptionString = this.state.feature.description;
@@ -109,8 +99,7 @@ export class FeaturePrint extends Component {
                     <button className="btn btn-sm btn-outline-dark w-100" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit
                                 </button>
-                    <DeleteButton featureIDtoDelete={this.state.feature.id} />
-                </td>
+                    <button className="btn btn-sm btn-outline-dark w-100" onClick={e=>this.onDeleteClick(e)}>Delete</button>                </td>
             </tr>);
     }
 }

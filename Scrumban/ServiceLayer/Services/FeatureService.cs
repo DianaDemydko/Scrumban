@@ -11,14 +11,12 @@ namespace Scrumban.ServiceLayer.Services
     public class FeatureService : IFeatureService
     {
         private UnitOfWork _unitOfWork;
+        private IMapper mapper;
 
         public FeatureService(ScrumbanContext options)
         {
             _unitOfWork = new UnitOfWork(options);
-        }
-        public IQueryable<FeatureDTO> Get()
-        {
-            var mapper = new MapperConfiguration(cfg => {
+             mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<FeatureDAL, FeatureDTO>();
                 cfg.CreateMap<FeatureDTO, FeatureDAL>();
                 cfg.CreateMap<StateDAL, StateDTO>();
@@ -26,6 +24,13 @@ namespace Scrumban.ServiceLayer.Services
                 cfg.CreateMap<StoryDAL, StoryDTO>();
                 cfg.CreateMap<StoryDTO, StoryDAL>();
             }).CreateMapper();
+        }
+        public FeatureDTO GetByID(int _id)
+        {
+            return mapper.Map<FeatureDAL, FeatureDTO>(_unitOfWork.Feature.GetByID(_id));
+        }
+        public IQueryable<FeatureDTO> Get()
+        {
             return mapper.Map<IQueryable<FeatureDAL>, List<FeatureDTO>>(_unitOfWork.Feature.GetAll()).AsQueryable();
         }
 
@@ -85,12 +90,13 @@ namespace Scrumban.ServiceLayer.Services
             return mapper.Map<IEnumerable<StateDAL>, IEnumerable<StateDTO>>(_unitOfWork.Feature.GetAllStates());
         }
 
-        public IEnumerable<StoryDTO> GetAllStories()
-        {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<StoryDAL, StoryDTO>();
-            }).CreateMapper();
-            return mapper.Map<IEnumerable<StoryDAL>, IEnumerable<StoryDTO>>(_unitOfWork.Feature.GetAllStories());
-        }
+        //public IQueryable<StoryDTO> GetAllStories()
+        //{
+        //    var mapper = new MapperConfiguration(cfg => {
+        //        cfg.CreateMap<StoryDAL, StoryDTO>();
+        //        cfg.CreateMap<StoryDTO, StoryDAL>();
+        //    }).CreateMapper();
+        //    return mapper.Map<IQueryable<StoryDAL>, IQueryable<StoryDTO>>(_unitOfWork.StoryRepository.GetAll());
+        //}
     }
 }

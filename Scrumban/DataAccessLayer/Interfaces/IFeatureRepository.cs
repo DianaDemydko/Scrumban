@@ -7,7 +7,7 @@ namespace Scrumban.DataAccessLayer.Interfaces
     {
         IEnumerable<PriorityDAL> GetAllPriorities();
         IEnumerable<StateDAL> GetAllStates();
-        IEnumerable<StoryDAL> GetAllStories();
+        FeatureDAL GetByID(int _id);
 
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System;
 
 namespace Scrumban.DataAccessLayer.Models
 {
+    [Table("Story")]
     public class StoryDAL
     {
 
@@ -18,13 +19,13 @@ namespace Scrumban.DataAccessLayer.Models
         public string Description { get; set; }
         public int Rank { get; set; }
 
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         //Navigation properties
         public StoryStateDAL StoryState { get; set; }
 
         public int? FeatureId { get; set; }
         public FeatureDAL Feature { get; set; }
-
-
     }
 }

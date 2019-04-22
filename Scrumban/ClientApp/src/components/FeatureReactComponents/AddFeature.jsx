@@ -22,7 +22,6 @@ export class AddFeature extends React.Component {
         this.onDescrioptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
         this.onStartDateChanged = this.onStartDateChanged.bind(this);
-        this.onCancelClick = this.onCancelClick.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
     }
     componentDidMount() {
@@ -47,9 +46,17 @@ export class AddFeature extends React.Component {
                 priorityid: this.state.priorityID, time: this.state.start,
                 stateid: this.state.stateID
             })
-        });
-        window.location = "/feature";
-    }
+        }).then(function (response) {
+            let responseStatus = response.status
+            switch (responseStatus) {
+                case 200:
+                    this.props.moveToComponent("feature");
+                    break
+            }
+        }.bind(this))
+
+        }
+    
     onNameChanged(e) {
         this.setState({ name: e.target.value });
     }
@@ -67,9 +74,7 @@ export class AddFeature extends React.Component {
     onStartDateChanged(newDate) {
         this.setState({ start: newDate });
     }
-    onCancelClick() {
-        window.location = "/feature";
-    }
+
    
 
     render() {
@@ -117,7 +122,7 @@ export class AddFeature extends React.Component {
                 <div className="addContent">
                     <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'15%' }} onClick={this.handleClick} > Submit </button>
                 
-                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}  onClick={this.onCancelClick} > Cancel </button>
+                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={() => this.props.moveToComponent("feature")} > Cancel </button>
                     </div>
 
 

@@ -98,9 +98,9 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<StoryDAL>().HasData(
                 new StoryDAL[]
                 {
-                    new StoryDAL{Story_id=1,Name="Story1",Description = "Description1"},
-                    new StoryDAL{Story_id=2,Name="Story2",Description = "Description2"},
-                    new StoryDAL{Story_id=3,Name="Story3",Description = "Description3"}
+                    new StoryDAL{Story_id=1,Name="Story1",Description = "Description1", StoryState_id = 1},
+                    new StoryDAL{Story_id=2,Name="Story2",Description = "Description2", StoryState_id = 1},
+                    new StoryDAL{Story_id=3,Name="Story3",Description = "Description3", StoryState_id = 1}
                 }
             );
             base.OnModelCreating(modelBuilder);

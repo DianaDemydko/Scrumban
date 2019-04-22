@@ -19,7 +19,7 @@ namespace Scrumban.ServiceLayer.DTO
         public PriorityDTO Priority { get; set; }
 
 
-        public List<StoryDAL> Stories { set; get; }
+        public List<StoryDTO> Stories { set; get; }
         public DateTime Time { set; get; }
     }
 }

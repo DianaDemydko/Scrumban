@@ -17,7 +17,7 @@ namespace Scrumban.Controllers
     {
         IStoryService _storyService;
 
-        public StoryController(DbContextOptions<ScrumbanContext> options)
+        public StoryController(ScrumbanContext options)
         {
             _storyService = new StoryService(options);
         }

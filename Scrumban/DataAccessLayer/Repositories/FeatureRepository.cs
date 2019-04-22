@@ -14,10 +14,14 @@ namespace Scrumban.DataAccessLayer.Repositories
         public FeatureRepository(ScrumbanContext context) : base(context)
         {
         }
+        public FeatureDAL GetByID(int _id)
+        {
+            return _dbContext.Features.Include(x => x.Priority).Include(x => x.State).FirstOrDefault(x => x.ID == _id);
+        }
 
         public override IQueryable<FeatureDAL> GetAll()
         {
-            var response = _dbContext.Features.Include(x => x.Priority).Include(x => x.State).Include(x => x.Stories).ToList().AsQueryable();
+            var response = _dbContext.Features.Include(x => x.Priority).Include(x => x.State).ToList().AsQueryable();
             return response;
         }
         public IQueryable<PriorityDAL> GetPriorities()
@@ -105,9 +109,6 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
             return _dbContext.States;
         }
-        public IEnumerable<StoryDAL> GetAllStories()
-        {
-            return _dbContext.Stories;
-        }
+      
     }
 } 

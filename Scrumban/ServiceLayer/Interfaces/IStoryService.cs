@@ -7,7 +7,6 @@ namespace Scrumban.ServiceLayer.Interfaces
     public interface IStoryService
     {
         IQueryable<StoryDTO> GetStories();
-        IEnumerable<StoryStateDTO> GetStates();
 
         StoryDTO GetStory(int id);
 

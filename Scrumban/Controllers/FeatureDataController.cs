@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
-using Scrumban.DataAccessLayer;
-using Scrumban.ServiceLayer.DTO;
+using Microsoft.AspNet.OData;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.Services;
+using Microsoft.EntityFrameworkCore;
+using Scrumban.ServiceLayer.DTO;
+using Scrumban.DataAccessLayer;
+using Microsoft.AspNetCore.Http;
+using Scrumban.DataAccessLayer.Models;
 
 namespace Scrumban.Controllers
 {
@@ -14,40 +17,62 @@ namespace Scrumban.Controllers
     public class FeatureDataController : Controller
     {
         private IFeatureService featureService;
-        public FeatureDataController(ScrumbanContext context)
+        private IStoryService storyService;
+        public FeatureDataController(DbContextOptions<ScrumbanContext> options)
         {
-            featureService = new FeatureService(context);
+            featureService = new FeatureService(new ScrumbanContext(options));
+            storyService = new StoryService( new ScrumbanContext(options) );
 
         }
+
         [HttpGet]
         [EnableQuery()]
         public IEnumerable<FeatureDTO> Get()
         {
-            var result = featureService.Get();
+            var result = featureService.Get().ToList();
+
+            for(int i=0;i<result.Count;i++)
+            {
+                result[i].Stories = storyService.GetStories().Where(story => story.FeatureId == result[i].ID).ToList();
+            }
             return result;
 
         }
 
         [HttpDelete]
-        public void Delete([FromBody] FeatureDTO _feature)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public void Delete([FromBody] FeatureDTO feature)
         {
-            featureService.Delete(_feature);
+            var newStories = feature.Stories;
+            if (newStories != null){
+                for (int i = 0; i < newStories.Count; i++)
+                {
+                    newStories[i].FeatureId = null;
+                    storyService.UpdateStory(newStories[i]);
+                }
+            }
+            featureService.Delete(feature);
+
 
         }
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public void Put([FromBody] FeatureDTO feature)
         {
-            
+            var newStories = feature.Stories;
+            for (int i = 0; i < newStories.Count; i++)
+            {
+                newStories[i].FeatureId = feature.ID;
+                storyService.UpdateStory(newStories[i]);         
+            }
             featureService.Put(feature);
-
-
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public void Post([FromBody]FeatureDTO feature)
         {
             featureService.Post(feature);
-
 
         }
 
@@ -60,10 +85,9 @@ namespace Scrumban.Controllers
         }
         [HttpGet]
         [Route("/api/[controller]/getAllStories")]
-        public IEnumerable<StoryDTO> GetAllStories()
+        public IQueryable<StoryDTO> GetAllStories()
         {
-            var stories = featureService.GetAllStories();
-            return stories;
+           return storyService.GetStories();
         }
         [HttpGet]
         [Route("/api/[controller]/getStates")]
@@ -71,38 +95,6 @@ namespace Scrumban.Controllers
         {
             var states = featureService.GetStates();
             return states;
-        }
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        //  private object repository;
-
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
-        }
-
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
-
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
         }
     }
 }

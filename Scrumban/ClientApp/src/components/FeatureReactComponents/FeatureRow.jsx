@@ -11,15 +11,22 @@ export class FeatureRow extends Component {
             edit: false
         }
         this.onStateChanged = this.onStateChanged.bind(this);
+        this.onDeleteStatusChanged = this.onDeleteStatusChanged.bind(this);
     }
     onStateChanged(editState) {
         this.setState({ edit: editState });
     }
+    onDeleteStatusChanged(deleteStatus) {
+        if (deleteStatus == true) {
+            this.props.deleteItem(this.props.feature);
+        }
+    }
+
 
    
     render() {
-        return (this.state.edit ? <EditFeature featuretoEdit={this.props.feature} onStateUpdating={this.onStateChanged} /> :
-            <FeaturePrint onStateUpdating={this.onStateChanged} feature={this.props.feature} />
+        return (this.state.edit ? <EditFeature featuretoEdit={this.props.feature} onStateUpdating={this.onStateChanged} moveToComponent={this.props.moveToComponent}/> :
+            <FeaturePrint onStateUpdating={this.onStateChanged} feature={this.props.feature} DeleteStatusChanged={this.onDeleteStatusChanged}/>
 
         );
     }

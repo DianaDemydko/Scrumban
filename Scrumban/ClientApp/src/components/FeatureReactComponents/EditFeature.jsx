@@ -25,19 +25,18 @@ export class EditFeature extends Component {
         this.onDateChange = this.onDateChange.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
         this.onStoriesChanged = this.onStoriesChanged.bind(this);
-       // this.getFeatureStories = this.getFeatureStories(this);
         this.onCancel = this.onCancel.bind(this);
     }
+
     getStatedStories() {
         var array = [];
         var tmp = this.state.stories;
         this.state.allStories.forEach(function (i) {
             var item = tmp.find(function (j) {
-                return j.id == i.id;
+                return j.story_id == i.story_id;
             });
             if (item != null) {
                 array.push({ story: item, state: true });
-
             }
             else {
                 array.push({ story: i, state: false });
@@ -51,13 +50,12 @@ export class EditFeature extends Component {
         var array = this.getStatedStories();
         return (<select class="btn btn-light dropdown-toggle w-100" value="Stories" onChange={this.onStoriesChanged} > 
             {array.map((item) =>
-                (item.state ? <option key={item.id} style={{ 'background': 'blue', 'color':'white' }}> {item.story.name} </option> :
-                    <option key={item.id} > {item.story.name} </option>  ))}
+                (item.state ? <option key={item.story_id} style={{ 'background': 'blue', 'color':'white' }}> {item.story.name} </option> :
+                    <option key={item.story_id} > {item.story.name} </option>  ))}
             </select>);
-     
     }
+
     componentDidMount() {
-        
         fetch('api/FeatureData/getPriorities')
             .then(res => res.json())
             .then(json => {
@@ -73,37 +71,33 @@ export class EditFeature extends Component {
             .then(json => {
                 this.setState({ allStories: json })
             });
-
-      
-        
-
     }
 
     onNameChanged(e) {
-        this.setState({ name: e.target.value });
+        this.setState({ name : e.target.value });
     }
     onDescriptionChanged(e) {
         this.setState({ description: e.target.value });
     }
     onPriorityChanged(e) {
         var i = this.state.priorities.find(x => x.name === e.target.value).id;
-        this.setState({ priorityID: i });
+        this.setState({ priorityid: i });
     }
     onDateChange(newDate) {
         this.setState({ date: newDate });
     }
     onStateChanged(e) {
-        var i = this.state.states.find(x => x.name === e.target.value).id;
-        this.setState({ stateID: i });
+        var i = this.state.allStates.find(x => x.name === e.target.value).id;
+        this.setState({ stateid: i });
     }
     onStoriesChanged(e) {
-        var newStories = [];
+        var newStories = this.state.stories;
         var arrayStories = this.getStatedStories();
         var item = arrayStories.find(function (j) {
             return j.story.name == e.target.value;
         });
         if (item.state == true) {
-            newStories= this.state.stories.filter(i => i != item.story);
+            alert("Sory, if You want to remove any story from Feature you can do it only from Story Grid");
         }
         else {
             newStories.push(item.story);
@@ -117,16 +111,22 @@ export class EditFeature extends Component {
             method: 'put',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                    id: this.props.featuretoEdit.id, name: this.state.name,
-                    description: this.state.description,
-                    priorityID: this.state.priorityID,
-                    time: this.state.date,
-                    stateID: this.state.stateID, stories: this.state.stories
-               
-
+                id: this.props.featuretoEdit.id, name: this.state.name,
+                description: this.state.description,
+                priorityID: this.state.priorityID,
+                time: this.state.date,
+                stateID: this.state.stateID, stories: this.state.stories
             })
-        });
-        this.props.onStateUpdating(false);
+        }).then(function (response) {
+            let responseStatus = response.status
+            switch (responseStatus) {
+                case 200:
+                    this.props.onStateUpdating(false);
+                    this.props.moveToComponent("feature");
+                    break
+            }
+        }.bind(this))
+
 
 
     }
@@ -142,14 +142,14 @@ export class EditFeature extends Component {
             <td>
                
                     <div>
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" onChange={e => this.onNameChanged(e)} defaultValue={this.props.featuretoEdit.name} />
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" onChange={e => this.onNameChanged(e)} defaultValue={this.state.name} />
                     </div>
             </td>
                 <td>
                     <div>
                         <label for="description">Description</label>
-                        <input type="text" class="form-control" onChange={e => this.onDescriptionChanged(e)} defaultValue={this.props.featuretoEdit.description} />
+                    <input type="text" class="form-control" onChange={e => this.onDescriptionChanged(e)} defaultValue={this.state.description} />
                     </div>
             </td>
             <td>
@@ -167,7 +167,7 @@ export class EditFeature extends Component {
                     <div>
                     <label for="priority">Priority</label>
                     <div />
-                        <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onPriorityChanged(e)} value={this.props.featuretoEdit.priority.name} >
+                    <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onPriorityChanged(e)} value={this.props.featuretoEdit.priority.name} >
                         {this.state.priorities.map(priority => (
                             <option> {priority.name}</option>))}
                         </select>
