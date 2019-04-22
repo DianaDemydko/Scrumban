@@ -7,7 +7,7 @@ using Scrumban.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer;
 
-namespace Scrumban.Test
+namespace Scrumban.Test.Controllers.Tests
 {
     public class StoryControllerTest
     {
