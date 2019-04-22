@@ -114,84 +114,101 @@ namespace Scrumban.DataAccessLayer
                     new StoryDAL
                     {
                         Story_id =1,
+                        sprint_id =1,
+                        StoryPoints=40,
                         Name ="Add something usefull",
+                        StartDate = new DateTime(2019, 5,1),
+                        EndDate = new DateTime(2019, 5, 3),
                         Description = "Long longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong long description",
                         Rank = 12,
                         StoryState_id = 1
                     },
-
                     new StoryDAL
                     {
                         Story_id =2,
-                        Name ="Fix very bad bug",
-                        Description = "The shortest description",
-                        Rank = 4,
-                        StoryState_id = 2
+                        sprint_id =1,
+                        StoryPoints=5,
+                        Name ="Add something usefull",
+                        StartDate = new DateTime(2019, 5,1),
+                        EndDate = new DateTime(2019, 5, 5),
+                        Description = "Long longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong long description",
+                        Rank = 12,
+                        StoryState_id = 5
                     },
                     new StoryDAL
                     {
                         Story_id =3,
+                        sprint_id =1,
+                        StoryPoints = 10,
+                        StartDate = new DateTime(2019, 5,1),
+                        EndDate = new DateTime(2019, 5, 15),
+                        Name ="Fix very bad bug",
+                        Description = "The shortest description",
+                        Rank = 4,
+                        StoryState_id = 5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =4,
+                        sprint_id = 2,
+                        StoryPoints = 20,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 5, 30),
                         Name ="Test something",
                         Description = "Description3",
                         Rank = 40,
-                        StoryState_id=2
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =5,
+                        sprint_id = 2,
+                        StoryPoints = 30,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 3),
+                        Name ="Create chart",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =6,
+                        sprint_id = 2,
+                        StoryPoints = 15,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 7),
+                        Name ="Create chat",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =7,
+                        sprint_id = 2,
+                        StoryPoints = 10,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 8),
+                        Name ="Create team entity",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =8,
+                        sprint_id = 2,
+                        StoryPoints = 5,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 11),
+                        Name ="Create team controller",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
                     }
                 }
             );
-            //modelBuilder.Entity<StoryDAL>().HasData(
-            //    new StoryDAL[]
-            //    {
-            //        new StoryDAL
-            //        {
-            //            Story_id =1,
-            //            sprint_id =1,
-            //            StoryPoints = 40,
-            //            Name ="Add something usefull",
-            //            Description = "Long longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong long description",
-            //            Rank = 12,
-            //            StartDate = new DateTime(2019, 5,1),
-            //            EndDate = new DateTime(2019, 5, 3),
-            //            StoryState_id = 5
-            //        },
-
-            //        new StoryDAL
-            //        {
-            //            Story_id =2,
-            //             sprint_id =1,
-            //            StoryPoints = 30,
-            //            Name ="Fix very bad bug",
-            //            Description = "The shortest description",
-            //            Rank = 4,
-            //            StartDate = new DateTime(2019, 5,1),
-            //            EndDate = new DateTime(2019, 5, 10),
-            //            StoryState_id = 5
-            //        },
-            //        new StoryDAL
-            //        {
-            //            Story_id =3,
-            //            sprint_id =1,
-            //            StoryPoints = 25,
-            //            Name ="Test something",
-            //            Description = "Description3",
-            //            Rank = 40,
-            //            StartDate = new DateTime(2019, 5,1),
-            //            EndDate = new DateTime(2019, 5, 12),
-            //            StoryState_id=2
-            //        },
-            //        new StoryDAL
-            //        {
-            //            Story_id =3,
-            //            sprint_id =1,
-            //            StoryPoints = 25,
-            //            Name ="Test something",
-            //            Description = "Description3",
-            //            Rank = 40,
-            //            StartDate = new DateTime(2019, 5,1),
-            //            EndDate = new DateTime(2019, 5, 20),
-            //            StoryState_id=2
-            //        }
-            //    }
-            //);
             base.OnModelCreating(modelBuilder);
         }
     }

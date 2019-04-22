@@ -34,7 +34,7 @@ namespace Scrumban.Controllers
         }
        
         [HttpGet]
-        [Route("GetAllStoriesOfCurrentSprint/{id}")]
+        [Route("GetSprintStories/{id}")]
         public List<StoryDTO> GetAllStoriesOfCurrentSprint(int id)
         {
             IQueryable<StoryDTO> allStories = _storyService.GetStories();
@@ -49,7 +49,7 @@ namespace Scrumban.Controllers
             return storiesOfCurrentSprint;
         }
         [HttpGet]
-        [Route("GetDoneStoriesOfCurrentSprint/{id}")]
+        [Route("GetDoneStories/{id}")]
         public List<StoryDTO> GetDoneStoriesOfCurrentSprint(int id)
         {
             IQueryable<StoryDTO> allStories = _storyService.GetStories();
