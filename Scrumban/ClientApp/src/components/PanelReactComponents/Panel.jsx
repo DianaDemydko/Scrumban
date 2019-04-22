@@ -22,7 +22,7 @@ export class Panel extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="panelDiv">
                 <ul className="panelUl">
                     <li className="panelLi">
                         {this.state.loginStatus == "true" ?
@@ -30,7 +30,6 @@ export class Panel extends React.Component {
                             : (<button className="panelBtn" onClick={() => this.props.moveToComponent("login")}>Log In  </button>)
                         }
                     </li >
-                    
                     {this.state.loginStatus == "true" ?
                         (<span>
                             <li className="panelLi">
@@ -44,7 +43,7 @@ export class Panel extends React.Component {
                         </span>
                         )
                         : (<li className="panelLi"><button className="panelBtn" onClick={() => this.props.moveToComponent("signup")}> Sign Up </button></li>)
-                         }
+                    }
                     <li className="panelLi">
                         <button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>About</button>
                     </li>

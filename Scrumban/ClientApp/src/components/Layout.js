@@ -41,23 +41,7 @@ export class Layout extends Component {
     }
 
     render() {
-
         return (
-            //<div className="container">
-            //    <div className="col-12">
-            //        Token: {sessionStorage.getItem("tokenKey")}
-            //    </div>
-            //    <div className="col-12">
-            //        RefreshToken: {sessionStorage.getItem("refreshTokenKey")}
-            //    </div>
-            //    <div className="col-12">
-            //        E
-            //        </div>
-            //    <div className="col-12">
-            //        Expires: {sessionStorage.getItem("expires")}
-            //    </div>
-
-            //</div>
             <div>
                 <Panel
                     key={this.state.childRefresh}
@@ -73,6 +57,7 @@ export class Layout extends Component {
                     moveToComponent={this.setRenderedComponentName}
                     parentOnLoginStatusCallBack={this.onLoginStatusCallBack}
                     user={this.state.user}
+                    panelLoginStatus={this.state.panelLoginStatus}
                     updateUser={this.updateUser}
                 />
             </div>

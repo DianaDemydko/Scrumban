@@ -88,7 +88,7 @@ export class Login extends React.Component {
                         sessionStorage.setItem("expires", data.expires)
                         var x = data.user.id
                         sessionStorage.setItem("userId", x)
-                        this.props.moveToComponent(true, data.user, "tasks")
+                        this.props.moveToComponent(true, data.user, "kanbanBoard")
                     }
                 });
         }

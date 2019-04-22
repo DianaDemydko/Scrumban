@@ -52,7 +52,7 @@ export class SprintCreateForm extends React.Component {
                         alert("Creating element went wrong!")
                         break
                     case 200:
-                        this.props.moveToComponent2("sprints");
+                        this.props.moveToComponent("sprints");
                         break
                 }
             }.bind(this))
@@ -150,7 +150,7 @@ export class SprintCreateForm extends React.Component {
                 </form>
                     <div>
                         <button type="button" class="btn btn-primary" id="create-button" onClick={this.addNewSprint.bind(this)}>Create Sprint</button>
-                    <button type="button" class="btn btn-danger" id="create-form-cancel-button" onClick={() => this.props.moveToComponent2("sprints")} >Cancel</button>
+                    <button type="button" class="btn btn-danger" id="create-form-cancel-button" onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
                     </div>
             </div>
         )

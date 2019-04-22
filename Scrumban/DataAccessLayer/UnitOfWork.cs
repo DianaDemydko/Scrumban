@@ -14,7 +14,7 @@ namespace Scrumban.DataAccessLayer
         private IStoryRepository _storyRepository;
         private IStoryStateRepository _storyStateRepository;
         private ITaskRepository _taskRepository;
-        private IFeatureRepository feature_repository;
+        private IFeatureRepository _feature_repository;
         private IUserRepository _userRepository;
         private ITokenRefreshRepository _tokenRefreshRepository;
         private ITaskChangeHistoryRepository _taskChangeHistoryRepository;
@@ -28,10 +28,10 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (feature_repository == null)
-                    feature_repository = new FeatureRepository(_scrumbanContext);
+                if (_feature_repository == null)
+                    _feature_repository = new FeatureRepository(_scrumbanContext);
 
-                return feature_repository;
+                return _feature_repository;
             }
         }
       
