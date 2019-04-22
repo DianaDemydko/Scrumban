@@ -5,10 +5,10 @@ using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNet.OData.Query;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Scrumban.Controllers
 {
-
     [Route("api/[controller]")]
     public class DefectDataController : Controller
     {
@@ -19,6 +19,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [EnableQuery()]
         [Route("/api/[controller]/getDefects")]
         public IQueryable<DefectDTO> GetDefects()

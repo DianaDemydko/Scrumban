@@ -30,7 +30,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 */
 .bm-menu-wrap {
     /*position: absolute !important;*/
-    display:block;
+    display: block;
     position: fixed;
     height: 100%;
 }
@@ -77,19 +77,18 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Styling of overlay */
 .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
-    display:block;
-
+    display: block;
 }
 
 
 
 
-.dropdown {
+.menu-dropdown {
     /* float: left; */
     /*overflow: hidden;*/
 }
 
-    .dropdown .dropbtn {
+    .menu-dropdown .dropbtn {
         display: block;
         text-decoration: none;
         margin-bottom: 10px;
@@ -99,11 +98,11 @@ Note: Beware of modifying this element as it can break the animations - you shou
         cursor: pointer;
     }
 
-    .navbar a:hover, .dropdown:hover .dropbtn {
+    .navbar a:hover, .menu-dropdown:hover .dropbtn {
         background-color: #373a47;
     }
 
-.dropdown-content {
+.menu-dropdown-content {
     display: none;
     background-color: rgba(100,100,100,0.3);
     min-width: 140px;
@@ -113,19 +112,18 @@ Note: Beware of modifying this element as it can break the animations - you shou
     border-bottom-left-radius: 4px
 }
 
-    .dropdown-content a {
+    .menu-dropdown-content a {
         color: black;
         padding: 1px 16px;
         text-decoration: none;
         display: block;
         text-align: left;
-        
     }
 
-        .dropdown-content a:hover {
+        .menu-dropdown-content a:hover {
             background-color: rgba(100,100,100,0.3);
         }
 
-.dropdown:hover .dropdown-content {
+.menu-dropdown:hover .menu-dropdown-content {
     display: block;
 }

@@ -33,12 +33,6 @@ namespace Scrumban.DataAccessLayer.Models
 
         public IEnumerable<TaskDAL> Tasks { get; set; }
 
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-
-        //Navigation properties
-        public StoryStateDAL StoryState { get; set; }
-
         public int? FeatureId { get; set; }
         public FeatureDAL Feature { get; set; }
     }

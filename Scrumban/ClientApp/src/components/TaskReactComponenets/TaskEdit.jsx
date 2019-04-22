@@ -221,7 +221,7 @@ export class TaskEdit extends React.Component {
                 </div>
                 <div className="form-group">
                     <div className="col-8">
-                        <label for="userAssign">Assign to</label>
+                        <label for="userAssign">Stories</label>
                         <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
                             <option>--Independent--</option>
                             {this.props.stories.map((item) => <option>{item.name}</option>)}

@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../../GridStyles/StyleForGrid.css';
 import { FeatureFilter } from './FeatureFilter.jsx';
 import { FeatureRow } from './FeatureRow.jsx';
+import { checkToken } from '../Helpers'
 
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
@@ -145,9 +146,30 @@ export class FeatureTable extends Component {
         this.loadData();
     }
     loadData() {
-         fetch('api/FeatureData/')
-            .then(function (res) {
-                return res.json()
+        checkToken()
+        fetch('api/FeatureData/', {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
+                    }
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
             })
             .then(data =>
                 this.setState({ features: data })

@@ -212,16 +212,6 @@ export class TaskAdd extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    {this.state.stories.map(function (story) {
-                        return <div>{story.name}</div>
-                    })}
-                </div>
-                <div>
-                    {this.state.users.map(function (story) {
-                        return <div>{story.firstName}</div>
-                    })}
-                </div>
                 <h2>Add task</h2>
                 <div className="form-group col-12">
                     <div>

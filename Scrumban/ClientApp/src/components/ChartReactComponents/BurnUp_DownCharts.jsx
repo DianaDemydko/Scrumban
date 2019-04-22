@@ -194,6 +194,10 @@ function FormIdealLine(duration, sumOfAllPoints) {
     }
     return resault_array;
 } 
+
+
+
+
 export class BurnUp_DownCharts extends React.Component {
     constructor(props) {
         super(props);

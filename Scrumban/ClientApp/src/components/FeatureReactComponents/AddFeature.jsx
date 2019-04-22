@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import '../../GridStyles/StyleForGrid.css';
-
+import { checkToken } from '../Helpers'
 
 
 export class AddFeature extends React.Component {
@@ -38,20 +38,33 @@ export class AddFeature extends React.Component {
     }
 
     handleClick(e) {
+        checkToken()
         fetch('api/FeatureData/', {
             method: 'post',
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            },
             body: JSON.stringify({
                 name: this.state.name, description: this.state.description,
                 priorityid: this.state.priorityID, time: this.state.start,
                 stateid: this.state.stateID
             })
         }).then(function (response) {
-            let responseStatus = response.status
-            switch (responseStatus) {
-                case 200:
-                    this.props.moveToComponent("feature");
-                    break
+            if (response.status == 200) {
+                this.props.moveToComponent("feature");
+            }
+            else if (response.status == 401) {
+                var answer = window.confirm("You are not authorized. Move to Login page ?");
+                if (answer == true) {
+                    window.location.replace("/login");
+                }
+            }
+            else if (response.status == 403) {
+                alert("ERROR! You have not permission !")
+            }
+            else {
+                alert("ERROR! Status code: " + response.status)
             }
         }.bind(this))
 
@@ -106,7 +119,7 @@ export class AddFeature extends React.Component {
                 <div />
                 <div className="addContent">
                     <label class="col-2"> Priority: </label>
-                <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
+                <select class="btn btn-light dropdown-toggle m-0" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
                     {this.state.priorities.map(priority => (
                         <option> { priority.name }</option>))}
            

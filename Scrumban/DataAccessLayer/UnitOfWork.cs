@@ -96,18 +96,6 @@ namespace Scrumban.DataAccessLayer
             }
         }
 
-        public IStoryStateRepository StoryStateRepository
-        {
-            get
-            {
-                if(_storyStateRepository == null)
-                {
-                    _storyStateRepository = new StoryStateRepository(_scrumbanContext);
-                }
-                return _storyStateRepository;
-
-            }
-        }
 
         public ITaskRepository Tasks
         {

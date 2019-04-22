@@ -2,7 +2,7 @@
 import { DefectRow } from './DefectRow';
 import { Pagination } from './Pagination';
 import buildQuery from 'odata-query'
-
+import { checkToken } from '../Helpers'
 
 
 const apiGetUrl = "/api/DefectData/getDefects";
@@ -379,9 +379,32 @@ export class DefectGrid extends React.Component {
     }
 
     loadData(query) {
-
-        fetch(apiGetUrl + query)
-            .then(response => response.json())
+        checkToken()
+        fetch(apiGetUrl + query, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
+                        //this.props.moveToComponent("login")
+                    }
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            })
             .then(data => { this.setState({ defects: data }) });
        
     }

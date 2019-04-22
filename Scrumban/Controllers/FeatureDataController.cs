@@ -10,6 +10,7 @@ using Scrumban.ServiceLayer.DTO;
 using Scrumban.DataAccessLayer;
 using Microsoft.AspNetCore.Http;
 using Scrumban.DataAccessLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Scrumban.Controllers
 {
@@ -26,6 +27,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [EnableQuery()]
         public IEnumerable<FeatureDTO> Get()
         {
@@ -69,6 +71,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public void Post([FromBody]FeatureDTO feature)
         {

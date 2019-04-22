@@ -15,11 +15,11 @@ export class SideBar extends React.Component {
             <Menu>
                 <a className="menu-item" onClick={() => this.props.moveToComponent("home")}>Home</a>
 
-                <a className="dropdown">
+                <a className="menu-dropdown">
                     <a className="dropbtn">Grids
                     <i className="fa fa-caret-down"></i>
                     </a>
-                    <div className="dropdown-content">
+                    <div className="menu-dropdown-content">
                         <a className="menu-item" onClick={() => this.props.moveToComponent("sprints")}>Sprints</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("feature")}>Features</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("stories")}>Stories</a>

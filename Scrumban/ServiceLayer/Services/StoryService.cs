@@ -16,9 +16,9 @@ namespace Scrumban.ServiceLayer.Services
         IUnitOfWork _unitOfWork { get; set; }
         IMapper _mapper { get; set; }
 
-        public StoryService(IUnitOfWork unitOfWork)
+        public StoryService(ScrumbanContext options)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = new UnitOfWork(options);
 
             var configuration = new MapperConfiguration(config => {
                 config.CreateMap<StoryDAL, StoryDTO>()

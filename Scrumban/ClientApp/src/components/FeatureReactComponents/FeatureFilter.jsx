@@ -89,7 +89,7 @@ export class FeatureFilter extends Component {
     }
 
     render() {
-        return <div class="container bg-light" id='filterForm'>
+        return <div class="container bg-light width-100" style={{ 'margin': '0' }} id='filterForm'>
             <div class='row'>
                 <div class="col-sm">
                     <label>Name</label>
