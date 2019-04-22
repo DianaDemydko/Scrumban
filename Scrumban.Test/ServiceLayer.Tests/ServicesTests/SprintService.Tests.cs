@@ -90,8 +90,8 @@ namespace Scrumban.Test.ServiceLayer.Tests.ServicesTests
             service.Update(newSprint);
             var result = service.GetByID(newSprint.Sprint_id);
             Assert.Equal(result.Sprint_id,newSprint.Sprint_id);
-            //Assert.NotStrictEqual("NameName", result.Name);
-            //Assert.NotStrictEqual("description", result.Description);
+            Assert.Equal("NameName", result.Name);
+            Assert.Equal("description", result.Description);
         }
     }
 }
