@@ -61,10 +61,13 @@ export class Login extends React.Component {
         if (this.handleValidation()) {
             fetch('api/users/token', {
                 method: 'post',
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
                 body: JSON.stringify({
                     grant_type: 'password',
-                    login: this.state.email,
+                    email: this.state.email,
                     password: this.state.password
                 })
             }).then(function (response) {
@@ -80,8 +83,12 @@ export class Login extends React.Component {
                         //this.props.moveToComponent(true, data.user, "tasks");
                     }
                     else {
-                        sessionStorage.setItem("tokenKey", data.access_token);
-                        this.props.moveToComponent(true, data.user, "kanbanBoard");
+                        sessionStorage.setItem("tokenKey", data.access_token)
+                        sessionStorage.setItem("refreshTokenKey", data.refresh_token)
+                        sessionStorage.setItem("expires", data.expires)
+                        var x = data.user.id
+                        sessionStorage.setItem("userId", x)
+                        this.props.moveToComponent(true, data.user, "kanbanBoard")
                     }
                 });
         }

@@ -8,23 +8,40 @@ import {
     Button
 } from "react-bootstrap";
 import "./Register.css";
+import "../../index.css"
 import { RouteComponentProps } from 'react-router';
-
 
 export class Register extends React.Component {
     state = {
 
         title: "",
         loading: true,
+
         firstname: "",
         surname: "",
         email: "",
         password: "",
         confirmpassword: "",
+
+        //validation
+        firstnameValid: false,
+        firstnameValidMessage: "",
+
+        surnameValid: false,
+        surnameValidMessage: "",
+
+        emailValid: false,
+        emailValidMessage: "",
+
+        passwordValid: false,
+        passwordValidMessage: "",
+
+        confirmpasswordValid: false,
+        confirmpasswordValidMessage: "",
+
         //fields: {},
         picture: null,
         pictureUrl: null,
-        pivtureBinary: null,
         errors: []
     };
     constructor(props) {
@@ -37,6 +54,11 @@ export class Register extends React.Component {
         this.confirmpasswordChanged = this.confirmpasswordChanged.bind(this);
         this.onFileChanged = this.onFileChanged.bind(this);
     }
+
+    componentDidMount() {
+        this.onFileChanged()
+    }
+
     handleValidation() {
         //let fields = this.state.fields;
         let errors = [];
@@ -106,25 +128,116 @@ export class Register extends React.Component {
     }
   
     firstnameChanged(e) {
-        this.setState({ firstname: e.target.value });
+        var firstName = e.target.value
+        var message = ""
+        var isValid = false
+
+        if (firstName == "") {
+            message = "Input first name !"
+        }
+        else {
+            isValid = true
+            message = ""
+        }
+        this.setState({ firstname: firstName, firstnameValid: isValid, firstnameValidMessage: message })
     }
+
     surnameChanged(e) {
-        this.setState({ surname: e.target.value });
+        var surname = e.target.value
+        var message = ""
+        var isValid = false
+
+        if (surname == "") {
+            message = "Input surname !"
+        }
+        else {
+            isValid = true
+            message = ""
+        }
+        this.setState({ surname: surname, surnameValid: isValid, surnameValidMessage: message })
     }
+
     emailChanged(e) {
-       
-            this.setState({ email: e.target.value });
-        
-        
+        var email = e.target.value
+        var message = ""
+        var isValid = false
+
+        var regex = new RegExp(
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+
+        if (email == "") {
+            message = "Input email (login) !"
+        }
+        else if (regex.test(email) === false) {
+            message = "incorrect email !"
+        }
+        else {
+            isValid = true
+            message = ""
+        }
+        this.setState({ email: email, emailValid: isValid, emailValidMessage: message })
     }
     passwordChanged(e) {
-        this.setState({ password: e.target.value });
+        var password = e.target.value
+        var message = ""
+        var isValid = false
+        var confirmIsValid = false
+
+        var regex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])")
+
+        if (password == "") {
+            isValid = true
+            confirmIsValid = true
+            message = ""
+        }
+        else if (password.length < 5) {
+            message = "be at least 5 characters !"
+        }
+        else if (regex.test(password) === false) {
+            message = "be at least one small letter, one capital letter and one number!"
+        }
+        else {
+            isValid = true
+        }
+        this.setState({ password: password, passwordValid: isValid, confirmpasswordValid: confirmIsValid, passwordValidMessage: message })
     }
+
     confirmpasswordChanged(e) {
-        this.setState({ comfirmpassword: e.target.value });
+        var passwordConfirm = (e == null ? this.state.passwordconfirm : e.target.value)
+        var message = ""
+        var isValid = false
+        if (passwordConfirm == "" && this.state.password !== "") {
+            message = "confirm password !"
+        }
+        else if (this.state.password == "") {
+            isValid = true
+        }
+        else if (passwordConfirm !== this.state.password) {
+            message = "password is not confirmed"
+        }
+        else if (this.state.newPasswordValid === false) {
+            isValid = false
+            message = this.state.newPasswordValidMessage
+        }
+        else {
+            isValid = true
+            message = ""
+        }
+        this.setState({ comfirmpassword: passwordConfirm, confirmpasswordValid: isValid, confirmpasswordValidMessage: message })
+        //this.setState({ comfirmpassword: e.target.value });
     }
 
     handleSubmit(e) {
+        if (this.state.firstnameValid === false ||
+            this.state.surnameValid === false ||
+            this.state.emailValid === false ||
+            this.state.passwordValid === false ||
+            this.state.confirmpasswordValid === false
+        ) {
+            alert("Invalid data")
+            return;
+        }
+
         e.preventDefault();
         if (this.handleValidation()) {
             fetch('api/users/Create', {
@@ -165,8 +278,8 @@ export class Register extends React.Component {
         
     }
 
-    onFileChanged(e) {
-        var file = e.target.files[0]
+    onFileChanged(e = null) {
+        var file = (e == null ? new File([""], "incognito.jpg") : e.target.files[0])
         var reader = new FileReader()
         reader.onloadend = () => {
             this.setState({ picture: file, pictureUrl: reader.result })
@@ -190,26 +303,30 @@ export class Register extends React.Component {
                         type="text"
                         value={this.state.firstname}
                         onChange={e => this.firstnameChanged(e)}
+                        className={this.state.firstnameValid ? "" : "is-invalid"}
                     />
+                    <small className="valid-error">{this.state.firstnameValidMessage}</small>
                 </FormGroup>
                 <span style={{ color: "red" }}>{this.state.errors["firsname"]}</span>
                 <FormGroup controlId="surname" bsSize="large">
                     <ControlLabel>Surname</ControlLabel>
                     <FormControl
-                        
                         type="text"
                         value={this.state.surname}
                         onChange={e => this.surnameChanged(e)}
+                        className={this.state.surnameValid ? "" : "is-invalid"}
                     />
+                    <small className="valid-error">{this.state.surnameValidMessage}</small>
                 </FormGroup>
                 <FormGroup controlId="email" bsSize="large">
                     <ControlLabel>Email</ControlLabel>
                     <FormControl
-                        
                         type="email"
                         value={this.state.email}
                         onChange={e => this.emailChanged(e)}
+                        className={this.state.emailValid ? "" : "is-invalid"}
                     />
+                    <small className="valid-error">{this.state.emailValidMessage}</small>
                 </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
                     <ControlLabel>Password</ControlLabel>
@@ -217,7 +334,9 @@ export class Register extends React.Component {
                         value={this.state.password}
                         onChange={e => this.passwordChanged(e)}
                         type="password"
+                        className={this.state.passwordValid ? "" : "is-invalid"}
                     />
+                    <small className="valid-error">{this.state.passwordValidMessage}</small>
                 </FormGroup>
                 <FormGroup controlId="confirmPassword" bsSize="large">
                     <ControlLabel>Confirm Password</ControlLabel>
@@ -225,17 +344,20 @@ export class Register extends React.Component {
                         value={this.state.confirmPassword}
                         onChange={e => this.confirmpasswordChanged(e)}
                         type="password"
+                        className={this.state.confirmpasswordValid ? "" : "is-invalid"}
                     />
+                    <small className="valid-error">{this.state.confirmpasswordValidMessage}</small>
                 </FormGroup>
 
+                {/*}
                 <div className="row">
-                    <div>{this.state.picture ? this.state.picture.name : "__"}</div>
-                    <img src={this.state.pictureUrl} alt="Image" width="100%" />
+                    <img src={this.state.pictureUrl} alt="Image" className="profile-image"/>
                 </div>
                 <div className="row">
-                    <input type="file" onChange={this.onFileChanged} />
-                    <button onClick={this.uploadFile}>Upload</button>
+                    <label for="file-upload" className="btn btn-outline-info" > Upload Picture </label>
+                    <input type="file" id="file-upload" onChange={this.onFileChanged} hidden/>
                 </div>
+                */}
 
                 <Button
                     block

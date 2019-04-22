@@ -15,23 +15,15 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
         }
 
-        public override void Create(TaskDAL item)
+        public override void Create(TaskDAL task)
         {
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    TaskDAL added = new TaskDAL
-                    {
-                        Name = item.Name,
-                        Description = item.Description,
-                        StartDate = item.StartDate,
-                        FinishDate = item.FinishDate,
-                        PriorityId = item.PriorityId,
-                        TaskStateId = item.TaskStateId
-                    };
-                    _dbContext.Add(added);
+                    _dbContext.Add(task);
                     transaction.Commit();
+
                 }
                 catch (Exception ex)
                 {
@@ -63,7 +55,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override TaskDAL GetByID(int id)
         {
-            return _dbContext.Tasks.Include(x => x.Priority).Include( x => x.TaskState).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Tasks.Include(x => x.Priority).Include( x => x.TaskState).Include(x => x.User).Include(x => x.Story).FirstOrDefault(x => x.Id == id);
         }
 
         public override void Update(TaskDAL item)
@@ -95,7 +87,8 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<TaskDAL> GetAll()
         {
-            return _dbContext.Tasks.Include(x => x.TaskState).Include(x => x.Priority);
+            var n = _dbContext.Tasks.Include(x => x.TaskState).Include(x => x.Priority).Include(x => x.taskChangeHistories).ThenInclude(y => y.User).Include(x => x.User).Include(x => x.Story).AsQueryable();
+            return n;
         }
 
         public IEnumerable<TaskStateDAL> GetAllStates()

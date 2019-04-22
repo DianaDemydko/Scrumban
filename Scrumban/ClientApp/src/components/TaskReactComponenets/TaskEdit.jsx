@@ -1,13 +1,12 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { checkToken } from '../Helpers'
 
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 const updateTaskUrl = "/api/TaskGrid/editTask";
+const updateTaskDetailedUrl = "/api/TaskGrid/editTaskDetailed";
 
-// consts of stable tables
-//const priorityTable = data.priority;
-//const stateTable = data.taskState;
 
 export class TaskEdit extends React.Component {
 
@@ -28,8 +27,7 @@ export class TaskEdit extends React.Component {
             storyId: this.props.item.storyId,
             programmerId: this.props.item.programmerId
         };
-
-
+        
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
@@ -38,7 +36,6 @@ export class TaskEdit extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onFinishDateChange = this.onFinishDateChange.bind(this);
-
     }
 
     onNameChanged(e) {
@@ -72,8 +69,11 @@ export class TaskEdit extends React.Component {
     }
 
     onUpdate(task) {
-        if (task) {
-            var data = JSON.stringify({
+        var data = JSON.stringify({
+            "userId": sessionStorage.getItem("userId"),
+            "description": "description",
+            "operation": "Updated",
+            "task": {
                 "id": task.id,
                 "name": task.name,
                 "description": task.description,
@@ -88,38 +88,43 @@ export class TaskEdit extends React.Component {
 
                 "programmerId": null,
                 "storyId": null
-            });
+            }
+        });
+        
+        if (task) {
+            checkToken()
 
-            fetch(updateTaskUrl, {
+            fetch(updateTaskDetailedUrl, {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
                 },
                 body: data
-                })
-                .then(function (response) {
-                    if (response.status == 200) {
-                        return response.json()
+            })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return "Ok"
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
                     }
-                    else if (response.status == 401) {
-                        var answer = window.confirm("You are not authorized. Move to Login page ?");
-                        if (answer == true) {
-                            window.location.replace("/login");
-                        }
-                    }
-                    else if (response.status == 403) {
-                        alert("ERROR! You have not permission !")
-                    }
-                    else {
-                        alert("ERROR! Status code: " + response.status)
-                    }
-                })
-                .then(data => {
-                    if (data != null) {
-                        this.props.changed(data)
-                    }
-                })
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            })
+            .then(data => {
+                if (data == "Ok") {
+                    this.props.changed(data)
+                    //this.props.moveToComponent("tasks")
+                }
+            })
         }
     }
 
@@ -205,8 +210,26 @@ export class TaskEdit extends React.Component {
                         </select>
                     </div>
                 </div>
+                <div className="form-group">
+                    <div className="col-8">
+                        <label for="userAssign">Assign to</label>
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                            <option>--Nobody--</option>
+                            {this.props.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-8">
+                        <label for="userAssign">Assign to</label>
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                            <option>--Independent--</option>
+                            {this.props.stories.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
+                </div>
                 <div className="col-12">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-info button-fixed">Save</button>
+                    <button type="submit" onClick={this.onSubmit}   className="btn btn-sm btn-outline-info button-fixed">Save  </button>
                     <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-info button-fixed">Cancel</button>
                 </div>
             </td>

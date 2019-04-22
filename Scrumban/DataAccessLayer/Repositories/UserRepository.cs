@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -16,7 +17,7 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
             try
             {
-                return _dbContext.Set<UsersDAL>();
+                return _dbContext.Users.Include(x => x.Role).AsQueryable();
             }
             catch
             {
@@ -27,21 +28,25 @@ namespace Scrumban.DataAccessLayer.Repositories
         public override void Create(UsersDAL user)
         {
             user.Password = generatePasswordHash(user.Password);
+            PictureDAL picture = new PictureDAL();
+            _dbContext.Pictures.Add(picture);
+            user.Picture = picture;
             _dbContext.Set<UsersDAL>().Add(user);
         }
 
-        // Register user
-        public void Create(UsersDAL user, PictureDAL picture)
+        public override UsersDAL GetByID(int id)
         {
-            //user.PictureId = picture.Id;
-            //user.Password = generatePasswordHash(user.Password);
-            //_dbContext.Set<UsersDAL>().Add(user);
-            //_dbContext.Set<PictureDAL>().Add(picture);
-            user.Password = generatePasswordHash(user.Password);
-            _dbContext.Users.Add(user);
-            picture.UserId = user.Id;
-            _dbContext.Pictures.Add(picture);
-            
+            try
+            {
+                var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
+                var role = _dbContext.Roles.FirstOrDefault(x => x.Id == user.RoleId);
+                user.Role = role;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public override void Update(UsersDAL user)
@@ -51,27 +56,14 @@ namespace Scrumban.DataAccessLayer.Repositories
             {
                 user.Password = generatePasswordHash(user.Password);
             }
+            _dbContext.Entry(oldUser).State = EntityState.Detached;
             _dbContext.Entry(user).State = EntityState.Modified;
         }
 
-        public void Update(UsersDAL user, PictureDAL picture)
+        public void PictureUpdate(PictureDAL picture)
         {
-            UsersDAL oldUser = _dbContext.Users.Find(user.Id);
-            PictureDAL oldPicture = _dbContext.Pictures.FirstOrDefault(x => x.UserId == user.Id);
-            user.Picture = oldPicture;
-            if (user.Password != oldUser.Password)
-            {
-                user.Password = generatePasswordHash(user.Password);
-            }
-            _dbContext.Entry(oldUser).State = EntityState.Detached;
-            _dbContext.Entry(oldPicture).State = EntityState.Detached;
-            _dbContext.Entry(user).State = EntityState.Modified;
-            //PictureDAL oldPicture = _dbContext.Pictures.FirstOrDefault(x => x.UserId == user.Id);
-            if(oldPicture != null && picture != null)
-            {
-                oldPicture.Image = picture.Image;
-            }
-            _dbContext.Entry(oldPicture).State = EntityState.Modified;
+            PictureDAL pictureDAL = _dbContext.Pictures.Find(picture.Id);
+            pictureDAL.Image = picture.Image;
         }
 
         //To Get the list of Users    
@@ -80,6 +72,11 @@ namespace Scrumban.DataAccessLayer.Repositories
             List<UsersDAL> lstUsers = new List<UsersDAL>();
             lstUsers = (from UsersList in _dbContext.Set<UsersDAL>() select UsersList).ToList();
             return lstUsers;
+        }
+
+        public IEnumerable<RoleDAL> GetRoles()
+        {
+            return _dbContext.Roles;
         }
         //To check if user is registered
         public bool CheckAvailability(string email, string password)

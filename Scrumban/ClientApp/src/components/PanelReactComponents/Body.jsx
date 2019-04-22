@@ -25,10 +25,7 @@ import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 export class Body extends React.Component {
     constructor(props) {
         super(props);
-      
-        this.state = {
-            i: 1
-        }
+
     }
 
     render() {
@@ -42,7 +39,7 @@ export class Body extends React.Component {
                 renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
                 break
             case 'profile':
-                renderedComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+                renderedComponent = <ProfilePage moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />
@@ -81,6 +78,7 @@ export class Body extends React.Component {
                 renderedComponent = <Home />
         }
         
+
         return (<div>
             <div> 
                 {this.props.panelLoginStatus == true ?
@@ -88,9 +86,8 @@ export class Body extends React.Component {
                     ""}
             </div>
             <div> 
-               
-                    {renderedComponent}
-                </div> 
+              {renderedComponent}
+            </div> 
         </div>
         )
     }
