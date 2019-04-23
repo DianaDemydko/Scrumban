@@ -27,7 +27,7 @@ namespace Scrumban.DataAccessLayer
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
         public DbSet<TokenRefreshDAL> TokenRefresh { get; set; }
         public DbSet<TaskChangeHistoryDAL> TaskChangeHistories { get; set; }
-        
+        public DbSet<TeamDAL> Teams { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // User Identity
@@ -239,6 +239,13 @@ namespace Scrumban.DataAccessLayer
                         Rank = 40,
                         StoryState_id=5
                     }
+                }
+            );
+            modelBuilder.Entity<TeamDAL>().HasData(
+                new TeamDAL[]
+                {
+                    new TeamDAL{TeamID = 1, Name = "Lv-396.1 .Net", Project = "Scrumban"},
+                    new TeamDAL{TeamID = 2, Name = "New Team", Project = "New Project"}
                 }
             );
             base.OnModelCreating(modelBuilder);

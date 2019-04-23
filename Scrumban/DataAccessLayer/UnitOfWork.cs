@@ -18,6 +18,7 @@ namespace Scrumban.DataAccessLayer
         private IUserRepository _userRepository;
         private ITokenRefreshRepository _tokenRefreshRepository;
         private ITaskChangeHistoryRepository _taskChangeHistoryRepository;
+        private ITeamRepository _teamRepository;
 
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
@@ -147,6 +148,20 @@ namespace Scrumban.DataAccessLayer
                 return _taskChangeHistoryRepository;
             }
         }
+
+        public ITeamRepository TeamRepository
+        {
+            get
+            {
+                if (_teamRepository == null)
+                {
+                    _teamRepository = new TeamRepository(_scrumbanContext);
+                }
+
+                return _teamRepository;
+            }
+        }
+
 
         public int Save()
         {
