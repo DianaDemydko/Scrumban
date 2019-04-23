@@ -15,7 +15,6 @@ export class AddFeature extends React.Component {
             start: new Date(),
             priorities: [],
             states: []
-
         };
         this.handleClick = this.handleClick.bind(this);
         this.onNameChanged = this.onNameChanged.bind(this);
@@ -67,8 +66,7 @@ export class AddFeature extends React.Component {
                 alert("ERROR! Status code: " + response.status)
             }
         }.bind(this))
-
-        }
+    }
     
     onNameChanged(e) {
         this.setState({ name: e.target.value });
@@ -96,20 +94,18 @@ export class AddFeature extends React.Component {
                 <label style={{ 'fontSize': '40px' }} > Create New Feature</label>
                 <div />
                 <div className = "addContent">
-                <label class = "col-2"> Name: </label>
-                <input className="inputAdd" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
-<div/>
+                    <label class = "col-2"> Name: </label>
+                    <input className="inputAdd" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
+                    <div/>
                 </div>
-                
                 <div className="addContent">
                     <label class="col-2"> Description: </label>
                     <textarea className="inputAdd" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
                     <div />
                 </div>
-                
                 <div className="addContent">
                     <label class="col-2"> State: </label>
-                <select class="btn btn-light dropdown-toggle m-0" name="state" onChange={e => this.onStateChanged(e)} >
+                <select class="btn btn-light dropdown-toggle m-0 w-25" name="state" onChange={e => this.onStateChanged(e)} >
                     {this.state.states.map(state => (
                         <option> {state.name}</option>))}
 
@@ -119,10 +115,9 @@ export class AddFeature extends React.Component {
                 <div />
                 <div className="addContent">
                     <label class="col-2"> Priority: </label>
-                <select class="btn btn-light dropdown-toggle m-0" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
-                    {this.state.priorities.map(priority => (
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
+                      {this.state.priorities.map(priority => (
                         <option> { priority.name }</option>))}
-           
                     </select>
                 </div>
                 <div />
@@ -131,10 +126,8 @@ export class AddFeature extends React.Component {
                     <DatePicker selected={this.state.start} onChange={this.onStartDateChanged} dateFormat="yyyy/MM/dd" />
                     <div />
                 </div>
-                
                 <div className="addContent">
                     <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'15%' }} onClick={this.handleClick} > Submit </button>
-                
                     <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={() => this.props.moveToComponent("feature")} > Cancel </button>
                     </div>
 

@@ -21,7 +21,7 @@ import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
 import { Home } from '../Home';
 import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 import { AddFeature } from '../FeatureReactComponents/AddFeature';
-
+import { AdminTable } from '../AdminGridReactComponents/AdminTable';
 
 export class Body extends React.Component {
     constructor(props) {
@@ -33,6 +33,9 @@ export class Body extends React.Component {
         var renderedComponent;
 
         switch (this.props.renderedComponentName) {
+            case 'admin':
+                renderedComponent = <AdminTable moveToComponent={this.props.moveToComponent} />
+                break
             case 'login':
                 renderedComponent = <Login moveToComponent={this.props.parentOnLoginStatusCallBack} />
                 break

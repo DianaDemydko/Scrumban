@@ -9,7 +9,6 @@ import { checkToken } from '../Helpers'
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
 
-
 export class FeatureTable extends Component {
     constructor(props) {
         super(props);
@@ -50,11 +49,7 @@ export class FeatureTable extends Component {
     }
 
     findData(query) {
-        fetch('api/FeatureData/' + query)
-            .then(res => res.json())
-            .then(json => {
-                this.setState({ features: json })
-            });
+        this.loadData(query);
     }
     onEditItem() {
         this.loadData();
@@ -133,21 +128,15 @@ export class FeatureTable extends Component {
                 break
         }
 
-        fetch('api/FeatureData/' + query)
-            .then(res => res.json())
-            .then(json => {
-                this.setState({ features: json })
-            });
+        this.loadData(query);
     }
-
-
 
     componentDidMount() {
-        this.loadData();
+        this.loadData("");
     }
-    loadData() {
+    loadData(query) {
         checkToken()
-        fetch('api/FeatureData/', {
+        fetch('api/FeatureData/' + query, {
             method: "get",
             headers: {
                 "Content-Type": "application/json",

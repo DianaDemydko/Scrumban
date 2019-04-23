@@ -85,17 +85,21 @@ export class DefectEdit extends React.Component {
 
     render() {
         return <tr>
-                    <td>  
-                        <label for="name">Name</label>
-                        <input type="text"
+            <td>
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text"
                         placeholder="defect name"
                         defaultValue={this.props.item.name}
                         onChange={this.onNameChange}
                         class="form-control"
                         id="name"
                         autoComplete="false"/>
-                    </td>
-                    <td>
+                </div>
+            </td>
+            
+            <td>
+                <div>
                         <label for="description">Description</label>
                         <textarea rows="3"
                         type="text"
@@ -104,26 +108,35 @@ export class DefectEdit extends React.Component {
                         onChange={this.onDescriptionChange}
                         class="form-control"
                         id="description" />
-                    </td>
-                    <td>
+                </div>
+            </td>
+
+            <td>
+                <div>
                         <label for="state">State</label>
-                        <select onChange={this.onStateChange} class="form-control" id="state" defaultValue={this.props.item.state}>
+                    <select onChange={this.onStateChange} class="btn btn-light dropdown-toggle m-0" id="state" defaultValue={this.props.item.state}>
                             {stateOption.map((item) => <option>{item.name}</option>)}
-                        </select>
-                    </td>
-                    <td>             
+                    </select>
+                </div>
+            </td>
+            <td> 
+                <div>
                         <label for="priority">Priority</label>
-                        <select onChange={this.onPriorityChange} class="form-control" id="priority" defaultValue={this.props.item.priority}>
+                    <select onChange={this.onPriorityChange} class="btn btn-light dropdown-toggle m-0" id="priority" defaultValue={this.props.item.priority}>
                             {priorityOption.map((item) => <option>{item.name}</option>)}
-                        </select>
-                    </td>
-                    <td>             
+                    </select>
+                </div>
+            </td>
+            <td>  
+                <div>
                         <label for="severity">Severity</label>
-                        <select onChange={this.onSeverityChange} class="form-control" id="severity" defaultValue={this.props.item.severity}>
+                    <select onChange={this.onSeverityChange} class="btn btn-light dropdown-toggle m-0" id="severity" defaultValue={this.props.item.severity}>
                             {severityOption.map((item) => <option>{item.name}</option>)}
-                        </select>          
-                    </td>
-                    <td>      
+                    </select> 
+                </div>
+            </td>
+            <td>
+                <div>
                         <label for="storyId">StoryId</label>
                         <input type="text"
                         placeholder="StoryId"
@@ -131,19 +144,21 @@ export class DefectEdit extends React.Component {
                         onChange={this.onStoryIdChange}
                         class="form-control"
                         id="storyId" />
-                    </td>
-                    <td>
+                </div>
+            </td>
+            <td>
+                <div>
                         <label for="status">Status</label>
-                        <select onChange={this.onStatusChange} class="form-control" id="status" defaultValue={this.props.item.status}>
+                    <select onChange={this.onStatusChange} class="btn btn-light dropdown-toggle m-0" id="status" defaultValue={this.props.item.status}>
                             {statusOption.map((item) => <option>{item.name}</option>)}
-                        </select>
-                    </td>
-                    <td>
-                <button type="submit" onClick={this.onSubmit} style={{ width: '100%' }} className="btn btn-outline-primary">Save</button>
-                    </td>
-                    <td>
-                <button type="submit" onClick={this.props.editDefect} style={{ width: '100%' }} className="btn btn-outline-primary">Cancel</button>
-                    </td>
+                    </select>
+                </div>
+            </td>
+            <td>
+
+                <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark w-100 m-1">Save</button>
+                <button type="submit" onClick={this.props.editDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Cancel</button>
+            </td>
             </tr>;
     }
 }

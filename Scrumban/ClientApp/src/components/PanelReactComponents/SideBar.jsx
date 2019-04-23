@@ -14,12 +14,12 @@ export class SideBar extends React.Component {
         return (
             <Menu>
                 <a className="menu-item" onClick={() => this.props.moveToComponent("home")}>Home</a>
-
                 <a className="menu-dropdown">
                     <a className="dropbtn">Grids
                     <i className="fa fa-caret-down"></i>
                     </a>
                     <div className="menu-dropdown-content">
+                        <a className="menu-item" onClick={() => this.props.moveToComponent("admin")}>Admin</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("sprints")}>Sprints</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("feature")}>Features</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("stories")}>Stories</a>

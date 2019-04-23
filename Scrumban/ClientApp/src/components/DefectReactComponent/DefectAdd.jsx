@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import '../../GridStyles/StyleForGrid.css';
 const apiAddUrl = "/api/DefectData/addDefect";
 
 
@@ -76,93 +77,72 @@ export class DefectAdd extends React.Component {
         let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
         this.onAddDefect(defect);
         this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
-        
+
         //window.location.replace("/defects");
     }
 
-    render() {  
+    render() {
         return (
-            <div>
-                <h2> Add defect </h2>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>Name</label>
-                            <input type="text"
-                                class="form-control"
-                                placeholder="defect name"
-                                onChange={this.onNameChange}
-                                id="name"
-                                autoComplete="false"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>Description</label>
-                            <textarea rows="3"
-                                type="text"
-                                placeholder="defect description"
-                                onChange={this.onDescriptionChange}
-                                class="form-control"
-                                id="description" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>State</label>
-                            <select onChange={this.onStateChange} class="form-control" id="state" placeholder="state" defaultValue={stateOption[0].name}>
-                                {stateOption.map((item) => <option>{item.name}</option>)}
-                            </select>
+            <div className="addComponentBackground">
+                <label style={{ 'fontSize': '40px' }}> Create New Defect </label>
+                <div />
+                <div className="addContent">
+                    <label class="col-2">Name</label>
+                    <input type="text"
+                        className="inputAdd"
+                        placeholder="defect name"
+                        onChange={this.onNameChange}
+                        id="name"
+                        autoComplete="false" />
+                </div>
+                <div className="addContent">
+                    <label class="col-2">Description</label>
+                    <textarea rows="3"
+                        type="text"
+                        placeholder="defect description"
+                        onChange={this.onDescriptionChange}
+                        className="inputAdd"
+                        id="description" />
+                </div>
+                <div className="addContent">
+                    <label class="col-2">State</label>
+                    <select onChange={this.onStateChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="state" defaultValue={stateOption[0].name}>
+                        {stateOption.map((item) => <option>{item.name}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <label class="col-2">Priority</label>
+                    <select onChange={this.onPriorityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="priority" placeholder="priority" defaultValue={priorityOption[0].name}>
+                        {priorityOption.map((item) => <option>{item.name}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <label class="col-2">Severity</label>
+                    <select onChange={this.onSeverityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="severity" placeholder="severity" defaultValue={severityOption[0].name}>
+                        {severityOption.map((item) => <option>{item.name}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <label class="col-2">Story Id</label>
+                    <input type="text"
+                        placeholder="Story Id"
+                        onChange={this.onStoryIdChange}
+                        className="inputAdd"
+                        id="storyId" />
+                </div>
+                <div className="addContent">
+                    <label class="col-2">Status</label>
+                    <select onChange={this.onStatusChange} class="btn btn-light dropdown-toggle m-0 w-25" id="status" placeholder="status" defaultValue={statusOption[0].name}>
+                        {statusOption.map((item) => <option>{item.name}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Add</button>
+                    <button type="submit" onClick={() => this.props.moveToComponent("defects")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Cancel</button>
+                </div>
 
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>Priority</label>
-                            <select onChange={this.onPriorityChange} class="form-control" id="priority" placeholder="priority" defaultValue={priorityOption[0].name}>
-                                {priorityOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>Severity</label>
-                            <select onChange={this.onSeverityChange} class="form-control" id="severity" placeholder="severity" defaultValue={severityOption[0].name}>
-                                {severityOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>Story Id</label>
-                            <input type="text"
-                                placeholder="Story Id"
-                                onChange={this.onStoryIdChange}
-                                class="form-control"
-                                id="storyId" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <label>Status</label>
-                            <select onChange={this.onStatusChange} class="form-control" id="status" placeholder="status" defaultValue={statusOption[0].name}>
-                                {statusOption.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="col-md-7">
-                            <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Add</button>
-                            <button type="submit" onClick={() => this.props.moveToComponent("defects")} className="btn btn-primary">Cancel</button>
-                          
-                        </div>
-                    </div>
-                </form>
 
             </div>
         );
     }
-
-
 }

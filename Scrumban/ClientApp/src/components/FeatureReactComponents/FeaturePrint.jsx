@@ -62,24 +62,24 @@ export class FeaturePrint extends Component {
         var v = this.getFirstDescriptionWord();
         return (
             <tr id='featureOutputForm'>
-                <td class="col">{this.state.feature.name}
+                <td class="col"><label style={{ 'margin': '15px' }}>{this.state.feature.name}</label>
                 </td>
                 <td class="col" >
-                    <div className="dropdown">
-                        <span>{v + "..."} </span>
+                    <div className="dropdown" style={{ 'margin': '15px' }}>
+                        <span style={{ 'margin': '15px' }}>{v + "..."} </span>
                         <div className="dropdown-content">
                             <label>{this.state.feature.description}</label>
                         </div>
                     </div>
                 </td>
-                <td class="col" > {this.state.feature.state.name} </td>
+                <td class="col" > <label style={{ 'margin': '15px' }}>{this.state.feature.state.name}</label> </td>
                 {/*<td class="col" > {this.state.feature.owner.name } </td>*/}
-                <td class="col"> Owner </td>
-                <td class="col"> {this.state.feature.priority.name} </td>
+                <td class="col"> <label style={{ 'margin': '15px' }}> Owner </label> </td>
+                <td class="col"> <label style={{ 'margin': '15px' }}>{this.state.feature.priority.name}</label> </td>
 
                 <td class="col"> 
                     <div>
-                        <div className="dd-header" onClick={() => this.toggleList()}>
+                        <div className="dd-header" style={{ 'margin': '15px' }} onClick={() => this.toggleList()}>
                             <div className="dd-header-title">Stories
                             {this.state.listOpen
                                     ? <span class="fa fa-caret-up" id="active-caret"/>
@@ -94,8 +94,8 @@ export class FeaturePrint extends Component {
                         </ul>}
                     </div>
                     </td>
-                <td class="col">
-                    <Moment class="col" parse="YYYY/MM/DD" format="YYYY/MM/DD" > {this.state.feature.time} </Moment>
+                <td class="col" style={{ 'margin': '15px' }}>
+                    <Moment class="col" style={{ 'margin': '15px' }} parse="YYYY/MM/DD" format="YYYY/MM/DD" > {this.state.feature.time} </Moment>
                 </td>
                 
                 <td class="col">

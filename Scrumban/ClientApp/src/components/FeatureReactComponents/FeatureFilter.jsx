@@ -57,7 +57,7 @@ export class FeatureFilter extends Component {
         if (this.state.findPriorityID != 0) {
             filter.push({ priorityid: parseInt(this.state.findPriorityID) })
         }
-        if (this.state.findstateID != 0) {
+        if (this.state.findStateID != 0) {
             filter.push({ stateid: parseInt(this.state.findstateID) })
         }
         var query = buildQuery({ filter })

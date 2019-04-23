@@ -48,7 +48,6 @@ namespace Scrumban.DataAccessLayer.Repositories
                 return null;
             }
         }
-
         public override void Update(UsersDAL user)
         {
             UsersDAL oldUser = _dbContext.Users.Find(user.Id);
@@ -59,13 +58,11 @@ namespace Scrumban.DataAccessLayer.Repositories
             _dbContext.Entry(oldUser).State = EntityState.Detached;
             _dbContext.Entry(user).State = EntityState.Modified;
         }
-
         public void PictureUpdate(PictureDAL picture)
         {
             PictureDAL pictureDAL = _dbContext.Pictures.Find(picture.Id);
             pictureDAL.Image = picture.Image;
         }
-
         //To Get the list of Users    
         public List<UsersDAL> GetUsers()
         {
