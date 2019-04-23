@@ -75,6 +75,8 @@ namespace Scrumban.DataAccessLayer.Repositories
                     task.FinishDate = item.FinishDate;
                     task.PriorityId = item.PriorityId;
                     task.TaskStateId = item.TaskStateId;
+                    task.UserId = item.UserId;
+                    task.StoryId = item.StoryId;
 
                     transaction.Commit();
                 }

@@ -60,22 +60,22 @@ export class TaskGrid extends React.Component {
                 'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
             }
         }).then(function (response) {
-                if (response.status == 200) {
-                    var res = response.json()
-                    return res;
-                }
-                else if (response.status == 401) {
-                    alert("Not Authorized")
-                    window.location.replace("/login");
-                }
-                else {
-                    alert(response.status + "Get tasks error")
-                }
-            }).then(data => this.setState({
-                    tasks: data,
-                    filter: filter
-                })
-            )
+            if (response.status == 200) {
+                var res = response.json()
+                return res;
+            }
+            else if (response.status == 401) {
+                alert("Not Authorized")
+                window.location.replace("/login");
+            }
+            else {
+                alert(response.status + "Get tasks error")
+            }
+        }).then(data => this.setState({
+            tasks: data,
+            filter: filter
+        })
+        )
     }
 
     fetchStates() {
@@ -116,7 +116,7 @@ export class TaskGrid extends React.Component {
             })
             .then(data => this.setState({ stories: data }))
     }
-    
+
     fetchUsers() {
         fetch(getUsersUrl, {
             meethod: "get",
@@ -262,15 +262,14 @@ export class TaskGrid extends React.Component {
                 <TaskFilter changeFilter={this.startFiltration} states={this.state.states} priorities={this.state.priorities} />
                 <br />
                 <br />
-
                 {/* render grid */}
-                <table className="table table-hover table-responsive-x1 table-fixed">
-                    <thead className="bg-light">
+                <table className="table table-striped" style={{ 'table-layout': 'fixed' }}>
+                    <thead>
                         <th className="col-1">
                             <span>Title</span>
                             <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
                         </th>
-                        <th className="col-1">
+                        <th className="col-1" min-width="100px">
                             <span>Description</span>
                             <ion-icon src={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
                         </th>
@@ -316,7 +315,7 @@ export class TaskGrid extends React.Component {
                 <div>
                     <button
                         onClick={() => this.props.moveToComponent("taskAdd")}
-                        className="btn btn-sm btn-outline-info button-fixed"
+                        className="btn btn-sm btn-outline-dark"
                     >
                         Add
                     </button>
