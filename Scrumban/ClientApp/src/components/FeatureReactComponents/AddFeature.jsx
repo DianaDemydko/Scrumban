@@ -109,7 +109,7 @@ export class AddFeature extends React.Component {
                 
                 <div className="addContent">
                     <label class="col-2"> State: </label>
-                <select class="btn btn-light dropdown-toggle" name="state" onChange={e => this.onStateChanged(e)} >
+                <select class="btn btn-light dropdown-toggle m-0" name="state" onChange={e => this.onStateChanged(e)} >
                     {this.state.states.map(state => (
                         <option> {state.name}</option>))}
 

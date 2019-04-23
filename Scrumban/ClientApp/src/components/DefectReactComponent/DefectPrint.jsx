@@ -16,10 +16,10 @@ export class DefectPrint extends React.Component {
                 <td>{this.props.item.storyId}</td>
                 <td>{this.props.item.status}</td>
                 <td>
-                    <button type="button" onClick={this.props.editDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
+                    <button style={{ width: '100%' }} type="button" onClick={this.props.editDefect} className="btn btn-outline-primary">Edit</button>
                 </td>
                 <td>
-                    <button type="submit" onClick={this.props.deleteDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
+                    <button style={{ width: '100%' }} type="submit" onClick={this.props.deleteDefect} className="btn btn-outline-danger">Delete</button>
                 </td>
             </tr>
         );

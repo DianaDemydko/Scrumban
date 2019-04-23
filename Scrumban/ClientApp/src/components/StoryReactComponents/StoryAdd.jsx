@@ -49,7 +49,7 @@ export class StoryAdd extends React.Component {
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    this.props.moveToComponent("stories");
+
                 }
             }.bind(this);
             xhr.send(data);
@@ -66,8 +66,7 @@ export class StoryAdd extends React.Component {
         let story = { name: storyName, description: storyDescription, priority: storyPriorityId, storyState: storyStateId };
         this.onAdd(story);
         this.setState({ name: "", description: "", priorityId: 2, storyStateId: 1 });
-        
-        //window.location.replace("/stories");
+        window.location.replace("/stories");
     }
 
     render() {
@@ -105,9 +104,9 @@ export class StoryAdd extends React.Component {
                     </div>
                     <button type="submit" className="btn btn-primary button-fixed">Submit</button>
 
-                    
-                    <button type="submit" className="btn btn-danger  button-fixed" onClick={() => this.props.moveToComponent("stories")}>Cancel</button>
-                   
+                    <Link to={cancelUrl}>
+                        <button type="submit" className="btn btn-danger  button-fixed">Cancel</button>
+                    </Link>
                 </form>
             </div>
         );

@@ -70,10 +70,10 @@ export class SprintRow extends React.Component {
                     <td>{moment(this.state.sprint.endDate).format("MM-DD-YYYY")}</td>
                 <td>{this.state.sprint.sprintStatus}</td>
                 <td>
-                        <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>
+                    <button type="button" class="btn btn-success" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>
                 </td>
                 <td>
-                        <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
+                    <button type="button" class="btn btn-danger" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
                 </td>
                 </tr>
                 {this.state.isEditMode ? <SprintEditForm sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : null}

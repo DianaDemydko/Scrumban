@@ -89,7 +89,7 @@ export class FeatureFilter extends Component {
     }
 
     render() {
-        return <div class="container bg-light width-100" style={{ 'margin': '0' }} id='filterForm'>
+        return <div className='filterContainer' id='filterForm'>
             <div class='row'>
                 <div class="col-sm">
                     <label>Name</label>
@@ -126,7 +126,7 @@ export class FeatureFilter extends Component {
                         value={this.state.findDescription} />
                 </div>
                 <div class="col-sm">
-                    <select class="btn btn-light dropdown-toggle w-100" name="state" onChange={e => this.onFindStateChange(e)} >
+                    <select class="btn btn-light dropdown-toggle w-100 m-0" name="state" onChange={e => this.onFindStateChange(e)} >
                         {this.state.states.map(state => (
                             <option>{state.name}
                             </option>))}
@@ -136,7 +136,7 @@ export class FeatureFilter extends Component {
                     <input className="input" type='text' />
                 </div>
                 <div class="col-sm">
-                    <select class="btn btn-light dropdown-toggle" name="prioriry" onChange={e => this.onFindPriorityChange(e)}>
+                    <select class="btn btn-light dropdown-toggle m-0" name="prioriry" onChange={e => this.onFindPriorityChange(e)}>
                         {this.state.priorities.map(priority => (
                             <option> {priority.name}</option>))}
                     </select>
@@ -159,7 +159,7 @@ export class FeatureFilter extends Component {
                         Clear
                  </button>
                 </div>
-
+                
 
             </div>
 

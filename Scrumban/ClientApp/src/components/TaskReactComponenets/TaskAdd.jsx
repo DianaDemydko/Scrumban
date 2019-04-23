@@ -58,7 +58,7 @@ export class TaskAdd extends React.Component {
                 'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
             }
         })
-            .then(function (response) {
+            .then(function(response){
                 if (response.status == 200) {
                     return response.json()
                 }
@@ -70,7 +70,7 @@ export class TaskAdd extends React.Component {
                     alert("ERROR ! " + response.status)
                 }
             })
-            .then(data => this.setState({ stories: data }))
+            .then(data => this.setState({stories: data}))
     }
 
     fetchUsers() {
@@ -117,7 +117,7 @@ export class TaskAdd extends React.Component {
         this.setState({ finishDate: date });
     }
 
-    onPriorityChanged(e) {
+    onPriorityChanged(e){
         this.setState({ priority: e.target.value });
     }
 
@@ -161,7 +161,6 @@ export class TaskAdd extends React.Component {
                 }
             });
             var moveToComponentVar = this.props.moveToComponent;
-            var result = 100;
             fetch(addTaskUrl, {
                 method: "post",
                 headers: {
@@ -169,10 +168,10 @@ export class TaskAdd extends React.Component {
                     "Authorization": "Bearer " + sessionStorage.getItem("tokenKey")
                 },
                 body: data
-            })
+                })
                 .then(function (response) {
                     if (response.status == 200) {
-                        result = response.status
+                        moveToComponentVar("tasks")
                     }
                     else if (response.status == 400) {
                         alert("ERROR! Incorrect data !")
@@ -190,10 +189,6 @@ export class TaskAdd extends React.Component {
                         alert("ERROR! Status code: " + response.status)
                     }
                 })
-            if (result == 200) {
-                moveToComponentVar("tasks")
-            }
-
         }
     }
 
@@ -216,79 +211,89 @@ export class TaskAdd extends React.Component {
 
     render() {
         return (
-            <div className="addComponentBackground">
+            <div>
+                <h2>Add task</h2>
+                <div className="form-group col-12">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false"/>
 
-                <h2 style={{ 'fontSize': '40px' }}>Add task</h2>
-
-                <div className="addContent">
-                    <label for="name" className="col-2">Name</label>
-                    <input type="text" className="inputAdd" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" />
+                    </div>
+                </div>
+                <div className="form-group col-12">
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea rows="3" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="description" placeholder="task description"/>
+                    </div>
+                </div>
+                <div className="form-group col-4">
+                    <div>
+                        <label for="description">Start Date</label><br />
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.onStartDateChange}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                            dateFormat="MMMM d, yyyy h:mm aa"
+                            timeCaption="time"
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        />
+                    </div>
+                </div>
+                <div className="form-group col-4">
+                    <div >
+                        <label for="finishDate">Finish Date</label><br />
+                        <DatePicker
+                            selected={this.state.finishDate}
+                            onChange={this.onFinishDateChange}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                            dateFormat="MMMM d, yyyy h:mm aa"
+                            timeCaption="time"
+                            id="finishDate"
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-4">
+                        <label for="priorityName">Priority</label>
+                        <select class="form-control form-control-sm" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
+                            {priorityTable.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-4">
+                        <label for="taskStateName">State</label>
+                        <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
+                            {stateTable.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-4">
+                        <label for="userAssign">Assign to</label>
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                            <option>Nobody</option>
+                            {this.state.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <div className="col-4">
+                        <label for="story">Story</label>
+                        <select class="form-control form-control-sm" id="story" onChange={this.onStoryChanged} placeholder="">
+                            <option>Independent</option>
+                            {this.state.stories.map((item) => <option>{item.name}</option>)}
+                        </select>
+                    </div>
                 </div>
 
-                <div className="addContent">
-                    <label for="description" className="col-2">Description</label>
-                    <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="task description" />
-                </div>
-
-                <div className="addContent">
-                    <label for="description" className="col-2">Start Date</label><br />
-                    <DatePicker
-                        selected={this.state.startDate}
-                        onChange={this.onStartDateChange}
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        timeIntervals={15}
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        timeCaption="time"
-                        className="datePickerStyle btn btn-sm btn-outline-secondary"
-                    />
-                </div>
-
-                <div className="addContent">
-                    <label for="finishDate" className="col-2">Finish Date</label><br />
-                    <DatePicker
-                        selected={this.state.finishDate}
-                        onChange={this.onFinishDateChange}
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        timeIntervals={15}
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        timeCaption="time"
-                        id="finishDate"
-                        className="datePickerStyle btn btn-sm btn-outline-secondary"
-                    />
-                </div>
-
-                <div className="addContent">
-                    <label for="priorityName" className="col-2">Priority</label>
-                    <select class="btn btn-light dropdown-toggle" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
-                        {priorityTable.map((item) => <option>{item.name}</option>)}
-                    </select>
-                </div>
-                <div className="addContent">
-                    <label for="taskStateName" className="col-2">State</label>
-                    <select class="btn btn-light dropdown-toggle" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
-                        {stateTable.map((item) => <option>{item.name}</option>)}
-                    </select>
-                </div>
-                <div className="addContent">
-                    <label for="userAssign" className="col-2">Assign to</label>
-                    <select class="btn btn-light dropdown-toggle" id="userAssign" onChange={this.onUserChanged} placeholder="">
-                        <option>Nobody</option>
-                        {this.state.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
-                    </select>
-                </div>
-                <div className="addContent">
-                    <label for="story" className="col-2">Story</label>
-                    <select class="btn btn-light dropdown-toggle" id="story" onChange={this.onStoryChanged} placeholder="">
-                        <option>Independent</option>
-                        {this.state.stories.map((item) => <option>{item.name}</option>)}
-                    </select>
-                </div>
-                <div className="addContent">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Submit</button>
-                    <button type="submit" onClick={() => this.props.moveToComponent("tasks")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Cancel</button>
-                </div>
+                <button type="submit" onClick={this.onSubmit} className="btn btn-outline-info button-fixed">Submit</button>
+                <button type="submit" onClick={() => this.props.moveToComponent("tasks")} className="btn btn-outline-danger button-fixed">Cancel</button>
             </div>
         );
     }

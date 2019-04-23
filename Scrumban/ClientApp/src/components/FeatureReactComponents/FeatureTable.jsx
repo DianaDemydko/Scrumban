@@ -182,38 +182,38 @@ export class FeatureTable extends Component {
             <label style={{ 'fontSize': '40px' }}> Feature </label>
             <FeatureFilter changeFindData={this.findData} />
             <div className="tablePosition">
-            <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
-                <thead>
-                    <tr>
+                <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
+                    <thead>
+                        <tr>
                             <th className="col" onClick={() => this.sortData('name')}>
                                 Name {this.renderCaret('name')}
-                        </th>
-                        <th class="col" min-width="100px" onClick={() => this.sortData('description')}>
-                                Description {this.renderCaret('description')}                           
-                        </th>
-                        <th class="col" onClick={() => this.sortData('state')}>
+                            </th>
+                            <th class="col" min-width="100px" onClick={() => this.sortData('description')}>
+                                Description {this.renderCaret('description')}
+                            </th>
+                            <th class="col" onClick={() => this.sortData('state')}>
                                 State {this.renderCaret('state')}
-                        </th>
-                        <th class="col"  > Owner  </th>
-                        <th class="col" onClick={() => this.sortData('priority')}>
-                                Priority {this.renderCaret('priority')}                          
-                        </th>
-                        <th class="col" > Stories </th>
-                        <th class="col" onClick={() => this.sortData('time')} >
+                            </th>
+                            <th class="col"  > Owner  </th>
+                            <th class="col" onClick={() => this.sortData('priority')}>
+                                Priority {this.renderCaret('priority')}
+                            </th>
+                            <th class="col" > Stories </th>
+                            <th class="col" onClick={() => this.sortData('time')} >
                                 Start Date {this.renderCaret('time')}
-                        </th>
+                            </th>
 
-                        <th class="col" />
-                    </tr>
-                </thead>
-                <tbody>
+                            <th class="col" />
+                        </tr>
+                    </thead>
+                    <tbody>
 
                         {this.state.features.map(feature => (
-                            <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem}/>)
-                    )}
-                </tbody>
+                            <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} />)
+                        )}
+                    </tbody>
                 </table>
-                </div>
+            </div>
             <div />
             <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("featureAdd")} >
                 Create New

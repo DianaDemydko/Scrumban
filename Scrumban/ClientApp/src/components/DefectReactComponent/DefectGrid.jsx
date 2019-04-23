@@ -431,10 +431,6 @@ export class DefectGrid extends React.Component {
                 if (xhr.status == 200) {
                     this.loadData("");
                 }
-                if (xhr.status == 400) {
-                    alert("Defect have deleted already ! ")
-                    this.loadData("");
-                }
             }.bind(this);
             xhr.send();
         }
@@ -524,7 +520,7 @@ export class DefectGrid extends React.Component {
             <div>
                 <Pagination items={this.state.defects}  onChangePage={this.onChangePage} />
             </div>
-            <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
+            <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
             
 
 

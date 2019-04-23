@@ -10,12 +10,12 @@ export class SprintCreateForm extends React.Component {
 
         this.state =
         {
-            statuses: [],
+            statuses: [{ sprintStatus: 'Not Started'}],// this.props.location.state.statuses,
             name: "",
             description: "",
             startDate: new Date(),
             endDate: new Date(),
-            sprintStatus: 'Not Started'
+            sprintStatus: 'Not Started' //this.props.location.state.statuses[0].sprintStatus
             }
         this.state.endDate.setMonth(this.state.startDate.getMonth() + 1)
 
@@ -26,19 +26,6 @@ export class SprintCreateForm extends React.Component {
         this.onStartDateChanged = this.onStartDateChanged.bind(this)
         this.onEndDateChanged = this.onEndDateChanged.bind(this)
         this.onStatusChanged = this.onStatusChanged.bind(this)
-        this.fetchSprintStatuses = this.fetchSprintStatuses.bind(this)
-    }
-
-    componentDidMount() {
-        this.fetchSprintStatuses()
-    }
-
-    fetchSprintStatuses() {
-        fetch('api/Sprint/GetStatuses')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ statuses: data });
-            })
     }
 
     addNewSprint() {
@@ -100,7 +87,7 @@ export class SprintCreateForm extends React.Component {
 
     render() {
         return (
-            <div id="sprint-create-form-container">
+            <div>
                 <h1>Create Sprint Form</h1>
                 <form id="sprint-create-form">
                     <div class="form-group">
@@ -161,9 +148,9 @@ export class SprintCreateForm extends React.Component {
                     
                     <br />
                 </form>
-                    <div id="create-form-buttons">
-                    <button type="button" class="btn btn-sm btn-outline-dark" id="create-button" onClick={this.addNewSprint.bind(this)}>Create Sprint</button>
-                    <button type="button" class="btn btn-sm btn-outline-dark" id="create-form-cancel-button" onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="create-button" onClick={this.addNewSprint.bind(this)}>Create Sprint</button>
+                    <button type="button" class="btn btn-danger" id="create-form-cancel-button" onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
                     </div>
             </div>
         )

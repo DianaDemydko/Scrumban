@@ -1,6 +1,4 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer.Models;
 
@@ -38,21 +36,6 @@ namespace Scrumban.DataAccessLayer
                     new RoleDAL{ Id = 2, Name = "Scrum Master" },
                     new RoleDAL{ Id = 3, Name = "Product Owner" },
                     new RoleDAL{ Id = 4, Name = "Tester" }
-                }
-            );
-
-            modelBuilder.Entity<UsersDAL>().HasData(
-                new UsersDAL[]
-                {
-                    new UsersDAL
-                    {
-                        Id = 1,
-                        FirstName = "Name",
-                        Surname = "Surname",
-                        Email = "admin@gmail.com",
-                        Password = generatePasswordHash("Admin1"),
-                        RoleId = 5
-                    }
                 }
             );
 
@@ -227,26 +210,6 @@ namespace Scrumban.DataAccessLayer
                 }
             );
             base.OnModelCreating(modelBuilder);
-        }
-
-        // generating password hash
-        private string generatePasswordHash(string inputPassword)
-        {
-            SHA512 sha512 = SHA512.Create();
-            byte[] bytes = Encoding.UTF8.GetBytes(inputPassword);
-            byte[] hash = sha512.ComputeHash(bytes);
-            return GetStringFromHash(hash);
-        }
-
-        private string GetStringFromHash(byte[] hash)
-        {
-            StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < hash.Length; i++)
-            {
-                result.Append(hash[i].ToString("X2"));
-            }
-            return result.ToString();
         }
     }
 }

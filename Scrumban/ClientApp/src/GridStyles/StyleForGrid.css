@@ -1,14 +1,16 @@
 ﻿body {
    
 }
-.componentBackground {
+.filterContainer {
     background-color: #efefef;
     border-radius: 10px;
+    height:75px;
 }
 .input {
     width: 100%;
     border: 1px solid slategrey;
     border-radius: 4px;
+    height:37px;
 }
 .inputAdd {
     width: 25%;

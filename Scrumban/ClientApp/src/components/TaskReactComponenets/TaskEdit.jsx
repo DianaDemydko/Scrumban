@@ -25,20 +25,13 @@ export class TaskEdit extends React.Component {
             taskStateName: this.props.item.taskState.name,
 
             storyId: this.props.item.storyId,
-            programmerId: this.props.item.programmerId,
-
-            userId: this.props.item.userId,
-            storyId: this.props.item.storyId,
-
+            programmerId: this.props.item.programmerId
         };
-
+        
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
-        this.onUserChanged = this.onUserChanged.bind(this);
-        this.onStoryChanged = this.onStoryChanged.bind(this);
-
         this.onUpdate = this.onUpdate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
@@ -74,27 +67,6 @@ export class TaskEdit extends React.Component {
             taskStateId: this.props.states.find(x => x.name === e.target.value).id
         });
     }
-    onUserChanged(e) {
-        if (e.target.value === "--Nobody--") {
-
-        }
-        else {
-            this.setState({
-                userId: this.props.users.find(x => (x.firstName + " " + x.surname) === e.target.value).id
-            });
-        }
-
-    }
-    onStoryChanged(e) {
-        if (e.target.value === "--Independent--") {
-
-        }
-        else {
-            this.setState({
-                storyId: this.props.stories.find(x => x.name === e.target.value).story_id
-            });
-        }
-    }
 
     onUpdate(task) {
         var data = JSON.stringify({
@@ -114,11 +86,11 @@ export class TaskEdit extends React.Component {
                 "taskStateId": task.taskStateId,
                 "taskState": task.taskState,
 
-                "userId": task.userId,
-                "storyId": task.storyId
+                "programmerId": null,
+                "storyId": null
             }
         });
-
+        
         if (task) {
             checkToken()
 
@@ -130,29 +102,29 @@ export class TaskEdit extends React.Component {
                 },
                 body: data
             })
-                .then(function (response) {
-                    if (response.status == 200) {
-                        return "Ok"
+            .then(function (response) {
+                if (response.status == 200) {
+                    return "Ok"
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
                     }
-                    else if (response.status == 401) {
-                        var answer = window.confirm("You are not authorized. Move to Login page ?");
-                        if (answer == true) {
-                            window.location.replace("/login");
-                        }
-                    }
-                    else if (response.status == 403) {
-                        alert("ERROR! You have not permission !")
-                    }
-                    else {
-                        alert("ERROR! Status code: " + response.status)
-                    }
-                })
-                .then(data => {
-                    if (data == "Ok") {
-                        this.props.changed(data)
-                        //this.props.moveToComponent("tasks")
-                    }
-                })
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            })
+            .then(data => {
+                if (data == "Ok") {
+                    this.props.changed(data)
+                    //this.props.moveToComponent("tasks")
+                }
+            })
         }
     }
 
@@ -174,36 +146,26 @@ export class TaskEdit extends React.Component {
                 id: this.state.taskStateId,
                 name: this.state.taskStateName
             },
-            userId: this.state.userId,
-            storyId: this.state.storyId
+            programmerId: null,
+            storyId: null
         };
         this.onUpdate(task);
         this.props.edit();
     }
 
     render() {
-        var story_name;
-        var user_name;
-        if (this.props.item.story != null) {
-            story_name = this.props.stories.find(x => x.story_id === this.props.item.story.story_id).name
-        }
-        if (this.props.item.user != null) {
-            var user = this.props.users.find(x => x.id === this.props.item.user.id)
-            user_name = user.firstName + " " + user.surname
-        }
-
         return <tr>
             <td colSpan="4">
                 <div className="form-group col-12">
                     <div>
                         <label for="name">Name</label>
-                        <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name} />
+                        <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name}/>
                     </div>
                 </div>
                 <div className="form-group col-12">
                     <div>
                         <label for="description">Description</label>
-                        <textarea rows="3" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="description" placeholder="task description" defaultValue={this.props.item.description} />
+                        <textarea rows="3" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="description" placeholder="task description" defaultValue={this.props.item.description}/>
                     </div>
                 </div>
                 <div className="form-group col-4">
@@ -235,8 +197,8 @@ export class TaskEdit extends React.Component {
                 <div className="form-group">
                     <div className="col-4">
                         <label for="priorityName">Priority</label>
-                        <select class="btn btn-light dropdown-toggle w-100" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
-                            {this.props.priorities.map((item) => <option>{item.name}</option>)}
+                        <select class="form-control form-control-sm" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
+                            {this.props.priorities.map((item) => <option>{item.name}</option> )}
                         </select>
                     </div>
                 </div>
@@ -251,7 +213,7 @@ export class TaskEdit extends React.Component {
                 <div className="form-group">
                     <div className="col-8">
                         <label for="userAssign">Assign to</label>
-                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="" defaultValue={user_name} >
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
                             <option>--Nobody--</option>
                             {this.props.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
                         </select>
@@ -259,15 +221,15 @@ export class TaskEdit extends React.Component {
                 </div>
                 <div className="form-group">
                     <div className="col-8">
-                        <label for="userAssign">Story</label>
-                        <select class="form-control form-control-sm m-0" id="userAssign" onChange={this.onStoryChanged} placeholder="" defaultValue={story_name}>
+                        <label for="userAssign">Stories</label>
+                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="">
                             <option>--Independent--</option>
                             {this.props.stories.map((item) => <option>{item.name}</option>)}
                         </select>
                     </div>
                 </div>
                 <div className="col-12">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-info button-fixed">Save  </button>
+                    <button type="submit" onClick={this.onSubmit}   className="btn btn-sm btn-outline-info button-fixed">Save  </button>
                     <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-info button-fixed">Cancel</button>
                 </div>
             </td>

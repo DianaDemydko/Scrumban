@@ -61,8 +61,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // [Route("/api/[controller]/deleteDefect")]
+       // [Route("/api/[controller]/deleteDefect")]
         public IActionResult Delete(int? id)
         {
             try
