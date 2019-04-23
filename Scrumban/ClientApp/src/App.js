@@ -23,6 +23,9 @@ import { SprintCreateForm } from './components/Sprint/CreateForm/SprintCreateFor
 
 import { Chat } from './components/Chat';
 
+import { TeamGrid } from './components/TeamReactComponent/TeamGrid';
+import { TeamAdd } from './components/TeamReactComponent/TeamAdd';
+import { TeamEdit } from './components/TaskReactComponenets/TaskEdit';
 
 export default class App extends Component {
     displayName = App.name
@@ -48,7 +51,10 @@ export default class App extends Component {
                 <Route path='/editfeature' component={EditFeature} />
             <Route path='/panel' component={Panel} />
             <Route path='/login' component={Login} />
-            <Route path='/chat' component={Chat}/>
+            <Route path='/chat' component={Chat} />
+            <Route path='/teams' component={TeamGrid} />
+            <Route path='/addTeam' component={TeamAdd} />
+            
            
       </Layout>
     );

@@ -38,6 +38,11 @@ export class Menu extends Component {
                                 <Glyphicon glyph='th-list' /> Tasks
               </NavItem>
                         </LinkContainer>
+                            <LinkContainer to={'/teams'}>
+                                <NavItem>
+                                    <Glyphicon glyph='th-list' /> Team
+              </NavItem>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

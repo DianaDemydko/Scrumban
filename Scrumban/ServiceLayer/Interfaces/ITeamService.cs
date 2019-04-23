@@ -8,10 +8,11 @@ namespace Scrumban.ServiceLayer.Interfaces
 {
     public interface ITeamService
     {
-        TeamDTO GetTeam(int? id);
-        IQueryable<TeamDTO> GetTeams();
-        void AddTeam(TeamDTO teamDTO);
-        void DeleteTeam(int? id);
+        TeamDTO ReadTeam(int id);
+        IQueryable<TeamDTO> ReadTeams();
+        void CreateTeam(TeamDTO teamDTO);
+        void DeleteTeam(int id);
         void UpdateTeam(TeamDTO teamDTO);
+        void DeleteTeam(TeamDTO teamDTO);
     }
 }

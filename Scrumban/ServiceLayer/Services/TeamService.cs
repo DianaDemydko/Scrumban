@@ -19,69 +19,79 @@ namespace Scrumban.BusinessLogicLayer
             this._unitOfWork = unitOfWork;
         }
 
-        public TeamDTO GetTeam(int? id)
+        public TeamDTO ReadTeam(int id)
         {
-            if (id == null)
-            {
-
-            }
-            var team = _unitOfWork.TeamRepository.GetByID(id.Value);
-            if (team == null)
-            {
-
-            }
-            return new TeamDTO
-            {
-                TeamID = team.TeamID,
-                Name = team.Name,
-                Project = team.Project
-            };
+ 
+                var team = _unitOfWork.TeamRepository.GetByID(id);
+            
+                return new TeamDTO
+                {
+                    TeamID = team.TeamID,
+                    Name = team.Name,
+                    Project = team.Project
+                };
         }
-        public IQueryable<TeamDTO> GetTeams()
-        {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<TeamDAL, TeamDTO>();
-            }).CreateMapper();
-            return mapper.Map<IQueryable<TeamDAL>, List<TeamDTO>>(_unitOfWork.TeamRepository.GetAll()).AsQueryable();
-        }
-        public void AddTeam(TeamDTO teamDTO)
-        {
-            if (teamDTO == null)
-            {
 
-            }
-            TeamDAL team = new TeamDAL
+        public IQueryable<TeamDTO> ReadTeams()
+        {
+            IQueryable<TeamDAL> teamsDAL = _unitOfWork.TeamRepository.GetAll();
+            IQueryable<TeamDTO> teamsDTO = teamsDAL.Select(teamDAL => new TeamDTO()
             {
-                TeamID = teamDTO.TeamID,
-                Name = teamDTO.Name,
-                Project = teamDTO.Project
-            };
-            _unitOfWork.TeamRepository.Create(team);
+                TeamID = teamDAL.TeamID,
+                Name = teamDAL.Name,
+                Project = teamDAL.Project,
+            });
+            return teamsDTO.AsQueryable();
+
+            //var mapper = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<TeamDAL, TeamDTO>();
+            //}).CreateMapper();
+            //return mapper.Map<IQueryable<TeamDAL>, List<TeamDTO>>(_unitOfWork.TeamRepository.GetAll()).AsQueryable();
+        }
+        public void CreateTeam(TeamDTO teamDTO)
+        {
+            if (teamDTO != null)
+            {
+                TeamDAL team = new TeamDAL
+                {
+                    TeamID = teamDTO.TeamID,
+                    Name = teamDTO.Name,
+                    Project = teamDTO.Project
+                };
+                _unitOfWork.TeamRepository.Create(team);
+                _unitOfWork.Save();
+            }
+           
+        }
+        public void DeleteTeam(int id)
+        {
+            
+            _unitOfWork.TeamRepository.Delete(id);
+                _unitOfWork.Save();
+           
+           
+        }
+        public void DeleteTeam(TeamDTO teamDTO)
+        {
+
+            TeamDAL teamToDelete = new TeamDAL() { TeamID = teamDTO.TeamID };
+            _unitOfWork.TeamRepository.Delete(teamToDelete);
             _unitOfWork.Save();
-        }
-        public void DeleteTeam(int? id)
-        {
-            if (id == null)
-            {
 
-            }
-            _unitOfWork.TeamRepository.Delete(id.Value);
-            _unitOfWork.Save();
+
         }
         public void UpdateTeam(TeamDTO teamDTO)
         {
-            if (teamDTO == null)
-            {
-
-            }
-            TeamDAL team = new TeamDAL
-            {
-                TeamID = teamDTO.TeamID,
-                Name = teamDTO.Name,
-                Project = teamDTO.Project
-            };
-            _unitOfWork.TeamRepository.Update(team);
-            _unitOfWork.Save();
+            var team = _unitOfWork.TeamRepository.GetByID(teamDTO.TeamID);
+                team = new TeamDAL
+                {
+                    TeamID = teamDTO.TeamID,
+                    Name = teamDTO.Name,
+                    Project = teamDTO.Project
+                };
+                _unitOfWork.Save();
+            
         }
     }
 }

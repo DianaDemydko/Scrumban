@@ -1,5 +1,5 @@
 ﻿import React from "react";
-import { slide as Menu } from "react-burger-menu";
+import { elastic as Menu } from "react-burger-menu";
 
 export class SideBar extends React.Component {
     constructor(props) {

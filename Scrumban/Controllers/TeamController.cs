@@ -22,17 +22,17 @@ namespace Scrumban.Controllers
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getTeams")]
-        public IQueryable<TeamDTO> GetTeams()
+        public IQueryable<TeamDTO> Get()
         {
-            IQueryable<TeamDTO> team = _teamServise.GetTeams();
-            return team;
+            IQueryable<TeamDTO> teams = _teamServise.ReadTeams();
+            return teams;
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("/api/[controller]/addTeam")]
         public IActionResult Add([FromBody]TeamDTO teamDTO)
         {
-            _teamServise.AddTeam(teamDTO);
+            _teamServise.CreateTeam(teamDTO);
             return Ok(teamDTO);
         }
 
@@ -44,12 +44,11 @@ namespace Scrumban.Controllers
             return Ok(teamDTO);
         }
 
-        [HttpDelete("{id}")]
-        //[Route("/api/[controller]/deleteTeam")]
-        public IActionResult Delete(int? id)
+        [HttpDelete]
+        public IActionResult Delete([FromBody]TeamDTO teamDTO)
         {
-            TeamDTO teamDTO = _teamServise.GetTeam(id);
-            _teamServise.DeleteTeam(id);
+           
+            _teamServise.DeleteTeam(teamDTO.TeamID);
             return Ok(teamDTO);
         }
     }

@@ -40,6 +40,9 @@ namespace Scrumban
             services.AddTransient<IDefectRepository, DefectRepository>();
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<ITeamService, TeamService>();
+
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -55,9 +58,6 @@ namespace Scrumban
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
-            
-            
-
         }
 
        
@@ -90,6 +90,7 @@ namespace Scrumban
                 routes.Expand().Select().Count().OrderBy().Filter(); 
                 
             });
+
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chatHub");
@@ -104,6 +105,7 @@ namespace Scrumban
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+           
             app.UseWebSockets();
             
             //app.UseSignalR(routes =>

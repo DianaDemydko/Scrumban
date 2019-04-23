@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-//import * as signalR from '@aspnet/signalr';
 import { HubConnectionBuilder } from '@aspnet/signalr';
 
 

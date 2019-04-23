@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +8,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 {
     public class TeamRepository : BaseRepository<TeamDAL>, ITeamRepository
     {
-        public TeamRepository(ScrumbanContext dbContext) : base(dbContext)
+        public TeamRepository(ScrumbanContext _dbContext) : base(_dbContext)
         {
 
         }
@@ -44,7 +42,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<TeamDAL> GetAll()
         {
-            return _dbContext.Teams.Include(x => x.TeamID).Include(x => x.Name).Include(x=>x.Project);
+            return _dbContext.Teams.Include(x => x.Name).Include(x=>x.Project);
         }
 
         public override void Delete(int id)
