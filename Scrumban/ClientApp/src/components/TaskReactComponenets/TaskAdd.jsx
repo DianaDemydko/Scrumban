@@ -171,7 +171,7 @@ export class TaskAdd extends React.Component {
             })
                 .then(function (response) {
                     if (response.status == 200) {
-                        result = response.status
+                        //result = response.status
                         moveToComponentVar("tasks")
                     }
                     else if (response.status == 400) {
