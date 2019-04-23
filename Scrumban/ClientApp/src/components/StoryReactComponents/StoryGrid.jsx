@@ -67,22 +67,20 @@ export class StoryGrid extends React.Component {
         var remove = this.onRemoveStory;
         var changed = this.onChanged;
         return (<div>
-            <h2>Stories</h2>
-            <div>
-                <table className="table table-fixed">
-                    <thead className="bg-light">
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Priority</th>
-                        <th>State</th>
+            <label style={{ 'fontSize': '40px' }}>Stories</label>
+            <div className="tablePosition">
+                <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
+                    <thead>
+                        <th className="col">Name</th>
+                        <th className="col">Description</th>
+                        <th className="col">Priority</th>
+                        <th className="col">State</th>
                     </thead>
                     {this.state.stories.map(function (story) { return <StoryComponent key={story.id} story={story} onRemove={remove} onChanged={changed} /> })}
                 </table>
-                <div>
-                    <Link to='/addStory'><button className="btn btn-primary button-fixed">Add</button></Link>
-                </div>
+                <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("storyAdd")}>Create New</button>
             </div>
         </div>
-        )
+        );
     }
 }

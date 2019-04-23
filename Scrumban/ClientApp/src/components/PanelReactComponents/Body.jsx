@@ -22,6 +22,7 @@ import { Home } from '../Home';
 import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 import { AddFeature } from '../FeatureReactComponents/AddFeature';
 import { AdminTable } from '../AdminGridReactComponents/AdminTable';
+import { StoryAdd } from '../StoryReactComponents/StoryAdd';
 
 export class Body extends React.Component {
     constructor(props) {
@@ -62,6 +63,9 @@ export class Body extends React.Component {
                 break;
             case 'stories':
                 renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} />
+                break
+            case 'storyAdd':
+                renderedComponent = <StoryAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'sprints':
                 renderedComponent = <SprintMain moveToComponent={this.props.moveToComponent} />

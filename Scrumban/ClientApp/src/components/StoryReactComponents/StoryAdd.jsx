@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 // consts of urls
-const addStoryUri = "/api/storyGrid/addStory";
+const addStoryUri = "/api/storyGrid/CreateStory";
 const cancelUrl = "/stories";
 // consts of stable tables
 const priorityTable = data.priority;
@@ -66,49 +66,41 @@ export class StoryAdd extends React.Component {
         let story = { name: storyName, description: storyDescription, priority: storyPriorityId, storyState: storyStateId };
         this.onAdd(story);
         this.setState({ name: "", description: "", priorityId: 2, storyStateId: 1 });
-        window.location.replace("/stories");
+        //window.location.replace("/stories");
+        this.props.moveToComponent("stories");
     }
+   
 
     render() {
         return (
-            <div>
-                <h2>Add story</h2>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" onChange={this.onNameChanged} id="name" placeholder="story name" autoComplete="false" />
+            <div className="addComponentBackground" >
+                <label style={{ 'fontSize': '40px' }} >Add story</label>
+                <div />
+                    <div className="addContent">
+                    <label class="col-2">Name</label>
+                    <input type="text" className="inputAdd" onChange={this.onNameChanged} id="name" placeholder="story name" autoComplete="false" />
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="description">Description</label>
-                            <textarea rows="3" class="form-control" onChange={this.onDescriptionChanged} id="description" placeholder="story description" />
+                <div className="addContent">
+                    <label class="col-2" for="description">Description</label>
+                    <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="story description" />
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="priority">Priority</label>
-                            <select class="form-control" onChange={this.onPriorityChanged} id="priority" placeholder="story priority" defaultValue={priorityTable[0].name}>
+                    <div className="addContent">
+                    <label class="col-2" for="priority">Priority</label>
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={this.onPriorityChanged} id="priority" placeholder="story priority" defaultValue={priorityTable[0].name}>
                                 {priorityTable.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="storyState">State</label>
-                            <select class="form-control" onChange={this.onStateChanged} id="storyState" placeholder="story state" defaultValue={stateTable[0].name}>
+                    <div className="addContent">
+                    <label class="col-2" for="storyState">State</label>
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={this.onStateChanged} id="storyState" placeholder="story state" defaultValue={stateTable[0].name}>
                                 {stateTable.map((item) => <option>{item.name}</option>)}
                             </select>
-                        </div>
-                    </div>
-                    <button type="submit" className="btn btn-primary button-fixed">Submit</button>
-
-                    <Link to={cancelUrl}>
-                        <button type="submit" className="btn btn-danger  button-fixed">Cancel</button>
-                    </Link>
-                </form>
-            </div>
+                </div>
+                <div className="addContent">
+                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={this.onSubmit}> Submit</button>
+                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'15%' }} onClick={() => this.props.moveToComponent("stories")}>Cancel</button>
+                </div>
+                </div>
         );
-    }
+}
 }
