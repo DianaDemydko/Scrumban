@@ -1,7 +1,20 @@
 ﻿#sprint-create-form {
-    width: 330px;
+    width: 25%;
 }
 
 #create-form-cancel-button {
-    margin-left: 152px
+    display:inline-block;
+    float:right;
+}
+
+.form-control {
+    margin-top: 0;
+}
+
+#create-form-buttons{
+    width:25%;
+}
+
+#sprint-create-form-container{
+    padding:20px;
 }

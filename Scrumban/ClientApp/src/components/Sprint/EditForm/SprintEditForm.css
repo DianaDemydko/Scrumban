@@ -1,6 +1,11 @@
 ﻿#sprint-edit-form {
-    width: 330px
+    width: 25%;
 }
 #edit-form-cancel-button {
-    margin-left: 203px
+    display:inline-block;
+    float:right;
+}
+
+#edit-form-buttons {
+    width: 25%;
 }
