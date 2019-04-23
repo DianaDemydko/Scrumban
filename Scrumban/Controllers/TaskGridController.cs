@@ -42,7 +42,7 @@ namespace Scrumban.Controllers
             return Ok(taskChangeHistoryDTO);
         }
 
-        [Authorize(Roles = "Tester")]
+        [Authorize]
         [Route("/api/[controller]/editTaskDetailed")]
         [HttpPost]
         public IActionResult Edit([FromBody]TaskChangeHistoryDTO taskChangeHistoryDTO)
@@ -56,7 +56,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int? id)
         {

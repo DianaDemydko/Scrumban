@@ -202,7 +202,6 @@ export class ProfilePageEdit extends Component {
         })
             .then(function (response) {
                 if (response.status == 200) {
-                    alert(response.status)
                     return response.json();
                 }
                 else {
@@ -238,7 +237,6 @@ export class ProfilePageEdit extends Component {
             body: checkUser
         })
             .then(function (response) {
-                alert(response.status)
                 if (response.status == 200) {
                     return response.json();
                 }
@@ -249,14 +247,14 @@ export class ProfilePageEdit extends Component {
                     alert("You are not authorizated !  " + response.status)
                 }
                 else{
-                    alert(response.status)
+                    alert("ERROR : " + response.status)
                 }
             })
             .then(data => {
                 if (data == true)
                     { this.onUpdate() }
                 else
-                    { alert("Old password is not correct") }
+                    { alert("Current password is not correct") }
             })
     }
 

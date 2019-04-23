@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import "./TooltipStyle.css"
 //import Collapse from "../../../node_modules/react-bootstrap/lib/Collapse"
 //import Button from "../../../node_modules/react-bootstrap/lib/Button"
 //import Overlay from "../../../node_modules/react-bootstrap/lib/Overlay"

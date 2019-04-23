@@ -161,7 +161,6 @@ export class TaskAdd extends React.Component {
                 }
             });
             var moveToComponentVar = this.props.moveToComponent;
-            var result = 100;
             fetch(addTaskUrl, {
                 method: "post",
                 headers: {
@@ -173,6 +172,7 @@ export class TaskAdd extends React.Component {
                 .then(function (response) {
                     if (response.status == 200) {
                         result = response.status
+                        moveToComponentVar("tasks")
                     }
                     else if (response.status == 400) {
                         alert("ERROR! Incorrect data !")
@@ -190,9 +190,7 @@ export class TaskAdd extends React.Component {
                         alert("ERROR! Status code: " + response.status)
                     }
                 })
-            if (result == 200) {
-                moveToComponentVar("tasks")
-            }
+
 
         }
     }

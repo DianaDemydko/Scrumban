@@ -48,7 +48,7 @@ export class Layout extends Component {
                     moveToComponent={this.setRenderedComponentName} // set name of rendered component
                     loginStatusCallBack={this.state.panelLoginStatus == true ? "true" : "false"}
                     currentUser={this.state.user ? this.state.user.firstName : ""}
-                    currentUserPicture={this.state.user ? this.state.user.picture.image : "" }
+                    currentUserPicture={this.state.user ? (this.state.user.picture ? this.state.user.picture.image : "") : "" }
                     onLogOut={this.onLoginStatusCallBack}
                 />
                 <Body
