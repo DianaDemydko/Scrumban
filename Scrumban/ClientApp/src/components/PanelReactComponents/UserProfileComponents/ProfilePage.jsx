@@ -22,7 +22,7 @@ export class ProfilePage extends Component {
     }
 
     componentDidMount() {
-        this.setState({ user: this.props.user, role: this.props.user.role, pictureUrl: this.props.user.picture.image })
+        this.setState({ user: this.props.user, role: this.props.user.role, pictureUrl: (this.props.user.picture ? this.props.user.picture.image : "") })
     }
 
     onPrintOrEdit(param) {

@@ -19,6 +19,8 @@ using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Scrumban.Hubs;
+
 
 namespace Scrumban
 {
@@ -71,15 +73,26 @@ namespace Scrumban
             services.AddTransient<IStoryService, StoryService>();
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ITaskService, TaskService>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<ITeamService, TeamService>();
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
             
             services.AddODataQueryFilter();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+
+            services.AddOptions();
+            services.AddSignalR();
+            services.AddODataQueryFilter();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
         }
@@ -117,6 +130,11 @@ namespace Scrumban
                 
             });
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -126,6 +144,11 @@ namespace Scrumban
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+           
+            app.UseWebSockets();
+            
+
+            
         }
 
         private class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>

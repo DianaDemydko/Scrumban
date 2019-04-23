@@ -14,6 +14,7 @@ namespace Scrumban.DataAccessLayer.Interfaces
         IStoryStateRepository StoryStateRepository { get; }
         ITokenRefreshRepository TokenRefreshRepository { get; }
         ITaskChangeHistoryRepository TaskChangeHistoryRepository { get; }
+        ITeamRepository TeamRepository { get; }
         int Save();
         void Dispose();
 

@@ -25,7 +25,7 @@ namespace Scrumban.DataAccessLayer
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
         public DbSet<TokenRefreshDAL> TokenRefresh { get; set; }
         public DbSet<TaskChangeHistoryDAL> TaskChangeHistories { get; set; }
-        
+        public DbSet<TeamDAL> Teams { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DefectDAL>().HasData(
@@ -61,7 +61,37 @@ namespace Scrumban.DataAccessLayer
                     new RoleDAL{ Id = 1, Name = "Team Member" },
                     new RoleDAL{ Id = 2, Name = "Scrum Master" },
                     new RoleDAL{ Id = 3, Name = "Product Owner" },
-                    new RoleDAL{ Id = 4, Name = "Tester" }
+                    new RoleDAL{ Id = 4, Name = "Tester" },
+                    new RoleDAL{ Id = 5, Name = "Admin"}
+                }
+            );
+
+            UsersDAL user = new UsersDAL
+            {
+                Id = 1,
+                FirstName = "Name",
+                Surname = "Surname",
+                Email = "admin@gmail.com",
+                Password = generatePasswordHash("Admin1"),
+                RoleId = 5
+            };
+
+            modelBuilder.Entity<UsersDAL>().HasData(
+                new UsersDAL[]
+                {
+                    user
+                }
+            );
+
+            modelBuilder.Entity<PictureDAL>().HasData(
+                new PictureDAL[]
+                {
+                    new PictureDAL
+                    {
+                        Id = 1,
+                        Image = "",
+                        UserId = user.Id
+                    }
                 }
             );
 
@@ -233,6 +263,13 @@ namespace Scrumban.DataAccessLayer
                         Rank = 40,
                         StoryState_id=5
                     }
+                }
+            );
+            modelBuilder.Entity<TeamDAL>().HasData(
+                new TeamDAL[]
+                {
+                    new TeamDAL{TeamID = 1, Name = "Lv-396.1 .Net", Project = "Scrumban"},
+                    new TeamDAL{TeamID = 2, Name = "New Team", Project = "New Project"}
                 }
             );
             base.OnModelCreating(modelBuilder);

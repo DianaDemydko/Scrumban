@@ -62,7 +62,12 @@ export class NavMenu extends Component {
                             <NavItem>
                                 <Glyphicon glyph='th-list' /> Feature
               </NavItem>
-                        </LinkContainer>
+                      </LinkContainer>
+                      <LinkContainer to={'/teams'}>
+                          <NavItem>
+                              <Glyphicon glyph='th-list' /> Team
+              </NavItem>
+                      </LinkContainer>
 
           </Nav>
               </Navbar.Collapse>
