@@ -79,7 +79,7 @@ export class StoryGrid extends React.Component {
                     {this.state.stories.map(function (story) { return <StoryComponent key={story.id} story={story} onRemove={remove} onChanged={changed} /> })}
                 </table>
                 <div>
-                    <Link to='/addStory'><button className="btn btn-primary button-fixed">Add</button></Link>
+                    <button className="btn btn-primary button-fixed" onClick={() => this.props.moveToComponent("storyAdd")}>Add</button>
                 </div>
             </div>
         </div>

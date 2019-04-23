@@ -21,6 +21,7 @@ import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
 import { Home } from '../Home';
 import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 import { AddFeature } from '../FeatureReactComponents/AddFeature';
+import { StoryAdd } from '../StoryReactComponents/StoryAdd';
 
 
 export class Body extends React.Component {
@@ -60,6 +61,9 @@ export class Body extends React.Component {
             case 'stories':
                 renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} />
                 break
+            case 'storyAdd':
+                renderedComponent = <StoryAdd moveToComponent={this.props.moveToComponent} />
+                break 
             case 'sprints':
                 renderedComponent = <SprintMain moveToComponent={this.props.moveToComponent} />
                 break 
@@ -71,7 +75,7 @@ export class Body extends React.Component {
                 break
             case 'defectAdd':
                 renderedComponent = <DefectAdd moveToComponent={this.props.moveToComponent} />
-                break 
+                break
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
                 break

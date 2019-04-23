@@ -60,6 +60,7 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Route("CreateStory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreateStory([FromBody] StoryDTO story)
