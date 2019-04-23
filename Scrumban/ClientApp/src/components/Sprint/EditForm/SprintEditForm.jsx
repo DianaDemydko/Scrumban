@@ -136,9 +136,9 @@ export class SprintEditForm extends React.Component {
                         </div>
                         
                     </form>
-                    <div>
-                        <button className="btn btn-primary button-fixed" onClick={this.onUpdatingSprint} >Save</button>
-                        <button className="btn btn-danger button-fixed" id='edit-form-cancel-button' onClick={this.props.onCancelEditMode} >Cancel</button>
+                    <div id="edit-form-buttons">
+                        <button className="btn btn-sm btn-outline-dark m-1" onClick={this.onUpdatingSprint} >Save</button>
+                        <button className="btn btn-sm btn-outline-dark m-1" id='edit-form-cancel-button' onClick={this.props.onCancelEditMode} >Cancel</button>
                     </div>
                 </td>
             </tr>

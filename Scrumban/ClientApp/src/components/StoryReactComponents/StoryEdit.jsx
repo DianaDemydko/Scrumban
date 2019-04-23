@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
-const updateStoryUri = "/api/storyGrid/editStory";
+const updateStoryUri = "/api/storyGrid/UpdateStory";
 
 // consts of stable tables
 const priorityTable = data.priority;

@@ -5,7 +5,7 @@ import { StoryComponent } from './StoryComponent';
 //import '../../index.css';
 
 // const
-const apiUrlGet = "/api/storyGrid/getStories";
+const apiUrlGet = "/api/storyGrid/GetStories";
 const apiUrlDelete = "/api/storyGrid";
 
 
