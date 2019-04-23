@@ -229,7 +229,7 @@ export class TaskAdd extends React.Component {
                 </div>
 
                 <div className="addContent">
-                    <label for="description" className="col-2">Start Date</label><br />
+                    <label for="description" className="col-2">Start Date</label>
                     <DatePicker
                         selected={this.state.startDate}
                         onChange={this.onStartDateChange}
@@ -243,7 +243,7 @@ export class TaskAdd extends React.Component {
                 </div>
 
                 <div className="addContent">
-                    <label for="finishDate" className="col-2">Finish Date</label><br />
+                    <label for="finishDate" className="col-2">Finish Date</label>
                     <DatePicker
                         selected={this.state.finishDate}
                         onChange={this.onFinishDateChange}
@@ -259,26 +259,26 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
                     <label for="priorityName" className="col-2">Priority</label>
-                    <select class="btn btn-light dropdown-toggle" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
+                    <select class="btn btn-light dropdown-toggle w-25" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
                         {priorityTable.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
                     <label for="taskStateName" className="col-2">State</label>
-                    <select class="btn btn-light dropdown-toggle" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
+                    <select class="btn btn-light dropdown-toggle w-25" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
                         {stateTable.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
                     <label for="userAssign" className="col-2">Assign to</label>
-                    <select class="btn btn-light dropdown-toggle" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                    <select class="btn btn-light dropdown-toggle w-25" id="userAssign" onChange={this.onUserChanged} placeholder="">
                         <option>Nobody</option>
                         {this.state.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
                     <label for="story" className="col-2">Story</label>
-                    <select class="btn btn-light dropdown-toggle" id="story" onChange={this.onStoryChanged} placeholder="">
+                    <select class="btn btn-light dropdown-toggle w-25" id="story" onChange={this.onStoryChanged} placeholder="">
                         <option>Independent</option>
                         {this.state.stories.map((item) => <option>{item.name}</option>)}
                     </select>
