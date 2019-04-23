@@ -3,7 +3,7 @@
     display: inline-block;
     vertical-align: top;
     width: 19%;
-    margin: 5px;
+    margin: 0.5%;
 }
 
 .column-header {
@@ -23,10 +23,10 @@
     background-color: #eef2f9;
     padding: 7px;
     overflow-y: auto;
-    height: 500px;
+    height: 80vh;
 }
 
-#Tasks.column-header {
+#Items.column-header {
     background-image: linear-gradient(to bottom right, #d7dfe4 20%, #abb5bf);
 }
 

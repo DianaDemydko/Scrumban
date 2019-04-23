@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer.Models;
 
@@ -169,6 +171,36 @@ namespace Scrumban.DataAccessLayer
                 {
                     new StoryDAL
                     {
+                        Story_id =9,
+                        sprint_id =1,
+                        StoryPoints=12,
+                        Name ="Something important to do",
+                        Description = "Short desc.",
+                        Rank = 2,
+                        StoryState_id = 1
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =10,
+                        sprint_id =1,
+                        StoryPoints=4,
+                        Name ="Add Something important 1",
+                        Description = "Medium size description, sample text and something else...",
+                        Rank = 3,
+                        StoryState_id = 1
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =11,
+                        sprint_id =1,
+                        StoryPoints=50,
+                        Name ="Add Something important 2",
+                        Description = "Long loong longLong longng lng log longLong longLg longg longLog longLg ng long description",
+                        Rank = 15,
+                        StoryState_id = 1
+                    },
+                    new StoryDAL
+                    {
                         Story_id =1,
                         sprint_id =1,
                         StoryPoints=40,
@@ -273,6 +305,26 @@ namespace Scrumban.DataAccessLayer
                 }
             );
             base.OnModelCreating(modelBuilder);
+        }
+
+        // generating password hash
+        private string generatePasswordHash(string inputPassword)
+        {
+            SHA512 sha512 = SHA512.Create();
+            byte[] bytes = Encoding.UTF8.GetBytes(inputPassword);
+            byte[] hash = sha512.ComputeHash(bytes);
+            return GetStringFromHash(hash);
+        }
+
+        private string GetStringFromHash(byte[] hash)
+        {
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                result.Append(hash[i].ToString("X2"));
+            }
+            return result.ToString();
         }
     }
 }

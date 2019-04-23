@@ -18,7 +18,7 @@ export default class KanbanBoard extends React.Component {
         }
 
         this.state.columns = [
-            { name: 'Tasks', column_id: 'Tasks' },
+            { name: 'Items', column_id: 'Items' },
             { name: 'To Do', column_id: 'To_Do' },
             { name: 'In Progress', column_id: 'In_Progress' },
             { name: 'Testing', column_id: 'Testing' },
@@ -35,7 +35,7 @@ export default class KanbanBoard extends React.Component {
     }
 
     componentDidMount() {
-        var orderBy = ['rank desc']
+        var orderBy = ['rank asc']
         var query = buildQuery({ orderBy })
 
         this.getStoriesData(query)
@@ -138,13 +138,13 @@ export default class KanbanBoard extends React.Component {
 
     ChangeColumnAllowed(prevColumnID, nextColumnID) {
 
-        if (nextColumnID == 'Tasks') {
+        if (nextColumnID == 'Items') {
             return null
         }
 
         if (nextColumnID == 'To_Do') {
             switch (prevColumnID) {
-                case 'Tasks': return 'Selected'
+                case 'Items': return 'Selected'
                 case 'Testing': return 'Rejected'
                 default: return null
             }

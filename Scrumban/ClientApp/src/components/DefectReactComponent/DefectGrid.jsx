@@ -238,6 +238,10 @@ export class DefectGrid extends React.Component {
                 if (xhr.status == 200) {
                     this.loadData("");
                 }
+                if (xhr.status == 400) {
+                    alert("Defect have deleted already ! ")
+                    this.loadData("");
+                }
             }.bind(this);
             xhr.send();
         }
