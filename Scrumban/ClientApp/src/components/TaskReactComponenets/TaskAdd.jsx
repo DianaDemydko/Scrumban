@@ -220,6 +220,7 @@ export class TaskAdd extends React.Component {
 
                     </div>
                 </div>
+
                 <div className="form-group col-12">
                     <div>
                         <label for="description">Description</label>
@@ -281,6 +282,67 @@ export class TaskAdd extends React.Component {
                             {this.state.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
                         </select>
                     </div>
+
+                <div className="addContent">
+                    <label for="description" className="col-2">Description</label>
+                    <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="task description" />
+                </div>
+
+                <div className="addContent">
+                    <label for="description" className="col-2">Start Date</label>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.onStartDateChange}
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={15}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        timeCaption="time"
+                        className="datePickerStyle btn btn-sm btn-outline-secondary"
+                    />
+                </div>
+
+                <div className="addContent">
+                    <label for="finishDate" className="col-2">Finish Date</label>
+                    <DatePicker
+                        selected={this.state.finishDate}
+                        onChange={this.onFinishDateChange}
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={15}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        timeCaption="time"
+                        id="finishDate"
+                        className="datePickerStyle btn btn-sm btn-outline-secondary"
+                    />
+                </div>
+
+                <div className="addContent">
+                    <label for="priorityName" className="col-2">Priority</label>
+                    <select class="btn btn-light dropdown-toggle w-25" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
+                        {priorityTable.map((item) => <option>{item.name}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <label for="taskStateName" className="col-2">State</label>
+                    <select class="btn btn-light dropdown-toggle w-25" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
+                        {stateTable.map((item) => <option>{item.name}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <label for="userAssign" className="col-2">Assign to</label>
+                    <select class="btn btn-light dropdown-toggle w-25" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                        <option>Nobody</option>
+                        {this.state.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
+                    <label for="story" className="col-2">Story</label>
+                    <select class="btn btn-light dropdown-toggle w-25" id="story" onChange={this.onStoryChanged} placeholder="">
+                        <option>Independent</option>
+                        {this.state.stories.map((item) => <option>{item.name}</option>)}
+                    </select>
+
                 </div>
                 <div className="form-group">
                     <div className="col-4">

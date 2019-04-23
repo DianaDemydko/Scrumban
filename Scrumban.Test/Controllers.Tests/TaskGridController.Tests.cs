@@ -36,7 +36,7 @@ namespace Scrumban.Test.Controllers.Tests
         {
             //Arrange
             var mock = new Mock<ITaskService>();
-            TaskDTO taskDTO = new TaskDTO { Name = "TestTask", Description = "TestDescription" };
+            TaskChangeHistoryDTO taskDTO = new TaskChangeHistoryDTO {  Description = "TestDescription" };
             mock.Setup(a => a.AddTask(taskDTO));
             TaskGridController controller = new TaskGridController(mock.Object);
 
@@ -51,14 +51,14 @@ namespace Scrumban.Test.Controllers.Tests
         {
             //Arrange
             var mock = new Mock<ITaskService>();
-            TaskDTO taskDTO = new TaskDTO { Name = "TestTask", Description = "TestDescription" };
+            TaskChangeHistoryDTO taskDTO = new TaskChangeHistoryDTO { Description = "TestDescription" };
             mock.Setup(a => a.AddTask(taskDTO));
             TaskGridController controller = new TaskGridController(mock.Object);
             var temp = controller.Add(taskDTO);
             //Act
-            var result = controller.Delete(1);
+            var result = controller.Delete(taskDTO.Id);
             //Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkResult>(result);
         }
 
         [Fact]
@@ -66,16 +66,15 @@ namespace Scrumban.Test.Controllers.Tests
         {
             //Arrange
             var mock = new Mock<ITaskService>();
-            TaskDTO taskDTO = new TaskDTO { Name = "TestTask", Description = "TestDescription" };
+            TaskChangeHistoryDTO taskDTO = new TaskChangeHistoryDTO { Description = "TestDescription" };
             mock.Setup(a => a.AddTask(taskDTO));
             string exp = "111";
-            taskDTO.Name = exp;
             taskDTO.Description = exp;
             mock.Setup(a => a.UpdateTask(taskDTO));
             TaskGridController controller = new TaskGridController(mock.Object);
             var result = controller.Edit(taskDTO);
             Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(exp,taskDTO.Name);
+            Assert.Equal(exp,taskDTO.Description);
 
         }
 

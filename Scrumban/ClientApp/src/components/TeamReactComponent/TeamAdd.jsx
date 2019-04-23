@@ -47,7 +47,7 @@ export class TeamAdd extends React.Component {
         };
         this.onAdd(team);
         this.setState({ teamName: "", teamProject: "" });
-        window.location.replace("/teams");
+        this.props.moveToComponent("teams");
     }
     render() {
         return (
