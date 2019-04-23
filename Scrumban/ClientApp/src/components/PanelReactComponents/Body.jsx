@@ -22,6 +22,9 @@ import { Home } from '../Home';
 import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
 import { AddFeature } from '../FeatureReactComponents/AddFeature';
 import { StoryAdd } from '../StoryReactComponents/StoryAdd';
+import { TeamGrid } from '../TeamReactComponent/TeamGrid';
+import { TeamAdd } from '../TeamReactComponent/TeamAdd';
+import { Chat } from '../Chat';
 
 
 export class Body extends React.Component {
@@ -75,6 +78,15 @@ export class Body extends React.Component {
                 break
             case 'defectAdd':
                 renderedComponent = <DefectAdd moveToComponent={this.props.moveToComponent} />
+                break
+            case 'teams':
+                renderedComponent = <TeamGrid moveToComponent={this.props.moveToComponent} />
+                break
+            case 'teamAdd':
+                renderedComponent = <TeamAdd moveToComponent={this.props.moveToComponent} />
+                break
+            case 'chat':
+                renderedComponent = <Chat moveToComponent={this.props.moveToComponent} />
                 break
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
