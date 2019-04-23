@@ -7,6 +7,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    padding:10px;
     border: 1px solid grey;
     width: 100%;
     display: inline-block;
@@ -17,17 +18,20 @@
         cursor: default;
     }
 
-.kanban-card-header {
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
-    display: flex;
+.card-header-rank {
+    display: inline-block;
+    height: 20px;
+    width: 80px;
+    text-align: center;
+    
 }
 
-.card-header-rank {
+.card-header-points {
+    display: inline-block;
     height: 20px;
-    width: 70px;
+    width: 80px;
     text-align: center;
+    float: right;
 }
 
 .card-header-rank-text {
@@ -35,8 +39,23 @@
     font-size: 12px;
     font-weight: 600;
     border-radius: 5px;
-    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
     background-image: linear-gradient(to right bottom, #041932, #003351, #004f61, #006a5c, #008344, #388033, #517c25, #64771a, #4c5d1c, #37431b, #242b17, #131411);
+}
+
+.card-header-points-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    background-image: linear-gradient(to right bottom, #272162, #47347d, #664998, #875fb4, #a975d0, #b676d3, #c378d5, #d079d6, #c864be, #c050a5, #b53a8c, #aa2074);
 }
 
 .card-name-text {
@@ -44,7 +63,8 @@
     display: flex;
     font-size: 20px;
     font-weight: 600;
-    margin: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     word-wrap: break-word;
 }
 
@@ -58,8 +78,6 @@
 
 .card-toggle-collapse {
     border-bottom: 1px dashed grey;
-    margin-left: 10px;
-    margin-right: 10px;
     justify-content: flex-end;
 }
 
@@ -104,8 +122,6 @@
     border: 1px solid grey;
     font-size: 14px;
     font-weight: 600;
-    margin-left: 10px;
-    margin-right: 10px;
     word-wrap: break-word;
 }
 
@@ -122,8 +138,6 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border: 1px solid grey;
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 10px;
     word-wrap: break-word;
 }
