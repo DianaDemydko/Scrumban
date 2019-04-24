@@ -20,15 +20,16 @@ export class TeamEdit extends Component {
         this.setState({ project: e.target.value });
     }
     onSubmit() {
-        fetch('api/team/', {
+        fetch('api/team/editTeam/', {
             method: 'post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id: this.props.teamEdit.id, name: this.state.name,
-                project: this.state.project
+                "id": this.props.teamEdit.id,
+                "name": this.state.name,
+                "project": this.state.project
             })
         });
-        window.location.reload();
+
 
     }
     onCancel() {

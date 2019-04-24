@@ -28,7 +28,7 @@ namespace Scrumban.Controllers
             return teams;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("/api/[controller]/addTeam")]
         public IActionResult Add([FromBody]TeamDTO teamDTO)
         {
@@ -37,19 +37,20 @@ namespace Scrumban.Controllers
         }
 
         [HttpPost]
-        [Route("/api/[controller]/editTeam")]
+        [Route("/api/[controller]/edit")]
         public IActionResult Edit([FromBody]TeamDTO teamDTO)
         {
             _teamServise.UpdateTeam(teamDTO);
             return Ok(teamDTO);
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody]TeamDTO teamDTO)
+        [HttpDelete("{id}")]
+        [Route("/api/[controller]/delete")]
+        public IActionResult Delete(int? id)
         {
            
-            _teamServise.DeleteTeam(teamDTO.TeamID);
-            return Ok(teamDTO);
+            _teamServise.DeleteTeam(id.Value);
+            return Ok();
         }
     }
 }

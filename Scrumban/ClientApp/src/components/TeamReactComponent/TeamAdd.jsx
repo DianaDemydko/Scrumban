@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-const addTeamUrl = "/api/team/addTeam";
+const addTeamUrl = "/api/team/teamAdd";
 const cancelUrl = "/teams";
 
 export class TeamAdd extends React.Component {
@@ -26,15 +26,16 @@ export class TeamAdd extends React.Component {
     }
 
     onAdd(team) {
-        fetch('api/team/', {
-            method: 'put',
+        fetch('api/team/addTeam', {
+            method: 'post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                name: team.teamName,
-                project: team.teamProject
+                
+                "name": team.teamName,
+                "project": team.teamProject,
             })
         });
-        window.location.reload();
+      
 
     }
 
@@ -66,11 +67,11 @@ export class TeamAdd extends React.Component {
                             <textarea rows="3" class="form-control" onChange={this.onTeamProjectChanged} id="teamProject" placeholder="project" />
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary button-fixed">Submit</button>
+                    <button type="submit" className="btn btn-dark button-fixed">Submit</button>
 
 
                     <Link to={cancelUrl}>
-                        <button type="submit" className="btn btn-danger  button-fixed">Cancel</button>
+                        <button type="submit" className="btn btn-dark  button-fixed">Cancel</button>
                     </Link>
                 </form>
             </div>

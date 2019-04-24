@@ -122,11 +122,11 @@ export class EditFeature extends Component {
             switch (responseStatus) {
                 case 200:
                     this.props.onStateUpdating(false);
+                    this.props.onEditFeature();
                     break
             }
         }.bind(this))
 
-        this.props.onEditFeature();
     }
     onCancel() {
 

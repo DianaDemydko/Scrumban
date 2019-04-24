@@ -3,6 +3,7 @@ using System.Linq;
 using Scrumban.DataAccessLayer.Interfaces;
 using Scrumban.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -18,14 +19,7 @@ namespace Scrumban.DataAccessLayer.Repositories
             {
                 try
                 {
-                    TeamDAL added = new TeamDAL
-                    {
-                        TeamID = item.TeamID,
-                        Name = item.Name,
-                        Project = item.Project
-                        
-                    };
-                    _dbContext.Add(added);
+                    _dbContext.Add(item);
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -52,10 +46,6 @@ namespace Scrumban.DataAccessLayer.Repositories
                 try
                 {
                     TeamDAL _team = _dbContext.Teams.FirstOrDefault(x => x.TeamID == id);
-                    if (_team == null)
-                    {
-
-                    }
                     _dbContext.Teams.Remove(_team);
                     transaction.Commit();
                 }
@@ -72,9 +62,6 @@ namespace Scrumban.DataAccessLayer.Repositories
                 try
                 {
                     TeamDAL team = _dbContext.Teams.FirstOrDefault(x => x.TeamID == item.TeamID);
-                    if (team == null)
-                    {
-                    }
                     team.Name = item.Name;
                     team.Project = item.Project;
                     transaction.Commit();

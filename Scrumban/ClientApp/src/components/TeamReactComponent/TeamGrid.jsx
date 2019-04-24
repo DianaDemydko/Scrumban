@@ -3,19 +3,6 @@ import buildQuery from 'odata-query';
 import { Link } from 'react-router-dom';
 import { TeamEdit } from './TeamEdit';
 
-class AddButton extends Component {
-    constructor(props, context) {
-        super(props, context);
-    }
-    render() {
-        return (
-            <Link to="/addTeam">
-                <button class="btn btn-dark">
-                    Add
-                    </button>
-            </Link>);
-    }
-}
 
 class DeleteButton extends Component {
 
@@ -25,14 +12,14 @@ class DeleteButton extends Component {
         this.onClick = this.onClick.bind(this);
     }
     onClick(e) {
-        fetch('api/team/', {
+      
+        var data = JSON.stringify({ "id" : this.props.teamIDtoDelete })
+        fetch("api/team/" + this.props.teamIDtoDelete, {
             method: 'delete',
-            headers: { "Content-Type": "application/json" },
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: this.props.teamIDtoDelete })
-        });
-
-        window.location.reload();
+            headers: { "Content-Type": "application/json" }
+        })
+            
+       
     }
     render() {
         return (
@@ -47,7 +34,8 @@ class TeamRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: false
+            edit: false,
+            
         }
         this.onStateChanged = this.onStateChanged.bind(this);
     }
@@ -87,7 +75,8 @@ class TeamPrint extends Component {
                     <button class="btn btn-dark" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit
                                 </button>
-                    <DeleteButton teamIDtoDelete={this.state.team.id} />
+                    <DeleteButton
+                        teamIDtoDelete={this.state.team.teamID} />
                 </td>
             </tr>
 
@@ -245,9 +234,17 @@ export class TeamGrid extends Component {
                 )
                 )}
             </table>
-            <div />
-            <AddButton />
+            <button
+                type="submit"
 
+                onClick={() => this.props.moveToComponent("teamAdd")}
+
+                className="btn btn-sm btn-outline-dark"
+
+            >Create new</button>
+            <div />
+            
+           
         </div>;
 
     }

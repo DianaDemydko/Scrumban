@@ -106,7 +106,8 @@ export class Body extends React.Component {
             <div> 
                 {this.props.panelLoginStatus == true ?
                     (<SideBar moveToComponent={this.props.moveToComponent} />) :
-                    ""}
+                    ""
+            }
             </div>
             <div> 
               {renderedComponent}

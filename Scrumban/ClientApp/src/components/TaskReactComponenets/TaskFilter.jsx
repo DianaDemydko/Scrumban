@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿            import React, { Component } from 'react';
 import buildQuery from 'odata-query'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -102,44 +102,43 @@ export class TaskFilter extends React.Component {
 
     // render row
     render() {
-        return <table className="table table-responsive-x1 table-fixed">
-            <thead>
-                <th className="col-1">
+        return <div className='filterContainer'>
+            <div class = "row">
+                <div class="col-sm">
                     <label for="inputTitle">Title</label>
-                </th>
-                <th className="col-3">
+                </div>
+                <div class="col-sm ">
                     <label for="exampleInputDescription">Description</label>
-                </th>
-                <th className="col-1">
+                </div>
+                <div class="col-sm">
                     <label for="">Start Date</label>
-                </th>
-                <th className="col-1">
+                </div>
+                <div class="col-sm">
                     <label for="">FinishDate</label>
-                </th>
-                <th className="col-1">
+                </div>
+                <div class="col-sm">
                     <label for="priority">Priority</label>
-                </th>
-                <th className="col-1">
+                </div>
+                <div class="col-sm">
                     <label for="state">State</label><br />
-                </th>
-                <th className="col-1">{/* For button Edit   */}</th>
-                <th className="col-1">{/* For button Delete */}</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="inputTitle" aria-describedby="emailHelp" placeholder="Search" value={this.state.name} autocomplete="off" />
+                </div>
+                <div class="col-sm">{/* For button Edit   */}</div>
+                <div class="col-sm">{/* For button Delete */}</div>
+            </div>
+            <div class = "row">
+                
+                    
+                <div class="col-sm">
+                    <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search" value={this.state.name} autocomplete="off" />
                         </div>
-                    </td>
-                    <td>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder="Search" value={this.state.description} autocomplete="off" />
+                    
+                <div class="col-sm">
+                    <input type="text" className="input" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder=" Search" value={this.state.description} autocomplete="off" />
                         </div>
-                    </td>
-                    <td>
-                        <div className="form-group">
+                    
+                <div class="col-sm" >
                             <DatePicker
+                                class="input"
                                 selected={this.state.startDate}
                                 onChange={this.onStartDateChange}
                                 dateFormat="MMMM d"
@@ -147,11 +146,11 @@ export class TaskFilter extends React.Component {
                                 className="datePickerStyle btn btn-sm btn-outline-secondary"
                             />
                         </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div className="form-group">
+                   
+                <div class="col-sm">
+                            <div >
                                 <DatePicker
+                                    class="input"
                                     selected={this.state.finishDate}
                                     onChange={this.onFinishDateChange}
                                     dateFormat="MMMM d"
@@ -160,31 +159,28 @@ export class TaskFilter extends React.Component {
                                 />
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        <div>
-                            <select class="form-control form-control-sm" onChange={this.onPriorityChanged} id="priority" placeholder="task priority" value={this.state.priorityName}>
+                    
+                <div class="col-sm">
+                    <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onPriorityChanged} id="priority" placeholder="task priority" value={this.state.priorityName}>
                                 <option>All</option>
                                 {this.props.priorities.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
-                    </td>
-                    <td>
-                        <div>
-                            <select class="form-control form-control-sm" onChange={this.onStateChanged} id="state" placeholder="task state" value={this.state.taskStateName}>
+                    
+                <div class="col-sm">
+                    <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStateChanged} id="state" placeholder="task state" value={this.state.taskStateName}>
                                 <option>All</option>
                                 {this.props.states.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
-                    </td>
-                    <td>
-                        <button type="submit" onClick={this.onSetFilter} class="btn btn-sm btn-outline-info button-fixed"> Filter </button>
-                    </td>
-                    <td>
-                        <button type="submit" onClick={this.onCancelFilter} class="btn btn-sm btn-outline-info button-fixed"> Cancel </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>;
+                <div class="col-sm" >  
+                    <button type="submit" onClick={this.onSetFilter} class="btn btn-sm btn-outline-dark w-100"> Filter </button>
+                </div>  
+                <div class="col-sm">
+                    <button type="submit" onClick={this.onCancelFilter} class="btn btn-sm btn-outline-dark w-100"> Cancel </button>
+                </div>
+               
+            </div>
+        </div>;
     }
 }
