@@ -10,6 +10,7 @@ import {
 import "./Register.css";
 import "../../index.css"
 import { RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
 
 export class Register extends React.Component {
     state = {
@@ -234,7 +235,7 @@ export class Register extends React.Component {
             this.state.passwordValid === false ||
             this.state.confirmpasswordValid === false
         ) {
-            alert("Invalid data")
+            toast.error("Invalid data");
             return;
         }
 
@@ -259,16 +260,16 @@ export class Register extends React.Component {
                 let responseStatus = response.status
                 switch (responseStatus) {
                     case 400:
-                        alert("Registration went wrong. Please check all fields!")
+                        toast.error("Registration went wrong. Please check all fields!");
                         break
                     case 200:
-                        alert("Registration was successful:-)")
+                        toast.success("Registration was successful:-)");
                         break
                 }
             }.bind(this))
-                .catch(() => alert("Unexpected error occured."))
-
-            window.location.replace("./login");
+                .catch(() => toast.error("Something wrong!!!"))
+            this.props.moveToComponent("login")
+            //window.location.replace("./login");
         } else
         {
             var erText = "";

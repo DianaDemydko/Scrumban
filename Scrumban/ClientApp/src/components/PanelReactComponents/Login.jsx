@@ -2,6 +2,7 @@
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { Route } from 'react-router';
+import { toast } from 'react-toastify';
 
 export class Login extends React.Component {
     constructor(props) {
@@ -72,10 +73,11 @@ export class Login extends React.Component {
                 })
             }).then(function (response) {
                 if (response.status == 200) {
+                    toast.success("Authorization success");
                     return response.json();
                 }
                 else {
-                    alert("ERROR! Status code: " + response.status + "\nAuthorization failed. Invalid email or password:-(")
+                    toast.error("Authorization failed. Invalid email or password:");
                     return "error"
                 }
                 }).then((data) => {
@@ -93,7 +95,7 @@ export class Login extends React.Component {
                 });
         }
         else {
-            alert("ERROR! Status code: ")
+            toast.error("Something wrong");
         }
     }
 

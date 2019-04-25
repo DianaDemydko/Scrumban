@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import '../../GridStyles/StyleForGrid.css';
+import { toast } from 'react-toastify';
+
 const apiAddUrl = "/api/DefectData/addDefect";
-
-
 const data = require('../../DefectData.json');
 const priorityOption = data.priority;
 const stateOption = data.state;
@@ -59,7 +59,12 @@ export class DefectAdd extends React.Component {
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
+                    toast.success("Defect was created in database !");
                     this.props.moveToComponent("defects");
+                }
+                else {
+                    toast.error("Something wrong !");
+                    return
                 }
             }.bind(this);
             xhr.send(data);

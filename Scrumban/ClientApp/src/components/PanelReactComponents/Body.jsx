@@ -27,6 +27,9 @@ import { TeamGrid } from '../TeamReactComponent/TeamGrid';
 import { TeamAdd } from '../TeamReactComponent/TeamAdd';
 import { Chat } from '../Chat';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
 export class Body extends React.Component {
     constructor(props) {
         super(props);
@@ -98,11 +101,12 @@ export class Body extends React.Component {
                 renderedComponent = <BurnUp_DownCharts />
                 break
             default:
-                renderedComponent = <Home />
+                renderedComponent = <Kanban />
         }
         
 
         return (<div>
+            <ToastContainer autoClose={3000} position="bottom-center" />
             <div> 
                 {this.props.panelLoginStatus == true ?
                     (<SideBar moveToComponent={this.props.moveToComponent} />) :

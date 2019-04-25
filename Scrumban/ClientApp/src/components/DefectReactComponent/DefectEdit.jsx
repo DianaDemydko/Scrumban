@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
+import { toast } from 'react-toastify';
+
 const apiEditUrl = "/api/DefectData/editDefect";
 const data = require('../../DefectData.json');
-
 const priorityOption = data.priority;
 const stateOption = data.state;
 const severityOption = data.severity;
@@ -56,7 +57,11 @@ export class DefectEdit extends React.Component {
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
-
+                    toast.success("Defect was updated !");
+                }
+                else {
+                    toast.error("Something wrong !");
+                    return
                 }
             }.bind(this);
             xhr.send(data);
