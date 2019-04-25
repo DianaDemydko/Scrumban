@@ -1,4 +1,6 @@
-﻿namespace Scrumban.ServiceLayer.DTO
+﻿using Microsoft.AspNet.OData.Query;
+
+namespace Scrumban.ServiceLayer.DTO
 {
     public class DefectDTO
     {

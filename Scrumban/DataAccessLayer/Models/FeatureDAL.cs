@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,9 +17,11 @@ namespace Scrumban.DataAccessLayer.Models
 
         public int? OwnerID { set; get; }
         public OwnerDAL Owner { get; set; }
-        public int? ReleaseID { set; get; }
-        public int? Priority { set; get; }
-        //public List<Story> Stories { set; get; }
+       // public int? ReleaseID { set; get; }
+        public int? PriorityID { set; get; }
+        public PriorityDAL Priority { get; set; }
+
+        public List<StoryDAL> Stories { set; get; }
         public DateTime Time { set; get; }
 
     }

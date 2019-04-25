@@ -12,11 +12,13 @@ namespace Scrumban.DataAccessLayer.Interfaces
         ISprintStatusRepository SprintStatusRepository { get; }
         IUserRepository UserRepository { get; }
         IStoryStateRepository StoryStateRepository { get; }
-
+        ITokenRefreshRepository TokenRefreshRepository { get; }
+        ITaskChangeHistoryRepository TaskChangeHistoryRepository { get; }
+        ITeamRepository TeamRepository { get; }
         int Save();
         void Dispose();
 
-        
+
 
     }
 }

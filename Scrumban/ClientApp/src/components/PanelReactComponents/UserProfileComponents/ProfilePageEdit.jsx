@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import "../../../index.css"
 
-const apiUrlGetUser = "/api/users/getUserAccount";
 const apiUrlEditUser = "/api/users/Edit";
 const apiUrlCheckUser = "/api/users/Check";
 
@@ -89,9 +88,14 @@ export class ProfilePageEdit extends Component {
         var email = e.target.value
         var message = ""
         var isValid = false
+        var regex = new RegExp(
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 
         if (email == "") {
             message = "Input email (login) !"
+        }
+        else if (regex.test(email) === false) {
+            message = "incorrect email !"
         }
         else {
             isValid = true
@@ -117,28 +121,25 @@ export class ProfilePageEdit extends Component {
         var password = e.target.value
         var message = ""
         var isValid = false
-        
+        var confirmIsValid = false
+
+        var regex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])")
 
         if (password == "") {
             isValid = true
+            confirmIsValid = true
             message = ""
         }
         else if (password.length < 5) {
-            message = "be at least 8 characters !"
+            message = "be at least 5 characters !"
         }
-        else if (password.length < 5) {
-            message = "be at least one letter !"
-        }
-        else if (password.length < 5) {
-            message = "be at least one capital letter !"
-        }
-        if (password.length < 5) {
-            message = "be at least one number !"
+        else if (regex.test(password) === false) {
+            message = "be at least one small letter, one capital letter and one number!"
         }
         else {
             isValid = true
         }
-        this.setState({ password: password, newPasswordValid: isValid, newPasswordValidMessage: message })
+        this.setState({ password: password, newPasswordValid: isValid, confirmNewPasswordValid: confirmIsValid, newPasswordValidMessage: message })
         //this.onPasswordConfirmChanged(null)
     }
 
@@ -148,6 +149,9 @@ export class ProfilePageEdit extends Component {
         var isValid = false
         if (passwordConfirm == "" && this.state.password !== "") {
             message = "confirm password !"
+        }
+        else if (this.state.password == "") {
+            isValid = true
         }
         else if (passwordConfirm !== this.state.password) {
             message = "password is not confirmed"
@@ -186,6 +190,7 @@ export class ProfilePageEdit extends Component {
             },
             "pictureId": this.props.user.pictureId,
             "picture": {
+                "id": this.props.user.picture.id,
                 "image": this.state.pictureUrl
             }
         })
@@ -197,7 +202,6 @@ export class ProfilePageEdit extends Component {
         })
             .then(function (response) {
                 if (response.status == 200) {
-                    alert(response.status)
                     return response.json();
                 }
                 else {
@@ -211,6 +215,17 @@ export class ProfilePageEdit extends Component {
     }
 
     onSave() {
+        if (this.state.firstNameValid === false ||
+            this.state.surnameValid === false ||
+            this.state.emailValid === false ||
+            this.state.oldPasswordValid === false ||
+            this.state.newPasswordValid === false ||
+            this.state.confirmNewPasswordValid === false
+            ) {
+            alert("Invalid data")
+            return;
+        }
+
         var checkUser = JSON.stringify({
             "email": this.props.user.email,
             "password": this.state.oldPassword
@@ -222,16 +237,24 @@ export class ProfilePageEdit extends Component {
             body: checkUser
         })
             .then(function (response) {
-                alert(response.status)
                 if (response.status == 200) {
                     return response.json();
+                }
+                else if (response.status == 401) {
+                    alert("You are not authenticated !  " + response.status)
+                }
+                else if (response.status == 403) {
+                    alert("You are not authorizated !  " + response.status)
+                }
+                else{
+                    alert("ERROR : " + response.status)
                 }
             })
             .then(data => {
                 if (data == true)
                     { this.onUpdate() }
                 else
-                    { alert("Old password is not correct") }
+                    { alert("Current password is not correct") }
             })
     }
 
@@ -249,15 +272,16 @@ export class ProfilePageEdit extends Component {
             <br />
 
             <div className="row justify-content-around">
-
                 <div className="col-4">
                     <div className="row">
                         <img src={this.state.pictureUrl} alt="Image" className="profile-image" />
                     </div>
-                    <br />
+                    <div className="row justify-content-center">
+                        <small>.png, .jpg, .jpeg, .img</small>
+                    </div>
                     <div className="row justify-content-center">
                         <label for="file-upload" className="btn btn-outline-info"> Upload Picture </label>
-                        <input id="file-upload" type="file" onChange={this.onFileChanged} hidden/>
+                        <input id="file-upload" type="file" onChange={this.onFileChanged} hidden accept=".png, .jpg, .jpeg, .img"/>
                     </div>
                 </div>
 
@@ -307,12 +331,6 @@ export class ProfilePageEdit extends Component {
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
                     <div className="row justify-content-start form-group">
                         <div className="col-4"><label for="oldPasswordId">Password:</label></div>
                         <div className="col-6">
@@ -370,9 +388,7 @@ export class ProfilePageEdit extends Component {
                     <div className="row">
                             <button onClick={this.onClick} className="btn btn-outline-info button-fixed">Save</button>
                             <button onClick={() => this.props.onPrintOrEdit("true")} className="btn btn-outline-info button-fixed">Cancel</button>
-                        
                     </div>
-                    
                 </div>
             </div>
         </div>

@@ -6,10 +6,10 @@ using Scrumban.ServiceLayer.DTO;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Scrumban.Controllers
 {
-
     [Route("api/[controller]")]
     public class TaskGridController : Controller
     {
@@ -19,11 +19,7 @@ namespace Scrumban.Controllers
         {
             _taskServise = taskService;
         }
-
-        //"Team Member"
-        //"Scrum Master"
-        //"Product Owner"
-        //"Tester"
+        //"Team Member", "Scrum Master", "Product Owner", "Tester"
         [HttpGet]
         [EnableQuery()]
         [Route("/api/[controller]/getTasks")]
@@ -35,31 +31,41 @@ namespace Scrumban.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("/api/[controller]/addTask")]
-        public IActionResult Add([FromBody]TaskDTO taskDTO)
+        [Route("/api/[controller]/addTaskDetailed")]
+        public IActionResult Add([FromBody]TaskChangeHistoryDTO taskChangeHistoryDTO)
         {
-            _taskServise.AddTask(taskDTO);
-            return Ok(taskDTO);
+            if (taskChangeHistoryDTO == null)
+            {
+                return StatusCode(400);
+            }
+            _taskServise.AddTask(taskChangeHistoryDTO);
+            return Ok(taskChangeHistoryDTO);
         }
 
-        
-        [HttpPost]
         [Authorize]
-        [Route("/api/[controller]/editTask")]
-        public IActionResult Edit([FromBody]TaskDTO taskDTO)
+        [Route("/api/[controller]/editTaskDetailed")]
+        [HttpPost]
+        public IActionResult Edit([FromBody]TaskChangeHistoryDTO taskChangeHistoryDTO)
         {
-            _taskServise.UpdateTask(taskDTO);
-            return Ok(taskDTO);
+            if (taskChangeHistoryDTO == null)
+            {
+                return StatusCode(400);
+            }
+            _taskServise.UpdateTask(taskChangeHistoryDTO);
+            return Ok(taskChangeHistoryDTO.Task);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int? id)
         {
-            TaskDTO taskDTO = _taskServise.GetTask(id);
-            _taskServise.DeleteTask(id);
-            return Ok(taskDTO);
+            if(id == null)
+            {
+                return StatusCode(400);
+            }
+            _taskServise.DeleteTask(id.Value);
+            return Ok();
         }
 
         // get additional const tables: states, priorities

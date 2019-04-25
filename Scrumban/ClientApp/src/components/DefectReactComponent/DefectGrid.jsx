@@ -1,6 +1,9 @@
-﻿import React, { Component } from 'react';
+﻿import React from 'react';
 import { DefectRow } from './DefectRow';
+import { Pagination } from './Pagination';
 import buildQuery from 'odata-query'
+import { checkToken } from '../Helpers'
+import '../../GridStyles/StyleForGrid.css';
 
 
 const apiGetUrl = "/api/DefectData/getDefects";
@@ -19,6 +22,7 @@ export class DefectGrid extends React.Component {
         super(props);
         this.state = {
             defects: [],
+            pageOfItems: [],//pagination
             //filter
             nameSearch: "",
             descriptionSearch: "",
@@ -45,20 +49,23 @@ export class DefectGrid extends React.Component {
         this.onStateSearchChanged = this.onStateSearchChanged.bind(this);
         this.onPrioritySearchChanged = this.onPrioritySearchChanged.bind(this);
         this.onSeveritySearchChanged = this.onSeveritySearchChanged.bind(this);
-        this.onStoryIdSearchChanged = this.onStoryIdSearchChanged.bind(this);
+        //this.onStoryIdSearchChanged = this.onStoryIdSearchChanged.bind(this);
         this.onStatusSearchChanged = this.onStatusSearchChanged.bind(this);
         this.onFiltersApply = this.onFiltersApply.bind(this)
         this.onFiltersClear = this.onFiltersClear.bind(this)
 
         //sorting
-        this.sortData = this.sortData.bind(this)
-        this.sortByName = this.sortByName.bind(this)
-        this.sortByDescription = this.sortByDescription.bind(this)
-        this.sortByState = this.sortByState.bind(this)
-        this.sortByPriority = this.sortByPriority.bind(this)
-        this.sortBySeverity = this.sortBySeverity.bind(this)
-        this.sortByStoryId = this.sortByStoryId.bind(this)
-        this.sortByStatus = this.sortByStatus.bind(this)   
+        this.sortData = this.sortData.bind(this)  
+
+        //pagination
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({
+            pageOfItems: pageOfItems
+        });
+       
     }
 
     onNameSearchChanged(e) {
@@ -76,9 +83,9 @@ export class DefectGrid extends React.Component {
     onSeveritySearchChanged(e) {
         this.setState({ severitySearch: e.target.value });
     }
-    onStoryIdSearchChanged(e) {
-        this.setState({ storyIdSearch: e.target.value });
-    }
+    //onStoryIdSearchChanged(e) {
+    //    this.setState({ storyIdSearch: e.target.value });
+    //}
     onStatusSearchChanged(e) {
         this.setState({ statusSearch: e.target.value });
     }
@@ -129,252 +136,84 @@ export class DefectGrid extends React.Component {
     }
 
     //sorting
-    //sort by Name
-    sortByName(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-            let aName = a[columnName].toLowerCase()
-            let bName = b[columnName].toLowerCase()
-            if (aName < bName) {
-                return -1;
-            }
-            if (aName > bName) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-    //sort by Description
-    sortByDescription(sortingOrder, columnName) {
-        let compareFunction = function (a, b) {
-            let aDescriptionLength = a[columnName].length
-            let bDescriptionLength = b[columnName].length
-            if (aDescriptionLength < bDescriptionLength) {
-                return -1;
-            }
-            if (aDescriptionLength > bDescriptionLength) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-    //sort by State
-    sortByState(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-    //sort by Priority
-    sortByPriority(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-    //sort by Severity
-    sortBySeverity(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-    //sort by StoryId
-    sortByStoryId(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-    //sort by Status
-    sortByStatus(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    defects: this.state.defects.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
     sortData(columnName) {
         let currentSort = this.state.currentSort
 
+        var query = '?$orderby='
+
         if (currentSort.columnName == columnName) {
-            if (currentSort.sortingOrder == 'ascending') {
-                currentSort.sortingOrder = 'descending'
+            if (currentSort.sortingOrder == 'asc') {
+                currentSort.sortingOrder = 'desc'
             }
             else {
-                currentSort.sortingOrder = 'ascending'
+                currentSort.sortingOrder = 'asc'
             }
         }
         else {
             currentSort.columnName = columnName
-            currentSort.sortingOrder = 'ascending'
+            currentSort.sortingOrder = 'asc'
         }
 
         this.setState({ currentSort: currentSort })
 
         switch (columnName) {
             case 'name':
-                this.sortByName(currentSort.sortingOrder, columnName)
+                query += 'name' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'description':
-                this.sortByDescription(currentSort.sortingOrder, columnName)
+                query += 'description' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'state':
-                this.sortByState(currentSort.sortingOrder, columnName)
+                query += 'state' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'priority':
-                this.sortByPriority(currentSort.sortingOrder, columnName)
+                query += 'priority' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'severity':
-                this.sortBySeverity(currentSort.sortingOrder, columnName)
+                query += 'severity' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'storyId':
-                this.sortByStoryId(currentSort.sortingOrder, columnName)
+                query += 'storyId' + ' ' + this.state.currentSort.sortingOrder;
                 break
             case 'status':
-                this.sortByStatus(currentSort.sortingOrder, columnName)
+                query += 'status' + ' ' + this.state.currentSort.sortingOrder;
                 break
         }
+        this.loadData(query);
     }
     componentDidMount() {
         this.loadData("");
     }
+
     loadData(query) {
-        fetch(apiGetUrl + query)
-            .then(response => response.json())
+        checkToken()
+        fetch(apiGetUrl + query, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
+                        //this.props.moveToComponent("login")
+                    }
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            })
             .then(data => { this.setState({ defects: data }) });
-        //var xhr = new XMLHttpRequest();
-        //xhr.open("get", apiGetUrl + query, true);
-        //xhr.onload = function () {
-        //    var data = JSON.parse(xhr.responseText);
-        //    this.setState({ defects: data });
-        //}.bind(this);
-        //xhr.send();
+       
     }
 
     onChanged(item) {
@@ -399,6 +238,10 @@ export class DefectGrid extends React.Component {
                 if (xhr.status == 200) {
                     this.loadData("");
                 }
+                if (xhr.status == 400) {
+                    alert("Defect have deleted already ! ")
+                    this.loadData("");
+                }
             }.bind(this);
             xhr.send();
         }
@@ -406,7 +249,7 @@ export class DefectGrid extends React.Component {
 
     renderCaret(columnName) {
         if (this.state.currentSort.columnName == columnName) {
-            if (this.state.currentSort.sortingOrder == 'ascending') {
+            if (this.state.currentSort.sortingOrder == 'asc') {
                 return (<span class="fa fa-caret-up" id="active-caret" /*style={{ color: '#2adc29' }}*/></span>)
             }
             else {
@@ -418,72 +261,104 @@ export class DefectGrid extends React.Component {
         }
     }
 
-
     render() {
         var changed = this.onChanged;
         var remove = this.onRemoveDefect;
-        return (<div>
-            <br />
-            <h2>Defects</h2>
-            <br />
-            <table className="table table-hover">
-                <thead className="bg-light">
-                    <tr>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description {this.renderCaret('description')}</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> StoryId {this.renderCaret('storyId')}</th>
-                        <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status {this.renderCaret('status')}</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
 
-                    <tr>
-                    <th><input type="text" class="form-control" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></th>
-                    <th><input type="text" class="form-control" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></th>
-                    <th><select class="form-control" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
-                            <option value="All">All</option>
-                            {stateOption.map((item) => <option>{item.name}</option>)}
-                        </select></th>
-                    <th><select class="form-control" placeholder="Search" onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
-                            <option value="All">All</option>
-                            {priorityOption.map((item) => <option>{item.name}</option>)}
-                        </select></th>
-                    <th><select class="form-control" placeholder="Search" onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
-                            <option value="All">All</option>
-                            {severityOption.map((item) => <option>{item.name}</option>)}
-                        </select></th>
-                        <th style={{ width: '10%' }}><input type="text" class="form-control" placeholder="Search" onChange={this.onStoryIdSearchChanged} value={this.state.storyIdSearch} /></th>
-                    <th>
-                        <select class="form-control" placeholder="Search" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
+        return (<div >
+            <label style={{ 'fontSize': '40px' }}> Defects </label>
+            <div className='filterContainer' id='filterForm'>
+            <div class='row'>
+                <div class="col-sm">
+                    <label>Name</label>
+                </div>
+                <div class="col-sm">
+                    <label>Description</label>
+                </div>
+                <div class="col-sm">
+                    <label>State</label>
+                </div>
+                <div class="col-sm">
+                    <label>Priority</label>
+                </div>
+                <div class="col-sm">
+                    <label>Severity</label>
+                </div>
+                <div class="col-sm">
+                    <label>Status</label>
+                </div>
+                <div class="col-sm" />
+                <div class="col-sm" />
+            </div>
+            <div class="row">
+                <div class="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></div>
+                <div class="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></div>
+                <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
+                    <option value="All">All</option>
+                    {stateOption.map((item) => <option>{item.name}</option>)}
+                </select></div>
+                <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
+                    <option value="All">All</option>
+                    {priorityOption.map((item) => <option>{item.name}</option>)}
+                </select></div>
+                <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
+                    <option value="All">All</option>
+                    {severityOption.map((item) => <option>{item.name}</option>)}
+                </select></div>
+                
+                <div class="col-sm">
+                    <select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                         <option value="All">All</option>
                         {statusOption.map((item) => <option>{item.name}</option>)}
-                        </select>
-                    </th>
-                    <th >
-                            <button style={{ width: '100%' }} type="button" className="btn btn-outline-dark" onClick={this.onFiltersApply}>Search</button>  
-                    </th>
-                    <th >
-                            <button style={{ width: '100%' }} type="button" className="btn btn-outline-dark" onClick={this.onFiltersClear}>Clear</button>
-                    </th>
-                 </tr>
+                    </select>
+                </div>
+                <div class="col-sm" >
+                    <td />
+                    <button class="btn btn-sm btn-outline-dark w-100" type="button"  onClick={this.onFiltersApply}>Search</button>
+                </div>
+                <div class="col-sm" >
+                    <td />
+                    <button class="btn btn-sm btn-outline-dark w-100" type="button"  onClick={this.onFiltersClear}>Clear</button>
+                </div>
+                </div>
+            </div>
+            {/* Table*/}
+            <div className="tablePosition">
+                <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
+                    <thead>
+                    <tr>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description {this.renderCaret('description')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> StoryId {this.renderCaret('storyId')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status {this.renderCaret('status')}</th>
+                            <th class="col" />
+                    </tr>
+
                 </thead>
-                {(this.state.defects.length > 0)
-                ? this.state.defects.map(function (defect) { return <DefectRow key={defect.defectId} defect={defect} onRemove={remove} onChanged={changed} /> })
+
+
+
+                {(this.state.pageOfItems.length > 0)//pageOfItems
+                    ? this.state.pageOfItems.map((defect) => {//pageOfItems
+                       
+                            return <DefectRow key={defect.defectId} defect={defect} onRemove={remove} onChanged={changed} />
+                        })
                     : (<tbody>
                             <td>
                                 No results
                             </td>
                        </tbody>)
                 }
-            </table>
-            <button className="btn btn-outline-primary" onClick={() => this.props.moveToComponent2("defectAdd")}>Add defect</button>
+                </table>
+                </div>
+            <div>
+                <Pagination items={this.state.defects}  onChangePage={this.onChangePage} />
+            </div>
+            <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
         </div>
         )
     }
 }
-
-
-

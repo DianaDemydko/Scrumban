@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Scrumban.DataAccessLayer.Models;
 
@@ -23,9 +25,37 @@ namespace Scrumban.DataAccessLayer
         public DbSet<PriorityDAL> Priorities { get; set; }
         public DbSet<SprintDAL> Sprints { get; set; }
         public DbSet<SprintStatusDAL> SprintStatuses { get; set; }
-        
+        public DbSet<TokenRefreshDAL> TokenRefresh { get; set; }
+        public DbSet<TaskChangeHistoryDAL> TaskChangeHistories { get; set; }
+        public DbSet<TeamDAL> Teams { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DefectDAL>().HasData(
+                new DefectDAL[]
+                {
+                   new DefectDAL(){DefectId=1, Name="Defect_1",Description="Descriprion_1",State="To Do",Priority="Medium",Severity="Medium",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=2, Name="Some Defect",Description="Descriprion_2",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=3, Name="Menu",Description="Descriprion_3",State="Done",Priority="High",Severity="Medium",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=4, Name="Autorization",Description="Descriprion_3",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=5, Name="Pagination",Description="Descriprion_5",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=6, Name="KanbanBoard",Description="Descriprion_7",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=7, Name="BusinessLogic",Description="Descriprion_9",State="In progress",Priority="High",Severity="Medium",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=8, Name="ConnectToDatabase",Description="Descriprion_1",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=9, Name="Style",Description="Descriprion_2",State="To Do",Priority="High",Severity="Critical",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=10, Name="Defect_5",Description="Descriprion_3",State="Done",Priority="Medium",Severity="Medium",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=11, Name="Defect_3",Description="Descriprion_5",State="In progress",Priority="Medium",Severity="Medium",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=12, Name="Defect_9",Description="Descriprion_2",State="Done",Priority="Low",Severity="Medium",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=13, Name="Defect_10",Description="Descriprion_1",State="To Do",Priority="Medium",Severity="Low",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=14, Name="Defect_12",Description="Descriprion_8",State="Done",Priority="High",Severity="Low",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=15, Name="Defect_18",Description="Descriprion_2",State="In progress",Priority="Low",Severity="Medium",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=16, Name="Defect_20",Description="Descriprion_1",State="Done",Priority="Medium",Severity="Low",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=17, Name="Defect_11",Description="Descriprion_8",State="In progress",Priority="Low",Severity="Medium",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=18, Name="Defect_14",Description="Descriprion_2",State="Done",Priority="Medium",Severity="Low",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=19, Name="Defect_17",Description="Descriprion_5",State="To Do",Priority="Low",Severity="Medium",StoryId=1,Status="Open" },
+                   new DefectDAL(){DefectId=20, Name="Defect_30",Description="Descriprion_2",State="Done",Priority="Low",Severity="Low",StoryId=1,Status="Close" },
+                   new DefectDAL(){DefectId=21, Name="Defect_12",Description="Descriprion_1",State="In progress",Priority="Medium",Severity="Medium",StoryId=1,Status="Open" }
+                }
+                );
             // User Identity
             modelBuilder.Entity<RoleDAL>().HasData(
                 new RoleDAL[]
@@ -33,7 +63,37 @@ namespace Scrumban.DataAccessLayer
                     new RoleDAL{ Id = 1, Name = "Team Member" },
                     new RoleDAL{ Id = 2, Name = "Scrum Master" },
                     new RoleDAL{ Id = 3, Name = "Product Owner" },
-                    new RoleDAL{ Id = 4, Name = "Tester" }
+                    new RoleDAL{ Id = 4, Name = "Tester" },
+                    new RoleDAL{ Id = 5, Name = "Admin"}
+                }
+            );
+
+            UsersDAL user = new UsersDAL
+            {
+                Id = 1,
+                FirstName = "Name",
+                Surname = "Surname",
+                Email = "admin@gmail.com",
+                Password = generatePasswordHash("Admin1"),
+                RoleId = 5
+            };
+
+            modelBuilder.Entity<UsersDAL>().HasData(
+                new UsersDAL[]
+                {
+                    user
+                }
+            );
+
+            modelBuilder.Entity<PictureDAL>().HasData(
+                new PictureDAL[]
+                {
+                    new PictureDAL
+                    {
+                        Id = 1,
+                        Image = "",
+                        UserId = user.Id
+                    }
                 }
             );
 
@@ -80,13 +140,8 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<SprintDAL>().HasData(
                 new SprintDAL[]
                 {
-                    new SprintDAL(){ Sprint_id=1, SprintStatus_id=1, Description="HUGE desc ======== ============== ========= ===============",
-                        EndDate =new DateTime(2019,4,20), StartDate=new DateTime(2019,1,12), Name="AAaSprint"},
-                    new SprintDAL(){ Sprint_id=2, SprintStatus_id=1, Description="empty", EndDate=new DateTime(2019,9,2), StartDate=new DateTime(2019,8,9), Name="bbbb Sprint"},
-                    new SprintDAL(){ Sprint_id=3, SprintStatus_id=1, Description="-", EndDate=new DateTime(2019,10,27), StartDate=new DateTime(2019,8,2), Name="anonimous"},
-                    new SprintDAL(){ Sprint_id=4, SprintStatus_id=1, Description="desc", EndDate=new DateTime(2019,12,3), StartDate=new DateTime(2019,8,17), Name="nameless"},
-                    new SprintDAL(){ Sprint_id=5, SprintStatus_id=1, Description="666 Don't delete this 666", EndDate=new DateTime(2018,4,7), StartDate=new DateTime(2018,3,13), Name="Evil Sprint 666"},
-                    new SprintDAL(){ Sprint_id=6, SprintStatus_id=1, Description="some desc", EndDate=new DateTime(2018,5,22), StartDate=new DateTime(2018,1,20), Name="XXXX"}
+                     new SprintDAL(){ Sprint_id=1, SprintStatus_id=3, Description="Description", EndDate=new DateTime(2019,5,22), StartDate=new DateTime(2019,5,1), Name="SPRINT 1"},
+                     new SprintDAL(){ Sprint_id=2, SprintStatus_id=2, Description="Description", EndDate=new DateTime(2019,6,11), StartDate=new DateTime(2019,5,24), Name="SPRINT 2"}
                 }
                 );
 
@@ -116,32 +171,160 @@ namespace Scrumban.DataAccessLayer
                 {
                     new StoryDAL
                     {
+                        Story_id =9,
+                        sprint_id =1,
+                        StoryPoints=12,
+                        Name ="Something important to do",
+                        Description = "Short desc.",
+                        Rank = 2,
+                        StoryState_id = 1
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =10,
+                        sprint_id =1,
+                        StoryPoints=4,
+                        Name ="Add Something important 1",
+                        Description = "Medium size description, sample text and something else...",
+                        Rank = 3,
+                        StoryState_id = 1
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =11,
+                        sprint_id =1,
+                        StoryPoints=50,
+                        Name ="Add Something important 2",
+                        Description = "Long loong longLong longng lng log longLong longLg longg longLog longLg ng long description",
+                        Rank = 15,
+                        StoryState_id = 1
+                    },
+                    new StoryDAL
+                    {
                         Story_id =1,
+                        sprint_id =1,
+                        StoryPoints=40,
                         Name ="Add something usefull",
+                        StartDate = new DateTime(2019, 5,1),
+                        EndDate = new DateTime(2019, 5, 3),
                         Description = "Long longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong long description",
                         Rank = 12,
                         StoryState_id = 1
                     },
-
                     new StoryDAL
                     {
                         Story_id =2,
-                        Name ="Fix very bad bug",
-                        Description = "The shortest description",
-                        Rank = 4,
-                        StoryState_id = 2
+                        sprint_id =1,
+                        StoryPoints=5,
+                        Name ="Add something usefull",
+                        StartDate = new DateTime(2019, 5,1),
+                        EndDate = new DateTime(2019, 5, 5),
+                        Description = "Long longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong longLong long description",
+                        Rank = 12,
+                        StoryState_id = 5
                     },
                     new StoryDAL
                     {
                         Story_id =3,
+                        sprint_id =1,
+                        StoryPoints = 10,
+                        StartDate = new DateTime(2019, 5,1),
+                        EndDate = new DateTime(2019, 5, 15),
+                        Name ="Fix very bad bug",
+                        Description = "The shortest description",
+                        Rank = 4,
+                        StoryState_id = 5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =4,
+                        sprint_id = 2,
+                        StoryPoints = 20,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 5, 30),
                         Name ="Test something",
                         Description = "Description3",
                         Rank = 40,
-                        StoryState_id=2
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =5,
+                        sprint_id = 2,
+                        StoryPoints = 30,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 3),
+                        Name ="Create chart",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =6,
+                        sprint_id = 2,
+                        StoryPoints = 15,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 7),
+                        Name ="Create chat",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =7,
+                        sprint_id = 2,
+                        StoryPoints = 10,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 8),
+                        Name ="Create team entity",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
+                    },
+                    new StoryDAL
+                    {
+                        Story_id =8,
+                        sprint_id = 2,
+                        StoryPoints = 5,
+                        StartDate = new DateTime(2019, 5,24),
+                        EndDate = new DateTime(2019, 6, 11),
+                        Name ="Create team controller",
+                        Description = "Description4",
+                        Rank = 40,
+                        StoryState_id=5
                     }
                 }
             );
+            modelBuilder.Entity<TeamDAL>().HasData(
+                new TeamDAL[]
+                {
+                    new TeamDAL{TeamID = 1, Name = "Lv-396.1 .Net", Project = "Scrumban"},
+                    new TeamDAL{TeamID = 2, Name = "New Team", Project = "New Project"}
+                }
+            );
             base.OnModelCreating(modelBuilder);
+        }
+
+        // generating password hash
+        private string generatePasswordHash(string inputPassword)
+        {
+            SHA512 sha512 = SHA512.Create();
+            byte[] bytes = Encoding.UTF8.GetBytes(inputPassword);
+            byte[] hash = sha512.ComputeHash(bytes);
+            return GetStringFromHash(hash);
+        }
+
+        private string GetStringFromHash(byte[] hash)
+        {
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                result.Append(hash[i].ToString("X2"));
+            }
+            return result.ToString();
         }
     }
 }

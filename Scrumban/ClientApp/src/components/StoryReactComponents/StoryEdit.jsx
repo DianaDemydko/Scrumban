@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
-const updateStoryUri = "/api/storyGrid/editStory";
+const updateStoryUri = "/api/storyGrid/UpdateStory";
 
 // consts of stable tables
 const priorityTable = data.priority;
@@ -73,7 +73,7 @@ export class StoryEdit extends React.Component {
 	render() {
 		return <tr className="current-row">
 			<td colSpan="4">
-				<form>
+				
 					<div className="form-group">
 						<div className="col-md-7">
 							<label for="name">Name</label>
@@ -89,7 +89,7 @@ export class StoryEdit extends React.Component {
 					<div className="form-group">
 						<div className="col-md-7">
 							<label for="priority">Priority</label>
-							<select class="form-control" id="priority" onChange={this.onPriorityChanged} placeholder="story priority" defaultValue={this.props.item.priority.name}>
+                        <select class="btn btn-light dropdown-toggle w-100 m-0" id="priority" onChange={this.onPriorityChanged} placeholder="story priority" defaultValue={this.props.item.priority.name}>
 								{priorityTable.map((item) => <option>{item.name}</option>)}
 							</select>
 						</div>
@@ -97,16 +97,16 @@ export class StoryEdit extends React.Component {
 					<div className="form-group">
 						<div className="col-md-7">
 							<label for="storyState">State</label>
-							<select class="form-control" id="storyState" onChange={this.onStateChanged} placeholder="story state" defaultValue={this.props.item.storyState.name}>
+                        <select class="btn btn-light dropdown-toggle w-100 m-0" id="storyState" onChange={this.onStateChanged} placeholder="story state" defaultValue={this.props.item.storyState.name}>
 								{stateTable.map((item) => <option>{item.name}</option>)}
 							</select>
 						</div>
 					</div>
-				</form>
+				
 			</td>
 			<td>
-				<button type="submit" onClick={this.onSubmit} className="btn btn-primary button-fixed">Save</button>
-				<button type="submit" onClick={this.props.edit} className="btn btn-danger button-fixed">Cancel</button>
+                <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark w-100 m-1">Save</button>
+                <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-dark w-100 m-1">Cancel</button>
 			</td>
 		</tr>;
 	}

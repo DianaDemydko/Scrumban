@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
+using System.Collections.Generic;
+
 
 namespace Scrumban.DataAccessLayer.Models
 {
@@ -15,6 +17,10 @@ namespace Scrumban.DataAccessLayer.Models
         [ForeignKey("StoryState")]
         public int StoryState_id { get; set; }
 
+        [ForeignKey("Sprint")]
+        public int sprint_id { get; set; }
+
+        public int StoryPoints { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Rank { get; set; }
@@ -24,5 +30,10 @@ namespace Scrumban.DataAccessLayer.Models
 
         //Navigation properties
         public StoryStateDAL StoryState { get; set; }
+
+        public IEnumerable<TaskDAL> Tasks { get; set; }
+
+        public int? FeatureId { get; set; }
+        public FeatureDAL Feature { get; set; }
     }
 }

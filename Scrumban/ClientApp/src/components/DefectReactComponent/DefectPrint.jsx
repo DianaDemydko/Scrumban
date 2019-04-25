@@ -8,18 +8,16 @@ export class DefectPrint extends React.Component {
     render() {
         return (
             <tr key={this.props.key}>
-                <td>{this.props.item.name}</td>
-                <td>{this.props.item.description}</td>
-                <td>{this.props.item.state}</td>
-                <td>{this.props.item.priority}</td>
-                <td>{this.props.item.severity}</td>
-                <td>{this.props.item.storyId}</td>
-                <td>{this.props.item.status}</td>
-                <td>
-                    <button style={{ width: '100%' }} type="button" onClick={this.props.editDefect} className="btn btn-outline-primary">Edit</button>
-                </td>
-                <td>
-                    <button style={{ width: '100%' }} type="submit" onClick={this.props.deleteDefect} className="btn btn-outline-danger">Delete</button>
+                <td class="col">{this.props.item.name}</td>
+                <td class="col">{this.props.item.description}</td>
+                <td class="col">{this.props.item.state}</td>
+                <td class="col">{this.props.item.priority}</td>
+                <td class="col">{this.props.item.severity}</td>
+                <td class="col">{this.props.item.storyId}</td>
+                <td class="col" style={{ 'margin': '15px' }}>{this.props.item.status}</td>
+                <td class="col">
+                    <button type="button" onClick={this.props.editDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
+                    <button type="submit" onClick={this.props.deleteDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
                 </td>
             </tr>
         );

@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Scrumban.ServiceLayer.DTO
 {
-    public class LoginDTO
+    public class TeamDTO
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public int TeamID { get; set; }
+        public string Name { get; set; }
+        public string Project { get; set; }
     }
 }

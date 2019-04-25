@@ -1,4 +1,5 @@
-﻿using Scrumban.DataAccessLayer;
+﻿using AutoMapper;
+using Scrumban.DataAccessLayer;
 using Scrumban.DataAccessLayer.Models;
 using Scrumban.ServiceLayer.DTO;
 using Scrumban.ServiceLayer.Interfaces;
@@ -10,33 +11,27 @@ namespace Scrumban.ServiceLayer.Services
     public class FeatureService : IFeatureService
     {
         private UnitOfWork _unitOfWork;
+        private IMapper mapper;
 
         public FeatureService(ScrumbanContext options)
         {
             _unitOfWork = new UnitOfWork(options);
+             mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<FeatureDAL, FeatureDTO>();
+                cfg.CreateMap<FeatureDTO, FeatureDAL>();
+                cfg.CreateMap<StateDAL, StateDTO>();
+                cfg.CreateMap<PriorityDAL, PriorityDTO>();
+                cfg.CreateMap<StoryDAL, StoryDTO>();
+                cfg.CreateMap<StoryDTO, StoryDAL>();
+            }).CreateMapper();
+        }
+        public FeatureDTO GetByID(int _id)
+        {
+            return mapper.Map<FeatureDAL, FeatureDTO>(_unitOfWork.Feature.GetByID(_id));
         }
         public IQueryable<FeatureDTO> Get()
         {
-            IQueryable<FeatureDAL> features = _unitOfWork.Feature.GetAll();
-            List<FeatureDTO> featureDTOs = new List<FeatureDTO>();
-            foreach (var item in features)
-            {
-                featureDTOs.Add(new FeatureDTO()
-                {
-                    ID = item.ID,
-                    Name = item.Name,
-                    Description = item.Description,
-                    StateID = item.StateID,
-                    State = item.State,
-                    OwnerID = item.OwnerID,
-                    Owner = item.Owner,
-                    Priority = item.Priority,
-                    Time = item.Time
-
-                });
-            }
-            return featureDTOs.AsQueryable();
-
+            return mapper.Map<IQueryable<FeatureDAL>, List<FeatureDTO>>(_unitOfWork.Feature.GetAll()).AsQueryable();
         }
 
         public void Delete(FeatureDTO feature)
@@ -56,7 +51,7 @@ namespace Scrumban.ServiceLayer.Services
                 State = feature.State,
                 OwnerID = feature.OwnerID,
                 Owner = feature.Owner,
-                Priority = feature.Priority,
+                PriorityID = feature.PriorityID,
                 Time = feature.Time
 
             });
@@ -74,10 +69,34 @@ namespace Scrumban.ServiceLayer.Services
                 State = feature.State,
                 OwnerID = feature.OwnerID,
                 Owner = feature.Owner,
-                Priority = feature.Priority,
+                PriorityID = feature.PriorityID,
                 Time = feature.Time
             });
             _unitOfWork.Save();
         }
+
+        public IEnumerable<PriorityDTO> GetPriorities()
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<PriorityDAL, PriorityDTO>();
+            }).CreateMapper();
+            return mapper.Map<IEnumerable<PriorityDAL>, IEnumerable<PriorityDTO>>(_unitOfWork.Feature.GetAllPriorities());
+        }
+        public IEnumerable<StateDTO> GetStates()
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<StateDAL, StateDTO>();
+            }).CreateMapper();
+            return mapper.Map<IEnumerable<StateDAL>, IEnumerable<StateDTO>>(_unitOfWork.Feature.GetAllStates());
+        }
+
+        //public IQueryable<StoryDTO> GetAllStories()
+        //{
+        //    var mapper = new MapperConfiguration(cfg => {
+        //        cfg.CreateMap<StoryDAL, StoryDTO>();
+        //        cfg.CreateMap<StoryDTO, StoryDAL>();
+        //    }).CreateMapper();
+        //    return mapper.Map<IQueryable<StoryDAL>, IQueryable<StoryDTO>>(_unitOfWork.StoryRepository.GetAll());
+        //}
     }
 }

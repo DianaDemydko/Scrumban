@@ -7,12 +7,8 @@ import { Login } from './Login';
 import { Register } from './Register';
 import { ProfilePage } from './UserProfileComponents/ProfilePage';
 import { About } from './About';
-
 import { TaskGrid } from '../TaskReactComponenets/TaskGrid';
 import { TaskAdd } from '../TaskReactComponenets/TaskAdd';
-
-//import { Logout } from './Logout';
-
 import { SideBar } from "./SideBar";
 import './SideBar.css';
 import { DefectGrid } from '../DefectReactComponent/DefectGrid';
@@ -22,29 +18,36 @@ import { StoryGrid } from '../StoryReactComponents/StoryGrid';
 import { DefectAdd } from '../DefectReactComponent/DefectAdd';
 import Kanban  from '../KanbanBoard/KanbanMain';
 import { SprintCreateForm } from '../Sprint/CreateForm/SprintCreateForm';
-
+import { Home } from '../Home';
+import { BurnUp_DownCharts } from '../ChartReactComponents/BurnUp_DownCharts';
+import { AddFeature } from '../FeatureReactComponents/AddFeature';
+import { AdminTable } from '../AdminGridReactComponents/AdminTable';
+import { StoryAdd } from '../StoryReactComponents/StoryAdd';
+import { TeamGrid } from '../TeamReactComponent/TeamGrid';
+import { TeamAdd } from '../TeamReactComponent/TeamAdd';
+import { Chat } from '../Chat';
 
 export class Body extends React.Component {
     constructor(props) {
         super(props);
-      
-        this.state = {
-            i: 1
-        }
+
     }
 
     render() {
         var renderedComponent;
 
         switch (this.props.renderedComponentName) {
+            case 'admin':
+                renderedComponent = <AdminTable moveToComponent={this.props.moveToComponent} />
+                break
             case 'login':
-                renderedComponent = <Login parentOnLoginStatusCallBack={this.props.parentOnLoginStatusCallBack} />
+                renderedComponent = <Login moveToComponent={this.props.parentOnLoginStatusCallBack} />
                 break
             case 'signup':
                 renderedComponent = <Register moveToComponent={this.props.moveToComponent} />
                 break
             case 'profile':
-                renderComponent = <ProfilePage key={this.state.i++} moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
+                renderedComponent = <ProfilePage moveToComponent={this.props.moveToComponent} user={this.props.user} updateUser={this.props.updateUser}/>
                 break
             case 'about':
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />
@@ -58,8 +61,14 @@ export class Body extends React.Component {
             case 'feature':
                 renderedComponent = <FeatureTable moveToComponent={this.props.moveToComponent} />
                 break
+            case 'featureAdd':
+                renderedComponent = <AddFeature moveToComponent={this.props.moveToComponent} />
+                break;
             case 'stories':
                 renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} />
+                break
+            case 'storyAdd':
+                renderedComponent = <StoryAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'sprints':
                 renderedComponent = <SprintMain moveToComponent={this.props.moveToComponent} />
@@ -72,24 +81,38 @@ export class Body extends React.Component {
                 break
             case 'defectAdd':
                 renderedComponent = <DefectAdd moveToComponent={this.props.moveToComponent} />
-                break 
+                break
+            case 'teams':
+                renderedComponent = <TeamGrid moveToComponent={this.props.moveToComponent} />
+                break
+            case 'teamAdd':
+                renderedComponent = <TeamAdd moveToComponent={this.props.moveToComponent} />
+                break
+            case 'chat':
+                renderedComponent = <Chat moveToComponent={this.props.moveToComponent} />
+                break
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
                 break
+            case 'burnDown_Up':
+                renderedComponent = <BurnUp_DownCharts />
+                break
             default:
-                renderedComponent = this.props.children
+                renderedComponent = <Home />
         }
         
-        return (<Grid fluid>
-            <Row>
-                <Col>  
-                    <SideBar moveToComponent={this.props.moveToComponent} />
-                </Col>
-                <Col sm={10}>
-                    {renderedComponent}
-                </Col>
-            </Row>
-        </Grid>
+
+        return (<div>
+            <div> 
+                {this.props.panelLoginStatus == true ?
+                    (<SideBar moveToComponent={this.props.moveToComponent} />) :
+                    ""
+            }
+            </div>
+            <div> 
+              {renderedComponent}
+            </div> 
+        </div>
         )
     }
 }

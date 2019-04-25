@@ -15,8 +15,11 @@ namespace Scrumban.DataAccessLayer.Interfaces
         //To get user 
         UsersDAL GetUserAccount(string email, string password);
 
-        void Create(UsersDAL user, PictureDAL picture);
-        void Update(UsersDAL user, PictureDAL picture);
+        void Create(UsersDAL user);
+        void Update(UsersDAL user);
+        void PictureUpdate(PictureDAL picture);
+
+        IEnumerable<RoleDAL> GetRoles();
     }
 }
 

@@ -10,29 +10,43 @@ namespace Scrumban.DataAccessLayer
 
         private ISprintRepository _sprintRepository;
         private ISprintStatusRepository _sprintStatusRepository;
-        private IDefectRepository defectRepository;
+        private IDefectRepository _defectRepository;
         private IStoryRepository _storyRepository;
         private IStoryStateRepository _storyStateRepository;
-        private ITaskRepository taskRepository;
-        private IFeatureRepository feature_repository;
+        private ITaskRepository _taskRepository;
+        private IFeatureRepository _feature_repository;
         private IUserRepository _userRepository;
+        private ITokenRefreshRepository _tokenRefreshRepository;
+        private ITaskChangeHistoryRepository _taskChangeHistoryRepository;
+        private ITeamRepository _teamRepository;
+
 
         public UnitOfWork(ScrumbanContext scrumbanContext)
         {
             _scrumbanContext = scrumbanContext;
         }
 
-         public IFeatureRepository Feature
+        public IFeatureRepository Feature
         {
             get
             {
-                if (feature_repository == null)
-                    feature_repository = new FeatureRepository(_scrumbanContext);
+                if (_feature_repository == null)
+                    _feature_repository = new FeatureRepository(_scrumbanContext);
 
-                return feature_repository;
+                return _feature_repository;
             }
         }
-      
+        public IStoryStateRepository StoryStateRepository
+        {
+            get
+            {
+                if (_storyStateRepository == null)
+                {
+                    _storyStateRepository = new StoryStateRepository(_scrumbanContext);
+                }
+                return _storyStateRepository;
+            }
+        }
 
         public ISprintRepository SprintRepository
         {
@@ -64,11 +78,11 @@ namespace Scrumban.DataAccessLayer
         {
             get
             {
-                if (defectRepository == null)
+                if (_defectRepository == null)
                 {
-                    defectRepository = new DefectRepository(_scrumbanContext);
+                    _defectRepository = new DefectRepository(_scrumbanContext);
                 }
-                return defectRepository;
+                return _defectRepository;
             }
         }
         public IStoryRepository StoryRepository
@@ -83,27 +97,16 @@ namespace Scrumban.DataAccessLayer
             }
         }
 
-        public IStoryStateRepository StoryStateRepository
-        {
-            get
-            {
-                if(_storyStateRepository == null)
-                {
-                    _storyStateRepository = new StoryStateRepository(_scrumbanContext);
-                }
-                return _storyStateRepository;
-            }
-        }
 
         public ITaskRepository Tasks
         {
             get
             {
-                if (taskRepository == null)
+                if (_taskRepository == null)
                 {
-                    taskRepository = new TaskRepository(_scrumbanContext);
+                    _taskRepository = new TaskRepository(_scrumbanContext);
                 }
-                return taskRepository;
+                return _taskRepository;
             }
         }
 
@@ -119,6 +122,43 @@ namespace Scrumban.DataAccessLayer
                 }
 
                 return _userRepository;
+            }
+        }
+
+        public ITokenRefreshRepository TokenRefreshRepository
+        {
+            get
+            {
+                if(_tokenRefreshRepository == null)
+                {
+                    _tokenRefreshRepository = new TokenRefreshRepository(_scrumbanContext);
+                }
+                return _tokenRefreshRepository;
+            }
+        }
+        
+        public ITaskChangeHistoryRepository TaskChangeHistoryRepository
+        {
+            get
+            {
+                if(_taskChangeHistoryRepository == null)
+                {
+                    _taskChangeHistoryRepository = new TaskChangeHistoryRepository(_scrumbanContext);
+                }
+                return _taskChangeHistoryRepository;
+            }
+        }
+
+        public ITeamRepository TeamRepository
+        {
+            get
+            {
+                if (_teamRepository == null)
+                {
+                    _teamRepository = new TeamRepository(_scrumbanContext);
+                }
+
+                return _teamRepository;
             }
         }
 

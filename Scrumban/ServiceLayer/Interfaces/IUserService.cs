@@ -1,6 +1,8 @@
 ﻿using Scrumban.ServiceLayer.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Scrumban.ServiceLayer.Interfaces
 {
@@ -18,5 +20,13 @@ namespace Scrumban.ServiceLayer.Interfaces
         bool CheckAvailability(string email, string password);
         //To get user 
         UserDTO GetUserAccount(string email, string password);
+
+        IEnumerable<RoleDTO> GetRoles();
+
+        string createToken(IEnumerable<Claim> claims, DateTime tokenExpire);
+
+        string createRefreshToken(int userId, int lifetime);
+
+        string updateTokens(string oldRefreshToken, int userId);
     }
 }

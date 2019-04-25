@@ -2,9 +2,8 @@
 import { SprintRow } from './SprintRow'
 import buildQuery from 'odata-query'
 import DatePicker from "react-datepicker";
-import { Link } from 'react-router-dom';
 
-const CreateSprintURL = "/CreateNewSprint";
+import './css/SprintTable.css';
 
 export class SprintTable extends React.Component
 {
@@ -348,7 +347,13 @@ export class SprintTable extends React.Component
             startDateSearch: null,
             endDateSearch: null,
             statusSearch: "All",
+            currentSort:
+            {
+                columnName: '',
+                sortingOrder: ''
+            }
         })
+        this.fetchSprintData("")
     }
 
     renderSprintsTable(sprints) {
@@ -419,12 +424,12 @@ export class SprintTable extends React.Component
                             </th>
                             <th>
                                 <div>
-                                    <button type="button" style={{ width: '100%'}} class="btn btn-primary" onClick={this.onFiltersApply}>Apply Filters</button>
+                                    <button type="button"  class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.onFiltersApply}>Apply Filters</button>
                                     </div>
                             </th>
                             <th>
                                 <div>
-                                    <button type="button" style={{ width: '100%' }} class="btn btn-primary" onClick={this.clearFilters}>Clear Filters</button>
+                                    <button type="button"  class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.clearFilters}>Clear Filters</button>
                                 </div>
                             </th>
                         </tr>
@@ -443,7 +448,7 @@ export class SprintTable extends React.Component
                 </tbody>
             </table>
                 <div>
-                    <button onClick={() => this.props.moveToComponent2("sprintAdd")} className="btn btn btn-info">Create New Sprint</button>
+                    <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn btn-sm btn-outline-dark m-1">Create New Sprint</button>
                 </div>
             </div>
             )
@@ -458,9 +463,8 @@ export class SprintTable extends React.Component
             : this.renderSprintsTable(this.state.sprints);
 
         return (
-            <div>
+            <div id="Table-container">
                 <h1>Sprints</h1>
-                <button type="button" class="btn btn-primary" onClick={() => { this.fetchSprintData("") }} >Load Sprint Table</button>
                 {content}
             </div>
         );

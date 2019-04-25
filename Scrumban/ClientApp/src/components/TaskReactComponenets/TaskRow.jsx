@@ -18,6 +18,12 @@ export class TaskRow extends React.Component {
         this.onChangedTask = this.onChangedTask.bind(this);
     }
 
+    componentWillReceiveProps(newProps) {
+        if (this.props.task != newProps.task) {
+            this.setState({task: newProps.task})
+        }
+    }
+
     onRemoveTask() {
         this.props.onRemove(this.state.task.id);
     }
@@ -33,8 +39,24 @@ export class TaskRow extends React.Component {
     render() {
         return <tbody>
             {this.state.printOrEdit ?
-                (<TaskPrint item={this.state.task} edit={this.onPrintOrEdit} delete={this.onRemoveTask}/>)
-                : (<TaskEdit item={this.state.task} edit={this.onPrintOrEdit} delete={this.onRemoveTask} changed={this.onChangedTask} states={this.props.states} priorities={this.props.priorities}/>)
+                (<TaskPrint
+                    item={this.state.task}
+                    edit={this.onPrintOrEdit}
+                    delete={this.onRemoveTask}
+                    moveToComponent={this.props.moveToComponent}
+                />)
+
+                : (<TaskEdit
+                    item={this.state.task}
+                    edit={this.onPrintOrEdit}
+                    delete={this.onRemoveTask}
+                    changed={this.onChangedTask}
+                    states={this.props.states}
+                    priorities={this.props.priorities}
+                    users={this.props.users}
+                    stories={this.props.stories}
+                    moveToComponent={this.props.moveToComponent}
+                />)
             }
         </tbody>;
     }

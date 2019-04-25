@@ -1,24 +1,19 @@
 ﻿.header {
     width: auto;
     height: auto;
-    margin-left: 20px;
-    margin-top:50px;
-    padding:60px;
+    margin: auto;
+
 }
     .header img {
-        position:absolute;
-        top: 5px;
-        left: 150px;
-        right: 0px;
-        width: 68%;
-        height: 95%;
+
+        width: 100%;
+        margin-top: 15px;
     }
 .info {
-    position: absolute;
-    left: 150px;
     width: 700px;
     height: 165px;
-    padding: 0px;
+    margin: auto;
+ 
 }
 p {
     font-size: 1.4rem;
@@ -28,7 +23,7 @@ p {
     text-indent: 1.5em;
     text-align:justify;
 }
-.info em  {
+.container em  {
     font-size: 1.5rem;
     text-transform: capitalize;
     text-shadow: -1px -1px 1px #aaa, 0px 2px 1px rgba(0,0,0,0.5), 2px 2px 2px rgba(0,0,0,0.7), 0px 0px 3px rgba(0,0,0,0.4);
