@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import buildQuery from 'odata-query';
-import { Link } from 'react-router-dom';
 import { TeamEdit } from './TeamEdit';
 
 
@@ -8,22 +7,21 @@ class DeleteButton extends Component {
 
     constructor(props) {
         super(props);
-
         this.onClick = this.onClick.bind(this);
     }
     onClick(e) {
-      
+        e.preventDefault();
         var data = JSON.stringify({ "id" : this.props.teamIDtoDelete })
         fetch("api/team/" + this.props.teamIDtoDelete, {
             method: 'delete',
             headers: { "Content-Type": "application/json" }
-        })
-            
+        });
+       
        
     }
     render() {
         return (
-            <button onClick={e => this.onClick(e)} class="btn btn-dark">
+            <button onClick={this.onClick} className="btn btn-sm btn-outline-dark w-100 m-1">
                 Delete
             </button>
         );
@@ -38,6 +36,7 @@ class TeamRow extends Component {
             
         }
         this.onStateChanged = this.onStateChanged.bind(this);
+       
     }
     onStateChanged(editState) {
         this.setState({ edit: editState });
@@ -45,7 +44,6 @@ class TeamRow extends Component {
     render() {
         return (this.state.edit ? <TeamEdit teamEdit={this.props.team} onStateUpdating={this.onStateChanged} /> :
             <TeamPrint onStateUpdating={this.onStateChanged} team={this.props.team} />
-
         );
     }
 }
@@ -72,7 +70,7 @@ class TeamPrint extends Component {
                 <td class="col"  > {this.state.team.name} </td>
                 <td class="col" > {this.state.team.project} </td>
                 <td>
-                    <button class="btn btn-dark" id='editButton' onClick={e => this.onEditButtonClick(e)} >
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit
                                 </button>
                     <DeleteButton
@@ -83,14 +81,6 @@ class TeamPrint extends Component {
         </tbody>);
     }
 }
-
-
-
-
-
-
-
-
 
 
 export class TeamGrid extends Component {
@@ -194,7 +184,6 @@ export class TeamGrid extends Component {
 
     }
 
-
     componentDidMount() {
 
         fetch('api/team/getTeams')
@@ -224,7 +213,7 @@ export class TeamGrid extends Component {
                     <th> <input type='text' onChange={e => this.onFindNameChange(e)} /> </th>
                     <th><input type='text' onChange={e => this.onFindProjectChange(e)} /></th>
 
-                    <th><button class="btn btn-dark" onClick={this.findData}>
+                    <th><button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.findData}>
                         Find
                         </button></th>
                 </tr>
@@ -239,7 +228,7 @@ export class TeamGrid extends Component {
 
                 onClick={() => this.props.moveToComponent("teamAdd")}
 
-                className="btn btn-sm btn-outline-dark"
+                className="btn btn-sm btn-outline-dark m-1"
 
             >Create new</button>
             <div />

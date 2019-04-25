@@ -1,9 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-const addTeamUrl = "/api/team/teamAdd";
-const cancelUrl = "/teams";
-
 export class TeamAdd extends React.Component {
     constructor(props) {
         super(props);
@@ -14,6 +11,7 @@ export class TeamAdd extends React.Component {
         this.onTeamNameChanged = this.onTeamNameChanged.bind(this);
         this.onTeamProjectChanged = this.onTeamProjectChanged.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
 
     }
 
@@ -50,11 +48,16 @@ export class TeamAdd extends React.Component {
         this.setState({ teamName: "", teamProject: "" });
         this.props.moveToComponent("teams");
     }
+    onCancel(e) {
+        e.preventDefault();
+        this.props.moveToComponent("teams");
+    }
     render() {
         return (
             <div>
                 <h3>Add team</h3>
-                <form onSubmit={this.onSubmit}>
+                <form>
+                    
                     <div className="form-group">
                         <div className="">
                             <label for="teamName">Name</label>
@@ -67,12 +70,8 @@ export class TeamAdd extends React.Component {
                             <textarea rows="3" class="form-control" onChange={this.onTeamProjectChanged} id="teamProject" placeholder="project" />
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-dark button-fixed">Submit</button>
-
-
-                    <Link to={cancelUrl}>
-                        <button type="submit" className="btn btn-dark  button-fixed">Cancel</button>
-                    </Link>
+                    <button type="submit" className="btn btn-sm btn-outline-dark m-1" onClick={this.onSubmit}>Submit</button>
+                    <button type="submit" className="btn btn-sm btn-outline-dark m-1" onClick={this.onCancel}>Cancel</button>
                 </form>
             </div>
         );

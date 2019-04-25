@@ -84,12 +84,13 @@ namespace Scrumban.BusinessLogicLayer
         public void UpdateTeam(TeamDTO teamDTO)
         {
             var team = _unitOfWork.TeamRepository.GetByID(teamDTO.TeamID);
-                team = new TeamDAL
-                {
-                    TeamID = teamDTO.TeamID,
-                    Name = teamDTO.Name,
-                    Project = teamDTO.Project
-                };
+            team = new TeamDAL
+            {
+                TeamID = teamDTO.TeamID,
+                Name = teamDTO.Name,
+                Project = teamDTO.Project
+            };
+                _unitOfWork.TeamRepository.Update(team);
                 _unitOfWork.Save();
             
         }

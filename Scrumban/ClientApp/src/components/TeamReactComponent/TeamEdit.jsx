@@ -20,17 +20,18 @@ export class TeamEdit extends Component {
         this.setState({ project: e.target.value });
     }
     onSubmit() {
-        fetch('api/team/editTeam/', {
+
+        fetch('api/team/edit/', {
             method: 'post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "id": this.props.teamEdit.id,
+                "teamID": this.props.teamEdit.teamID,
                 "name": this.state.name,
                 "project": this.state.project
             })
         });
-
-
+        this.props.onStateUpdating(false);
+        
     }
     onCancel() {
 
@@ -55,8 +56,8 @@ export class TeamEdit extends Component {
                 </form>
             </td>
             <td>
-                <button type="submit" onClick={this.onSubmit} class="btn btn-dark">Save</button>
-                <button type="submit" onClick={this.onCancel} class="btn btn-dark">Cancel</button>
+                <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark m-1">Save</button>
+                <button type="submit" onClick={this.onCancel} className="btn btn-sm btn-outline-dark m-1">Cancel</button>
             </td>
         </tr>;
 
