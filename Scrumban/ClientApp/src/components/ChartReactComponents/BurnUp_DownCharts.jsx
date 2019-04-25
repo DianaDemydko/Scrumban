@@ -114,7 +114,22 @@ function IdealTaskRemeaning(duration, sumOfAllPoints) {
 /*=====Function for forming array of data for Actual Task Remaining(Burn Down)=====*/
 function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllPoints) {
     var resault_array = [];
-   // resault_array.push(sumOfAllPoints);
+    ///sorting by dates
+    doneStories.sort(function compare(a, b){
+        var dateA = new Date(a.endDate);
+        var dateB = new Date(b.endDate);
+        return dateA - dateB;
+    });
+    ///delete stories with the same end date except one
+    for (var i = 0; i < doneStories.length ; i++) {
+        for (var j = i+1; j < doneStories.length; j++) {
+            if (doneStories[i].endDate == doneStories[j].endDate) {
+                doneStories[i].storyPoints += doneStories[j].storyPoints;
+                doneStories.splice(j, 1);
+                j++;
+            }
+        }
+    }
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
         for (var i = 0; i < doneStories.length; i++) {
@@ -140,7 +155,6 @@ function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllP
         }
     }
     return resault_array;
-
 }
 /*=====Function fpr forming array of data for Total (Burn Up) */
 function FormTotalLine(duration, sumOfAllPoints) {
@@ -154,7 +168,22 @@ function FormTotalLine(duration, sumOfAllPoints) {
 function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
     var resault_array = [];
     var value = 0;
-    //resault_array.push(value);
+    ///sorting by dates
+    doneStories.sort(function compare(a, b) {
+        var dateA = new Date(a.endDate);
+        var dateB = new Date(b.endDate);
+        return dateA - dateB;
+    });
+    ///delete stories with the same end date except one
+    for (var i = 0; i < doneStories.length; i++) {
+        for (var j = i + 1; j < doneStories.length; j++) {
+            if (doneStories[i].endDate == doneStories[j].endDate) {
+                doneStories[i].storyPoints += doneStories[j].storyPoints;
+                doneStories.splice(j, 1);
+                j++;
+            }
+        }
+    }
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
         for (var i = 0; i < doneStories.length; i++) {
@@ -166,8 +195,6 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
             var s = a + '.' + b + '.' + year;
             datesOfDoneStories.push(s);
         }
-
-        //datesOfDoneStories.sort();
         var pointer_for_stories = 0;
         for (var i = 0 ; i < duration; i++) {
             if (arrayOfSprintDays[i] === datesOfDoneStories[pointer_for_stories]) {
@@ -178,7 +205,6 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
             } else {
                 resault_array.push(value);
             }
-
         }
     }
     return resault_array;
