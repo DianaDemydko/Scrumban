@@ -1,9 +1,19 @@
 ﻿import React, { Component } from 'react';
+import { toast } from 'react-toastify';
+
+const Msg = ({ closeToast, deleteDefect }) => (
+    <div>
+        <strong> Are you sure???</strong>
+        <button className="btn btn-light w-100 m-1" onClick={deleteDefect}> Yes </button>
+        <button className="btn btn-light w-100 m-1" onClick={closeToast}> No </button>
+    </div>
+)
 
 export class DefectPrint extends React.Component {
     constructor(props) {
         super(props);
     }
+
 
     render() {
         return (
@@ -16,8 +26,11 @@ export class DefectPrint extends React.Component {
                 <td class="col">{this.props.item.storyId}</td>
                 <td class="col" style={{ 'margin': '15px' }}>{this.props.item.status}</td>
                 <td class="col">
+                    
                     <button type="button" onClick={this.props.editDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
-                    <button type="submit" onClick={this.props.deleteDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
+                    <button type="submit" onClick={() => toast.error(<Msg deleteDefect={this.props.deleteDefect} />, {
+                        position: toast.POSITION.TOP_CENTER
+                    })} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
                 </td>
             </tr>
         );

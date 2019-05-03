@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 
 const apiGetUrl = "/api/DefectData/getDefects";
 const apiDeleteUrl = "/api/DefectData";
-
 const data = require('../../DefectData.json');
 const priorityOption = data.priority;
 const stateOption = data.state;
@@ -39,7 +38,6 @@ export class DefectGrid extends React.Component {
                 sortingOrder: ''
             }
         };
-
         this.loadData = this.loadData.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.onRemoveDefect = this.onRemoveDefect.bind(this);
@@ -61,6 +59,7 @@ export class DefectGrid extends React.Component {
         //pagination
         this.onChangePage = this.onChangePage.bind(this);
     }
+
     onChangePage(pageOfItems) {
         // update state with new page of items
         this.setState({
@@ -201,10 +200,11 @@ export class DefectGrid extends React.Component {
                 }
                 else if (response.status == 401) {
                     //var answer = window.confirm("You are not authorized. Move to Login page ?");
-                    toast.warn("You are not authorized. Login please !");
+                    toast.warn("You are not authorized. Please login!");
+                    window.location.replace("");
                    // if (answer == true) {
                         //window.location.replace("/login");
-                        this.props.moveToComponent("login")
+                    
                    // }
                 }
                 else if (response.status == 403) {
@@ -233,7 +233,6 @@ export class DefectGrid extends React.Component {
 
         if (defectId) {
             var url = apiDeleteUrl + "/" + defectId;
-
             var xhr = new XMLHttpRequest();
             xhr.open("delete", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");

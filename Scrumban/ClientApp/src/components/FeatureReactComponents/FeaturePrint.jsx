@@ -2,6 +2,7 @@
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
 import '../../GridStyles/StyleForGrid.css';
+import { toast } from 'react-toastify';
 
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
@@ -31,6 +32,7 @@ export class FeaturePrint extends Component {
             let responseStatus = response.status
             switch (responseStatus) {
                 case 200:
+                    toast.success("Feature was deleted !");
                     this.props.DeleteStatusChanged(true);
                     break
             }

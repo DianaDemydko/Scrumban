@@ -106,7 +106,7 @@ export class Body extends React.Component {
         
 
         return (<div>
-            <ToastContainer autoClose={3000} position="bottom-center" />
+            <ToastContainer autoClose={3000} position="bottom-right" />
             <div> 
                 {this.props.panelLoginStatus == true ?
                     (<SideBar moveToComponent={this.props.moveToComponent} />) :
