@@ -21,7 +21,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Scrumban.Hubs;
 
-
 namespace Scrumban
 {
     public class Startup
@@ -62,7 +61,8 @@ namespace Scrumban
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();
-
+            
+            services.AddTransient<IJiraService, JiraService>();
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDefectRepository, DefectRepository>();

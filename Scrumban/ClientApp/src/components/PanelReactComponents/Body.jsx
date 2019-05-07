@@ -29,6 +29,7 @@ import { Chat } from '../Chat';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { JiraPage } from '../JiraReactComponent/JiraPage';
 
 export class Body extends React.Component {
     constructor(props) {
@@ -90,6 +91,9 @@ export class Body extends React.Component {
                 break
             case 'teamAdd':
                 renderedComponent = <TeamAdd moveToComponent={this.props.moveToComponent} />
+                break
+            case 'jira':
+                renderedComponent = <JiraPage moveToComponent={this.props.moveToComponent} />
                 break
             case 'chat':
                 renderedComponent = <Chat moveToComponent={this.props.moveToComponent} />

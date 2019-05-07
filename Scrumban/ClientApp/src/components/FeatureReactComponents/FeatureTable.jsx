@@ -5,6 +5,7 @@ import '../../GridStyles/StyleForGrid.css';
 import { FeatureFilter } from './FeatureFilter.jsx';
 import { FeatureRow } from './FeatureRow.jsx';
 import { checkToken } from '../Helpers'
+import { toast } from 'react-toastify';
 
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
