@@ -6,6 +6,7 @@ import {
     Button
 } from "react-bootstrap";
 import { toast } from 'react-toastify';
+import img from '../JiraReactComponent/info.png';
 
 export class JiraPage extends React.Component {
     state = {
@@ -56,7 +57,7 @@ export class JiraPage extends React.Component {
                         toast.success("Synchronization was successful!!!");
                         break
                     case 404:
-                        toast.error("Incorrect login or password!");
+                        toast.error("Incorrect Email or Token!");
                         break
                     default:
                         toast.error("Something wrong!!");
@@ -77,7 +78,7 @@ export class JiraPage extends React.Component {
                 </div>
                 <br />
                 <FormGroup controlId="username" bsSize="large">
-                    <ControlLabel>Login</ControlLabel>
+                    <ControlLabel>Email in Jira</ControlLabel>
                     <FormControl
                         autoFocus
                         type="text"
@@ -86,7 +87,13 @@ export class JiraPage extends React.Component {
                     />
                     </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
-                    <ControlLabel>Password</ControlLabel>
+                    <ControlLabel>Token API in Jira</ControlLabel>
+                    <div className="dropdown" style={{ 'margin': '15px' }}>
+                        <span ><img src={img} width="15" height="15" /> </span>
+                        <div className="dropdown-content">
+                            <label>To generate an API token, click <a href="https://id.atlassian.com/manage/api-tokens#" target="_blank">here</a> and create a new one.</label>
+                        </div>
+                    </div>
                     <FormControl
                         value={this.state.password}
                         onChange={e => this.passwordChanged(e)}

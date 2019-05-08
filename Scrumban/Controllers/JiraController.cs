@@ -21,10 +21,10 @@ namespace Scrumban.Controllers
         
         public async Task<IActionResult> Index([FromBody]JiraLoginDTO login)
         {
-            var url = "https://ssu-jira.softserveinc.com";
-            //var url = "https://scrumban.atlassian.net";
+            //var url = "https://ssu-jira.softserveinc.com";
+            var url = "https://scrumban.atlassian.net";
             var username = login.Username;
-            var password = login.Password;
+            var password = login.Password;//bIBZVGD4iO8JtzaQipZT4136
 
             try
             {
