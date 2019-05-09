@@ -1,12 +1,16 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { StoryComponent } from './StoryComponent';
+import '../../GridStyles/StyleForGrid.css';
 
 //import '../../index.css';
 
 // const
-const apiUrlGet = "/api/storyGrid/GetStories";
-const apiUrlDelete = "/api/storyGrid";
+
+const apiUrlDelete = "/api/Story/DeleteStory";
+
+//const icon_up = require("./sort-arrow-up.svg")
+//const icon_down = require("./sort-arrow-down.svg")
 
 
 
@@ -15,31 +19,70 @@ export class StoryGrid extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { stories: [] };
+        this.state = {
+            stories: []
+        };
 
         this.onRemoveStory = this.onRemoveStory.bind(this);
-        this.onAdded = this.onAdded.bind(this);
         this.onChanged = this.onChanged.bind(this);
+        this.loadData = this.loadData.bind(this);
+        this.fetchSprints = this.fetchSprints.bind(this);
     }
-
-    // Load data
-    loadData() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("get", apiUrlGet, true);
-        xhr.setRequestHeader("Content-Type", "application/json")
-        xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            this.setState({ stories: data });
-        }.bind(this);
-        xhr.send();
-    }
-
-    componentDidMount() {
+    onDeleteItem(id) {
+        var newStory = this.state.stories.filter(function (x) {
+            return x.story_id != id;
+        });
+        this.setState({ stories: newStory });
         this.loadData();
     }
+    // Load data
+    loadData() {
+        fetch('api/Story/GetStories', {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    if (answer == true) {
+                        window.location.replace("/login");
+                    }
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            })
+            .then(data =>
+                this.setState({ stories: data })
+        );
+    }
+    fetchSprints() {
 
-    onAdded(item) {
-        this.setState({ stories: this.state.stories.push(item) });
+        fetch("/api/sprint/index")
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                this.setState({ sprints: data })
+
+            });
+
+    }
+    componentDidMount(){
+        this.loadData();
+        this.fetchSprints();
+    }
+    componentWillUpdate() {
+        this.loadData();
     }
 
     onChanged(item) {
@@ -50,17 +93,29 @@ export class StoryGrid extends React.Component {
     }
 
     onRemoveStory(id) {
-        var url = apiUrlDelete + "/" + id;
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("delete", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onload = function () {
-            if (xhr.status == 200) {
-                this.loadData();
+        fetch('/api/Story/' + id, {
+            method: "delete",
+            headers: {
+                'Content-Type': 'application/json'
             }
-        }.bind(this);
-        xhr.send();
+        }).then(function (response) {
+            if (response.status == 200) {
+                this.onDeleteItem(id);
+                }
+                else if (response.status == 401) {
+                    var answer = window.confirm("You are not authorized. Move to Login page ?")
+                    if (answer == true) {
+                        window.location.replace("/login");
+                    }
+                }
+                else if (response.status == 403) {
+                    alert("ERROR! You have not permission !")
+                }
+                else {
+                    alert("ERROR! Status code: " + response.status)
+                }
+            }.bind(this));
     }
 
     render() {
@@ -71,14 +126,17 @@ export class StoryGrid extends React.Component {
             <div className="tablePosition">
                 <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
                     <thead>
-                        <th className="col">Name</th>
-                        <th className="col">Description</th>
-                        <th className="col">Priority</th>
-                        <th className="col">State</th>
+                        <th className="col" style={{ cursor: 'pointer' }}>Name</th>
+                        <th className="col" style={{ cursor: 'pointer' }}>State</th>
+                        <th className="col" style={{ cursor: 'pointer' }}>Description</th>
+                        <th className="col" style={{ cursor: 'pointer' }}>Story points</th>
+                        <th className="col" style={{ cursor: 'pointer' }}>Rank</th>
+                        <th class="col"  />
+                        <th class="col" />
                     </thead>
-                    {this.state.stories.map(function (story) { return <StoryComponent key={story.id} story={story} onRemove={remove} onChanged={changed} /> })}
+                    {this.state.stories.map(function (story) { return <StoryComponent key={story.id} story={story}  onRemove={remove} onChanged={changed} /> })}
                 </table>
-                <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("storyAdd")}>Create New</button>
+                <button class="btn btn-sm btn-outline-dark" style={{ 'margin': '20px' }} onClick={() => this.props.moveToComponent("storyAdd")}>Create New</button>
             </div>
         </div>
         );

@@ -154,13 +154,15 @@ export class CycleTimeChart extends React.Component {
             },
         }
         return (
-            <div className='centered'>
+            <div className='container'>
+                <div className='centered'>
                 <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>
                 <h3 className='header'>Cycle Tyme</h3>
                 <Bar data={dataCycleTime} options={optionsCycleTime} />
+                </div>
             </div>
             );
     }

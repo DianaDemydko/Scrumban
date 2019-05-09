@@ -2,72 +2,110 @@
 import { Link } from 'react-router-dom';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 // consts of urls
-const addStoryUri = "/api/storyGrid/CreateStory";
+const addStoryUri = "/api/Story/CreateStory";
 const cancelUrl = "/stories";
 // consts of stable tables
-const priorityTable = data.priority;
 const stateTable = data.storyState;
-
+var check = false;
 
 export class StoryAdd extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            name: "", description: "", priority: priorityTable[0].name, storyState: stateTable[0].name
+            name: "",
+            description: "",
+            allSprints: [],
+            storyState: stateTable[0].name,
+            sprint: "",
+            storyPoints: 1,
+            rank: 1
         };
 
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
-        this.onPriorityChanged = this.onPriorityChanged.bind(this);
+        this.onSprintChanged = this.onSprintChanged.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
+        this.onStoryPointsChanged = this.onStoryPointsChanged.bind(this);
+        this.onRankChanged = this.onRankChanged.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onNameChanged(e) {
         this.setState({ name: e.target.value });
     }
-
+    onStoryPointsChanged(e) {
+        this.setState({ storyPoints: e.target.value });
+    }
+    onRankChanged(e) {
+        this.setState({ rank: e.target.value });
+    }
     onDescriptionChanged(e) {
         this.setState({ description: e.target.value });
     }
 
-    onPriorityChanged(e) {
-        this.setState({ priority: e.target.value });
+    onSprintChanged(e) {
+        check = true;
+        this.setState({ sprint: e.target.value });
     }
 
     onStateChanged(e) {
         this.setState({ storyState: e.target.value });
     }
 
-    onAdd(story) {
-        if (story) {
-            var data = JSON.stringify({ "name": story.name, "description": story.description });
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("post", addStoryUri, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status == 200) {
-
-                }
-            }.bind(this);
-            xhr.send(data);
-        }
-    }
-
     onSubmit(e) {
         e.preventDefault();
+        var storySprintId = 1;
+        if (check === false) {
+            storySprintId = this.state.allSprints[0].sprint_id;
+        }
+        else {
+            check = false;
+            storySprintId = this.state.allSprints.find(x => x.name === this.state.sprint).sprint_id;
+        }
         var storyName = this.state.name;
         var storyDescription = this.state.description;
-        var storyPriorityId = priorityTable.find(x => x.name === this.state.priority).id;
-        var storyStateId = stateTable.find(x => x.name === this.state.storyState).id;
+        var storyPoints = this.state.storyPoints;
+        var storyRank = this.state.rank;
+        var storyState = this.state.storyState;
 
-        let story = { name: storyName, description: storyDescription, priority: storyPriorityId, storyState: storyStateId };
-        this.onAdd(story);
-        this.setState({ name: "", description: "", priorityId: 2, storyStateId: 1 });
-        //window.location.replace("/stories");
+        fetch('api/Story/CreateStory',
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    name: storyName,
+                    description: storyDescription,
+                    sprint_id: storySprintId,
+                    storyState: storyState,
+                    storyPoints: storyPoints,
+                    rank: storyRank
+                })
+
+            })
+            .then(function (response) {
+                let responseStatus = response.status
+                switch (responseStatus) {
+                    case 400:
+                        alert("Creating element went wrong!")
+                        break
+                    case 200:
+                        this.props.moveToComponent("sprints");
+                        break
+                }
+            }.bind(this))
         this.props.moveToComponent("stories");
+    }
+    componentDidMount() {
+        fetch('api/Sprint/Index')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    allSprints: json
+                })
+            });
     }
    
 
@@ -78,21 +116,30 @@ export class StoryAdd extends React.Component {
                 <div />
                     <div className="addContent">
                     <label class="col-2">Name</label>
-                    <input type="text" className="inputAdd" onChange={this.onNameChanged} id="name" placeholder="story name" autoComplete="false" />
+                    <input type="text" className="inputAdd" onChange={e => this.onNameChanged(e)} id="name" placeholder="story name" autoComplete="false" />
                         </div>
                 <div className="addContent">
                     <label class="col-2" for="description">Description</label>
-                    <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="story description" />
+                    <textarea rows="3" className="inputAdd" onChange={e=>this.onDescriptionChanged(e)} id="description" placeholder="story description" />
                         </div>
                     <div className="addContent">
-                    <label class="col-2" for="priority">Priority</label>
-                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={this.onPriorityChanged} id="priority" placeholder="story priority" defaultValue={priorityTable[0].name}>
-                                {priorityTable.map((item) => <option>{item.name}</option>)}
-                            </select>
-                        </div>
+                        <label class="col-2">Story Points</label>
+                        <input type="text" className="inputAdd" onChange={e=>this.onStoryPointsChanged(e)} id="storyPoints" placeholder="story points" autoComplete="false" />
+                    </div>
+                    <div className="addContent">
+                        <label class="col-2">Rank</label>
+                        <input type="text" className="inputAdd" onChange={e=>this.onRankChanged(e)} id="rank" placeholder="story rank" autoComplete="false" />
+                </div>
+                <div className="addContent">
+                    <label class="col-2" for="sprints">Sprint</label>
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                        {this.state.allSprints.map(sprint => (
+                            <option> {sprint.name}</option>))}
+                    </select>
+                </div>
                     <div className="addContent">
                     <label class="col-2" for="storyState">State</label>
-                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={this.onStateChanged} id="storyState" placeholder="story state" defaultValue={stateTable[0].name}>
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={e=>this.onStateChanged(e)} id="storyState" placeholder="story state">
                                 {stateTable.map((item) => <option>{item.name}</option>)}
                             </select>
                 </div>

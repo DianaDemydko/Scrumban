@@ -410,7 +410,8 @@ export class BurnUp_DownCharts extends React.Component {
         }
 
         return (
-            <div className='centered'>
+            <div className='container'>
+                <div className='centered'>
                 <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
@@ -418,7 +419,9 @@ export class BurnUp_DownCharts extends React.Component {
                 <h3 className='header'>Burn Down</h3>
                 <Line data={dataBurnDown} options={optionsBurnDown} />
                 <h3 className='header'>Burn Up</h3>
-                <Line data={dataBurnUp} options={optionsBurnUp} />
+                    <Line data={dataBurnUp} options={optionsBurnUp} />
+                </div>
+
             </div>
         );
     }

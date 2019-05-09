@@ -76,10 +76,11 @@ namespace Scrumban.Controllers
             }
         }
 
-        [HttpDelete("DeleteStory")]
+        [HttpDelete("{story_id}")]
+        [Route ("/api/[controller]/DeleteStory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult DeleteStory([FromBody] int story_id)
+        public IActionResult DeleteStory( int story_id)
         {
             try
             {

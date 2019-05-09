@@ -48,8 +48,14 @@ namespace Scrumban.ServiceLayer.Services
 
         public void CreateStory(StoryDTO storyDTO)
         {
-            StoryDAL storyDAL = _mapper.Map<StoryDAL>(storyDTO);
-            storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == storyDTO.StoryState).StoryState_id;
+            StoryDAL storyDAL = new StoryDAL() {
+                Name = storyDTO.Name,
+                Description = storyDTO.Description,
+                Rank = storyDTO.Rank,
+                sprint_id = storyDTO.sprint_id,
+                StoryPoints = storyDTO.StoryPoints,
+            };
+           storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == storyDTO.StoryState).StoryState_id;
 
             _unitOfWork.StoryRepository.Create(storyDAL);
             _unitOfWork.Save();
