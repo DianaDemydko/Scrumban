@@ -18,7 +18,11 @@ export class StoryComponent extends React.Component {
         this.onChangedStory = this.onChangedStory.bind(this);
         this.onChangedEditStory = this.onChangedEditStory.bind(this);
     }
-
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            data: newProps
+        })
+    }
     onRemoveStory() {
         this.props.onRemove(this.state.data.story_id);
     }
