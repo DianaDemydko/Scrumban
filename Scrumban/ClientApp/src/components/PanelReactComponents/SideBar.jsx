@@ -23,10 +23,20 @@ export class SideBar extends React.Component {
                         <a className="menu-item" onClick={() => this.props.moveToComponent("tasks")}>Tasks</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("defects")}>Defects</a>
                     </div>
-                <a className="menu-item" onClick={() => this.props.moveToComponent("burnDown_Up")}>Burn Up and Burn Down charts</a>
+                </a>
+                <a className="menu-dropdown">
+                    <a className="dropbtn">Charts
+                    <i className="fa fa-caret-down"></i>
+                    </a>
+                    <div className="menu-dropdown-content">
+                        <a className="menu-item" onClick={() => this.props.moveToComponent("burnDown_Up")}>Burn Up and Burn Down charts</a>
+                        <a className="menu-item" onClick={() => this.props.moveToComponent("cycle_time")}>Cycle Time chart</a>
+                    </div>
+                </a>
+                
                 <a className="menu-item" onClick={() => this.props.moveToComponent("chat")}>Chat</a>
                 <a className="menu-item" onClick={() => this.props.moveToComponent("jira")}>JiraSync</a>
-                <a className="menu-item" onClick={() => this.props.moveToComponent("cycle_time")}>Cycle Time chart</a>
+                
 
             </Menu>
         );
