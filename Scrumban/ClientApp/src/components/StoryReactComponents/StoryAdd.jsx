@@ -22,7 +22,6 @@ export class StoryAdd extends React.Component {
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onSprintChanged = this.onSprintChanged.bind(this);
-        this.onStateChanged = this.onStateChanged.bind(this);
         this.onStoryPointsChanged = this.onStoryPointsChanged.bind(this);
         this.onRankChanged = this.onRankChanged.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -44,10 +43,6 @@ export class StoryAdd extends React.Component {
     onSprintChanged(e) {
         check = true;
         this.setState({ sprint: e.target.value });
-    }
-
-    onStateChanged(e) {
-        this.setState({ storyState: e.target.value });
     }
 
     onSubmit(e) {
@@ -133,12 +128,6 @@ export class StoryAdd extends React.Component {
                         {this.state.allSprints.map(sprint => (
                             <option> {sprint.name}</option>))}
                     </select>
-                </div>
-                    <div className="addContent">
-                    <label class="col-2" for="storyState">State</label>
-                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={e=>this.onStateChanged(e)} id="storyState" placeholder="story state">
-                                {stateTable.map((item) => <option>{item.name}</option>)}
-                            </select>
                 </div>
                 <div className="addContent">
                     <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={this.onSubmit}> Submit</button>
