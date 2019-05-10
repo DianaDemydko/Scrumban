@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import { Line } from "react-chartjs-2";
+import { toast } from "react-toastify"; 
 import './css/BurnUp_DownCharts.css'
 
 
@@ -290,7 +291,9 @@ export class BurnUp_DownCharts extends React.Component {
             }
         }
         catch (e) {
-            window.alert("Cannot build chart because of data conflict in story's and sprint's dates.");
+
+            toast.error("Cannot build chart because of data conflict in story's and sprint's dates.");
+            //window.alert("Cannot build chart because of data conflict in story's and sprint's dates.");
         }
     }
 
