@@ -26,9 +26,14 @@ import { StoryAdd } from '../StoryReactComponents/StoryAdd';
 import { TeamGrid } from '../TeamReactComponent/TeamGrid';
 import { TeamAdd } from '../TeamReactComponent/TeamAdd';
 import { Chat } from '../Chat';
+import { JiraPage } from '../JiraReactComponent/JiraPage';
 import { CycleTimeChart } from '../ChartReactComponents/CycleTimeChart';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+
+
+
 export class Body extends React.Component {
     constructor(props) {
         super(props);
@@ -90,6 +95,9 @@ export class Body extends React.Component {
             case 'teamAdd':
                 renderedComponent = <TeamAdd moveToComponent={this.props.moveToComponent} />
                 break
+            case 'jira':
+                renderedComponent = <JiraPage moveToComponent={this.props.moveToComponent} />
+                break
             case 'chat':
                 renderedComponent = <Chat moveToComponent={this.props.moveToComponent} />
                 break
@@ -103,7 +111,7 @@ export class Body extends React.Component {
                 renderedComponent = <CycleTimeChart />
                 break
             default:
-                renderedComponent = <Home />
+                renderedComponent = <Kanban />
         }
         
 

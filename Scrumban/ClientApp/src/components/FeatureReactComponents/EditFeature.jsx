@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { toast } from 'react-toastify';
 
 export class EditFeature extends Component {
     constructor(props) {
@@ -97,7 +98,8 @@ export class EditFeature extends Component {
             return j.story.name == e.target.value;
         });
         if (item.state == true) {
-            alert("Sory, if You want to remove any story from Feature you can do it only from Story Grid");
+            //alert("Sory, if You want to remove any story from Feature you can do it only from Story Grid");
+            toast.warn("Sory, if You want to remove any story from Feature you can do it only from Story Grid");
         }
         else {
             newStories.push(item.story);
@@ -121,6 +123,7 @@ export class EditFeature extends Component {
             let responseStatus = response.status
             switch (responseStatus) {
                 case 200:
+                    toast.success("Defect was updated !");
                     this.props.onStateUpdating(false);
                     this.props.onEditFeature();
                     break
