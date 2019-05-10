@@ -256,35 +256,42 @@ export class BurnUp_DownCharts extends React.Component {
 
     }
     onSprintChanged = async (e) => {
-        var CurentSprint = this.state.allSprints.find(x => x.name === e.target.value);
-        var sprint_id = CurentSprint.sprint_id;
-        var duration = GetDurationOfSprint(CurentSprint.startDate, CurentSprint.endDate);
-        var arrayOfLabels = UpdateXaxes(CurentSprint.startDate, CurentSprint.endDate, duration);
-        ///getting all stories which belong to current sprint
-        var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
-        var stories = await responce.json();
-        var sumOfpoints = SumOfStoryPoints(stories);
-        var dataForIdealTaskRemeaning = IdealTaskRemeaning(duration, sumOfpoints);
-        ///getting all stories that are done and which belong to current sprint
-        var responcee = await fetch('api/Chart/GetDoneStories/' + sprint_id);
-        var doneStories = await responcee.json();
-        var dataForActualTaskRemaining = ActualTaskRemaining(duration, doneStories, arrayOfLabels, sumOfpoints);
-        var dataForIdeal = FormIdealLine(duration, sumOfpoints);
-        var dataForCompleted = FormCompletedLine(duration, doneStories, arrayOfLabels);
-        var dataForTotal = FormTotalLine(duration, sumOfpoints);
-        this.setState({
-            sprintDays: arrayOfLabels,
-            currentSprintID: sprint_id,
-            currentSprint: CurentSprint,
-            allStoriesOfCurrentSprint: stories,
-            sumOfAllStoryPoints: sumOfpoints,
-            durationOfSprint: duration,
-            idealTaskRemainingArray: dataForIdealTaskRemeaning,
-            actualTaskRemainingArray: dataForActualTaskRemaining,
-            completedArray: dataForCompleted,
-            idealArray: dataForIdeal,
-            totalArray: dataForTotal
-        });
+        try {
+            if (e.target.value != "Select sprint here...") {
+                var CurentSprint = this.state.allSprints.find(x => x.name === e.target.value);
+                var sprint_id = CurentSprint.sprint_id;
+                var duration = GetDurationOfSprint(CurentSprint.startDate, CurentSprint.endDate);
+                var arrayOfLabels = UpdateXaxes(CurentSprint.startDate, CurentSprint.endDate, duration);
+                ///getting all stories which belong to current sprint
+                var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
+                var stories = await responce.json();
+                var sumOfpoints = SumOfStoryPoints(stories);
+                var dataForIdealTaskRemeaning = IdealTaskRemeaning(duration, sumOfpoints);
+                ///getting all stories that are done and which belong to current sprint
+                var responcee = await fetch('api/Chart/GetDoneStories/' + sprint_id);
+                var doneStories = await responcee.json();
+                var dataForActualTaskRemaining = ActualTaskRemaining(duration, doneStories, arrayOfLabels, sumOfpoints);
+                var dataForIdeal = FormIdealLine(duration, sumOfpoints);
+                var dataForCompleted = FormCompletedLine(duration, doneStories, arrayOfLabels);
+                var dataForTotal = FormTotalLine(duration, sumOfpoints);
+                this.setState({
+                    sprintDays: arrayOfLabels,
+                    currentSprintID: sprint_id,
+                    currentSprint: CurentSprint,
+                    allStoriesOfCurrentSprint: stories,
+                    sumOfAllStoryPoints: sumOfpoints,
+                    durationOfSprint: duration,
+                    idealTaskRemainingArray: dataForIdealTaskRemeaning,
+                    actualTaskRemainingArray: dataForActualTaskRemaining,
+                    completedArray: dataForCompleted,
+                    idealArray: dataForIdeal,
+                    totalArray: dataForTotal
+                });
+            }
+        }
+        catch (e) {
+            window.alert("Cannot build chart because of data conflict in story's and sprint's dates.");
+        }
     }
 
     render() {
@@ -412,7 +419,8 @@ export class BurnUp_DownCharts extends React.Component {
         return (
             <div className='container'>
                 <div className='centered'>
-                <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                    <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                        <option>Select sprint here...</option>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>

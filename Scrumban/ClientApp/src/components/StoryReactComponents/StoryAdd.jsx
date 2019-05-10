@@ -1,9 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
-// consts of urls
-const addStoryUri = "/api/Story/CreateStory";
-const cancelUrl = "/stories";
 // consts of stable tables
 const stateTable = data.storyState;
 var check = false;

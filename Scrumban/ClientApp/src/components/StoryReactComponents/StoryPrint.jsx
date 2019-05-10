@@ -9,7 +9,6 @@ export class StoryPrint extends React.Component {
         this.state = {
             listFeatureOpen: false,
             listSprintOpen: false,
-            //allSprints: this.props.sprints,
             story : this.props.item
         }
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);

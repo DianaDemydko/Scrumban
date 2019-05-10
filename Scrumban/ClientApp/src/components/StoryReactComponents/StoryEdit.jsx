@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
-const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
-const updateStoryUri = "/api/storyGrid/UpdateStory";
+const data = require('../../GlobalData.json'); // json file with stable tables (state)
 
 // consts of stable tables
 const stateTable = data.storyState;
@@ -60,7 +59,7 @@ export class StoryEdit extends React.Component {
                 method: 'put',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    story_id: story.id, name: story.name,
+                    story_id: story.story_id, name: story.name,
                     description: story.description,
                     storyPoints: story.storyPoints,
                     storyState: story.storyState,

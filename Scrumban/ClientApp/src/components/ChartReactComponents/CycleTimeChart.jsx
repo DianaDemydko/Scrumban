@@ -95,21 +95,23 @@ export class CycleTimeChart extends React.Component {
             });
     }
     onSprintChanged = async (e) => {
-        var currentSprint = this.state.allSprints.find(x => x.name === e.target.value);
-        var sprint_id = currentSprint.sprint_id;
-        ///get all stories
-        var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
-        var stories = await responce.json();
-        var xAxesLabels = GetLabelsOX(stories);
-        ///get cicle time days
-        var cycleTimeDays = GetCycleTimeDays(stories);
-        var maxValue = Math.max.apply(null, cycleTimeDays);
-        this.setState({
-            currentSprintStories: stories,
-            storyNames: xAxesLabels,
-            cycleTimeDays: cycleTimeDays,
-            maxCycleTime: maxValue
-        });
+        if (e.target.value != "Select sprint here...") {
+            var currentSprint = this.state.allSprints.find(x => x.name === e.target.value);
+            var sprint_id = currentSprint.sprint_id;
+            ///get all stories
+            var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
+            var stories = await responce.json();
+            var xAxesLabels = GetLabelsOX(stories);
+            ///get cicle time days
+            var cycleTimeDays = GetCycleTimeDays(stories);
+            var maxValue = Math.max.apply(null, cycleTimeDays);
+            this.setState({
+                currentSprintStories: stories,
+                storyNames: xAxesLabels,
+                cycleTimeDays: cycleTimeDays,
+                maxCycleTime: maxValue
+            });
+        }
 
     }
     render() {
@@ -156,11 +158,12 @@ export class CycleTimeChart extends React.Component {
         return (
             <div className='container'>
                 <div className='centered'>
-                <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                    <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                        <option>Select sprint here...</option>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>
-                <h3 className='header'>Cycle Tyme</h3>
+                <h3 className='header'>Cycle Time</h3>
                 <Bar data={dataCycleTime} options={optionsCycleTime} />
                 </div>
             </div>

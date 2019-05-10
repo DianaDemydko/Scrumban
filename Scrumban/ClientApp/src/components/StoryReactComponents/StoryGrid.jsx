@@ -1,14 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { StoryComponent } from './StoryComponent';
+import { StoryFilter } from './StoryFilter';
 import '../../GridStyles/StyleForGrid.css';
 
-//import '../../index.css';
-
 // const
-
-const apiUrlDelete = "/api/Story/DeleteStory";
-
 const icon_up = require("../FeatureReactComponents/sort-arrow-up.svg")
 const icon_down = require("../FeatureReactComponents/sort-arrow-down.svg")
 
@@ -40,6 +36,7 @@ export class StoryGrid extends React.Component {
         this.renderCaret = this.renderCaret.bind(this);
         this.onDeleteItem = this.onDeleteItem.bind(this);
         this.sortData = this.sortData.bind(this);
+        this.startFiltration = this.startFiltration.bind(this);
         //this.sortByName = this.sortByName.bind(this);
     }
 
@@ -192,10 +189,30 @@ export class StoryGrid extends React.Component {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(response => response.json())
-            .then(data => {
-                this.setState({ stories: data });
-            })
+        }).then(function (response) {
+            if (response.status == 200) {
+                return response.json()
+            }
+            else if (response.status == 401) {
+                var answer = window.confirm("You are not authorized. Move to Login page ?");
+                if (answer == true) {
+                    window.location.replace("/login");
+                }
+            }
+            else if (response.status == 403) {
+                alert("ERROR! You have not permission !")
+            }
+            else {
+                alert("ERROR! Status code: " + response.status)
+            }
+        }).then(data =>
+                this.setState({ stories: data })
+            );
+    }
+    startFiltration(filtrParam) {
+
+        this.loadData(filtrParam);
+
     }
 
 
@@ -204,6 +221,10 @@ export class StoryGrid extends React.Component {
         var changed = this.onChanged;
         return (<div>
             <label style={{ 'fontSize': '40px' }}>Stories</label>
+            <br />
+            <hr></hr>
+            <StoryFilter changeFilter={this.startFiltration} />
+            <hr></hr>
             <div className="tablePosition">
                 <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
                     <thead>
