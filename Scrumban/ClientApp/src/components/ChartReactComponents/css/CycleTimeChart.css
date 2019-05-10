@@ -1,12 +1,13 @@
-﻿
-.centered {
-margin-left: 5%;
+﻿.centered {
+    margin-left: 5%;
 }
+
 select {
     width: 100%;
     margin-top: 30px;
 }
-h3.header{
+
+h3.header {
     text-align: center;
-    padding:0;
+    padding: 0;
 }

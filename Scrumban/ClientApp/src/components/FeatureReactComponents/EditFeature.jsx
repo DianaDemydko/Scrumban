@@ -142,7 +142,7 @@ export class EditFeature extends Component {
                     <input type="text" class="form-control" onChange={e => this.onNameChanged(e)} defaultValue={this.state.name} />
                     </div>
             </td>
-                <td>
+            <td>
                     <div>
                         <label for="description">Description</label>
                     <input type="text" class="form-control" onChange={e => this.onDescriptionChanged(e)} defaultValue={this.state.description} />
