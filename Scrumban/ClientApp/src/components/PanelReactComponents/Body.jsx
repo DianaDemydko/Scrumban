@@ -26,10 +26,13 @@ import { StoryAdd } from '../StoryReactComponents/StoryAdd';
 import { TeamGrid } from '../TeamReactComponent/TeamGrid';
 import { TeamAdd } from '../TeamReactComponent/TeamAdd';
 import { Chat } from '../Chat';
+import { JiraPage } from '../JiraReactComponent/JiraPage';
+import { CycleTimeChart } from '../ChartReactComponents/CycleTimeChart';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { JiraPage } from '../JiraReactComponent/JiraPage';
+
+
 
 export class Body extends React.Component {
     constructor(props) {
@@ -103,6 +106,9 @@ export class Body extends React.Component {
                 break
             case 'burnDown_Up':
                 renderedComponent = <BurnUp_DownCharts />
+                break
+            case 'cycle_time':
+                renderedComponent = <CycleTimeChart />
                 break
             default:
                 renderedComponent = <Kanban />

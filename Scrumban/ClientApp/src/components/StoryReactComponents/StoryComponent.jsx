@@ -8,16 +8,18 @@ export class StoryComponent extends React.Component {
         super(props);
         // state : true - print
         // state : false - edit 
-        this.state = { data: props.story, states: true };
+        this.state = {
+            data: this.props.story,
+            states: true
+        };
 
         this.onRemoveStory = this.onRemoveStory.bind(this);
         this.onEditStory = this.onEditStory.bind(this);
         this.onChangedStory = this.onChangedStory.bind(this);
         this.onChangedEditStory = this.onChangedEditStory.bind(this);
     }
-
     onRemoveStory() {
-        this.props.onRemove(this.state.data.id);
+        this.props.onRemove(this.state.data.story_id);
     }
 
     onChangedStory() {
@@ -36,15 +38,10 @@ export class StoryComponent extends React.Component {
 
     render() {
         const isEdit = this.state.states;
-        return (
-
-
-            <tbody>
-                {isEdit ?
-                    (<StoryPrint item={this.state.data} edit={this.onEditStory} delete={this.onRemoveStory} />)
-                    : (<StoryEdit item={this.state.data} edit={this.onEditStory} delete={this.onRemoveStory} changed={this.onChangedEditStory} />)
-                }
-            </tbody>
+        return (isEdit ?
+            (<StoryPrint item={this.state.data}  edit={this.onEditStory} delete={this.onRemoveStory} moveToComponent={this.props.moveToComponent} />)
+            : (<StoryEdit item={this.state.data} edit={this.onEditStory} delete={this.onRemoveStory} changed={this.onChangedEditStory} moveToComponent={this.props.moveToComponent}/>)
+                
         )
     }
 }

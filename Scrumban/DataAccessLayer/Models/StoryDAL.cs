@@ -30,7 +30,6 @@ namespace Scrumban.DataAccessLayer.Models
 
         //Navigation properties
         public StoryStateDAL StoryState { get; set; }
-
         public IEnumerable<TaskDAL> Tasks { get; set; }
 
         public int? FeatureId { get; set; }
