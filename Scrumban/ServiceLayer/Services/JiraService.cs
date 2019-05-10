@@ -19,14 +19,13 @@ namespace Scrumban.ServiceLayer.Services
         {
             _unitOfWork = unitOfWork;
 
-            mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<GetIssue, DefectDAL>()
+            mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<GetIssue, StoryDAL>()
                 .ForMember(bs => bs.Name, opt => opt.MapFrom(c => c.Fields.Summary))
                 .ForMember(bs => bs.Description, opt => opt.MapFrom(c => c.Fields.Description))
-                .ForMember(bs => bs.State, opt => opt.MapFrom(c => c.Fields.Status.StatusCategory.Name));
+                .ForMember(bs => bs.StartDate, opt => opt.MapFrom(c => c.Fields.Created));
             }).CreateMapper();
-
-
         }
         public async Task<GetIssuesResponse> GetIssueResponse(string path, string username, string password)
         {
@@ -38,11 +37,11 @@ namespace Scrumban.ServiceLayer.Services
 
             for (var i = 0; i < issues.Issues.Length; i++) { 
                 var issue = await api.GetIssue(issues.Issues[i].Id);
-                var defect = mapper.Map<GetIssue, DefectDAL>(issue);
-                _unitOfWork.Defects.Create(defect);
+                var storyDAL = mapper.Map<GetIssue, StoryDAL>(issue);
+                storyDAL.StoryState_id= _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == issue.Fields.Status.Name).StoryState_id;
+
+                _unitOfWork.StoryRepository.Create(storyDAL);
             }
-
-
             _unitOfWork.Save();
 
             return issues;
