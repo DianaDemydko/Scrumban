@@ -59,7 +59,7 @@ export class StoryEdit extends React.Component {
                 method: 'put',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    story_id: story.story_id, name: story.name,
+                    story_id: story.id, name: story.name,
                     description: story.description,
                     storyPoints: story.storyPoints,
                     storyState: story.storyState,
