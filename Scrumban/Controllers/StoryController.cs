@@ -31,7 +31,8 @@ namespace Scrumban.Controllers
         [EnableQuery()]
         public IQueryable<StoryDTO> GetStories()
         {
-            
+            try { 
+           
                 IQueryable<StoryDTO> stories = _storyService.GetStories();
                 return stories;
             }

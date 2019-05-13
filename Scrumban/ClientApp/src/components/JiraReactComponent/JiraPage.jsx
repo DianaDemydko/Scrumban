@@ -40,34 +40,34 @@ export class JiraPage extends React.Component {
     
 
     handleSubmit(e) {
+        toast.warn("Wait please!")
         e.preventDefault();
-            fetch('/jira', {
-                method: 'post',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: this.state.username,
-                    password: this.state.password,
-                    project: this.state.project
-                })
+        fetch('/jira', {
+            method: 'post',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                project: this.state.project
+            })
 
-            }).then(function (response) {
-                let responseStatus = response.status
-                switch (responseStatus) {
-                    case 200:
-                        toast.success("Synchronization was successful!!!");
-                        break
-                    case 404:
-                        toast.error("Incorrect Email or Token!");
-                        break
-                    default:
-                        toast.error("Something wrong!!");
-                        break
+        }).then(function (response) {
+            let responseStatus = response.status
+            switch (responseStatus) {
+                case 200:
+                    toast.success("Synchronization was successful!!!");
+                    this.props.moveToComponent("kanbanBoard");
+                    break
+                case 404:
+                    toast.error("Incorrect Email or Token!");
+                    break
+                default:
+                    toast.error("Something wrong!!");
+                    break
 
-                }
-            }.bind(this))
-            this.props.moveToComponent("jira")
-            //window.location.replace("./login");
-        }
+            }
+        }.bind(this))
+    }
 
     render() {
         return (

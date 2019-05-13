@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
 // consts of stable tables
 const stateTable = data.storyState;
@@ -75,20 +76,18 @@ export class StoryAdd extends React.Component {
                     storyPoints: storyPoints,
                     rank: storyRank
                 })
-
-            })
-            .then(function (response) {
+            }).then(function (response) {
                 let responseStatus = response.status
                 switch (responseStatus) {
                     case 400:
-                        alert("Creating element went wrong!")
+                        toast.error("Something wrong  !");
                         break
-                    case 200:
-                        this.props.moveToComponent("sprints");
+                    case 201:
+                        toast.success("Story was created in database !");
+                        this.props.moveToComponent("stories");
                         break
                 }
             }.bind(this))
-        this.props.moveToComponent("stories");
     }
     componentDidMount() {
         fetch('api/Sprint/Index')

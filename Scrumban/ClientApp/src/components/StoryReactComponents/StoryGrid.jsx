@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { StoryComponent } from './StoryComponent';
 import { StoryFilter } from './StoryFilter';
+import { toast } from 'react-toastify';
 import '../../GridStyles/StyleForGrid.css';
 
 // const
@@ -45,6 +46,7 @@ export class StoryGrid extends React.Component {
             return x.story_id != id;
         });
         this.setState({ stories: newStory });
+        toast.success("You deleted a story!");
         this.loadData("");
     }
 
@@ -66,6 +68,7 @@ export class StoryGrid extends React.Component {
         var arr = this.state.stories;
         var index = arr.indexOf(x => x.id = item.id);
         arr[index] = item;
+        toast.success("You edited a story!");
         this.setState({ stories: arr });
     }
 
