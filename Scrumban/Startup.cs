@@ -21,9 +21,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Scrumban.Hubs;
 using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Features;
+using System.Net;
+using static Scrumban.Startup;
 
 namespace Scrumban
 {
+    public static class ApplicationBuilderExtensions
+    {
+        public static IApplicationBuilder UseHttpException(this IApplicationBuilder application)
+        {
+            return application.UseMiddleware<HttpExceptionMiddleware>();
+        }
+    }
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -31,7 +42,9 @@ namespace Scrumban
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-      
+
+        
+
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
@@ -109,7 +122,9 @@ namespace Scrumban
             //{
             app.UseExceptionHandler("/error");
 
-            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+            app.UseStatusCodePagesWithReExecute(" / StatusCode ? code ={ 0}");
+            app.UseHttpException();
+            
             app.UseHsts();
             //}
 
@@ -141,7 +156,7 @@ namespace Scrumban
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 0, seconds: 30);
+                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 1, seconds: 30);
                 
 
                 if (env.IsDevelopment())
@@ -154,6 +169,68 @@ namespace Scrumban
             
 
             
+        }
+
+
+        internal class HttpExceptionMiddleware
+        {
+            private readonly RequestDelegate next;
+
+            public HttpExceptionMiddleware(RequestDelegate next)
+            {
+                this.next = next;
+            }
+
+            public async Task Invoke(HttpContext context)
+            {
+                try
+                {
+                    await this.next.Invoke(context);
+                }
+                catch (HttpException httpException)
+                {
+                    context.Response.StatusCode = httpException.StatusCode;
+                    var responseFeature = context.Features.Get<IHttpResponseFeature>();
+                    responseFeature.ReasonPhrase = httpException.Message;
+                }
+            }
+        }
+
+        public class HttpException : Exception
+        {
+            private readonly int httpStatusCode;
+
+            public HttpException(int httpStatusCode)
+            {
+                this.httpStatusCode = httpStatusCode;
+            }
+
+            public HttpException(HttpStatusCode httpStatusCode)
+            {
+                this.httpStatusCode = (int)httpStatusCode;
+            }
+
+            public HttpException(int httpStatusCode, string message) : base(message)
+            {
+                this.httpStatusCode = httpStatusCode;
+            }
+
+            public HttpException(HttpStatusCode httpStatusCode, string message) : base(message)
+            {
+                this.httpStatusCode = (int)httpStatusCode;
+            }
+
+            public HttpException(int httpStatusCode, string message, Exception inner) : base(message, inner)
+            {
+                this.httpStatusCode = httpStatusCode;
+            }
+
+            public HttpException(HttpStatusCode httpStatusCode, string message, Exception inner) : base(message, inner)
+            {
+                this.httpStatusCode = (int)httpStatusCode;
+            }
+
+            public int StatusCode { get { return this.httpStatusCode; } }
         }
 
         private class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
@@ -189,5 +266,10 @@ namespace Scrumban
                 };
             }
         }
+
+
+       
+
+        
     }
 }

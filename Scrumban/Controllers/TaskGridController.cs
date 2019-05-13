@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net;
 
 namespace Scrumban.Controllers
 {
@@ -26,6 +27,7 @@ namespace Scrumban.Controllers
         public IQueryable<TaskDTO> GetTasks()
         {
             IQueryable<TaskDTO> tasks = _taskServise.GetTasks();
+            
             return tasks;
         }
 

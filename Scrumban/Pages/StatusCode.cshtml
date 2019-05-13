@@ -1,6 +1,8 @@
 ﻿@page
 @model int
-
+@{
+	ViewData["Title"] = "StatusCode";
+}
 @{
 	var statusCode = Model;
 	var statusmessage = "";
@@ -31,5 +33,5 @@
 <div class="jumbotron">
 	<h1>Error @Model</h1>
 	<h3>@statusmessage</h3>
-	<img src=@imgpath/>
+	<img src=@imgpath />
 </div>
