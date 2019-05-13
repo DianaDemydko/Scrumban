@@ -25,23 +25,20 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
-        [EnableQuery]
         [Route("GetStories")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetStories()
+        [EnableQuery()]
+        public IQueryable<StoryDTO> GetStories()
         {
             
                 IQueryable<StoryDTO> stories = _storyService.GetStories();
-                if (stories!=null)
-                {
-                    
-                    return Ok(stories);
-                }
-                else
-                {
-                    return NotFound();;
-                }
+                return stories;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         [HttpGet]
@@ -82,10 +79,11 @@ namespace Scrumban.Controllers
             }
         }
 
-        [HttpDelete("DeleteStory")]
+        [HttpDelete("{story_id}")]
+        [Route ("/api/[controller]/DeleteStory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult DeleteStory([FromBody] int story_id)
+        public IActionResult DeleteStory( int story_id)
         {
             try
             {

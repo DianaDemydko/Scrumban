@@ -2,19 +2,19 @@
 	"storyState": [
 		{
 			"id": "1",
-			"name": "Non Started"
+			"name": "Not Selected"
 		},
 		{
 			"id": "2",
-			"name": "In Progress"
+			"name": "Selected"
 		},
 		{
 			"id": "3",
-			"name": "Rejected"
+			"name": "In Progress"
 		},
 		{
 			"id": "4",
-			"name": "In Complete"
+			"name": "Testing"
 		},
 		{
 			"id": "5",
@@ -22,7 +22,7 @@
 		},
 		{
 			"id": "6",
-			"name": "Accepted"
+			"name": "Rejected"
 		}
 	],
   "priority": [

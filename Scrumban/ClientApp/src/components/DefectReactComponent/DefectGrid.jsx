@@ -4,11 +4,11 @@ import { Pagination } from './Pagination';
 import buildQuery from 'odata-query'
 import { checkToken } from '../Helpers'
 import '../../GridStyles/StyleForGrid.css';
+import { toast } from 'react-toastify';
 
 
 const apiGetUrl = "/api/DefectData/getDefects";
 const apiDeleteUrl = "/api/DefectData";
-
 const data = require('../../DefectData.json');
 const priorityOption = data.priority;
 const stateOption = data.state;
@@ -38,7 +38,6 @@ export class DefectGrid extends React.Component {
                 sortingOrder: ''
             }
         };
-
         this.loadData = this.loadData.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.onRemoveDefect = this.onRemoveDefect.bind(this);
@@ -60,6 +59,7 @@ export class DefectGrid extends React.Component {
         //pagination
         this.onChangePage = this.onChangePage.bind(this);
     }
+
     onChangePage(pageOfItems) {
         // update state with new page of items
         this.setState({
@@ -199,17 +199,20 @@ export class DefectGrid extends React.Component {
                     return response.json()
                 }
                 else if (response.status == 401) {
-                    var answer = window.confirm("You are not authorized. Move to Login page ?");
-                    if (answer == true) {
-                        window.location.replace("/login");
-                        //this.props.moveToComponent("login")
-                    }
+                    //var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    toast.warn("You are not authorized. Please login!");
+                    window.location.replace("");
+                   // if (answer == true) {
+                        //window.location.replace("/login");
+                    
+                   // }
                 }
                 else if (response.status == 403) {
-                    alert("ERROR! You have not permission !")
+                    toast.error("You have not permission  !");
                 }
                 else {
-                    alert("ERROR! Status code: " + response.status)
+                    toast.error("Something wrong  !");
+                    //alert("ERROR! Status code: " + response.status)
                 }
             })
             .then(data => { this.setState({ defects: data }) });
@@ -230,16 +233,16 @@ export class DefectGrid extends React.Component {
 
         if (defectId) {
             var url = apiDeleteUrl + "/" + defectId;
-
             var xhr = new XMLHttpRequest();
             xhr.open("delete", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onload = function () {
                 if (xhr.status == 200) {
+                    toast.success("Defect was deleted !");
                     this.loadData("");
                 }
                 if (xhr.status == 400) {
-                    alert("Defect have deleted already ! ")
+                    toast.error("Defect have deleted already ! ");
                     this.loadData("");
                 }
             }.bind(this);
@@ -250,10 +253,10 @@ export class DefectGrid extends React.Component {
     renderCaret(columnName) {
         if (this.state.currentSort.columnName == columnName) {
             if (this.state.currentSort.sortingOrder == 'asc') {
-                return (<span class="fa fa-caret-up" id="active-caret" /*style={{ color: '#2adc29' }}*/></span>)
+                return (<span class="fa fa-caret-up" id="active-caret" ></span>)
             }
             else {
-                return (<span class="fa fa-caret-down" id="active-caret" /*style={{ color: '#2adc29' }}*/></span>)
+                return (<span class="fa fa-caret-down" id="active-caret" ></span>)
             }
         }
         else {

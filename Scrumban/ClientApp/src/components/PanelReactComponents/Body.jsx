@@ -26,6 +26,13 @@ import { StoryAdd } from '../StoryReactComponents/StoryAdd';
 import { TeamGrid } from '../TeamReactComponent/TeamGrid';
 import { TeamAdd } from '../TeamReactComponent/TeamAdd';
 import { Chat } from '../Chat';
+import { JiraPage } from '../JiraReactComponent/JiraPage';
+import { CycleTimeChart } from '../ChartReactComponents/CycleTimeChart';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
+
 
 export class Body extends React.Component {
     constructor(props) {
@@ -88,6 +95,9 @@ export class Body extends React.Component {
             case 'teamAdd':
                 renderedComponent = <TeamAdd moveToComponent={this.props.moveToComponent} />
                 break
+            case 'jira':
+                renderedComponent = <JiraPage moveToComponent={this.props.moveToComponent} />
+                break
             case 'chat':
                 renderedComponent = <Chat moveToComponent={this.props.moveToComponent} />
                 break
@@ -97,12 +107,16 @@ export class Body extends React.Component {
             case 'burnDown_Up':
                 renderedComponent = <BurnUp_DownCharts />
                 break
+            case 'cycle_time':
+                renderedComponent = <CycleTimeChart />
+                break
             default:
-                renderedComponent = <Home />
+                renderedComponent = <Kanban />
         }
         
 
         return (<div>
+            <ToastContainer autoClose={3000} position="bottom-right" />
             <div> 
                 {this.props.panelLoginStatus == true ?
                     (<SideBar moveToComponent={this.props.moveToComponent} />) :

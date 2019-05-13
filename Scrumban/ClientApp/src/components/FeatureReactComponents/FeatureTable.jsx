@@ -5,6 +5,7 @@ import '../../GridStyles/StyleForGrid.css';
 import { FeatureFilter } from './FeatureFilter.jsx';
 import { FeatureRow } from './FeatureRow.jsx';
 import { checkToken } from '../Helpers'
+import { toast } from 'react-toastify';
 
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
@@ -148,16 +149,19 @@ export class FeatureTable extends Component {
                     return response.json()
                 }
                 else if (response.status == 401) {
-                    var answer = window.confirm("You are not authorized. Move to Login page ?");
-                    if (answer == true) {
-                        window.location.replace("/login");
-                    }
+                    toast.warn("You are not authorized. Please login!");
+                    window.location.replace("");
+                    //var answer = window.confirm("You are not authorized. Move to Login page ?");
+                    //if (answer == true) {
+                    //    this.props.moveToComponent("login")
+                    //}
                 }
                 else if (response.status == 403) {
-                    alert("ERROR! You have not permission !")
+                    toast.error("You have not permission  !");
                 }
                 else {
-                    alert("ERROR! Status code: " + response.status)
+                    toast.error("Something wrong  !");
+                   // alert("ERROR! Status code: " + response.status)
                 }
             })
             .then(data =>

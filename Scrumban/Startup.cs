@@ -75,7 +75,8 @@ namespace Scrumban
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer();
-
+            
+            services.AddTransient<IJiraService, JiraService>();
             services.AddTransient<IDefectService, DefectService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDefectRepository, DefectRepository>();

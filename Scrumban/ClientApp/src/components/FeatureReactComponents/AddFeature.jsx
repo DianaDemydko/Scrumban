@@ -2,6 +2,7 @@
 import DatePicker from 'react-datepicker';
 import '../../GridStyles/StyleForGrid.css';
 import { checkToken } from '../Helpers'
+import { toast } from 'react-toastify';
 
 
 export class AddFeature extends React.Component {
@@ -51,19 +52,24 @@ export class AddFeature extends React.Component {
             })
         }).then(function (response) {
             if (response.status == 200) {
+                toast.success("Feature was created in database !");
                 this.props.moveToComponent("feature");
             }
             else if (response.status == 401) {
-                var answer = window.confirm("You are not authorized. Move to Login page ?");
-                if (answer == true) {
-                    window.location.replace("/login");
-                }
+                //var answer = window.confirm("You are not authorized. Move to Login page ?");
+               // if (answer == true) {
+                    toast.warn("You are not authorized. Login please !");
+                    this.props.moveToComponent("login");
+                    //window.location.replace("/login");
+                //}
             }
             else if (response.status == 403) {
-                alert("ERROR! You have not permission !")
+                toast.error("You have not permission  !");
+                //alert("ERROR! You have not permission !")
             }
             else {
-                alert("ERROR! Status code: " + response.status)
+                toast.error("Something wrong  !");
+                //alert("ERROR! Status code: " + response.status)
             }
         }.bind(this))
     }
