@@ -103,7 +103,7 @@ export class Body extends React.Component {
                 break
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
-                break
+				break
             case 'burnDown_Up':
                 renderedComponent = <BurnUp_DownCharts />
                 break

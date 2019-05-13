@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Scrumban.ServiceLayer.DTO;
 using Scrumban.DataAccessLayer;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Web.Http;
 
 namespace Scrumban.Controllers
 {
@@ -29,8 +31,7 @@ namespace Scrumban.Controllers
         [EnableQuery()]
         public IQueryable<StoryDTO> GetStories()
         {
-            try
-            {
+            
                 IQueryable<StoryDTO> stories = _storyService.GetStories();
                 return stories;
             }
@@ -46,15 +47,17 @@ namespace Scrumban.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetStory(int id)
         {
-            try
+            
+            StoryDTO story = _storyService.GetStory(id);
+            if (story!=null)
             {
-                StoryDTO story = _storyService.GetStory(id);
                 return Ok(story);
             }
-            catch
+            else
             {
-                return NotFound();
+                return NotFound(); ;
             }
+            
         }
 
 

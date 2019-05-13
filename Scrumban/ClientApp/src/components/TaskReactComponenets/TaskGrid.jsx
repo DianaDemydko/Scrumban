@@ -130,19 +130,19 @@ export class TaskGrid extends React.Component {
 
             }
 
-            else if (response.status == 401) {
+            //else if (response.status == 401) {
 
-                alert("Not Authorized")
+            //    alert("Not Authorized")
 
-                window.location.replace("/login");
+            //    window.location.replace("/login");
 
-            }
+            //}
 
-            else {
+            //else {
 
-                alert(response.status + "Get tasks error")
+            //    alert(response.status + "Get tasks error")
 
-            }
+            //}
 
         }).then(data => this.setState({
 

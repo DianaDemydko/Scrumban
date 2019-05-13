@@ -41,6 +41,7 @@ namespace Scrumban.Controllers
             }
             catch
             {
+
                 return BadRequest();
             }
         }
