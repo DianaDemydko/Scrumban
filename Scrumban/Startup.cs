@@ -20,7 +20,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Scrumban.Hubs;
-
+using System;
 
 namespace Scrumban
 {
@@ -100,15 +100,18 @@ namespace Scrumban
        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+
+            //}
+            //else
+            //{
+            app.UseExceptionHandler("/error");
+
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+            app.UseHsts();
+            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -138,6 +141,8 @@ namespace Scrumban
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
+                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 0, seconds: 30);
+                
 
                 if (env.IsDevelopment())
                 {

@@ -63,6 +63,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\components\KanbanBoard\" />
+    <Folder Include="ClientApp\src\components\ErrorPageComponent\" />
     <Folder Include="ClientApp\src\components\Sprint\" />
   </ItemGroup>
 
