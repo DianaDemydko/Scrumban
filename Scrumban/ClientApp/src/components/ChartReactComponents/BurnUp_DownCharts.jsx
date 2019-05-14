@@ -332,7 +332,7 @@ export class BurnUp_DownCharts extends React.Component {
                     ticks: {
                         max: this.state.sumOfAllStoryPoints,
                         min: 0,
-                        stepSize: 5
+                        stepSize: 15
                     },
                     gridLines: {
                         color: "black",
@@ -396,7 +396,7 @@ export class BurnUp_DownCharts extends React.Component {
                     ticks: {
                         max: this.state.sumOfAllStoryPoints,
                         min: 0,
-                        stepSize: 5
+                        stepSize: 15
                     },
                     gridLines: {
                         color: "black",

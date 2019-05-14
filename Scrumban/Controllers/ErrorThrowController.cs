@@ -27,7 +27,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
-        [Route("Throw400")]
+        [Route("Throw403")]
         public IActionResult Throw403()
         {
             throw new Startup.HttpException(403, "Forbiden");
