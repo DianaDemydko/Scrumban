@@ -4,16 +4,15 @@ using Microsoft.AspNet.OData;
 using Scrumban.ServiceLayer.Interfaces;
 using Scrumban.ServiceLayer.DTO;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Scrumban.Controllers
 {
     [Route("api/[controller]")]
-    public class DefectDataController : Controller
+    public class DefectController : Controller
     {
         IDefectService _defectService;
-        public DefectDataController(IDefectService defectService)
+        public DefectController(IDefectService defectService)
         {
             _defectService = defectService;
         }
@@ -29,6 +28,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("/api/[controller]/addDefect")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -47,6 +47,7 @@ namespace Scrumban.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("/api/[controller]/editDefect")]
         public IActionResult Edit([FromBody]DefectDTO defectDTO)
         {
@@ -62,8 +63,9 @@ namespace Scrumban.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
+        [Route("/api/[controller]/deleteDefect/{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // [Route("/api/[controller]/deleteDefect")]
         public IActionResult Delete(int? id)
         {
             try

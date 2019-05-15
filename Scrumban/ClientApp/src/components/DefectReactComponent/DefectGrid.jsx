@@ -6,9 +6,8 @@ import { checkToken } from '../Helpers';
 import { toast } from 'react-toastify';
 import '../../GridStyles/StyleForGrid.css';
 
-const apiGetUrl = "/api/DefectData/getDefects";
-const apiDeleteUrl = "/api/DefectData";
-
+const apiGetUrl = "/api/Defect/getDefects";
+const apiDeleteUrl = "/api/Defect/deleteDefect";
 
 export class DefectGrid extends React.Component {
 
@@ -190,13 +189,13 @@ export class DefectGrid extends React.Component {
         var remove = this.onRemoveDefect;
 
         return (<div >
-            <label style={{ 'fontSize': '40px' }}> Defects </label>
+            <label style={{ 'fontSize': '40px','margin-left':'1%' }}> Defects </label>
 
             <DefectFilter loadData={this.loadData} />
 
             {/* Table*/}
-            <div className="tablePosition">
-                <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
+            <div className="tablePosition" style={{ 'margin-right': '1%', 'margin-left': '1%' }}>
+                <table class="table table-hover" style={{ 'table-layout': 'fixed' }} >
                     <thead>
                     <tr>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>

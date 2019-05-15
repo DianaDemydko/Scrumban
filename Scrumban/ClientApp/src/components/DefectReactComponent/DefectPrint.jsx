@@ -17,7 +17,7 @@ export class DefectPrint extends React.Component {
 
     render() {
         return (
-            <tr key={this.props.key}>
+            <tr key={this.props.key} >
                 <td class="col">{this.props.item.name}</td>
                 <td class="col">{this.props.item.description}</td>
                 <td class="col">{this.props.item.state}</td>

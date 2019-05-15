@@ -14,12 +14,12 @@ namespace Scrumban.ServiceLayer.Services
     public class JiraService : IJiraService
     {
         IUnitOfWork _unitOfWork { get; set; }
-        private IMapper mapper;
+        private IMapper _mapper;
         public JiraService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 
-            mapper = new MapperConfiguration(cfg =>
+            _mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<GetIssue, StoryDAL>()
                 .ForMember(bs => bs.Name, opt => opt.MapFrom(c => c.Fields.Summary))
@@ -37,7 +37,7 @@ namespace Scrumban.ServiceLayer.Services
 
             for (var i = 0; i < issues.Issues.Length; i++) { 
                 var issue = await api.GetIssue(issues.Issues[i].Id);
-                var storyDAL = mapper.Map<GetIssue, StoryDAL>(issue);
+                var storyDAL = _mapper.Map<GetIssue, StoryDAL>(issue);
                 storyDAL.StoryState_id= _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == issue.Fields.Status.Name).StoryState_id;
 
                 _unitOfWork.StoryRepository.Create(storyDAL);

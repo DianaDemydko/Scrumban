@@ -2,7 +2,7 @@
 import { checkToken } from '../Helpers';
 import { toast } from 'react-toastify';
 
-const apiEditUrl = "/api/DefectData/editDefect";
+const apiEditUrl = "/api/Defect/editDefect";
 const data = require('../../DefectData.json');
 const priorityOption = data.priority;
 const stateOption = data.state;

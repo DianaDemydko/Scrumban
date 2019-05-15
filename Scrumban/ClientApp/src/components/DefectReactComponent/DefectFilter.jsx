@@ -96,7 +96,7 @@ export class DefectFilter extends React.Component {
     render() {
 
         return (<div className='filterContainer' id='filterForm'>
-            <div class='row'>
+            <div class='row' style={{ 'margin-right': '1%', 'margin-left': '1%' }}>
                 <div class="col-sm">
                     <label>Name</label>
                 </div>
@@ -116,9 +116,9 @@ export class DefectFilter extends React.Component {
                     <label>Status</label>
                 </div>
                 <div class="col-sm" />
-                <div class="col-sm" />
+                <div class="col-sm"  />
             </div>
-            <div class="row">
+            <div class="row" style={{ 'margin-right': '1%', 'margin-left': '1%' }}>
                 <div class="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></div>
                 <div class="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></div>
                 <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>

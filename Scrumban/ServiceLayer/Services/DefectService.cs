@@ -1,5 +1,4 @@
 ﻿using Scrumban.DataAccessLayer.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -12,90 +11,52 @@ namespace Scrumban.ServiceLayer.Services
     public class DefectService : IDefectService
     {
         IUnitOfWork _unitOfWork { get; set; }
+        IMapper _mapper { get; set; }
 
         public DefectService(IUnitOfWork unitOfWork)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
+            _mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<DefectDAL, DefectDTO>();  
+            }
+            ).CreateMapper();
         }
 
         public IQueryable<DefectDTO> GetDefects()
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<DefectDAL, DefectDTO>();
-            }).CreateMapper();
-            return mapper.Map<IQueryable<DefectDAL>, List<DefectDTO>>(_unitOfWork.Defects.GetAll()).AsQueryable();
+            return _mapper.Map<IQueryable<DefectDAL>, List<DefectDTO>>(_unitOfWork.Defects.GetAll()).AsQueryable();
         }
 
         public DefectDTO GetDefect(int? id)
         {
-            if (id == null)
+            DefectDAL defectDAL = _unitOfWork.Defects.GetByID(id.Value);
+            if (defectDAL == null)
             {
-
+                return null;
             }
-            var defect = _unitOfWork.Defects.GetByID(id.Value);
-            if (defect == null)
-            {
-
-            }
-            return new DefectDTO
-            {
-                DefectId = defect.DefectId,
-                Name = defect.Name,
-                Description = defect.Description,
-                State = defect.State,
-                Severity = defect.Severity,
-                Priority = defect.Priority,
-                Status = defect.Status
-            };
+            DefectDTO defectDTO = _mapper.Map<DefectDTO>(defectDAL);
+            return defectDTO;
+            
         }
 
         public void AddDefect(DefectDTO defectDTO)
         {
-            if (defectDTO == null)
-            {
-
-            }
-            DefectDAL defect = new DefectDAL
-            {
-                DefectId = defectDTO.DefectId,
-                Name = defectDTO.Name,
-                Description = defectDTO.Description,
-                State = defectDTO.State,
-                Severity = defectDTO.Severity,
-                Priority = defectDTO.Priority,
-                Status = defectDTO.Status
-            };
-            _unitOfWork.Defects.Create(defect);
+            DefectDAL defectDAL = _mapper.Map<DefectDAL>(defectDTO);
+            _unitOfWork.Defects.Create(defectDAL);
             _unitOfWork.Save();
         }
         public void DeleteDefect(int? id)
         {
-            if (id == null)
-            {
-
-            }
             _unitOfWork.Defects.Delete(id.Value);
             _unitOfWork.Save();
         }
+
         public void UpdateDefect(DefectDTO defectDTO)
         {
-            if (defectDTO == null)
-            {
-
-            }
-            DefectDAL defect = new DefectDAL
-            {
-                DefectId = defectDTO.DefectId,
-                Name = defectDTO.Name,
-                Description = defectDTO.Description,
-                State = defectDTO.State,
-                Severity = defectDTO.Severity,
-                Priority = defectDTO.Priority,
-                Status = defectDTO.Status
-            };
-            _unitOfWork.Defects.Update(defect);
+            DefectDAL defectDAL = _mapper.Map<DefectDAL>(defectDTO);
+            _unitOfWork.Defects.Update(defectDAL);
             _unitOfWork.Save();
         }
-
     }
 }

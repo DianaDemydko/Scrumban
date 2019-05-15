@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { checkToken } from '../Helpers';
 import '../../GridStyles/StyleForGrid.css';
 
-const apiAddUrl = "/api/DefectData/addDefect";
+const apiAddUrl = "/api/Defect/addDefect";
 const data = require('../../DefectData.json');
 const priorityOption = data.priority;
 const stateOption = data.state;
@@ -90,7 +90,7 @@ export class DefectAdd extends React.Component {
                             break
                         case 401:
                             toast.warn("You are not authorized. Please login!");
-                            window.location.replace("");
+                            moveToComponentVar("login");
                             break
                         case 403:
                             toast.error("You have not permission !");
