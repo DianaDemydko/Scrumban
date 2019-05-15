@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React from 'react';
 import { toast } from 'react-toastify';
 
 const Msg = ({ closeToast, deleteDefect }) => (

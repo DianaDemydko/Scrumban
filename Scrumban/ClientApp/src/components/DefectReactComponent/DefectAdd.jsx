@@ -1,6 +1,7 @@
-﻿import React, { Component } from 'react';
-import '../../GridStyles/StyleForGrid.css';
+﻿import React from 'react';
 import { toast } from 'react-toastify';
+import { checkToken } from '../Helpers';
+import '../../GridStyles/StyleForGrid.css';
 
 const apiAddUrl = "/api/DefectData/addDefect";
 const data = require('../../DefectData.json');
@@ -9,13 +10,19 @@ const stateOption = data.state;
 const severityOption = data.severity;
 const statusOption = data.status;
 
-
-
 export class DefectAdd extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { name: "", description: "", state: stateOption[0].name, priority: priorityOption[0].name, severity: severityOption[0].name, storyId: "", status: statusOption[0].name };
+        this.state = {
+            name: "",
+            description: "",
+            state: stateOption[0].name,
+            priority: priorityOption[0].name,
+            severity: severityOption[0].name,
+            storyId: "",
+            status: statusOption[0].name
+        };
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
@@ -48,28 +55,55 @@ export class DefectAdd extends React.Component {
         this.setState({ status: e.target.value });
     }
 
-    //add
     onAddDefect(defect) {
         if (defect) {
+            checkToken()
+            var data = JSON.stringify({
+                "name": defect.name,
+                "description": defect.description,
+                "state": defect.state,
+                "priority": defect.priority,
+                "severity": defect.severity,
+                "storyId": defect.storyId,
+                "status": defect.status
+            });
 
-            var data = JSON.stringify({ "name": defect.name, "description": defect.description, "state": defect.state, "priority": defect.priority, "severity": defect.severity, "storyId": defect.storyId, "status": defect.status });
-            var xhr = new XMLHttpRequest();
+            var moveToComponentVar = this.props.moveToComponent;
 
-            xhr.open("post", apiAddUrl, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status == 200) {
-                    toast.success("Defect was created in database !");
-                    this.props.moveToComponent("defects");
-                }
-                else {
-                    toast.error("Something wrong !");
-                    return
-                }
-            }.bind(this);
-            xhr.send(data);
+            fetch(apiAddUrl, {
+                method: "post",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": "Bearer " + sessionStorage.getItem("tokenKey")
+                },
+                body: data
+            })
+                .then(function (response) {
+                    let responseStatus = response.status
+                    switch (responseStatus) {
+                        case 200:
+                            toast.success("Defect was created in database !");
+                            moveToComponentVar("defects");
+                            break
+                        case 400:
+                            toast.error("Incorrect data !");
+                            break
+                        case 401:
+                            toast.warn("You are not authorized. Please login!");
+                            window.location.replace("");
+                            break
+                        case 403:
+                            toast.error("You have not permission !");
+                            break
+                        default:
+                            toast.error("Something wrong!!");
+                            this.loadData("");
+                            break
+                    }
+                })
         }
     }
+   
     onSubmit(e) {
         e.preventDefault();
         var defectDescription = this.state.description.trim();
@@ -83,7 +117,6 @@ export class DefectAdd extends React.Component {
         this.onAddDefect(defect);
         this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
 
-        //window.location.replace("/defects");
     }
 
     render() {

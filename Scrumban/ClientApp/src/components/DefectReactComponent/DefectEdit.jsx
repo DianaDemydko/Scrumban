@@ -1,4 +1,5 @@
-﻿import React, { Component } from 'react';
+﻿import React from 'react';
+import { checkToken } from '../Helpers';
 import { toast } from 'react-toastify';
 
 const apiEditUrl = "/api/DefectData/editDefect";
@@ -13,7 +14,15 @@ export class DefectEdit extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { name: this.props.item.name, description: this.props.item.description, state: this.props.item.state, priority: this.props.item.priority, severity: this.props.item.severity, storyId: this.props.item.storyId, status: this.props.item.status };
+        this.state = {
+            name: this.props.item.name,
+            description: this.props.item.description,
+            state: this.props.item.state,
+            priority: this.props.item.priority,
+            severity: this.props.item.severity,
+            storyId: this.props.item.storyId,
+            status: this.props.item.status
+        };
 
         this.onNameChange = this.onNameChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
@@ -49,22 +58,48 @@ export class DefectEdit extends React.Component {
     }
 
     onUpdate(defect) {
-        if (defect) {
-            var data = JSON.stringify({ "defectId": defect.defectId, "name": defect.name, "description": defect.description, "state": defect.state, "priority": defect.priority, "severity": defect.severity, "storyId": defect.storyId, "status": defect.status });
-            var xhr = new XMLHttpRequest();
 
-            xhr.open("post", apiEditUrl, true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onload = function () {
-                if (xhr.status == 200) {
-                    toast.success("Defect was updated !");
-                }
-                else {
-                    toast.error("Something wrong !");
-                    return
-                }
-            }.bind(this);
-            xhr.send(data);
+        var data = JSON.stringify({
+            "defectId": defect.defectId,
+            "name": defect.name,
+            "description": defect.description,
+            "state": defect.state,
+            "priority": defect.priority,
+            "severity": defect.severity,
+            "storyId": defect.storyId,
+            "status": defect.status
+        });
+        var loadDataVar = this.props.loadData;
+
+        if (defect) {
+            checkToken()
+            fetch(apiEditUrl, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+                },
+                body: data
+            })
+                .then(function (response) {
+                    let responseStatus = response.status
+                    switch (responseStatus) {
+                        case 200:
+                            toast.success("Defect was updated !");
+                            loadDataVar("");
+                            break
+                        case 401:
+                            toast.warn("You are not authorized. Please login!");
+                            window.location.replace("");
+                            break
+                        case 403:
+                            toast.error("You have not permission  !");
+                            break
+                        default:
+                            toast.error("Something wrong  !");
+                            break
+                    }
+                })
         }
     }
 
