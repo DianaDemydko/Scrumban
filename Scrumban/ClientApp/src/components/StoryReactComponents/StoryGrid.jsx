@@ -184,7 +184,6 @@ export class StoryGrid extends React.Component {
 
     componentDidMount() {
         this.loadData("")
-        //this.fetchSprints();
     }
     loadData(query) {
         fetch('api/Story/GetStories' + query, {

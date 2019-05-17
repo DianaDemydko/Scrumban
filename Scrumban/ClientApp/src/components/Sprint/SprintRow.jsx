@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { SprintEditForm } from './EditForm/SprintEditForm';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 export class SprintRow extends React.Component {
     constructor(props) {
@@ -49,10 +50,11 @@ export class SprintRow extends React.Component {
                 let responseStatus = response.status
                 switch (responseStatus) {
                     case 400:
-                        alert("Deleting element went wrong!")
+                        toast.error("Deleting element went wrong!")
                         break
                     case 200:
                         this.props.onDeletingSprintElement(sprint_id)
+                        toast.success("You deleted a sprint!");
                         break
                 }
             }.bind(this))

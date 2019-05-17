@@ -159,7 +159,7 @@ namespace Scrumban
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 0, seconds: 10);
+                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 1, seconds: 10);
                 
 
                 if (env.IsDevelopment())

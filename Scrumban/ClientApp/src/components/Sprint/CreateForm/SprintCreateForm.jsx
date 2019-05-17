@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import DatePicker from 'react-datepicker';
-
-import './SprintCreateForm.css'; 
+import { toast } from 'react-toastify';
 
 
 export class SprintCreateForm extends React.Component {
@@ -62,9 +61,10 @@ export class SprintCreateForm extends React.Component {
                 let responseStatus = response.status
                 switch (responseStatus) {
                     case 400:
-                        alert("Creating element went wrong!")
+                        toast.error("Something wrong!")
                         break
                     case 200:
+                        toast.success("Sprint was created in database !");
                         this.props.moveToComponent("sprints");
                         break
                 }
@@ -100,25 +100,24 @@ export class SprintCreateForm extends React.Component {
 
     render() {
         return (
-            <div id="sprint-create-form-container">
-                <h1>Create Sprint Form</h1>
-                <form id="sprint-create-form">
-                    <div class="form-group">
-                        <label>Name:*</label>
+            <div className="addComponentBackground">
+                <label style={{ 'fontSize': '40px' }} >Add sprint</label>
+                <div />
+                <div className="addContent">
+                    <label class="col-2">Name</label>
                         <input type="text"
-                            class="form-control"
+                            class="inputAdd"
                             placeholder="Name"
                             id="name"
                             required
                             onChange={this.onNameChanged}
                         />
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Description:*</label>
+                <div className="addContent">
+                    <label class="col-2" >Description</label>
                         <textarea type="text"
-                            rows="5"
-                            class="form-control"
+                        rows="5"
+                        className="inputAdd"
                             placeholder="Description"
                             id="description"
                             required
@@ -127,11 +126,11 @@ export class SprintCreateForm extends React.Component {
                     </div>
 
 
-                    <div class="form-group">
-                        <label>Start Date:*</label>
-                        <br />
+                <div className="addContent">
+                    <label class="col-2">Start Date</label>
                         <DatePicker
-                            className="form-control"
+
+                            className="datePickerStyle btn btn-sm btn-outline-secondary"
                             todayButton={"Today"}
                             selected={this.state.startDate}
                             onChange={this.onStartDateChanged}
@@ -140,11 +139,10 @@ export class SprintCreateForm extends React.Component {
                             />
                     </div>
 
-                    <div class="form-group">
-                        <label>End Date:*</label>
-                        <br />
+                <div className="addContent">
+                    <label class="col-2">End Date</label>
                         <DatePicker
-                            className="form-control"
+                        className="datePickerStyle btn btn-sm btn-outline-secondary"
                             todayButton={"Today"}
                             selected={this.state.endDate}
                             onChange={this.onEndDateChanged}
@@ -152,18 +150,16 @@ export class SprintCreateForm extends React.Component {
                         />
                     </div>
 
-                    <div class="form-group">
-                        <label>Status:*</label>
-                        <select class="form-control" onChange={this.onStatusChanged}>
+                <div className="addContent">
+                    <label class="col-2">Status</label>
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={this.onStatusChanged}>
                             {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                         </select>
                     </div>
                     
-                    <br />
-                </form>
-                    <div id="create-form-buttons">
-                    <button type="button" class="btn btn-sm btn-outline-dark" id="create-button" onClick={this.addNewSprint.bind(this)}>Create Sprint</button>
-                    <button type="button" class="btn btn-sm btn-outline-dark" id="create-form-cancel-button" onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
+                <div className="addContent">
+                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={this.addNewSprint.bind(this)}>Submit</button>
+                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
                     </div>
             </div>
         )
