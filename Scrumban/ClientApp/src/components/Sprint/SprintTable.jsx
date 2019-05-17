@@ -426,7 +426,7 @@ export class SprintTable extends React.Component
                     </div>
            <hr></hr>
            <div className="tablePosition">
-             <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
+             <table class="table" style={{ 'table-layout': 'fixed' }}>
                     <thead>
                         {/*Sorting row*/}
 

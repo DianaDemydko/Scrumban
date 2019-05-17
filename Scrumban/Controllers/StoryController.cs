@@ -18,10 +18,12 @@ namespace Scrumban.Controllers
     public class StoryController : Controller
     {
         IStoryService _storyService;
+        ISprintService _sprintService;
 
-        public StoryController(IStoryService storyService)
+        public StoryController(DbContextOptions<ScrumbanContext> options)
         {
-            _storyService = storyService;
+            _storyService = new StoryService(new ScrumbanContext(options));
+            _sprintService = new SprintService(new ScrumbanContext(options));
         }
 
         [HttpGet]
@@ -60,6 +62,32 @@ namespace Scrumban.Controllers
             }
             
         }
+        [HttpGet]
+        [Route("GetNotCompletedSprints")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetNotCompletedSprints()
+        {
+            try
+            {
+                IQueryable<SprintDTO> allSprints = _sprintService.GetAllSprints();
+                List<SprintDTO> sprints = new List<SprintDTO>();
+                foreach(SprintDTO sprint in allSprints)
+                {
+                    if(sprint.SprintStatus != "Completed")
+                    {
+                        sprints.Add(sprint);
+                    }
+                }
+                return Ok(sprints.AsQueryable());
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+        }
+
 
 
         [HttpPost]

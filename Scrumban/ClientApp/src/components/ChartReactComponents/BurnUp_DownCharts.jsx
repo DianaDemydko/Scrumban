@@ -124,14 +124,30 @@ function getActualForBurnDown(duration, doneStories, arrayOfSprintDays, sumOfAll
         return dateA - dateB;
     });
     ///delete stories with the same end date except one
-    for (var i = 0; i < doneStories.length ; i++) {
-        for (var j = i+1; j < doneStories.length; j++) {
-            if (doneStories[i].endDate == doneStories[j].endDate) {
-                doneStories[i].storyPoints += doneStories[j].storyPoints;
-                doneStories.splice(j, 1);
-                j++;
+    for (var i = 0; i < doneStories.length; i++) {
+        if (doneStories.length == 2) {
+            var endDayJ = Number(doneStories[1].endDate.substring(8, 10));
+            var endDayI = Number(doneStories[0].endDate.substring(8, 10));
+            var endMonthI = Number(doneStories[0].endDate.substring(5, 7));
+            var endMonthJ = Number(doneStories[1].endDate.substring(5, 7));
+            if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                doneStories[0].storyPoints += doneStories[1].storyPoints;
+                doneStories.splice(1, 1);
             }
         }
+        else {
+            for (var j = i + 1; j < doneStories.length; j++) {
+                var endDayJ = Number(doneStories[j].endDate.substring(8, 10));
+                var endDayI = Number(doneStories[i].endDate.substring(8, 10));
+                var endMonthI = Number(doneStories[i].endDate.substring(5, 7));
+                var endMonthJ = Number(doneStories[j].endDate.substring(5, 7));
+                if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                    doneStories[i].storyPoints += doneStories[j].storyPoints;
+                    doneStories.splice(j, 1);
+                }
+            }
+        }
+
     }
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
@@ -171,6 +187,7 @@ function getTotalForBurnUp(duration, sumOfAllPoints) {
 function getCompletedForBurnUp(duration, doneStories, arrayOfSprintDays) {
     var resault_array = [];
     var value = 0;
+    
     ///sorting by dates
     doneStories.sort(function compare(a, b) {
         var dateA = new Date(a.endDate);
@@ -179,13 +196,29 @@ function getCompletedForBurnUp(duration, doneStories, arrayOfSprintDays) {
     });
     ///delete stories with the same end date except one
     for (var i = 0; i < doneStories.length; i++) {
-        for (var j = i + 1; j < doneStories.length; j++) {
-            if (doneStories[i].endDate == doneStories[j].endDate) {
-                doneStories[i].storyPoints += doneStories[j].storyPoints;
-                doneStories.splice(j, 1);
-                j++;
+        if (doneStories.length == 2) {
+            var endDayJ = Number(doneStories[1].endDate.substring(8, 10));
+            var endDayI = Number(doneStories[0].endDate.substring(8, 10));
+            var endMonthI = Number(doneStories[0].endDate.substring(5, 7));
+            var endMonthJ = Number(doneStories[1].endDate.substring(5, 7));
+            if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                doneStories[0].storyPoints += doneStories[1].storyPoints;
+                doneStories.splice(1, 1);
             }
         }
+          else {
+                for (var j = i + 1; j < doneStories.length; j++) {
+                    var endDayJ = Number(doneStories[j].endDate.substring(8, 10));
+                    var endDayI = Number(doneStories[i].endDate.substring(8, 10));
+                    var endMonthI = Number(doneStories[i].endDate.substring(5, 7));
+                    var endMonthJ = Number(doneStories[j].endDate.substring(5, 7));
+                    if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                        doneStories[i].storyPoints += doneStories[j].storyPoints;
+                        doneStories.splice(j, 1);
+                    }
+                }
+            }
+        
     }
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {

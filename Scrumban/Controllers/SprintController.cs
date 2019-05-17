@@ -16,6 +16,7 @@ namespace Scrumban.Controllers
     public class SprintController : Controller
     {
         ISprintService _sprintService;
+        
 
         public SprintController(ISprintService sprintService)
         {
@@ -32,8 +33,6 @@ namespace Scrumban.Controllers
             try
             {
                 IQueryable<SprintDTO> sprints = _sprintService.GetAllSprints();
-
-                //var spr = sprints.ToList();
                     return Ok(sprints);
             }
             catch
