@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { DefectPrint } from './DefectPrint';
-import { Pagination } from "react-bootstrap";
 import { DefectEdit } from './DefectEdit';
 
 export class DefectRow extends Component {
@@ -36,9 +35,9 @@ export class DefectRow extends Component {
         return (
             <tbody>
             {
-                isEdit ?
-                    (<DefectPrint key={this.props.key} item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} />)
-                    : (<DefectEdit item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} changed={this.onChangedDefect} />)
+                    isEdit ?
+                        (<DefectPrint key={this.props.key} item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} />)
+                        : (<DefectEdit item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} changed={this.onChangedDefect} loadData={this.props.loadData} />)
             }
             
         </tbody>

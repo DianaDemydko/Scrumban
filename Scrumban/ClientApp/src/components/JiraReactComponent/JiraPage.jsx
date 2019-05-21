@@ -64,7 +64,6 @@ export class JiraPage extends React.Component {
                 default:
                     toast.error("Something wrong!!");
                     break
-
             }
         }.bind(this))
     }
