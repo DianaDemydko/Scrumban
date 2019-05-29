@@ -3,20 +3,23 @@ import { Line } from "react-chartjs-2";
 import { toast } from "react-toastify"; 
 import './css/BurnUp_DownCharts.css'
 
+//constant values
+const NOT_SELECTED = "Select sprint here...";
+
 
 /*=====Function for calculating duration of sprint=====*/
-function GetDurationOfSprint(startDate, endDate) {
-    var sDay = Number(startDate.substring(8, 10));
-    var eDay = Number(endDate.substring(8, 10));
-    var sMonth = Number(startDate.substring(5, 7));
-    var eMonth = Number(endDate.substring(5, 7));
+function getDuration(startDate, endDate) {
+    var startDay = Number(startDate.substring(8, 10));
+    var endDay = Number(endDate.substring(8, 10));
+    var startMonth = Number(startDate.substring(5, 7));
+    var endMonth = Number(endDate.substring(5, 7));
     var year = Number(startDate.substring(0, 4));
     var duration;
-    if (sMonth == eMonth) {
-        duration = eDay - sDay+1;
+    if (endMonth == startMonth) {
+        duration = endDay - startDay+1;
         return duration;
     } else {
-        switch (sMonth) {
+        switch (startMonth) {
             case 1:
             case 3:
             case 5:
@@ -24,35 +27,34 @@ function GetDurationOfSprint(startDate, endDate) {
             case 8:
             case 10:
             case 12:
-                duration = (31 - sDay) + eDay+1;
+                duration = (31 - startDay) + endDay + 1;
                 break;
             case 4:
             case 6:
             case 9:
             case 11:
-                duration = (30 - sDay) + eDay+1;
+                duration = (30 - startDay) + endDay + 1;
                 break;
             case 2:
                 if ((year % 4) === 0) {
-                    duration = (29 - sDay) + eDay + 1;
+                    duration = (29 - startDay) + endDay + 1;
                 } else {
-                    duration = (28 - sDay) + eDay + 1;
+                    duration = (28 - startDay) + endDay + 1;
                 }
         }
         return duration;
     }
 }
 /*=====Function for forming array with new labels for OX(dates of sprint)=====*/
-function UpdateXaxes(startDate, endDate, duration) {
-    var sDay = Number(startDate.substring(8, 10));
-    var eDay = Number(endDate.substring(8, 10));
-    var sMonth = Number(startDate.substring(5, 7));
-    var eMonth = Number(endDate.substring(5, 7));
+function getSprintDays(startDate, endDate, duration) {
+    var startDay = Number(startDate.substring(8, 10));
+    var startMonth = Number(startDate.substring(5, 7));
+    var endMonth = Number(endDate.substring(5, 7));
     var year = Number(startDate.substring(0, 4));
-    var arrayOflabels = [];
+    var sprintDaysArray = [];
     var daysInStartMonth;
-    var w = 1;
-    switch (sMonth) {
+    var nextMonthDay = 1;
+    switch (startMonth) {
         case 1:
         case 3:
         case 5:
@@ -77,25 +79,25 @@ function UpdateXaxes(startDate, endDate, duration) {
             break;
     }
     for (var i = 0; i <duration; i++) {
-        if (sDay <= daysInStartMonth) {
-            var a = sDay.toString();
-            var b = sMonth.toString();
-            var s = a + '.' + b + '.' + year;
-            arrayOflabels.push(s);
-            sDay += 1;
+        if (startDay <= daysInStartMonth) {
+            var dayPart = startDay.toString();
+            var monthPart = startMonth.toString();
+            var resault = dayPart + '.' + monthPart + '.' + year;
+            sprintDaysArray.push(resault);
+            startDay += 1;
         }
         else {
-            var a = w.toString();
-            var b = eMonth.toString();
-            var s = a + '.' + b + '.' + year;
-            arrayOflabels.push(s);
-            w += 1;
+            var dayPart = nextMonthDay.toString();
+            var monthPart = endMonth.toString();
+            var resault = dayPart + '.' + monthPart + '.' + year;
+            sprintDaysArray.push(resault);
+            nextMonthDay += 1;
         }
     }
-    return arrayOflabels;
+    return sprintDaysArray;
 }
 /*=====Function for calculating sum of story points of sprint=====*/
-function SumOfStoryPoints(stories) {
+function getSumOfStoryPoints(stories) {
     var sum = 0;
     for (var i = 0; i < stories.length; i++) {
         sum += stories[i].storyPoints;
@@ -103,7 +105,7 @@ function SumOfStoryPoints(stories) {
     return sum;
 }
 /*=====Function for forming array of data for Ideal Task Remaining(Burn Down)=====*/
-function IdealTaskRemeaning(duration, sumOfAllPoints) {
+function getIdealForBurnDown(duration, sumOfAllPoints) {
     var resault_array = [];
     var step = sumOfAllPoints / (duration -1);
     for (var i = 0; i < duration; i++) {
@@ -113,7 +115,7 @@ function IdealTaskRemeaning(duration, sumOfAllPoints) {
     return resault_array;
 }
 /*=====Function for forming array of data for Actual Task Remaining(Burn Down)=====*/
-function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllPoints) {
+function getActualForBurnDown(duration, doneStories, arrayOfSprintDays, sumOfAllPoints) {
     var resault_array = [];
     ///sorting by dates
     doneStories.sort(function compare(a, b){
@@ -122,25 +124,41 @@ function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllP
         return dateA - dateB;
     });
     ///delete stories with the same end date except one
-    for (var i = 0; i < doneStories.length ; i++) {
-        for (var j = i+1; j < doneStories.length; j++) {
-            if (doneStories[i].endDate == doneStories[j].endDate) {
-                doneStories[i].storyPoints += doneStories[j].storyPoints;
-                doneStories.splice(j, 1);
-                j++;
+    for (var i = 0; i < doneStories.length; i++) {
+        if (doneStories.length == 2) {
+            var endDayJ = Number(doneStories[1].endDate.substring(8, 10));
+            var endDayI = Number(doneStories[0].endDate.substring(8, 10));
+            var endMonthI = Number(doneStories[0].endDate.substring(5, 7));
+            var endMonthJ = Number(doneStories[1].endDate.substring(5, 7));
+            if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                doneStories[0].storyPoints += doneStories[1].storyPoints;
+                doneStories.splice(1, 1);
             }
         }
+        else {
+            for (var j = i + 1; j < doneStories.length; j++) {
+                var endDayJ = Number(doneStories[j].endDate.substring(8, 10));
+                var endDayI = Number(doneStories[i].endDate.substring(8, 10));
+                var endMonthI = Number(doneStories[i].endDate.substring(5, 7));
+                var endMonthJ = Number(doneStories[j].endDate.substring(5, 7));
+                if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                    doneStories[i].storyPoints += doneStories[j].storyPoints;
+                    doneStories.splice(j, 1);
+                }
+            }
+        }
+
     }
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
         for (var i = 0; i < doneStories.length; i++) {
-            var eDay = Number(doneStories[i].endDate.substring(8, 10));
-            var eMonth = Number(doneStories[i].endDate.substring(5, 7));
+            var endDay = Number(doneStories[i].endDate.substring(8, 10));
+            var endMonth = Number(doneStories[i].endDate.substring(5, 7));
             var year = Number(doneStories[i].endDate.substring(0, 4));
-            var a = eDay.toString();
-            var b = eMonth.toString();
-            var s = a + '.' + b + '.' + year;
-            datesOfDoneStories.push(s);
+            var dayPart = endDay.toString();
+            var dayMonth = endMonth.toString();
+            var resault = dayPart + '.' + dayMonth + '.' + year;
+            datesOfDoneStories.push(resault);
         }
         var pointer_for_stories = 0;
         for (var i = 0 ; i < duration; i++) {
@@ -158,7 +176,7 @@ function ActualTaskRemaining(duration, doneStories, arrayOfSprintDays, sumOfAllP
     return resault_array;
 }
 /*=====Function fpr forming array of data for Total (Burn Up) */
-function FormTotalLine(duration, sumOfAllPoints) {
+function getTotalForBurnUp(duration, sumOfAllPoints) {
     var resault_array = [];
     for (var i = 0; i <= duration; i++) {
         resault_array.push(sumOfAllPoints);
@@ -166,9 +184,10 @@ function FormTotalLine(duration, sumOfAllPoints) {
     return resault_array;
 }
 /*=====Function fpr forming array of data for Completed  (Burn Up) */
-function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
+function getCompletedForBurnUp(duration, doneStories, arrayOfSprintDays) {
     var resault_array = [];
     var value = 0;
+    
     ///sorting by dates
     doneStories.sort(function compare(a, b) {
         var dateA = new Date(a.endDate);
@@ -177,22 +196,38 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
     });
     ///delete stories with the same end date except one
     for (var i = 0; i < doneStories.length; i++) {
-        for (var j = i + 1; j < doneStories.length; j++) {
-            if (doneStories[i].endDate == doneStories[j].endDate) {
-                doneStories[i].storyPoints += doneStories[j].storyPoints;
-                doneStories.splice(j, 1);
-                j++;
+        if (doneStories.length == 2) {
+            var endDayJ = Number(doneStories[1].endDate.substring(8, 10));
+            var endDayI = Number(doneStories[0].endDate.substring(8, 10));
+            var endMonthI = Number(doneStories[0].endDate.substring(5, 7));
+            var endMonthJ = Number(doneStories[1].endDate.substring(5, 7));
+            if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                doneStories[0].storyPoints += doneStories[1].storyPoints;
+                doneStories.splice(1, 1);
             }
         }
+          else {
+                for (var j = i + 1; j < doneStories.length; j++) {
+                    var endDayJ = Number(doneStories[j].endDate.substring(8, 10));
+                    var endDayI = Number(doneStories[i].endDate.substring(8, 10));
+                    var endMonthI = Number(doneStories[i].endDate.substring(5, 7));
+                    var endMonthJ = Number(doneStories[j].endDate.substring(5, 7));
+                    if (endDayI == endDayJ && endMonthI == endMonthJ) {
+                        doneStories[i].storyPoints += doneStories[j].storyPoints;
+                        doneStories.splice(j, 1);
+                    }
+                }
+            }
+        
     }
     var datesOfDoneStories = [];
     if (doneStories.length > 0) {
         for (var i = 0; i < doneStories.length; i++) {
-            var eDay = Number(doneStories[i].endDate.substring(8, 10));
-            var eMonth = Number(doneStories[i].endDate.substring(5, 7));
+            var endDay = Number(doneStories[i].endDate.substring(8, 10));
+            var endMonth = Number(doneStories[i].endDate.substring(5, 7));
             var year = Number(doneStories[i].endDate.substring(0, 4));
-            var a = eDay.toString();
-            var b = eMonth.toString();
+            var a = endDay.toString();
+            var b = endMonth.toString();
             var s = a + '.' + b + '.' + year;
             datesOfDoneStories.push(s);
         }
@@ -211,7 +246,7 @@ function FormCompletedLine(duration, doneStories, arrayOfSprintDays) {
     return resault_array;
 }
 /*=====Function fpr forming array of data for Ideal  (Burn Up) */
-function FormIdealLine(duration, sumOfAllPoints) {
+function getIdealForBurnUp(duration, sumOfAllPoints) {
     var resault_array = [];
     var step = sumOfAllPoints / (duration-1);
     var value = 0;
@@ -232,13 +267,13 @@ export class BurnUp_DownCharts extends React.Component {
         this.state = {
             sumOfAllStoryPoints: 50,
             allSprints: [],
-            allStoriesOfCurrentSprint: [],
-            currentSprintID: 1,
-            currentSprint: null,
+            allStoriesOfSelectedSprint: [],
+            selectedSprintID: 1,
+            selectedSprint: null,
             sprintDays: ['0', '1.1.19', '2.1.19', '3.1.19'],
             durationOfSprint: 0,
             idealTaskRemainingArray: [],
-            actualTaskRemainingArray: [],
+            actualTaskRemeaningArray: [],
             totalArray: [],
             completedArray: [],
             idealArray: []
@@ -258,42 +293,41 @@ export class BurnUp_DownCharts extends React.Component {
     }
     onSprintChanged = async (e) => {
         try {
-            if (e.target.value != "Select sprint here...") {
-                var CurentSprint = this.state.allSprints.find(x => x.name === e.target.value);
-                var sprint_id = CurentSprint.sprint_id;
-                var duration = GetDurationOfSprint(CurentSprint.startDate, CurentSprint.endDate);
-                var arrayOfLabels = UpdateXaxes(CurentSprint.startDate, CurentSprint.endDate, duration);
-                ///getting all stories which belong to current sprint
-                var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
+            if (e.target.value != NOT_SELECTED) {
+                var selectedSprint = this.state.allSprints.find(x => x.name === e.target.value);
+                var sprintID = selectedSprint.sprint_id;
+                var duration = getDuration(selectedSprint.startDate, selectedSprint.endDate);
+                var sprintDaysArray = getSprintDays(selectedSprint.startDate, selectedSprint.endDate, duration);
+                ///getting all stories which belong to selected sprint
+                var responce = await fetch('api/Chart/GetSprintStories/' + sprintID);
                 var stories = await responce.json();
-                var sumOfpoints = SumOfStoryPoints(stories);
-                var dataForIdealTaskRemeaning = IdealTaskRemeaning(duration, sumOfpoints);
-                ///getting all stories that are done and which belong to current sprint
-                var responcee = await fetch('api/Chart/GetDoneStories/' + sprint_id);
+                var sumOfStoryPoints = getSumOfStoryPoints(stories);
+                var idealForBurnDown = getIdealForBurnDown(duration, sumOfStoryPoints);
+                ///getting all stories that are done and which belong to selected sprint
+                var responcee = await fetch('api/Chart/GetDoneStories/' + sprintID);
                 var doneStories = await responcee.json();
-                var dataForActualTaskRemaining = ActualTaskRemaining(duration, doneStories, arrayOfLabels, sumOfpoints);
-                var dataForIdeal = FormIdealLine(duration, sumOfpoints);
-                var dataForCompleted = FormCompletedLine(duration, doneStories, arrayOfLabels);
-                var dataForTotal = FormTotalLine(duration, sumOfpoints);
+                var actualForBurnDown = getActualForBurnDown(duration, doneStories, sprintDaysArray, sumOfStoryPoints);
+                var idealForBurnUp = getIdealForBurnUp(duration, sumOfStoryPoints);
+                var completedForBurnUp = getCompletedForBurnUp(duration, doneStories, sprintDaysArray);
+                var totalForBurnUp = getTotalForBurnUp(duration, sumOfStoryPoints);
                 this.setState({
-                    sprintDays: arrayOfLabels,
-                    currentSprintID: sprint_id,
-                    currentSprint: CurentSprint,
-                    allStoriesOfCurrentSprint: stories,
-                    sumOfAllStoryPoints: sumOfpoints,
+                    sprintDays: sprintDaysArray,
+                    selectedSprintID: sprintID,
+                    selectedSprint: selectedSprint,
+                    allStoriesOfSelectedSprint: stories,
+                    sumOfAllStoryPoints: sumOfStoryPoints,
                     durationOfSprint: duration,
-                    idealTaskRemainingArray: dataForIdealTaskRemeaning,
-                    actualTaskRemainingArray: dataForActualTaskRemaining,
-                    completedArray: dataForCompleted,
-                    idealArray: dataForIdeal,
-                    totalArray: dataForTotal
+                    idealTaskRemainingArray: idealForBurnDown,
+                    actualTaskRemeaningArray: actualForBurnDown,
+                    completedArray: completedForBurnUp,
+                    idealArray: idealForBurnUp,
+                    totalArray: totalForBurnUp
                 });
             }
         }
         catch (e) {
 
             toast.error("Cannot build chart because of data conflict in story's and sprint's dates.");
-            //window.alert("Cannot build chart because of data conflict in story's and sprint's dates.");
         }
     }
 
@@ -313,7 +347,7 @@ export class BurnUp_DownCharts extends React.Component {
                 },
                 {
                     label: 'Actual Tasks Remaining',
-                    data: this.state.actualTaskRemainingArray,
+                    data: this.state.actualTaskRemeaningArray,
                     lineTension: 0,
                     fill: false,
                     borderColor: 'red',
@@ -332,7 +366,7 @@ export class BurnUp_DownCharts extends React.Component {
                     ticks: {
                         max: this.state.sumOfAllStoryPoints,
                         min: 0,
-                        stepSize: 5
+                        stepSize: 15
                     },
                     gridLines: {
                         color: "black",
@@ -396,7 +430,7 @@ export class BurnUp_DownCharts extends React.Component {
                     ticks: {
                         max: this.state.sumOfAllStoryPoints,
                         min: 0,
-                        stepSize: 5
+                        stepSize: 15
                     },
                     gridLines: {
                         color: "black",
@@ -423,7 +457,7 @@ export class BurnUp_DownCharts extends React.Component {
             <div className='container'>
                 <div className='centered'>
                     <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
-                        <option>Select sprint here...</option>
+                        <option>{NOT_SELECTED}</option>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>

@@ -1,9 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-const data = require('../../GlobalData.json'); // json file with stable tables (priority, state)
+const data = require('../../GlobalData.json');
 // consts of stable tables
 const stateTable = data.storyState;
+
 var check = false;
 
 export class StoryAdd extends React.Component {
@@ -90,7 +91,7 @@ export class StoryAdd extends React.Component {
             }.bind(this))
     }
     componentDidMount() {
-        fetch('api/Sprint/Index')
+        fetch('api/Story/GetNotCompletedSprints')
             .then(res => res.json())
             .then(json => {
                 this.setState({

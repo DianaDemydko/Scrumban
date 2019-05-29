@@ -76,7 +76,7 @@ export class StoryEdit extends React.Component {
 		}
     }
     componentDidMount() {
-        fetch('api/Sprint/Index')
+        fetch('api/Story/GetNotCompletedSprints')
             .then(res => res.json())
             .then(json => {
                 this.setState({

@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import DatePicker from 'react-datepicker';
 
-import './SprintEditForm.css'; 
+import { toast } from 'react-toastify'; 
 
 export class SprintEditForm extends React.Component {
     constructor(props) {
@@ -64,24 +64,25 @@ export class SprintEditForm extends React.Component {
                 let responseStatus = response.status
                 switch (responseStatus) {
                     case 400:
-                        alert("Updaiting element went wrong!")
+                        toast.error("Updaiting element went wrong!")
                         break
                     case 200:
                         let temp = { ...this.state.sprint }
                         this.props.onUpdatingSprintElement(temp)
+
+                        toast.success("You edited a sprint!");
                         break
                 }
             }.bind(this))
-            .catch((e) => alert(e+"Unexpected error occured."))
+            .catch((e) => alert(e + "Unexpected error occured."))
     }
 
     render() {
         return (
-            <tr className="current-row">
-                <td colSpan="7">
-                    <form id="sprint-edit-form">
-                        <div class="form-group" id="edit-name">
-                            <label>Name:*</label>
+            <tr >
+                <td>
+                       <div>
+                            <label>Name</label>
                             <input type="text"
                                 class="form-control"
                                 placeholder="Name"
@@ -89,10 +90,11 @@ export class SprintEditForm extends React.Component {
                                 onChange={this.onNameChanged}
                                 value={this.state.sprint.name}
                             />
-                        </div>
-
-                        <div class="form-group" id="edit-description">
-                            <label>Description:*</label>
+                    </div>
+                </td>
+            <td>
+                  <div>
+                            <label>Description</label>
                             <textarea type="text"
                                 rows="4"
                                 class="form-control"
@@ -101,11 +103,11 @@ export class SprintEditForm extends React.Component {
                                 onChange={this.onDescriptionChanged}
                                 value={this.state.sprint.description}
                             />
-                        </div>
-
-                        <div class="form-group" id="edit-start-date">
-                            <label>Start Date:*</label>
-                            <br />
+                    </div>
+                </td>
+                <td>
+                   <div>
+                            <label>Start Date</label>
                             <DatePicker
                                 className="form-control"
                                 todayButton={"Today"}
@@ -114,11 +116,11 @@ export class SprintEditForm extends React.Component {
                                 minDate={new Date()}
                                 maxDate={this.state.endDate}
                             />
-                        </div>
-
-                        <div class="form-group" id="edit-end-date">
-                            <label>End Date:*</label>
-                            <br />
+                    </div>
+                </td>
+                <td>
+                        <div >
+                            <label>End Date</label>
                             <DatePicker
                                 className="form-control"
                                 todayButton={"Today"}
@@ -126,20 +128,21 @@ export class SprintEditForm extends React.Component {
                                 onChange={this.onEndDateChanged}
                                 minDate={this.state.sprint.startDate}
                             />
-                        </div>
-
-                        <div class="form-group" id="edit-status">
-                            <label>End Date:*</label>
-                            <select class="form-control" onChange={this.onStatusChanged} defaultValue={this.state.sprint.sprintStatus}>
+                    </div>
+                </td>
+                <td>
+                    <div >
+                            <label>Status</label>
+                        <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStatusChanged} defaultValue={this.state.sprint.sprintStatus}>
                                 {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                             </select>
-                        </div>
-                        
-                    </form>
-                    <div id="edit-form-buttons">
-                        <button className="btn btn-sm btn-outline-dark m-1" onClick={this.onUpdatingSprint} >Save</button>
-                        <button className="btn btn-sm btn-outline-dark m-1" id='edit-form-cancel-button' onClick={this.props.onCancelEditMode} >Cancel</button>
                     </div>
+                </td> 
+                <td>
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit" onClick={this.onUpdatingSprint} >Save</button>
+                </td>
+                <td>
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit"  onClick={this.props.onCancelEditMode} >Cancel</button>
                 </td>
             </tr>
         )

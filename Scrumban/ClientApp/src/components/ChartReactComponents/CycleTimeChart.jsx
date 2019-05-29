@@ -2,28 +2,30 @@
 import { Bar } from "react-chartjs-2";
 import  './css/CycleTimeChart.css'
 
+//constant values
+const NOT_SELECTED = "Select sprint here...";
 
 /*=====Function for forming OX labels=====*/
-function GetLabelsOX(stories) {
-    var arrayOflabels = [];
+function getStoriesNames(stories) {
+    var namesArray = [];
     for (var i = 0; i < stories.length; i++) {
-        arrayOflabels.push(stories[i].name);
+        namesArray.push(stories[i].name);
     }
-    return arrayOflabels;
+    return namesArray;
 }
 /*=====Function for calculating duration of story=====*/
-function GetDurationOfStory(startDate, endDate) {
-    var sDay = Number(startDate.substring(8, 10));
-    var eDay = Number(endDate.substring(8, 10));
-    var sMonth = Number(startDate.substring(5, 7));
-    var eMonth = Number(endDate.substring(5, 7));
+function getDurationOfStory(startDate, endDate) {
+    var startDay = Number(startDate.substring(8, 10));
+    var endDay = Number(endDate.substring(8, 10));
+    var startMonth = Number(startDate.substring(5, 7));
+    var endMonth = Number(endDate.substring(5, 7));
     var year = Number(startDate.substring(0, 4));
     var duration;
-    if (sMonth == eMonth) {
-        duration = eDay - sDay + 1;
+    if (startMonth == endMonth) {
+        duration = endDay - startDay + 1;
         return duration;
     } else {
-        switch (sMonth) {
+        switch (startMonth) {
             case 1:
             case 3:
             case 5:
@@ -31,19 +33,19 @@ function GetDurationOfStory(startDate, endDate) {
             case 8:
             case 10:
             case 12:
-                duration = (31 - sDay) + eDay + 1;
+                duration = (31 - startDay) + endDay + 1;
                 break;
             case 4:
             case 6:
             case 9:
             case 11:
-                duration = (30 - sDay) + eDay + 1;
+                duration = (30 - startDay) + endDay + 1;
                 break;
             case 2:
                 if ((year % 4) === 0) {
-                    duration = (29 - sDay) + eDay + 1;
+                    duration = (29 - startDay) + endDay + 1;
                 } else {
-                    duration = (28 - sDay) + eDay + 1;
+                    duration = (28 - startDay) + endDay + 1;
                 }
         }
         return duration;
@@ -54,7 +56,7 @@ function GetCycleTimeDays(stories) {
     var resaultArray = [];
     for (var i = 0; i < stories.length; i++) {
         if (stories[i].startDate && stories[i].endDate) {
-            var duration = GetDurationOfStory(stories[i].startDate, stories[i].endDate);
+            var duration = getDurationOfStory(stories[i].startDate, stories[i].endDate);
             resaultArray.push(duration);
         }
         else {
@@ -79,7 +81,7 @@ export class CycleTimeChart extends React.Component {
 
         this.state = {
             allSprints: [],
-            currentSprintStories: [],
+            storiesOfSelectedSprint: [],
             storyNames: [],
             cycleTimeDays: [],
             maxCycleTime: 30
@@ -95,19 +97,19 @@ export class CycleTimeChart extends React.Component {
             });
     }
     onSprintChanged = async (e) => {
-        if (e.target.value != "Select sprint here...") {
-            var currentSprint = this.state.allSprints.find(x => x.name === e.target.value);
-            var sprint_id = currentSprint.sprint_id;
+        if (e.target.value != NOT_SELECTED) {
+            var selectedSprint = this.state.allSprints.find(x => x.name === e.target.value);
+            var sprint_id = selectedSprint.sprint_id;
             ///get all stories
             var responce = await fetch('api/Chart/GetSprintStories/' + sprint_id);
             var stories = await responce.json();
-            var xAxesLabels = GetLabelsOX(stories);
+            var storiesNames = getStoriesNames(stories);
             ///get cicle time days
             var cycleTimeDays = GetCycleTimeDays(stories);
             var maxValue = Math.max.apply(null, cycleTimeDays);
             this.setState({
-                currentSprintStories: stories,
-                storyNames: xAxesLabels,
+                storiesOfSelectedSprint: stories,
+                storyNames: storiesNames,
                 cycleTimeDays: cycleTimeDays,
                 maxCycleTime: maxValue
             });
@@ -159,7 +161,7 @@ export class CycleTimeChart extends React.Component {
             <div className='container'>
                 <div className='centered'>
                     <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
-                        <option>Select sprint here...</option>
+                        <option>{NOT_SELECTED}</option>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>

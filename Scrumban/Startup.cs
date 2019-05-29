@@ -121,10 +121,12 @@ namespace Scrumban
             //}
             //else
             //{
+            app.UseHttpException();
+
             app.UseExceptionHandler("/error");
 
             app.UseStatusCodePagesWithReExecute(" / StatusCode ? code ={ 0}");
-            app.UseHttpException();
+            
             
             app.UseHsts();
             //}
@@ -157,7 +159,7 @@ namespace Scrumban
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 1, seconds: 30);
+                spa.Options.StartupTimeout = new TimeSpan(days: 0, hours: 0, minutes: 1, seconds: 10);
                 
 
                 if (env.IsDevelopment())

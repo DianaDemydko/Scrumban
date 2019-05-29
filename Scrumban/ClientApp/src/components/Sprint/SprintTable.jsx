@@ -3,7 +3,7 @@ import { SprintRow } from './SprintRow'
 import buildQuery from 'odata-query'
 import DatePicker from "react-datepicker";
 
-import './css/SprintTable.css';
+import '../../GridStyles/StyleForGrid.css';
 
 export class SprintTable extends React.Component
 {
@@ -358,9 +358,75 @@ export class SprintTable extends React.Component
 
     renderSprintsTable(sprints) {
         return (
-            <div class="panel-heading">
+            <div>
+                <div className='filterContainer'>
+                    {/*Filters row*/}
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="inputTitle">Name</label>
+                        </div>
+                        <div class="col-sm">
+                            <label for="description">Description</label><br />
+                        </div>
+                        <div class="col-sm ">
+                            <label for="startDate">Start Date</label>
+                        </div>
+                        <div class="col-sm">
+                            <label for="endDate">End Date</label>
+                        </div>
+                        <div class="col-sm">
+                            <label for="status">Status</label>
+                        </div>
+                        <div class="col-sm">
 
-                <table className='table'>
+                        </div>
+                        <div class="col-sm">{/*   */}</div>
+                    </div>
+                    <div className="row">
+                        <div class="col-sm">
+                            <input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} onKeyDown={this.onKeyDown} value={this.state.nameSearch} />
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} />
+                        </div>
+                        <div class="col-sm">
+                        <DatePicker
+                            className="form-control"
+                            todayButton={"Today"}
+                            selected={this.state.startDateSearch}
+                            onChange={this.onStartDateSearchChanged}
+                            onKeyDown={this.onKeyDown}
+                            isClearable={true}
+                            placeholderText="Search..."
+                            />
+                        </div>
+                        <div class="col-sm">
+                        <DatePicker
+                            className="form-control"
+                            todayButton={"Today"}
+                            selected={this.state.endDateSearch}
+                            onChange={this.onEndDateSearchChanged}
+                            onKeyDown={this.onKeyDown}
+                            isClearable={true}
+                            placeholderText="Search..."
+                        />
+                    </div>
+                        <div class="col-sm">
+                            <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStatusSearchChanged} value={this.state.statusSearch} onKeyDown={this.onKeyDown}>
+                                <option value="All">All</option>
+                                {this.state.statuses.map(status => <option value={status.sprintStatus} >{status.sprintStatus}</option>)}
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.onFiltersApply}>Apply Filters</button>
+                        </div>
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.clearFilters}>Clear</button>
+                        </div>
+                    </div>
+           <hr></hr>
+           <div className="tablePosition">
+             <table class="table" style={{ 'table-layout': 'fixed' }}>
                     <thead>
                         {/*Sorting row*/}
 
@@ -384,55 +450,7 @@ export class SprintTable extends React.Component
                             </th>
                         </tr>
 
-                        {/*Filters row*/}
-                        <tr>
-                            <th>
-                                <input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} onKeyDown={this.onKeyDown} value={this.state.nameSearch} />
-                            </th>
-                            <th>
-                                <div><input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} /></div>
-                            </th>
-                            <th>
-                                <DatePicker
-                                    className="form-control"
-                                    todayButton={"Today"}
-                                    selected={this.state.startDateSearch}
-                                    onChange={this.onStartDateSearchChanged}
-                                    onKeyDown={this.onKeyDown}
-                                    isClearable={true}
-                                    placeholderText="Search..."
-                                />
-                            </th>
-                            <th>
-                                <DatePicker
-                                    className="form-control"
-                                    todayButton={"Today"}
-                                    selected={this.state.endDateSearch}
-                                    onChange={this.onEndDateSearchChanged}
-                                    onKeyDown={this.onKeyDown}
-                                    isClearable={true}
-                                    placeholderText="Search..."
-                                />
-                            </th>
-                            <th>
-                                <div>
-                                    <select class="form-control" onChange={this.onStatusSearchChanged} value={this.state.statusSearch} onKeyDown={this.onKeyDown}>
-                                        <option value="All">All</option>
-                                        {this.state.statuses.map(status => <option value={status.sprintStatus} >{status.sprintStatus}</option>)}
-                                    </select>
-                                </div>
-                            </th>
-                            <th>
-                                <div>
-                                    <button type="button"  class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.onFiltersApply}>Apply Filters</button>
-                                    </div>
-                            </th>
-                            <th>
-                                <div>
-                                    <button type="button"  class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.clearFilters}>Clear Filters</button>
-                                </div>
-                            </th>
-                        </tr>
+                       
                 </thead>
                 <tbody>
                     
@@ -447,8 +465,8 @@ export class SprintTable extends React.Component
                     }
                 </tbody>
             </table>
-                <div>
-                    <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn btn-sm btn-outline-dark m-1">Create New Sprint</button>
+                    <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn btn-sm btn-outline-dark m-1">Create New</button>
+                    </div>
                 </div>
             </div>
             )
@@ -465,6 +483,8 @@ export class SprintTable extends React.Component
         return (
             <div id="Table-container">
                 <h1>Sprints</h1>
+                <br />
+                <hr></hr>
                 {content}
             </div>
         );
