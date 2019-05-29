@@ -17,12 +17,12 @@ namespace Scrumban.Controllers
     [Route("api/[controller]")]
     public class FeatureDataController : Controller
     {
-        private IFeatureService featureService;
-        private IStoryService storyService;
-        public FeatureDataController(DbContextOptions<ScrumbanContext> options)
+        IFeatureService _featureService;
+        IStoryService _storyService;
+        public FeatureDataController(IFeatureService featureService, IStoryService storyService)
         {
-            featureService = new FeatureService(new ScrumbanContext(options));
-            storyService = new StoryService( new ScrumbanContext(options) );
+            _featureService = featureService;
+            _storyService = storyService;
 
         }
 
@@ -31,11 +31,11 @@ namespace Scrumban.Controllers
         [EnableQuery()]
         public IEnumerable<FeatureDTO> Get()
         {
-            var result = featureService.Get().ToList();
+            var result = _featureService.Get().ToList();
 
             for(int i=0;i<result.Count;i++)
             {
-                result[i].Stories = storyService.GetStories().Where(story => story.FeatureId == result[i].ID).ToList();
+                result[i].Stories = _storyService.GetStories().Where(story => story.FeatureId == result[i].ID).ToList();
             }
             return result;
 
@@ -50,10 +50,10 @@ namespace Scrumban.Controllers
                 for (int i = 0; i < newStories.Count; i++)
                 {
                     newStories[i].FeatureId = null;
-                    storyService.UpdateStory(newStories[i]);
+                    _storyService.UpdateStory(newStories[i]);
                 }
             }
-            featureService.Delete(feature);
+            _featureService.Delete(feature);
 
 
         }
@@ -65,9 +65,9 @@ namespace Scrumban.Controllers
             for (int i = 0; i < newStories.Count; i++)
             {
                 newStories[i].FeatureId = feature.ID;
-                storyService.UpdateStory(newStories[i]);         
+                _storyService.UpdateStory(newStories[i]);         
             }
-            featureService.Put(feature);
+            _featureService.Put(feature);
         }
 
         [HttpPost]
@@ -75,7 +75,7 @@ namespace Scrumban.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public void Post([FromBody]FeatureDTO feature)
         {
-            featureService.Post(feature);
+            _featureService.Post(feature);
 
         }
 
@@ -83,20 +83,20 @@ namespace Scrumban.Controllers
         [Route("/api/[controller]/getPriorities")]
         public IEnumerable<PriorityDTO> GetPriorities()
         {
-            var priorities = featureService.GetPriorities();
+            var priorities = _featureService.GetPriorities();
             return priorities;
         }
         [HttpGet]
         [Route("/api/[controller]/getAllStories")]
         public IQueryable<StoryDTO> GetAllStories()
         {
-           return storyService.GetStories();
+           return _storyService.GetStories();
         }
         [HttpGet]
         [Route("/api/[controller]/getStates")]
         public IEnumerable<StateDTO> GetStates()
         {
-            var states = featureService.GetStates();
+            var states = _featureService.GetStates();
             return states;
         }
     }

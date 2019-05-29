@@ -13,9 +13,9 @@ namespace Scrumban.ServiceLayer.Services
     {
         IUnitOfWork _unitOfWork;
 
-        public SprintService(ScrumbanContext options)
+        public SprintService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(options);
+            _unitOfWork = unitOfWork;
         }
 
         public void Create(SprintDTO sprint)

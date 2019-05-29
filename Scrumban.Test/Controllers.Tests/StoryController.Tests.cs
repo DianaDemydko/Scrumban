@@ -18,10 +18,13 @@ namespace Scrumban.Test.Controllers.Tests
         public void CreateTest()
         {
             //Arrange
-            var mock = new Mock<IStoryService>();
+            var mockStory = new Mock<IStoryService>();
+            var mockSprint = new Mock<ISprintService>();
             StoryDTO storyDTO = new StoryDTO();
-            mock.Setup(a => a.CreateStory(storyDTO));
-            StoryController controller = new StoryController(mock.Object);
+            SprintDTO sprintDTO = new SprintDTO();
+            mockStory.Setup(a => a.CreateStory(storyDTO));
+            mockSprint.Setup(a => a.Create(sprintDTO));
+            StoryController controller = new StoryController(mockStory.Object,mockSprint.Object);
 
             //Act
             var result = controller.CreateStory(storyDTO);
@@ -34,6 +37,8 @@ namespace Scrumban.Test.Controllers.Tests
         {
             //Arrange
             var mock = new Mock<IStoryService>();
+            var mockSprint = new Mock<ISprintService>();
+            SprintDTO sprintDTO = new SprintDTO();
             StoryDTO storyDTO= new StoryDTO
             {
                 Story_id=1,
@@ -41,7 +46,8 @@ namespace Scrumban.Test.Controllers.Tests
                 Description = "description"
             };
             mock.Setup(i => i.GetStory(storyDTO.Story_id));
-            StoryController controller = new StoryController(mock.Object);
+            mockSprint.Setup(a => a.Create(sprintDTO));
+            StoryController controller = new StoryController(mock.Object,mockSprint.Object);
             //Act
             var result = controller.GetStory(storyDTO.Story_id);
 
@@ -53,8 +59,13 @@ namespace Scrumban.Test.Controllers.Tests
         public void GetStories()
         {
             var mock = new Mock<IStoryService>();
+            var mockSprint = new Mock<ISprintService>();
+
+            SprintDTO sprintDTO = new SprintDTO();
+            mockSprint.Setup(a => a.Create(sprintDTO));
+
             mock.Setup(i => i.GetStories()).Returns(new List<StoryDTO>().AsQueryable());
-            StoryController controller = new StoryController(mock.Object);
+            StoryController controller = new StoryController(mock.Object,mockSprint.Object);
             //Act
             var result = controller.GetStories();
 
@@ -66,13 +77,17 @@ namespace Scrumban.Test.Controllers.Tests
         public void UpdateStoryTest()
         {
             var mock = new Mock<IStoryService>();
+            var mockSprint = new Mock<ISprintService>();
+            SprintDTO sprintDTO = new SprintDTO();
+
+            mockSprint.Setup(a => a.Create(sprintDTO));
             StoryDTO storyDTO = new StoryDTO { Name = "Test", Description = "Test" };
             mock.Setup(a => a.CreateStory(storyDTO));
             string exp = "111";
             storyDTO.Name = exp;
             storyDTO.Description = exp;
             mock.Setup(a => a.UpdateStory(storyDTO));
-            StoryController controller = new StoryController(mock.Object);
+            StoryController controller = new StoryController(mock.Object,mockSprint.Object);
             var result = controller.UpdateStory(storyDTO);
             Assert.IsType<OkResult>(result);
             Assert.Equal(exp, storyDTO.Name);
@@ -85,9 +100,14 @@ namespace Scrumban.Test.Controllers.Tests
         {
             //Arrange
             var mock = new Mock<IStoryService>();
+
+            var mockSprint = new Mock<ISprintService>();
+            SprintDTO sprintDTO = new SprintDTO();
+
+            mockSprint.Setup(a => a.Create(sprintDTO));
             StoryDTO storyDTO = new StoryDTO { Name = "Test", Description = "Description" };
             mock.Setup(a => a.CreateStory(storyDTO));
-            StoryController controller = new StoryController(mock.Object);
+            StoryController controller = new StoryController(mock.Object,mockSprint.Object);
             var temp = controller.CreateStory(storyDTO);
             //Act
             var result = controller.DeleteStory(storyDTO.Story_id);

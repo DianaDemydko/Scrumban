@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Scrumban.ServiceLayer.Interfaces
 {
-    interface IFeatureService
+    public interface IFeatureService
     {
         IQueryable<FeatureDTO> Get();
         void Delete(FeatureDTO feature);

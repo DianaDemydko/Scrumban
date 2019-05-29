@@ -20,10 +20,10 @@ namespace Scrumban.Controllers
         IStoryService _storyService;
         ISprintService _sprintService;
 
-        public StoryController(DbContextOptions<ScrumbanContext> options)
+        public StoryController(IStoryService storyService,ISprintService sprintService)
         {
-            _storyService = new StoryService(new ScrumbanContext(options));
-            _sprintService = new SprintService(new ScrumbanContext(options));
+            _storyService = storyService;
+            _sprintService = sprintService;
         }
 
         [HttpGet]
