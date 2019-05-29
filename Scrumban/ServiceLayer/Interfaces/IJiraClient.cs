@@ -11,7 +11,7 @@ namespace Scrumban.ServiceLayer.Interfaces
         [Header("Authorization")]
         AuthenticationHeaderValue Authorization { get; set; }
 
-       [Get("/rest/agile/1.0/board/1/issue")]
+       [Get("/rest/agile/1.0/board/2/issue")]
         Task<GetIssuesResponse> GetIssues();
 
         [Get("/rest/agile/1.0/issue/{issueId}")]
