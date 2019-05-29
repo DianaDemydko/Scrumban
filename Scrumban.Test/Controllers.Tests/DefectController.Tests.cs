@@ -9,7 +9,7 @@ using Moq;
 
 namespace Scrumban.Test.Controllers.Tests
 {
-    public class DefectDataControllerTest
+    public class DefectControllerTest
     {
         [Fact]
         public void GetDefectsTest()
@@ -18,7 +18,7 @@ namespace Scrumban.Test.Controllers.Tests
             var mock = new Mock<IDefectService>();
 
             mock.Setup(i => i.GetDefects()).Returns(new List<DefectDTO>().AsQueryable());
-            DefectDataController controller = new DefectDataController(mock.Object);
+            DefectController controller = new DefectController(mock.Object);
             //Act
             var result = controller.GetDefects();
 
@@ -32,7 +32,7 @@ namespace Scrumban.Test.Controllers.Tests
             var mock = new Mock<IDefectService>();
             DefectDTO defectDTO = new DefectDTO();
             mock.Setup(a => a.AddDefect(defectDTO));
-            DefectDataController controller = new DefectDataController(mock.Object);
+            DefectController controller = new DefectController(mock.Object);
 
             //Act
             var result = controller.Add(defectDTO);
@@ -46,7 +46,7 @@ namespace Scrumban.Test.Controllers.Tests
             var mock = new Mock<IDefectService>();
             DefectDTO defectDTO = new DefectDTO();
             mock.Setup(a => a.AddDefect(defectDTO));
-            DefectDataController controller = new DefectDataController(mock.Object);
+            DefectController controller = new DefectController(mock.Object);
 
             controller.Add(defectDTO);
             //Act
@@ -65,7 +65,7 @@ namespace Scrumban.Test.Controllers.Tests
             defectDTO.Name = exp;
             defectDTO.Description = exp;
             mock.Setup(a => a.UpdateDefect(defectDTO));
-            DefectDataController controller = new DefectDataController(mock.Object);
+            DefectController controller = new DefectController(mock.Object);
             var result = controller.Edit(defectDTO);
             Assert.IsType<OkObjectResult>(result);
             Assert.Equal(exp,defectDTO.Name);
