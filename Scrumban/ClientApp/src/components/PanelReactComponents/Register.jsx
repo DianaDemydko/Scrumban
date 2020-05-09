@@ -12,6 +12,8 @@ import "../../index.css"
 import { RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
 
+const logo = require("./choices.png")
+
 export class Register extends React.Component {
     state = {
 
@@ -297,6 +299,13 @@ export class Register extends React.Component {
     render() {
         return (
             <div className="Signup">
+                <div className="logo">
+                    <div className="logo-img"><img src={logo} className="img"></img></div>
+                    <div className="name-wrapper">
+                        <div className="logo-name">SCRUMBAN</div>
+                        <div className="logo-slogan">Flexible solution</div>
+                    </div>
+                </div>
                 <FormGroup controlId="firstname" bsSize="large">
                     <ControlLabel>First Name</ControlLabel>
                     <FormControl
@@ -369,7 +378,7 @@ export class Register extends React.Component {
                     onClick={this.handleSubmit}
                     loadingText="Signing up…"
                     className="btn btn-primary"
-                >Signup</Button>
+                >Sign Up</Button>
             </div>
         );
     }

@@ -63,7 +63,6 @@ namespace Scrumban.DataAccessLayer
                     new RoleDAL{ Id = 1, Name = "Team Member" },
                     new RoleDAL{ Id = 2, Name = "Scrum Master" },
                     new RoleDAL{ Id = 3, Name = "Product Owner" },
-                    new RoleDAL{ Id = 4, Name = "Tester" },
                     new RoleDAL{ Id = 5, Name = "Admin"}
                 }
             );

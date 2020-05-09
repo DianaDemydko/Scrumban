@@ -15,6 +15,7 @@ export class SprintTable extends React.Component
             sprints: [],
             statuses: [],
             loading: true,
+            showFilters: false,
 
             nameSearch: "",
             descriptionSearch: "",
@@ -29,6 +30,7 @@ export class SprintTable extends React.Component
             }
         }
 
+        this.showFilters = this.showFilters.bind(this);
         this.fetchSprintData = this.fetchSprintData.bind(this)
         this.fetchSprintStatuses = this.fetchSprintStatuses.bind(this)
 
@@ -58,7 +60,9 @@ export class SprintTable extends React.Component
         this.fetchSprintData("")
     }
 
-    
+    showFilters(param) {
+        this.setState({ showFilters: param });
+    }
 
     fetchSprintData(query) {
         this.setState({ loading: true })
@@ -351,45 +355,47 @@ export class SprintTable extends React.Component
             {
                 columnName: '',
                 sortingOrder: ''
-            }
+            },
+            showFilters: false
         })
         this.fetchSprintData("")
     }
 
     renderSprintsTable(sprints) {
         return (
-            <div>
-                <div className='filterContainer'>
-                    {/*Filters row*/}
-                    <div class="row">
-                        <div class="col-sm">
+            <div className="table-wrapper"> 
+                <div>
+                    {this.state.showFilters ?
+                        (<div className='filterContainer'>
+                            <div className="row filter-row-5 ">
+                        <div className="col-sm">
                             <label for="inputTitle">Name</label>
                         </div>
-                        <div class="col-sm">
+                        <div className="col-sm">
                             <label for="description">Description</label><br />
                         </div>
-                        <div class="col-sm ">
+                        <div className="col-sm ">
                             <label for="startDate">Start Date</label>
                         </div>
-                        <div class="col-sm">
+                        <div className="col-sm">
                             <label for="endDate">End Date</label>
                         </div>
-                        <div class="col-sm">
+                        <div className="col-sm">
                             <label for="status">Status</label>
                         </div>
                         <div class="col-sm">
 
                         </div>
-                        <div class="col-sm">{/*   */}</div>
+                        <div className="col-sm">{/*   */}</div>
                     </div>
-                    <div className="row">
-                        <div class="col-sm">
-                            <input type="text" class="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} onKeyDown={this.onKeyDown} value={this.state.nameSearch} />
+                            <div className="row filter-row-10 ">
+                        <div classNAme="col-sm">
+                            <input type="text" className="form-control" placeholder="Search..." onChange={this.onNameSearchChanged} onKeyDown={this.onKeyDown} value={this.state.nameSearch} />
                         </div>
-                        <div class="col-sm">
-                            <input type="text" class="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} />
+                        <div className="col-sm">
+                            <input type="text" className="form-control" placeholder="Search..." onChange={this.onDescriptionSearchChanged} onKeyDown={this.onKeyDown} value={this.state.descriptionSearch} />
                         </div>
-                        <div class="col-sm">
+                        <div className="col-sm">
                         <DatePicker
                             className="form-control"
                             todayButton={"Today"}
@@ -400,7 +406,7 @@ export class SprintTable extends React.Component
                             placeholderText="Search..."
                             />
                         </div>
-                        <div class="col-sm">
+                        <div className="col-sm">
                         <DatePicker
                             className="form-control"
                             todayButton={"Today"}
@@ -411,20 +417,21 @@ export class SprintTable extends React.Component
                             placeholderText="Search..."
                         />
                     </div>
-                        <div class="col-sm">
-                            <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStatusSearchChanged} value={this.state.statusSearch} onKeyDown={this.onKeyDown}>
+                        <div className="col-sm">
+                            <select className="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStatusSearchChanged} value={this.state.statusSearch} onKeyDown={this.onKeyDown}>
                                 <option value="All">All</option>
                                 {this.state.statuses.map(status => <option value={status.sprintStatus} >{status.sprintStatus}</option>)}
                             </select>
                         </div>
                         <div class="col-sm">
-                            <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.onFiltersApply}>Apply Filters</button>
+                            <button type="button" className="btn apply-filters w-100 m-1" onClick={this.onFiltersApply}>Apply Filters</button>
                         </div>
                         <div class="col-sm">
-                            <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.clearFilters}>Clear</button>
-                        </div>
-                    </div>
-           <hr></hr>
+                            <button type="button" className="btn cancel-filter w-100 m-1" onClick={this.clearFilters}>Clear</button>
+                         </div>
+                      </div>
+                        </div>) : null}
+                  </div>
            <div className="tablePosition">
              <table class="table" style={{ 'table-layout': 'fixed' }}>
                     <thead>
@@ -465,10 +472,8 @@ export class SprintTable extends React.Component
                     }
                 </tbody>
             </table>
-                    <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn btn-sm btn-outline-dark m-1">Create New</button>
                     </div>
                 </div>
-            </div>
             )
     }
 
@@ -482,8 +487,13 @@ export class SprintTable extends React.Component
 
         return (
             <div id="Table-container">
-                <h1>Sprints</h1>
-                <br />
+                <div className="grid-panel">
+                    <div className="grid-name">Sprints</div>
+                    <div className="grid-buttons">
+                        <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn add-new btn-panel-table">Create New</button>
+                        <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
+                    </div>
+                </div>
                 <hr></hr>
                 {content}
             </div>

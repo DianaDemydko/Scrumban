@@ -2,6 +2,7 @@
 import { slide as Menu } from "react-burger-menu";
 import './SideBar.css';
 
+
 export class SideBar extends React.Component {
     constructor(props) {
         super(props);

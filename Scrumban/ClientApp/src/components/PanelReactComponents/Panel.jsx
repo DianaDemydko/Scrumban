@@ -1,6 +1,8 @@
 ﻿import React from 'react';
 import './Panel.css';
 
+const emptyAvatar = require('./user.png');
+
 export class Panel extends React.Component {
     constructor(props) {
 
@@ -33,11 +35,8 @@ export class Panel extends React.Component {
                     {this.state.loginStatus == "true" ?
                         (<span>
                             <li className="panelLi">
-                                <button className="panelBtn" onClick={() => this.props.moveToComponent("profile")} > {this.state.user} </button>
-                            </li>
-                            <li className="panelLi">
                                 <button className="panelBtn" onClick={() => this.props.moveToComponent("profile")}>
-                                    <img src={this.state.picture} className="picture" />
+                                    <img src={this.state.picture != null ? this.state.picture : emptyAvatar} className="picture" title={this.state.user} />
                                 </button>
                             </li>
                         </span>
@@ -45,7 +44,9 @@ export class Panel extends React.Component {
                         : (<li className="panelLi"><button className="panelBtn" onClick={() => this.props.moveToComponent("signup")}> Sign Up </button></li>)
                     }
                     <li className="panelLi">
-                        <button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>About</button>
+                        {this.state.loginStatus != "true" ?
+                            <button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>About</button>
+                            : null }
                     </li>
                 </ul>
             </div>

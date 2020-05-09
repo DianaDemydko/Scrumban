@@ -4,6 +4,8 @@ import "./Login.css";
 import { Route } from 'react-router';
 import { toast } from 'react-toastify';
 
+const logo = require("./choices.png")
+
 export class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -102,6 +104,13 @@ export class Login extends React.Component {
 
         return (
             <div className="Login">
+                <div className="logo">
+                    <div className="logo-img"><img src={logo} className="img"></img></div>
+                    <div className="name-wrapper">
+                        <div className="logo-name">SCRUMBAN</div>
+                        <div className="logo-slogan">Flexible solution</div>
+                    </div>
+                </div>
                 <FormGroup controlId="email" bsSize="large">
                     <ControlLabel>Email</ControlLabel>
                     <FormControl
@@ -127,7 +136,7 @@ export class Login extends React.Component {
                     onClick={this.handleSubmit}
                     className="btn btn-primary"
                  >
-                    Login
+                    Log In
                 </Button>
             </div>
         );

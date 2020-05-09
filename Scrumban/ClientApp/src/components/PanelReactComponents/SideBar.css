@@ -37,17 +37,17 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* General sidebar styles */
 .bm-menu {
     /*position: absolute;*/
-    background: #373a47;
+    background: #5C12A6;
     padding: 2.5em 1.5em 0;
     font-size: 1.5em;
 }
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
-    fill: #373a47;
+    fill: #5C12A6;
 }
 /* Wrapper for item list */
 .bm-item-list {
-    color: #b8b7ad;
+    color: #5C12A6;
     margin-left: 10%;
     font-size: 20px;
     /*color: #b8b7ad;
@@ -63,7 +63,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
     margin-bottom: 10px;
     color: #d1d1d1;
     transition: color 0.2s;
-    background: #373a47;
+    background: #5C12A6;
     cursor: pointer;
     outline: none;
 }
@@ -92,14 +92,13 @@ Note: Beware of modifying this element as it can break the animations - you shou
         display: block;
         text-decoration: none;
         margin-bottom: 10px;
-        color: #d1d1d1;
         transition: color 0.2s;
-        background: #373a47;
+        background: #5C12A6;
         cursor: pointer;
     }
 
     .navbar a:hover, .menu-dropdown:hover .dropbtn {
-        background-color: #373a47;
+        background-color: #2F0459;
     }
 
 .menu-dropdown-content {
@@ -121,9 +120,25 @@ Note: Beware of modifying this element as it can break the animations - you shou
     }
 
         .menu-dropdown-content a:hover {
-            background-color: rgba(100,100,100,0.3);
+            background-color: #2F0459;
         }
 
 .menu-dropdown:hover .menu-dropdown-content {
     display: block;
+}
+.menu-item {
+    background-color: #5C12A6;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+}
+.kanban-icon {
+    background-image: url('./networking.png');
+    background-repeat: no-repeat;
+}
+.menu-row {
+    display: flex;
+    flex-direction: row;
 }
