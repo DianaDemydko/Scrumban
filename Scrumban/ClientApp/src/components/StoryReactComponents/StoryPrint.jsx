@@ -30,9 +30,9 @@ export class StoryPrint extends React.Component {
         //var sprint = this.getSprintName();
         return (
             <tr>
-                <td class="col"><label style={{ 'margin': '15px' }}>{this.state.story.name}</label></td>
-                <td class="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyState}</label></td>
-                <td class="col">
+                <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.name}</label></td>
+                <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyState}</label></td>
+                <td className="col">
                     <div className="dropdown" style={{ 'margin': '15px' }}>
                     <span style={{ 'margin': '15px' }}>{v + "..."} </span>
                       <div className="dropdown-content">
@@ -40,10 +40,12 @@ export class StoryPrint extends React.Component {
                       </div>
                   </div>
                 </td>
-                <td class="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyPoints}</label></td>
-                <td class="col"><label style={{ 'margin': '15px' }}>{this.state.story.rank}</label></td>
-                <td class="col">
+                <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyPoints}</label></td>
+                <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.rank}</label></td>
+                <td className="col">
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" type="button" onClick={this.props.edit}>Edit</button>
+                </td>
+                <td className="col">
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit" onClick={this.props.delete}>Delete</button>
                 </td>
             </tr>

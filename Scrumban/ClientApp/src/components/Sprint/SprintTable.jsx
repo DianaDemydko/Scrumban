@@ -424,7 +424,7 @@ export class SprintTable extends React.Component
                             </select>
                         </div>
                         <div class="col-sm">
-                            <button type="button" className="btn apply-filters w-100 m-1" onClick={this.onFiltersApply}>Apply Filters</button>
+                            <button type="button" className="btn apply-filters w-100 m-1" onClick={this.onFiltersApply}>Filter</button>
                         </div>
                         <div class="col-sm">
                             <button type="button" className="btn cancel-filter w-100 m-1" onClick={this.clearFilters}>Clear</button>

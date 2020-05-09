@@ -158,8 +158,8 @@ export class SprintCreateForm extends React.Component {
                     </div>
                     
                 <div className="addContent">
-                    <button type="submit" class="btn create-save" style={{ 'margin-right': '20px', 'width': '50%' }} onClick={this.addNewSprint.bind(this)}>Save</button>
-                    <button type="submit" class="btn create-cancel" style={{ 'margin-right': '20px', 'width': '40%' }} onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
+                    <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }} onClick={this.addNewSprint.bind(this)}>Save</button>
+                    <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }} onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
                     </div>
             </div>
         )

@@ -27,8 +27,8 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        [EnableQuery()]
+        [EnableQuery]
+        [Route("Get")]
         public IEnumerable<FeatureDTO> Get()
         {
             var result = _featureService.Get().ToList();
@@ -80,20 +80,20 @@ namespace Scrumban.Controllers
         }
 
         [HttpGet]
-        [Route("/api/[controller]/getPriorities")]
+        [Route("GetPriorities")]
         public IEnumerable<PriorityDTO> GetPriorities()
         {
             var priorities = _featureService.GetPriorities();
             return priorities;
         }
         [HttpGet]
-        [Route("/api/[controller]/getAllStories")]
+        [Route("GetAllStories")]
         public IQueryable<StoryDTO> GetAllStories()
         {
            return _storyService.GetStories();
         }
         [HttpGet]
-        [Route("/api/[controller]/getStates")]
+        [Route("GetStates")]
         public IEnumerable<StateDTO> GetStates()
         {
             var states = _featureService.GetStates();

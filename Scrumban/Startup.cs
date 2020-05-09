@@ -89,6 +89,8 @@ namespace Scrumban
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IFeatureRepository, FeatureRepository>();
+            services.AddTransient<IFeatureService, FeatureService>();
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

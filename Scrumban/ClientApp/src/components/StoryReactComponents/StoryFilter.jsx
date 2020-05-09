@@ -92,6 +92,7 @@ export class StoryFilter extends React.Component {
             sprint_id: '',
         })
         this.props.changeFilter("");
+        this.props.hideFilters(false);
     }
     componentDidMount() {
         fetch("/api/sprint/index")
@@ -107,8 +108,8 @@ export class StoryFilter extends React.Component {
 
     // render row
     render() {
-        return <div className='filterContainer' style={{ "height":"120px"}}>
-            <div class="row">
+        return <div className='filterContainer' style={{ "height": "120px", marginLeft: '20px', marginRight: '20px' }}>
+            <div class="row filter-row-5">
                 <div class="col-sm">
                     <label for="inputTitle">Name</label>
                 </div>
@@ -129,7 +130,7 @@ export class StoryFilter extends React.Component {
                 </div>
                 <div class="col-sm">{/*   */}</div>
             </div>
-            <div class="row">
+            <div class="row filter-row-10">
                 <div class="col-sm">
                     <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search" value={this.state.name} autocomplete="off" />
                 </div>
@@ -160,8 +161,8 @@ export class StoryFilter extends React.Component {
                     </select>
                 </div>
                 <div class="col-sm" >
-                    <button type="submit" onClick={this.onSetFilter} className="btn btn-sm btn-outline-dark w-100 m-1"> Apply filter </button>
-                    <button type="submit" onClick={this.onCancelFilter} className ="btn btn-sm btn-outline-dark w-100 m-1"> Clear </button>
+                    <button type="submit" onClick={this.onSetFilter} className="btn apply-filters w-100 m-1">Filter</button>
+                    <button type="submit" onClick={this.onCancelFilter} className="btn cancel-filter w-100 m-1">Clear</button>
                 </div>
             </div>
 

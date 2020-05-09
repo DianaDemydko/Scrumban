@@ -27,9 +27,11 @@ export class StoryGrid extends React.Component {
             {
                 columnName: '',
                 sortingOrder: ''
-            }
+            },
+            showFilters: false
         };
 
+        this.showFilters = this.showFilters.bind(this);
         this.onRemoveStory = this.onRemoveStory.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.loadData = this.loadData.bind(this);
@@ -39,6 +41,12 @@ export class StoryGrid extends React.Component {
         this.sortData = this.sortData.bind(this);
         this.startFiltration = this.startFiltration.bind(this);
         //this.sortByName = this.sortByName.bind(this);
+    }
+
+    showFilters(param) {
+        this.setState({
+            showFilters: param
+        });
     }
 
     onDeleteItem(id) {
@@ -222,12 +230,16 @@ export class StoryGrid extends React.Component {
         var remove = this.onRemoveStory;
         var changed = this.onChanged;
         return (<div>
-            <label style={{ 'fontSize': '40px' }}>Stories</label>
-            <br />
+            <div className="grid-panel">
+                <div className="grid-name">Stories</div>
+                <div className="grid-buttons">
+                    <button onClick={() => this.props.moveToComponent("storyAdd")} className="btn add-new btn-panel-table">Create New</button>
+                    <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
+                </div>
+            </div>
             <hr></hr>
-            <StoryFilter changeFilter={this.startFiltration} />
-            <hr></hr>
-            <div className="tablePosition">
+            {this.state.showFilters ? <StoryFilter changeFilter={this.startFiltration} hideFilters={this.showFilters} /> : null}
+            <div className="tablePosition table-wrapper">
                 <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
                     <thead>
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}>Name{this.renderCaret('name')}</th>
@@ -240,7 +252,6 @@ export class StoryGrid extends React.Component {
                     </thead>
                     {this.state.stories.map(function (story) { return <StoryComponent key={story.story_id} story={story}  onRemove={remove} onChanged={changed} /> })}
                 </table>
-                <button class="btn btn-sm btn-outline-dark" style={{ 'margin': '20px' }} onClick={() => this.props.moveToComponent("storyAdd")}>Create New</button>
             </div>
         </div>
         );

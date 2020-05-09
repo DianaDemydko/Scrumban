@@ -21,7 +21,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<FeatureDAL> GetAll()
         {
-            var response = _dbContext.Features.Include(x => x.Priority).Include(x => x.State).ToList().AsQueryable();
+            var response = _dbContext.Features.Include(x => x.Priority).Include(x => x.State).AsQueryable();
             return response;
         }
         public IQueryable<PriorityDAL> GetPriorities()

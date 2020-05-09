@@ -57,17 +57,17 @@ export class EditFeature extends Component {
     }
 
     componentDidMount() {
-        fetch('api/FeatureData/getPriorities')
+        fetch('api/FeatureData/GetPriorities')
             .then(res => res.json())
             .then(json => {
                 this.setState({ priorities: json })
             });
-        fetch('api/FeatureData/getStates')
+        fetch('api/FeatureData/GetStates')
             .then(res => res.json())
             .then(json => {
                 this.setState({ allStates: json })
             });
-        fetch('api/FeatureData/getAllStories')
+        fetch('api/FeatureData/GetAllStories')
             .then(res => res.json())
             .then(json => {
                 this.setState({ allStories: json })
@@ -109,7 +109,7 @@ export class EditFeature extends Component {
 
   
      onSubmit() {
-         fetch('api/FeatureData/', {
+         fetch('api/FeatureData/Put', {
             method: 'put',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -187,9 +187,8 @@ export class EditFeature extends Component {
                         <DatePicker todayButton={"Today"} selected={this.state.date} onChange={this.onDateChange} dateFormat="yyyy/MM/dd" />
 
             </div>
-               
+
             </td>
-            <td/>
             <td>
 
                 <button className="btn btn-sm btn-outline-dark w-100 m-1"  type="submit" onClick={this.onSubmit} >Save</button>

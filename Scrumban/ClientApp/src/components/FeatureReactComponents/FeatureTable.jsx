@@ -6,6 +6,7 @@ import { FeatureFilter } from './FeatureFilter.jsx';
 import { FeatureRow } from './FeatureRow.jsx';
 import { checkToken } from '../Helpers'
 import { toast } from 'react-toastify';
+import buildQuery from 'odata-query'
 
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
@@ -26,13 +27,22 @@ export class FeatureTable extends Component {
                 columnName: '',
                 sortingOrder: ''
             },
+            showFilters: false
         };
+
+        this.showFilters = this.showFilters.bind(this);
         this.sortData = this.sortData.bind(this)
         this.findData = this.findData.bind(this);
         this.onDeleteItem = this.onDeleteItem.bind(this);
         this.renderCaret = this.renderCaret.bind(this);
         this.loadData = this.loadData.bind(this);
         this.onEditItem = this.onEditItem.bind(this);
+    }
+
+    showFilters(param) {
+        this.setState({
+            showFilters: param
+        });
     }
 
     renderCaret(columnName) {
@@ -53,7 +63,7 @@ export class FeatureTable extends Component {
         this.loadData(query);
     }
     onEditItem() {
-        this.loadData();
+        this.loadData("");
     }
     onDeleteItem(deletedItem) {
         var newFeatures = this.state.features.filter(function (x) {
@@ -136,25 +146,14 @@ export class FeatureTable extends Component {
         this.loadData("");
     }
     loadData(query) {
-        checkToken()
-        fetch('api/FeatureData/' + query, {
-            method: "get",
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
-            }
-        })
+        fetch('api/FeatureData/Get' + query)
             .then(function (response) {
                 if (response.status == 200) {
-                    return response.json()
+                    return response.json();
                 }
                 else if (response.status == 401) {
                     toast.warn("You are not authorized. Please login!");
                     window.location.replace("");
-                    //var answer = window.confirm("You are not authorized. Move to Login page ?");
-                    //if (answer == true) {
-                    //    this.props.moveToComponent("login")
-                    //}
                 }
                 else if (response.status == 403) {
                     toast.error("You have not permission  !");
@@ -172,10 +171,17 @@ export class FeatureTable extends Component {
 
     render() {
         return <div>
-            <label style={{ 'fontSize': '40px' }}> Feature </label>
-            <FeatureFilter changeFindData={this.findData} />
-            <div className="tablePosition">
-                <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
+            <div className="grid-panel">
+                <div className="grid-name">Features</div>
+                <div className="grid-buttons" style={{ marginLeft: '65%' }}>
+                    <button onClick={() => this.props.moveToComponent("featureAdd")} className="btn add-new btn-panel-table">Create New</button>
+                    <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
+                </div>
+            </div>
+            <hr></hr>
+            {this.state.showFilters ? <FeatureFilter changeFindData={this.findData} hideFilters={this.showFilters} /> : null }
+            <div className="tablePosition  table-wrapper">
+                <table class="table" style={{ 'table-layout': 'fixed' }} >
                     <thead>
                         <tr>
                             <th className="col" onClick={() => this.sortData('name')}>
@@ -187,7 +193,6 @@ export class FeatureTable extends Component {
                             <th class="col" onClick={() => this.sortData('state')}>
                                 State {this.renderCaret('state')}
                             </th>
-                            <th class="col"  > Owner  </th>
                             <th class="col" onClick={() => this.sortData('priority')}>
                                 Priority {this.renderCaret('priority')}
                             </th>
@@ -208,10 +213,6 @@ export class FeatureTable extends Component {
                 </table>
             </div>
             <div />
-            <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("featureAdd")} >
-                Create New
-                    </button>
-
         </div>;
 
     }

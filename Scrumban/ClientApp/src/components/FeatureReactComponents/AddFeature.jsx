@@ -25,12 +25,12 @@ export class AddFeature extends React.Component {
         this.onStateChanged = this.onStateChanged.bind(this);
     }
     componentDidMount() {
-        fetch('api/FeatureData/getPriorities')
+        fetch('api/FeatureData/GetPriorities')
             .then(res => res.json())
             .then(json => {
                 this.setState({ priorities: json })
             });
-        fetch('api/FeatureData/getStates')
+        fetch('api/FeatureData/GetStates')
             .then(res => res.json())
             .then(json => {
                 this.setState({ states: json })
@@ -97,20 +97,20 @@ export class AddFeature extends React.Component {
     render() {
         return (
             <div className="addComponentBackground" >
-                <label style={{ 'fontSize': '40px' }} > Create New Feature</label>
+                <label style={{ 'fontSize': '40px' }} className="create-title" >New Feature</label>
                 <div />
                 <div className = "addContent">
-                    <label class = "col-2"> Name: </label>
+                    <label class= "col-2  mr-10"> Name: </label>
                     <input className="inputAdd" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
                     <div/>
                 </div>
                 <div className="addContent">
-                    <label class="col-2"> Description: </label>
+                    <label class="col-2  mr-10"> Description: </label>
                     <textarea className="inputAdd" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
                     <div />
                 </div>
                 <div className="addContent">
-                    <label class="col-2"> State: </label>
+                    <label class="col-2  mr-10"> State: </label>
                 <select class="btn btn-light dropdown-toggle m-0 w-25" name="state" onChange={e => this.onStateChanged(e)} >
                     {this.state.states.map(state => (
                         <option> {state.name}</option>))}
@@ -120,7 +120,7 @@ export class AddFeature extends React.Component {
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name ="owners">Ownres</button>*/}
                 <div />
                 <div className="addContent">
-                    <label class="col-2"> Priority: </label>
+                    <label class="col-2  mr-10"> Priority: </label>
                     <select class="btn btn-light dropdown-toggle m-0 w-25" name="prioriry" onChange={e => this.onPriorityChanged(e)} >
                       {this.state.priorities.map(priority => (
                         <option> { priority.name }</option>))}
@@ -128,13 +128,13 @@ export class AddFeature extends React.Component {
                 </div>
                 <div />
                 <div className="addContent">
-                    <label class="col-2" >Start Date: </label>
-                    <DatePicker selected={this.state.start} onChange={this.onStartDateChanged} dateFormat="yyyy/MM/dd" />
+                    <label class="col-2  mr-10" >Start Date: </label>
+                    <DatePicker className="datePickerStyle btn btn-sm btn-outline-secondary" selected={this.state.start} onChange={this.onStartDateChanged} dateFormat="yyyy/MM/dd" />
                     <div />
                 </div>
                 <div className="addContent">
-                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'15%' }} onClick={this.handleClick} > Submit </button>
-                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={() => this.props.moveToComponent("feature")} > Cancel </button>
+                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'50%' }} onClick={this.handleClick} > Save </button>
+                    <button class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }} onClick={() => this.props.moveToComponent("feature")} > Cancel </button>
                     </div>
 
 

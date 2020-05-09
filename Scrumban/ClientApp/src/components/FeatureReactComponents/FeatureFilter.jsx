@@ -30,12 +30,12 @@ export class FeatureFilter extends Component {
         this.clearData = this.clearData.bind(this);
     }
     componentDidMount() {
-        fetch('api/FeatureData/getPriorities')
+        fetch('api/FeatureData/GetPriorities')
             .then(res => res.json())
             .then(json => {
                 this.setState({ priorities: json })
             });
-        fetch('api/FeatureData/getStates')
+        fetch('api/FeatureData/GetStates')
             .then(res => res.json())
             .then(json => {
                 this.setState({ states: json })
@@ -67,6 +67,8 @@ export class FeatureFilter extends Component {
     clearData() {
         this.setState({ findName: '', findDescription: '', findPriority: '', findDate: null });
         this.props.changeFindData('');
+
+        this.props.hideFilters(false);
     }
 
     onFindNameChange(e) {
@@ -89,8 +91,8 @@ export class FeatureFilter extends Component {
     }
 
     render() {
-        return <div className='filterContainer' id='filterForm'>
-            <div class='row'>
+        return <div className='filterContainer' id='filterForm' style={{ marginLeft: '20px', marginRight: '20px' }}>
+            <div class='row filter-row-5'>
                 <div class="col-sm">
                     <label>Name</label>
                 </div>
@@ -113,7 +115,7 @@ export class FeatureFilter extends Component {
                 <div class="col-sm" />
             </div>
 
-            <div class="row">
+            <div class="row filter-row-10">
                 <div class="col-sm">
                     <input className="input" type='text'
                         onChange={e => this.onFindNameChange(e)}
@@ -149,13 +151,13 @@ export class FeatureFilter extends Component {
                 </div>
                 <div class="col-sm">
                     <td />
-                    <button class="btn btn-sm btn-outline-dark w-100" onClick={this.findData}>
-                        Find
+                    <button className="btn apply-filters w-100 m-1" onClick={this.findData}>
+                        Filter
                  </button>
                 </div>
                 <div class="col-sm">
                     <td />
-                    <button class="btn btn-sm btn-outline-dark w-100" onClick={this.clearData}>
+                    <button className="btn cancel-filter w-100 m-1" onClick={this.clearData}>
                         Clear
                  </button>
                 </div>

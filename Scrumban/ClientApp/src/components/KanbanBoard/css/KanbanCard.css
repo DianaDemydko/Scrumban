@@ -85,11 +85,12 @@
 
 .card-button-expand {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
     background: #ffffff;
     border: none;
     height: 30px;
     width: 80%;
+    text-decoration: underline;
 }
 
     .card-button-expand:focus {
@@ -98,8 +99,9 @@
 
 .card-button-collapse {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
     background: #ffffff;
+    text-decoration: underline;
     border: none;
     height: 30px;
     width: 80%;

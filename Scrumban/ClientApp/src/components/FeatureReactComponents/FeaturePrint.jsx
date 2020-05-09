@@ -76,7 +76,6 @@ export class FeaturePrint extends Component {
                 </td>
                 <td class="col" > <label style={{ 'margin': '15px' }}>{this.state.feature.state.name}</label> </td>
                 {/*<td class="col" > {this.state.feature.owner.name } </td>*/}
-                <td class="col"> <label style={{ 'margin': '15px' }}> Owner </label> </td>
                 <td class="col"> <label style={{ 'margin': '15px' }}>{this.state.feature.priority.name}</label> </td>
 
                 <td class="col"> 

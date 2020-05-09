@@ -104,34 +104,34 @@ export class StoryAdd extends React.Component {
     render() {
         return (
             <div className="addComponentBackground" >
-                <label style={{ 'fontSize': '40px' }} >Add story</label>
+                <label style={{ 'fontSize': '40px' }} className="create-title" >New Story</label>
                 <div />
                     <div className="addContent">
-                    <label class="col-2">Name</label>
+                    <label class="col-2 mr-10">Name: </label>
                     <input type="text" className="inputAdd" onChange={e => this.onNameChanged(e)} id="name" placeholder="story name" autoComplete="false" />
                         </div>
                 <div className="addContent">
-                    <label class="col-2" for="description">Description</label>
+                    <label class="col-2 mr-10" for="description">Description: </label>
                     <textarea rows="3" className="inputAdd" onChange={e=>this.onDescriptionChanged(e)} id="description" placeholder="story description" />
                         </div>
                     <div className="addContent">
-                        <label class="col-2">Story Points</label>
+                    <label class="col-2 mr-10">Story Points: </label>
                         <input type="text" className="inputAdd" onChange={e=>this.onStoryPointsChanged(e)} id="storyPoints" placeholder="story points" autoComplete="false" />
                     </div>
                     <div className="addContent">
-                        <label class="col-2">Rank</label>
+                    <label class="col-2 mr-10">Rank: </label>
                         <input type="text" className="inputAdd" onChange={e=>this.onRankChanged(e)} id="rank" placeholder="story rank" autoComplete="false" />
                 </div>
                 <div className="addContent">
-                    <label class="col-2" for="sprints">Sprint</label>
+                    <label class="col-2 mr-10" for="sprints">Sprint: </label>
                     <select class="btn btn-light dropdown-toggle m-0 w-25" name="sprints" onChange={e => this.onSprintChanged(e)}>
                         {this.state.allSprints.map(sprint => (
                             <option> {sprint.name}</option>))}
                     </select>
                 </div>
                 <div className="addContent">
-                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={this.onSubmit}> Submit</button>
-                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'15%' }} onClick={() => this.props.moveToComponent("stories")}>Cancel</button>
+                    <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }} onClick={this.onSubmit}>Save</button>
+                    <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width':'40%' }} onClick={() => this.props.moveToComponent("stories")}>Cancel</button>
                 </div>
                 </div>
         );
