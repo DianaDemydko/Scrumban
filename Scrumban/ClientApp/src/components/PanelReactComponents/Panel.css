@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #5C12A6;
 }
 .panelLi {
     float: right;
@@ -17,9 +17,10 @@
 
 .panelBtn .picture {
     height: 25px;
-    width: auto;
+    width: 25px;
     display: block;
-}
+    border-radius: 50%
+;}
 
 .panelBtn {
     display: block;
@@ -27,12 +28,12 @@
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    background-color: #333;
+    background-color: #5C12A6;
     border: none;
 }
-.panelBtn:hover, .panelBtn:focus {
-    background-color: #4189C7;
-}
+    .panelBtn:hover, .panelBtn:focus {
+        background-color: #2F0459;
+    }
 
 .onAbove {
     z-index: 99999999;

@@ -3,8 +3,68 @@
         padding: 60px 0;
     }
 
-        .Login  {
-            margin: 0 auto;
-            max-width: 320px;
+    .Login {
+        margin: 0 auto;
+        max-width: 320px;
+        margin-left: 35%;
+    }
+    .btn-primary {
+        background-color: #5C12A6;
+        color: #ffffff;
+        font-style: normal;
+        border-color: #5C12A6;
+        width: 440px;
+    }
+
+        .btn-primary:hover {
+            background-color: #2F0459;
+            border-color: #2F0459;
         }
+
+    .btn.btn-primary[disabled] {
+        background-color: #7F25D9;
+        border-color: #7F25D9;
+    }
+    .logo-img {
+        display: flex;
+        align-self: flex-start;
+        margin-right: 10px;
+    }
+
+    .img {
+        height: 100px;
+    }
+    .logo {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+    .name-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-self: flex-end;
+    }
+    .logo-name {
+        text-align: center;
+        font-style: normal;
+        font-family: khula-800;
+        font-size: x-large;
+        font-weight: 800;
+        font-size: 55px;
+        color: #262626;
+    }
+    .logo-slogan {
+        text-align: center;
+        font-size: 20px;
+        color: #73168D;
+        font-family: khula-regular;
+        font-weight: bold;
+    }
+    .form-group {
+        width: 440px;
+    }
+    .control-label {
+        font-weight: 700;
+        color: #2F0459;
+    }
 }

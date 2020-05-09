@@ -101,10 +101,10 @@ export class SprintCreateForm extends React.Component {
     render() {
         return (
             <div className="addComponentBackground">
-                <label style={{ 'fontSize': '40px' }} >Add sprint</label>
+                <label style={{ 'fontSize': '40px' }} className="create-title" >New Sprint</label>
                 <div />
                 <div className="addContent">
-                    <label class="col-2">Name</label>
+                    <label class="col-2 mr-10">Name: </label>
                         <input type="text"
                             class="inputAdd"
                             placeholder="Name"
@@ -114,7 +114,7 @@ export class SprintCreateForm extends React.Component {
                         />
                     </div>
                 <div className="addContent">
-                    <label class="col-2" >Description</label>
+                    <label class="col-2 mr-10" >Description: </label>
                         <textarea type="text"
                         rows="5"
                         className="inputAdd"
@@ -127,7 +127,7 @@ export class SprintCreateForm extends React.Component {
 
 
                 <div className="addContent">
-                    <label class="col-2">Start Date</label>
+                    <label class="col-2 mr-10">Start Date: </label>
                         <DatePicker
 
                             className="datePickerStyle btn btn-sm btn-outline-secondary"
@@ -140,7 +140,7 @@ export class SprintCreateForm extends React.Component {
                     </div>
 
                 <div className="addContent">
-                    <label class="col-2">End Date</label>
+                    <label class="col-2 mr-10">End Date: </label>
                         <DatePicker
                         className="datePickerStyle btn btn-sm btn-outline-secondary"
                             todayButton={"Today"}
@@ -151,15 +151,15 @@ export class SprintCreateForm extends React.Component {
                     </div>
 
                 <div className="addContent">
-                    <label class="col-2">Status</label>
-                    <select class="btn btn-light dropdown-toggle m-0 w-25" onChange={this.onStatusChanged}>
+                    <label class="col-2 mr-10">Status: </label>
+                    <select class="btn btn-light dropdown-toggle" onChange={this.onStatusChanged}>
                             {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                         </select>
                     </div>
                     
                 <div className="addContent">
-                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={this.addNewSprint.bind(this)}>Submit</button>
-                    <button type="submit" class="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }} onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
+                    <button type="submit" class="btn create-save" style={{ 'margin-right': '20px', 'width': '50%' }} onClick={this.addNewSprint.bind(this)}>Save</button>
+                    <button type="submit" class="btn create-cancel" style={{ 'margin-right': '20px', 'width': '40%' }} onClick={() => this.props.moveToComponent("sprints")} >Cancel</button>
                     </div>
             </div>
         )

@@ -20,11 +20,11 @@ export default class KanbanCard extends React.Component {
     renderMoreInformationButton() {
         return this.state.moreInformation ?
             <div className="card-toggle card-toggle-collapse">
-                <button className="card-button-collapse" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >-</button>
+                <button className="card-button-collapse" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >Hide Details</button>
             </div>
             :
             <div className="card-toggle">
-                <button className="card-button-expand" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >+</button>
+                <button className="card-button-expand" data-toggle="collapse" data-target={"#card_data" + this.state.story.story_id} onClick={this.moreInformationHandler} >Show Details</button>
             </div>
     }
 
@@ -36,13 +36,13 @@ export default class KanbanCard extends React.Component {
                 draggable='true'
                 onDragStart={(e) => this.props.onDragStart(e, this.state.story.story_id)}
             >
-                <div class="row">
-                    <div class="col">
+                <div className="row">
+                    <div className="col">
                         <div className="card-header-rank">
                             <div className="card-header-rank-text">{"Rank: " + this.state.story.rank}</div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div className="card-header-points">
                             <div className="card-header-points-text">{"Points: " + this.state.story.storyPoints}</div>
                         </div>
@@ -53,8 +53,8 @@ export default class KanbanCard extends React.Component {
 
                 {this.renderMoreInformationButton()}
 
-                <div class="collapse" id={"card_data" + this.state.story.story_id}>
-                    <div class="card-description-header">Description</div>
+                <div className="collapse" id={"card_data" + this.state.story.story_id}>
+                    <div className="card-description-header">Description</div>
                     <div className="card-description-text">
                         {this.state.story.description}
                     </div>

@@ -7,6 +7,7 @@ namespace Scrumban.DataAccessLayer.Models
     [Table("Sprint")]
     public class SprintDAL
     {
+        //Атрибут, що вказує на що дане поле буде PK (Primary Key)
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Sprint_id { get; set; }
@@ -16,6 +17,7 @@ namespace Scrumban.DataAccessLayer.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        //Атрибут, що вказує на що дане поле буде FK (Foreign Key) на таблицю SprintStatus
         [ForeignKey("SprintStatus")]
         public int SprintStatus_id { get; set; }
         

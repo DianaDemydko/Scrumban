@@ -23,25 +23,35 @@
     background-color: #eef2f9;
     padding: 7px;
     overflow-y: auto;
-    height: 80vh;
+    height: 72vh;
 }
 
 #Items.column-header {
-    background-image: linear-gradient(to bottom right, #d7dfe4 20%, #abb5bf);
+    background-color: #7F25D9;
+    color: #ffffff;
+    font-weight: 400;
 }
 
 #To_Do.column-header {
-    background-image: linear-gradient(to bottom right, #00f2fe 20%, #4facfe);
+    background-color: #2F0459;
+    color: #ffffff;
+    font-weight: 400;
 }
 
 #In_Progress.column-header {
-    background-image: linear-gradient(to bottom right, #ce89f0 20%, #ad3de6);
+    background-color: #D98E04;
+    color: #ffffff;
+    font-weight: 400;
 }
 
 #Testing.column-header {
-    background-image: linear-gradient(to bottom right,#F9D423 20%, #e65c00);
+    background-color: #F2E205;
+    color: #ffffff;
+    font-weight: 400;
 }
 
 #Done.column-header {
-    background-image: linear-gradient( to bottom right, #65fd4d 20%, #02be5d);
+    background-color: #05A610;
+    color: #ffffff;
+    font-weight: 400;
 }
