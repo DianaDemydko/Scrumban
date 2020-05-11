@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 
 import DatePicker from 'react-datepicker';
+import { toast } from 'react-toastify';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -265,8 +266,8 @@ export class TaskEdit extends React.Component {
                 .then(function (response) {
 
                     if (response.status == 200) {
-
-                        return "Ok"
+                        toast.success("Updated successfuly");
+                        return "Ok";
 
                     }
 
@@ -388,10 +389,7 @@ export class TaskEdit extends React.Component {
 
         return <tr>
 
-            <td colSpan="4">
-
-                <div className="form-group col-12">
-
+            <td>
                     <div>
 
                         <label for="name">Name</label>
@@ -399,11 +397,8 @@ export class TaskEdit extends React.Component {
                         <input type="text" class="form-control form-control-sm" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" defaultValue={this.props.item.name} />
 
                     </div>
-
-                </div>
-
-                <div className="form-group col-12">
-
+            </td>
+            <td>
                     <div>
 
                         <label for="description">Description</label>
@@ -412,9 +407,9 @@ export class TaskEdit extends React.Component {
 
                     </div>
 
-                </div>
+                </td>
 
-                <div className="form-group col-4">
+                <td>
 
                     <div>
 
@@ -432,15 +427,15 @@ export class TaskEdit extends React.Component {
 
                             id="startDate"
 
-                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                            className="form-control"
 
                         />
 
                     </div>
 
-                </div>
+                </td>
 
-                <div className="form-group col-4">
+                <td>
 
                     <div >
 
@@ -458,21 +453,21 @@ export class TaskEdit extends React.Component {
 
                             id="finishDate"
 
-                            className="datePickerStyle btn btn-sm btn-outline-secondary"
+                            className="form-control"
 
                         />
 
                     </div>
 
-                </div>
+                </td>
 
-                <div className="form-group">
+                <td>
 
-                    <div className="col-4">
+                    <div>
 
                         <label for="priorityName">Priority</label>
 
-                        <select class="btn btn-light dropdown-toggle w-100" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
+                    <select class="form-control form-control-sm m-0"  id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
 
                             {this.props.priorities.map((item) => <option>{item.name}</option>)}
 
@@ -480,15 +475,15 @@ export class TaskEdit extends React.Component {
 
                     </div>
 
-                </div>
+                </td>
 
-                <div className="form-group">
+                <td>
 
-                    <div className="col-4">
+                    <div>
 
                         <label for="taskStateName">State</label>
 
-                        <select class="form-control form-control-sm" id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
+                    <select class="form-control form-control-sm m-0"  id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
 
                             {this.props.states.map((item) => <option>{item.name}</option>)}
 
@@ -496,15 +491,15 @@ export class TaskEdit extends React.Component {
 
                     </div>
 
-                </div>
+                </td>
 
-                <div className="form-group">
+                <td>
 
-                    <div className="col-8">
+                    <div>
 
                         <label for="userAssign">Assign to</label>
 
-                        <select class="form-control form-control-sm" id="userAssign" onChange={this.onUserChanged} placeholder="" defaultValue={user_name} >
+                    <select class="form-control form-control-sm m-0"  id="userAssign" onChange={this.onUserChanged} placeholder="" defaultValue={user_name} >
 
                             <option>--Nobody--</option>
 
@@ -514,11 +509,11 @@ export class TaskEdit extends React.Component {
 
                     </div>
 
-                </div>
+                </td>
 
-                <div className="form-group">
+                <td>
 
-                    <div className="col-8">
+                    <div>
 
                         <label for="userAssign">Story</label>
 
@@ -532,13 +527,14 @@ export class TaskEdit extends React.Component {
 
                     </div>
 
-                </div>
+                </td>
+            <td colSpan="2">
+                <div>
 
-                <div className="col-12">
+                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark w-100 m-1">Save</button> 
 
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-info button-fixed">Save  </button>
 
-                    <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-info button-fixed">Cancel</button>
+                    <button type="submit" onClick={this.props.edit} className="btn btn-sm btn-outline-dark w-100 m-1">Cancel</button>
 
                 </div>
 

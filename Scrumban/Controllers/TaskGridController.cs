@@ -58,7 +58,6 @@ namespace Scrumban.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
         [Route("/api/[controller]/deleteTask")]
         public IActionResult Delete(int? id)
         {

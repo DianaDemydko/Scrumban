@@ -57,7 +57,8 @@ namespace Scrumban.Controllers
 
 
         }
-        [HttpPut]
+        [HttpPost]
+        [Route("Put")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public void Put([FromBody] FeatureDTO feature)
         {

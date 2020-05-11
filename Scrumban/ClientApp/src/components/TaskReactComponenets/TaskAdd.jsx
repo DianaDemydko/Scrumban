@@ -432,13 +432,13 @@ export class TaskAdd extends React.Component {
 
 
 
-                <h2 style={{ 'fontSize': '40px' }}>Add task</h2>
+                <h2 style={{ 'fontSize': '40px' }} className="create-title">New Task</h2>
 
 
 
                 <div className="addContent">
 
-                    <label for="name" className="col-2">Name</label>
+                    <label for="name" className="col-2 mr-10">Name: </label>
 
                     <input type="text" className="inputAdd" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" />
 
@@ -448,7 +448,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="description" className="col-2">Description</label>
+                    <label for="description" className="col-2 mr-10">Description: </label>
 
                     <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="task description" />
 
@@ -458,7 +458,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="description" className="col-2">Start Date</label>
+                    <label for="description" className="col-2 mr-10">Start Date: </label>
 
                     <DatePicker
 
@@ -486,7 +486,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="finishDate" className="col-2">Finish Date</label>
+                    <label for="finishDate" className="col-2 mr-10">Finish Date: </label>
 
                     <DatePicker
 
@@ -516,7 +516,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="priorityName" className="col-2">Priority</label>
+                    <label for="priorityName" className="col-2 mr-10">Priority: </label>
 
                     <select class="btn btn-light dropdown-toggle w-25" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
 
@@ -528,7 +528,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="taskStateName" className="col-2">State</label>
+                    <label for="taskStateName" className="col-2 mr-10">State: </label>
 
                     <select class="btn btn-light dropdown-toggle w-25" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
 
@@ -540,7 +540,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="userAssign" className="col-2">Assign to</label>
+                    <label for="userAssign" className="col-2 mr-10">Assign to: </label>
 
                     <select class="btn btn-light dropdown-toggle w-25" id="userAssign" onChange={this.onUserChanged} placeholder="">
 
@@ -554,7 +554,7 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="story" className="col-2">Story</label>
+                    <label for="story" className="col-2 mr-10">Story: </label>
 
                     <select class="btn btn-light dropdown-toggle w-25" id="story" onChange={this.onStoryChanged} placeholder="">
 
@@ -568,9 +568,9 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Submit</button>
+                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }}>Save</button>
 
-                    <button type="submit" onClick={() => this.props.moveToComponent("tasks")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Cancel</button>
+                    <button type="submit" onClick={() => this.props.moveToComponent("tasks")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }}>Cancel</button>
 
                 </div>
 

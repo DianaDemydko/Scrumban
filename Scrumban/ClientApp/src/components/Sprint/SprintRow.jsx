@@ -31,7 +31,7 @@ export class SprintRow extends React.Component {
     onUpdatingSprintElement(sprint)
     {
         this.props.onUpdatingSprintElement(sprint)
-        this.setState({ sprint: sprint })
+        this.setState({ sprint: sprint, isEditMode: false })
     }
 
     onDeletingSprintElement(event)
@@ -54,7 +54,7 @@ export class SprintRow extends React.Component {
                         break
                     case 200:
                         this.props.onDeletingSprintElement(sprint_id)
-                        toast.success("You deleted a sprint!");
+                        toast.success("Sprint was deleted!");
                         break
                 }
             }.bind(this))
@@ -65,6 +65,7 @@ export class SprintRow extends React.Component {
     {
         return (
             <React.Fragment>
+                {this.state.isEditMode ? <SprintEditForm sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : 
             <tr key={this.state.sprint.sprint_id}>
                 <td>{this.state.sprint.name}</td>
                     <td>{this.state.sprint.description}</td>
@@ -77,8 +78,8 @@ export class SprintRow extends React.Component {
                 <td>
                         <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
                 </td>
-                </tr>
-                {this.state.isEditMode ? <SprintEditForm sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : null}
+                    </tr>
+                 }
             </React.Fragment>
         )
     }

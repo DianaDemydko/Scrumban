@@ -2,6 +2,7 @@
 import { SprintRow } from './SprintRow'
 import buildQuery from 'odata-query'
 import DatePicker from "react-datepicker";
+import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
 import '../../GridStyles/StyleForGrid.css';
 
@@ -27,7 +28,8 @@ export class SprintTable extends React.Component
             {
                 columnName: '',
                 sortingOrder: ''
-            }
+            },
+            pageOfItems: []
         }
 
         this.showFilters = this.showFilters.bind(this);
@@ -52,6 +54,15 @@ export class SprintTable extends React.Component
         this.sortByDate = this.sortByDate.bind(this)
         this.renderCaret = this.renderCaret.bind(this)
         this.clearFilters = this.clearFilters.bind(this)
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({
+            pageOfItems: pageOfItems
+        });
+
     }
 
     componentDidMount()
@@ -461,18 +472,24 @@ export class SprintTable extends React.Component
                 </thead>
                 <tbody>
                     
-                    {(sprints.length > 0)
-                            ? sprints.map(sprint =>
-                                <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
+                 {(this.state.pageOfItems.length > 0)//pageOfItems
+                                ? this.state.pageOfItems.map((sprint) => {//pageOfItems
+                                    return <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
+                                }
                         )
-                        : (<td colSpan="7">
-                            No results
-                          </td>)
+                       : (<tbody>
+                                    <td>
+                                        No results
+                            </td>
+                                </tbody>)
                             
                     }
                 </tbody>
             </table>
-                    </div>
+                </div>
+                <div>
+                    <Pagination items={sprints} onChangePage={this.onChangePage} />
+                </div>
                 </div>
             )
     }

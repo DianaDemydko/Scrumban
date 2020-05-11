@@ -4,6 +4,7 @@ import { StoryComponent } from './StoryComponent';
 import { StoryFilter } from './StoryFilter';
 import { toast } from 'react-toastify';
 import '../../GridStyles/StyleForGrid.css';
+import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
 // const
 const icon_up = require("../FeatureReactComponents/sort-arrow-up.svg")
@@ -28,7 +29,8 @@ export class StoryGrid extends React.Component {
                 columnName: '',
                 sortingOrder: ''
             },
-            showFilters: false
+            showFilters: false,
+            pageOfItems: []
         };
 
         this.showFilters = this.showFilters.bind(this);
@@ -40,7 +42,16 @@ export class StoryGrid extends React.Component {
         this.onDeleteItem = this.onDeleteItem.bind(this);
         this.sortData = this.sortData.bind(this);
         this.startFiltration = this.startFiltration.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
         //this.sortByName = this.sortByName.bind(this);
+    }
+
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({
+            pageOfItems: pageOfItems
+        });
+
     }
 
     showFilters(param) {
@@ -54,7 +65,7 @@ export class StoryGrid extends React.Component {
             return x.story_id != id;
         });
         this.setState({ stories: newStory });
-        toast.success("You deleted a story!");
+        toast.success("Story was deleted!");
         this.loadData("");
     }
 
@@ -76,7 +87,7 @@ export class StoryGrid extends React.Component {
         var arr = this.state.stories;
         var index = arr.indexOf(x => x.id = item.id);
         arr[index] = item;
-        toast.success("You edited a story!");
+        toast.success("Updated successfuly");
         this.setState({ stories: arr });
     }
 
@@ -250,8 +261,20 @@ export class StoryGrid extends React.Component {
                         <th class="col"  />
                         <th class="col" />
                     </thead>
-                    {this.state.stories.map(function (story) { return <StoryComponent key={story.story_id} story={story}  onRemove={remove} onChanged={changed} /> })}
+                    {(this.state.pageOfItems.length > 0)//pageOfItems
+                        ? this.state.pageOfItems.map((story) => {
+                            return <StoryComponent key={story.story_id} story={story} onRemove={remove} onChanged={changed} />
+                        }) : 
+                        (<tbody>
+                            <td>
+                                No results
+                            </td>
+                        </tbody>)
+                        }
                 </table>
+            </div>
+            <div>
+                <Pagination items={this.state.stories} onChangePage={this.onChangePage} />
             </div>
         </div>
         );

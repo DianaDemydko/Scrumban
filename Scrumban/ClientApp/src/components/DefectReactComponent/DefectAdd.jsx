@@ -122,10 +122,10 @@ export class DefectAdd extends React.Component {
     render() {
         return (
             <div className="addComponentBackground">
-                <label style={{ 'fontSize': '40px' }}> Create New Defect </label>
+                <label style={{ 'fontSize': '40px' }} className="create-title"> New Defect </label>
                 <div />
                 <div className="addContent">
-                    <label class="col-2">Name</label>
+                    <label class="col-2 mr-10">Name: </label>
                     <input type="text"
                         className="inputAdd"
                         placeholder="defect name"
@@ -134,7 +134,7 @@ export class DefectAdd extends React.Component {
                         autoComplete="false" />
                 </div>
                 <div className="addContent">
-                    <label class="col-2">Description</label>
+                    <label class="col-2 mr-10">Description: </label>
                     <textarea rows="3"
                         type="text"
                         placeholder="defect description"
@@ -143,25 +143,25 @@ export class DefectAdd extends React.Component {
                         id="description" />
                 </div>
                 <div className="addContent">
-                    <label class="col-2">State</label>
+                    <label class="col-2 mr-10">State: </label>
                     <select onChange={this.onStateChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="state" defaultValue={stateOption[0].name}>
                         {stateOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
-                    <label class="col-2">Priority</label>
+                    <label class="col-2 mr-10">Priority:</label>
                     <select onChange={this.onPriorityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="priority" placeholder="priority" defaultValue={priorityOption[0].name}>
                         {priorityOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
-                    <label class="col-2">Severity</label>
+                    <label class="col-2 mr-10">Severity:</label>
                     <select onChange={this.onSeverityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="severity" placeholder="severity" defaultValue={severityOption[0].name}>
                         {severityOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
-                    <label class="col-2">Story Id</label>
+                    <label class="col-2 mr-10">Story Id: </label>
                     <input type="text"
                         placeholder="Story Id"
                         onChange={this.onStoryIdChange}
@@ -169,14 +169,14 @@ export class DefectAdd extends React.Component {
                         id="storyId" />
                 </div>
                 <div className="addContent">
-                    <label class="col-2">Status</label>
+                    <label class="col-2 mr-10">Status: </label>
                     <select onChange={this.onStatusChange} class="btn btn-light dropdown-toggle m-0 w-25" id="status" placeholder="status" defaultValue={statusOption[0].name}>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Add</button>
-                    <button type="submit" onClick={() => this.props.moveToComponent("defects")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '15%' }}>Cancel</button>
+                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }}>Save</button>
+                    <button type="submit" onClick={() => this.props.moveToComponent("defects")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }}>Cancel</button>
                 </div>
 
 

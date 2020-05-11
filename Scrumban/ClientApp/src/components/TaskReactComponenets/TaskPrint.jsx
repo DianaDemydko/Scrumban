@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -71,41 +72,18 @@ export class TaskPrint extends React.Component {
             <tr>
 
                 <td>
-
-                    <span onClick={this.taskHistory}><span class="badge badge-info">i </span></span>
-
-                    {" " + this.props.item.name}
+                    {this.props.item.name}
 
                 </td>
 
                 <td>{this.props.item.description}    </td>
 
                 <td>
-
-                    <DatePicker
-
-                        selected={this.props.item.startDate}
-
-                        dateFormat="MMMM d"
-
-                        className="datePickerStyle btn btn-sm btn-outline-secondary"
-
-                    />
-
+                    {moment(this.props.item.startDate).format("MM-DD-YYYY")}
                 </td>
 
                 <td>
-
-                    <DatePicker
-
-                        selected={this.props.item.finishDate}
-
-                        dateFormat="MMMM d"
-
-                        className="datePickerStyle btn btn-sm btn-outline-secondary"
-
-                    />
-
+                    {moment(this.props.item.finishDate).format("MM-DD-YYYY")}
                 </td>
 
                 <td>{this.props.item.priority.name}  </td>
@@ -116,13 +94,9 @@ export class TaskPrint extends React.Component {
 
                 <td>{(this.props.item.story == null) ? ("") : (this.props.item.story.name)}</td>
 
-                <td>
+                <td colSpan="2">
 
                     <button type="button" onClick={this.props.edit} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
-
-                </td>
-
-                <td>
 
                     <button type="submit" onClick={this.props.delete} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
 

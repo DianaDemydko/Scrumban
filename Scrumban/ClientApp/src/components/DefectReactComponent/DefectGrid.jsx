@@ -22,8 +22,11 @@ export class DefectGrid extends React.Component {
             {
                 columnName: '',
                 sortingOrder: ''
-            }
+            },
+
+            showFilters: false
         };
+        this.showFilters = this.showFilters.bind(this);
         this.loadData = this.loadData.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.onRemoveDefect = this.onRemoveDefect.bind(this);
@@ -33,6 +36,10 @@ export class DefectGrid extends React.Component {
 
         //pagination
         this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    showFilters(param) {
+        this.setState({ showFilters: param });
     }
 
     onChangePage(pageOfItems) {
@@ -107,10 +114,7 @@ export class DefectGrid extends React.Component {
     onChanged(item) {
         var arr = this.state.defects;
         var index = arr.indexOf(x => x.defectId === item.defectId);
-        console.log(index);
         arr[index] = item;
-        console.log(arr[index]);
-        console.log(arr);
         this.setState({ defects: arr });
     }
 
@@ -189,12 +193,18 @@ export class DefectGrid extends React.Component {
         var remove = this.onRemoveDefect;
 
         return (<div >
-            <label style={{ 'fontSize': '40px','margin-left':'1%' }}> Defects </label>
-
-            <DefectFilter loadData={this.loadData} />
+            <div className="grid-panel">
+                <div className="grid-name">Defects</div>
+                <div className="grid-buttons">
+                    <button onClick={() => this.props.moveToComponent("defectAdd")} className="btn add-new btn-panel-table">Create New</button>
+                    <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
+                </div>
+            </div>
+            <hr></hr>
+            {this.state.showFilters ? <DefectFilter loadData={this.loadData} hideFilters={this.showFilters}/> : null }
 
             {/* Table*/}
-            <div className="tablePosition" style={{ 'margin-right': '1%', 'margin-left': '1%' }}>
+            <div className="tablePosition table-wrapper">
                 <table class="table table-hover" style={{ 'table-layout': 'fixed' }} >
                     <thead>
                     <tr>
@@ -228,7 +238,6 @@ export class DefectGrid extends React.Component {
             <div>
                 <Pagination items={this.state.defects}  onChangePage={this.onChangePage} />
             </div>
-            <button class="btn btn-sm btn-outline-dark" onClick={() => this.props.moveToComponent("defectAdd")}>Add defect</button>
         </div>
         )
     }

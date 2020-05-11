@@ -11,7 +11,7 @@ const propTypes = {
 
 const defaultProps = {
     initialPage: 1,
-    pageSize: 10    
+    pageSize: 4    
 }
 
 export class Pagination extends React.Component {

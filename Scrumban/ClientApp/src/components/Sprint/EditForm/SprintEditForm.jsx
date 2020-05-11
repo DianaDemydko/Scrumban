@@ -70,7 +70,7 @@ export class SprintEditForm extends React.Component {
                         let temp = { ...this.state.sprint }
                         this.props.onUpdatingSprintElement(temp)
 
-                        toast.success("You edited a sprint!");
+                        toast.success("Updated successfuly");
                         break
                 }
             }.bind(this))

@@ -1,9 +1,9 @@
 ﻿.pagination {
     display: inline-block;
-    padding-left: 25%;
     margin: 20px 0;
     border-radius: 4px;
-    align-self:center
+    align-self:center;
+    margin-left: 35%;
 }
     .pagination > li {
         display: inline
@@ -42,8 +42,8 @@
         z-index: 2;
         color: #fff;
         cursor: default;
-        background-color: #337ab7;
-        border-color: #337ab7
+        background-color: #5C12A6;
+        border-color: #5C12A6;
     }
 
     .pagination > .disabled > a, .pagination > .disabled > a:hover {

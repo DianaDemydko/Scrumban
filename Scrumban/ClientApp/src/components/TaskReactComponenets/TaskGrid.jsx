@@ -1,10 +1,11 @@
 ﻿import React, { Component } from 'react';
 
 import { TaskRow } from './TaskRow';
-
+import { toast } from 'react-toastify';
 import { TaskFilter } from './TaskFilter';
 
 import { checkToken } from '../Helpers'
+import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
 // consts of stable tables
 
@@ -67,13 +68,16 @@ export class TaskGrid extends React.Component {
             sortByUser: icon_down,
 
             sortByStory: icon_down,
+            showFilters: false,
 
 
 
-            filter: ""
+            filter: "",
+            pageOfItems: []
 
         };
 
+        this.showFilters = this.showFilters.bind(this);
 
 
         this.loadData = this.loadData.bind(this);
@@ -97,11 +101,21 @@ export class TaskGrid extends React.Component {
         this.sort = this.sort.bind(this);
 
         this.startFiltration = this.startFiltration.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
 
     }
 
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({
+            pageOfItems: pageOfItems
+        });
 
+    }
 
+    showFilters(param) {
+        this.setState({ showFilters: param });
+    }
     // Load data
 
     loadData(filter) {
@@ -422,7 +436,7 @@ export class TaskGrid extends React.Component {
 
     onRemoveTask(id) {
 
-        checkToken()
+       // checkToken()
 
 
 
@@ -445,6 +459,9 @@ export class TaskGrid extends React.Component {
             .then(function (response) {
 
                 if (response.status == 200) {
+
+
+                    toast.success("Task was deleted!");
 
                     this.loadData(this.state.filter.toString());
 
@@ -508,33 +525,23 @@ export class TaskGrid extends React.Component {
 
         return <div>
 
-            <br />
-
-            <h2>Tasks</h2>
-
-            <br />
-
-            <div className=" p-1">
-
-
-
-                {/* render filter form */}
-
-                <TaskFilter changeFilter={this.startFiltration} states={this.state.states} priorities={this.state.priorities} />
-
-                <br />
-
-                <br />
-
-                {/* render grid */}
-
-                <table className="table table-striped" style={{ 'table-layout': 'fixed' }}>
+            <div className="grid-panel">
+                <div className="grid-name">Tasks</div>
+                <div className="grid-buttons">
+                    <button onClick={() => this.props.moveToComponent("taskAdd")} className="btn add-new btn-panel-table">Create New</button>
+                    <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
+                </div>
+            </div>
+            <hr></hr>
+            {this.state.showFilters ? <TaskFilter changeFilter={this.startFiltration} states={this.state.states} priorities={this.state.priorities} hideFilters={this.showFilters} /> : null}
+            <div className="tablePosition table-wrapper">
+                <table className="table" style={{ 'table-layout': 'fixed' }}>
 
                     <thead>
 
                         <th className="col-1">
 
-                            <span>Title</span>
+                            <span>Name</span>
 
                             <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
 
@@ -601,8 +608,8 @@ export class TaskGrid extends React.Component {
                         <th className="col-1">{/* For button Delete */}</th>
 
                     </thead>
-
-                    {this.state.tasks.map(function (task) {
+                    {(this.state.pageOfItems.length > 0)//pageOfItems
+                        ? this.state.pageOfItems.map((task) => {
 
                         return <TaskRow key={task.id}
 
@@ -622,26 +629,16 @@ export class TaskGrid extends React.Component {
 
                         />
 
-                    })}
+                        }) : (<tbody>
+                            <td>
+                                No results
+                            </td>
+                        </tbody>) }
 
                 </table>
-
-                <div>
-
-                    <button
-
-                        onClick={() => this.props.moveToComponent("taskAdd")}
-
-                        className="btn btn-sm btn-outline-dark"
-
-                    >
-
-                        Add
-
-                    </button>
-
-                </div>
-
+            </div>
+            <div>
+                <Pagination items={this.state.tasks} onChangePage={this.onChangePage} />
             </div>
 
         </div>;

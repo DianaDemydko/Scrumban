@@ -98,47 +98,48 @@ export class TaskFilter extends React.Component {
             programmerId: ""
         })
         this.props.changeFilter("");
+        this.props.hideFilters(false);
     }
 
     // render row
     render() {
-        return <div className='filterContainer'>
-            <div class = "row">
-                <div class="col-sm">
-                    <label for="inputTitle">Title</label>
+        return <div className='filterContainer' style={{ marginLeft: '20px', marginRight: '20px' }}>
+            <div className= "row filter-row-5">
+                <div className="col-sm">
+                    <label for="inputTitle">Name</label>
                 </div>
-                <div class="col-sm ">
+                <div className="col-sm ">
                     <label for="exampleInputDescription">Description</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label for="">Start Date</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label for="">FinishDate</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label for="priority">Priority</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label for="state">State</label><br />
                 </div>
-                <div class="col-sm">{/* For button Edit   */}</div>
-                <div class="col-sm">{/* For button Delete */}</div>
+                <div className="col-sm">{/* For button Edit   */}</div>
+                <div className="col-sm">{/* For button Delete */}</div>
             </div>
-            <div class = "row">
+            <div className= "row filter-row-10">
                 
                     
-                <div class="col-sm">
+                <div className="col-sm">
                     <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search" value={this.state.name} autocomplete="off" />
                         </div>
                     
-                <div class="col-sm">
+                <div className="col-sm">
                     <input type="text" className="input" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder=" Search" value={this.state.description} autocomplete="off" />
                         </div>
                     
-                <div class="col-sm" >
+                <div className="col-sm" >
                             <DatePicker
-                                class="input"
+                                className="input"
                                 selected={this.state.startDate}
                                 onChange={this.onStartDateChange}
                                 dateFormat="MMMM d"
@@ -147,10 +148,10 @@ export class TaskFilter extends React.Component {
                             />
                         </div>
                    
-                <div class="col-sm">
+                <div className="col-sm">
                             <div >
                                 <DatePicker
-                                    class="input"
+                                    className="input"
                                     selected={this.state.finishDate}
                                     onChange={this.onFinishDateChange}
                                     dateFormat="MMMM d"
@@ -160,24 +161,24 @@ export class TaskFilter extends React.Component {
                             </div>
                         </div>
                     
-                <div class="col-sm">
-                    <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onPriorityChanged} id="priority" placeholder="task priority" value={this.state.priorityName}>
+                <div className="col-sm">
+                    <select className="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onPriorityChanged} id="priority" placeholder="task priority" value={this.state.priorityName}>
                                 <option>All</option>
                                 {this.props.priorities.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
                     
-                <div class="col-sm">
-                    <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStateChanged} id="state" placeholder="task state" value={this.state.taskStateName}>
+                <div className="col-sm">
+                    <select className="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStateChanged} id="state" placeholder="task state" value={this.state.taskStateName}>
                                 <option>All</option>
                                 {this.props.states.map((item) => <option>{item.name}</option>)}
                             </select>
                         </div>
-                <div class="col-sm" >  
-                    <button type="submit" onClick={this.onSetFilter} class="btn btn-sm btn-outline-dark w-100"> Filter </button>
+                <div className="col-sm" >  
+                    <button type="submit" onClick={this.onSetFilter} className="btn apply-filters w-100 m-1"> Filter </button>
                 </div>  
-                <div class="col-sm">
-                    <button type="submit" onClick={this.onCancelFilter} class="btn btn-sm btn-outline-dark w-100"> Cancel </button>
+                <div className="col-sm">
+                    <button type="submit" onClick={this.onCancelFilter} className="btn cancel-filter w-100 m-1"> Cancel </button>
                 </div>
                
             </div>

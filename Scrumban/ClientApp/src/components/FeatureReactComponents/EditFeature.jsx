@@ -49,7 +49,7 @@ export class EditFeature extends Component {
     getFeatureStories() {
 
         var array = this.getStatedStories();
-        return (<select class="btn btn-light dropdown-toggle w-100 m-0" value="Stories" onChange={this.onStoriesChanged} > 
+        return (<select class="btn btn-light dropdown-toggle w-100 m-0" value="Stories" onChange={this.onStoriesChanged}> 
             {array.map((item) =>
                 (item.state ? <option key={item.story_id} style={{ 'background': 'blue', 'color':'white' }}> {item.story.name} </option> :
                     <option key={item.story_id} > {item.story.name} </option>  ))}
@@ -110,7 +110,7 @@ export class EditFeature extends Component {
   
      onSubmit() {
          fetch('api/FeatureData/Put', {
-            method: 'put',
+            method: 'post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 id: this.props.featuretoEdit.id, name: this.state.name,
@@ -123,7 +123,7 @@ export class EditFeature extends Component {
             let responseStatus = response.status
             switch (responseStatus) {
                 case 200:
-                    toast.success("Defect was updated !");
+                    toast.success("Updated successfuly");
                     this.props.onStateUpdating(false);
                     this.props.onEditFeature();
                     break
@@ -155,7 +155,7 @@ export class EditFeature extends Component {
                 <div>
                     <label for="state">State</label>
                     <div/>
-                    <select class="btn btn-light dropdown-toggle w-100 m-0" name="state" onChange={e => this.onStateChanged(e)} value={this.props.featuretoEdit.state.name} >
+                    <select class="btn btn-light dropdown-toggle w-100 m-0" name="state" onChange={e => this.onStateChanged(e)} defaultValue={this.props.featuretoEdit.state.name} >
                         {this.state.allStates.map(state => (
                             <option>{state.name}
                             </option>))}
@@ -166,7 +166,7 @@ export class EditFeature extends Component {
                     <div>
                     <label for="priority">Priority</label>
                     <div />
-                    <select class="btn btn-light dropdown-toggle m-0" name="prioriry" onChange={e => this.onPriorityChanged(e)} value={this.props.featuretoEdit.priority.name} >
+                    <select class="btn btn-light dropdown-toggle m-0" name="prioriry" onChange={e => this.onPriorityChanged(e)} defaultValue={this.props.featuretoEdit.priority.name} >
                         {this.state.priorities.map(priority => (
                             <option> {priority.name}</option>))}
                         </select>

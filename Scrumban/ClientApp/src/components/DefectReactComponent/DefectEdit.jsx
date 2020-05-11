@@ -85,7 +85,7 @@ export class DefectEdit extends React.Component {
                     let responseStatus = response.status
                     switch (responseStatus) {
                         case 200:
-                            toast.success("Defect was updated !");
+                            toast.success("Updated successfuly");
                             loadDataVar("");
                             break
                         case 401:

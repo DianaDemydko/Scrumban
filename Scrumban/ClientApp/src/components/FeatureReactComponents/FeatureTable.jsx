@@ -7,6 +7,7 @@ import { FeatureRow } from './FeatureRow.jsx';
 import { checkToken } from '../Helpers'
 import { toast } from 'react-toastify';
 import buildQuery from 'odata-query'
+import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
@@ -27,7 +28,9 @@ export class FeatureTable extends Component {
                 columnName: '',
                 sortingOrder: ''
             },
-            showFilters: false
+            showFilters: false,
+
+            pageOfItems: []
         };
 
         this.showFilters = this.showFilters.bind(this);
@@ -37,6 +40,15 @@ export class FeatureTable extends Component {
         this.renderCaret = this.renderCaret.bind(this);
         this.loadData = this.loadData.bind(this);
         this.onEditItem = this.onEditItem.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({
+            pageOfItems: pageOfItems
+        });
+
     }
 
     showFilters(param) {
@@ -205,14 +217,23 @@ export class FeatureTable extends Component {
                         </tr>
                     </thead>
                     <tbody>
-
-                        {this.state.features.map(feature => (
-                            <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} />)
-                        )}
+                    {(this.state.pageOfItems.length > 0)//pageOfItems
+                            ? this.state.pageOfItems.map((feature) => {
+                                return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} />
+                            }
+                            ) :
+                            (<tbody>
+                                <td>
+                                    No results
+                            </td>
+                            </tbody>)
+                            }
                     </tbody>
                 </table>
             </div>
-            <div />
+            <div>
+                <Pagination items={this.state.features} onChangePage={this.onChangePage} />
+            </div>
         </div>;
 
     }

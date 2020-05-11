@@ -91,62 +91,63 @@ export class DefectFilter extends React.Component {
         this.state.statusSearch = "All";
 
         this.onFiltersApply();
+        this.props.hideFilters(false);
     }
 
     render() {
 
-        return (<div className='filterContainer' id='filterForm'>
-            <div class='row' style={{ 'margin-right': '1%', 'margin-left': '1%' }}>
-                <div class="col-sm">
+        return (<div className='filterContainer' id='filterForm' style={{ marginLeft: '20px', marginRight: '20px' }}>
+            <div className='row filter-row-5'>
+                <div className="col-sm">
                     <label>Name</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label>Description</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label>State</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label>Priority</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label>Severity</label>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <label>Status</label>
                 </div>
-                <div class="col-sm" />
-                <div class="col-sm"  />
+                <div className="col-sm" />
+                <div className="col-sm"  />
             </div>
-            <div class="row" style={{ 'margin-right': '1%', 'margin-left': '1%' }}>
-                <div class="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></div>
-                <div class="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></div>
-                <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
+            <div className="row filter-row-10">
+                <div className="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></div>
+                <div className="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></div>
+                <div className="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
                     <option value="All">All</option>
                     {stateOption.map((item) => <option>{item.name}</option>)}
                 </select></div>
-                <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
+                <div className="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
                     <option value="All">All</option>
                     {priorityOption.map((item) => <option>{item.name}</option>)}
                 </select></div>
-                <div class="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
+                <div className="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
                     <option value="All">All</option>
                     {severityOption.map((item) => <option>{item.name}</option>)}
                 </select></div>
 
-                <div class="col-sm">
-                    <select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
+                <div className="col-sm">
+                    <select className="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                         <option value="All">All</option>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
-                <div class="col-sm" >
+                <div className="col-sm" >
                     <td />
-                    <button class="btn btn-sm btn-outline-dark w-100" type="button" onClick={this.onFiltersApply}>Search</button>
+                    <button className="btn apply-filters w-100 m-1" type="button" onClick={this.onFiltersApply}>Filter</button>
                 </div>
-                <div class="col-sm" >
+                <div className="col-sm" >
                     <td />
-                    <button class="btn btn-sm btn-outline-dark w-100" type="button" onClick={this.onFiltersClear}>Clear</button>
+                    <button className="btn cancel-filter w-100 m-1" type="button" onClick={this.onFiltersClear}>Clear</button>
                 </div>
             </div>
         </div>)
