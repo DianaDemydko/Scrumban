@@ -66,6 +66,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                     defect.Severity = item.Severity;
                     defect.Priority = item.Priority;
                     defect.Status = item.Status;
+                    defect.StoryId = item.StoryId;
                     transaction.Commit();
                 }
                 catch (Exception ex)

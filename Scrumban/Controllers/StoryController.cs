@@ -44,7 +44,7 @@ namespace Scrumban.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [Route("GetStory")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

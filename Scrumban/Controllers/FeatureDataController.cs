@@ -41,6 +41,16 @@ namespace Scrumban.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        [EnableQuery]
+        [Route("GetFeature")]
+        public FeatureDTO GetFeature(int id)
+        {
+            FeatureDTO result = _featureService.GetByID(id);
+            return result;
+
+        }
+
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public void Delete([FromBody] FeatureDTO feature)

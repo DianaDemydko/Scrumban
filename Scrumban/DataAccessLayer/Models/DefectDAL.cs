@@ -18,7 +18,8 @@ namespace Scrumban.DataAccessLayer.Models
         public string State { get; set; }
         public string Priority { get; set; }
         public string Severity { get; set; }
-        public int? StoryId { get; set; } = 1;
+        public int? StoryId { get; set; }
+
         public string Status { get; set; }
     }
 }

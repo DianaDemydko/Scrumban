@@ -24,5 +24,34 @@ namespace Scrumban.DataAccessLayer.Repositories
             var storyToGet = _dbContext.Stories.Where(story => story.Story_id == id).Include("StoryState").First();
             return storyToGet;
         }
+
+        public override void Update(StoryDAL item)
+        {
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    StoryDAL story = _dbContext.Stories.FirstOrDefault(x => x.Story_id == item.Story_id);
+                    if (story == null)
+                    {
+
+                    }
+                    story.Name = item.Name;
+                    story.Description = item.Description;
+                    story.StoryPoints = item.StoryPoints;
+                    story.StoryState_id = item.StoryState_id;
+                    story.sprint_id = item.sprint_id;
+                    story.Rank = item.Rank;
+                    story.StartDate = item.StartDate;
+                    story.FeatureId = item.FeatureId;
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+            }
+        }
     }
 }

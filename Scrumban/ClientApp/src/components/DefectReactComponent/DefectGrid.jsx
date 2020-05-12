@@ -213,7 +213,7 @@ export class DefectGrid extends React.Component {
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> StoryId {this.renderCaret('storyId')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> Story {this.renderCaret('storyId')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status {this.renderCaret('status')}</th>
                             <th class="col" />
                     </tr>

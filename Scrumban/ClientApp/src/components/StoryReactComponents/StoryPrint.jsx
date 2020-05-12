@@ -9,10 +9,33 @@ export class StoryPrint extends React.Component {
         this.state = {
             listFeatureOpen: false,
             listSprintOpen: false,
-            story : this.props.item
+            story: this.props.item,
+            featureName: ''
         }
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);
+        this.getFeatureName = this.getFeatureName.bind(this);
         //this.getSprintName = this.getSprintName.bind(this);
+    }
+
+    componentDidMount() {
+        this.getFeatureName();
+    }
+
+    getFeatureName() {
+        fetch('api/FeatureData/' + this.state.story.featureId)
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data != null) {
+                    this.setState({ featureName: data.name });
+                } else {
+                    this.setState({ featureName: 'None' });
+                }
+             }
+            );
     }
 
     getFirstDescriptionWord() {
@@ -42,6 +65,7 @@ export class StoryPrint extends React.Component {
                 </td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyPoints}</label></td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.rank}</label></td>
+                <td className="col"><label style={{ 'margin': '15px' }}>{this.state.featureName}</label></td>
                 <td className="col">
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" type="button" onClick={this.props.edit}>Edit</button>
                 </td>

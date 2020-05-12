@@ -196,6 +196,15 @@ export class StoryGrid extends React.Component {
                     this.setState({ sortByState: icon_down });
                 }
                 break
+            case 'feature':
+                query += 'featureId' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByState: icon_up });
+                }
+                else {
+                    this.setState({ sortByState: icon_down });
+                }
+                break
         }
 
         this.loadData(query);
@@ -258,6 +267,7 @@ export class StoryGrid extends React.Component {
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}>Description{this.renderCaret('description')}</th>
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('story_points')}>Story points{this.renderCaret('story_points')}</th>
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('rank')}>Rank{this.renderCaret('rank')}</th>
+                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('feature')}>Feature{this.renderCaret('feature')}</th>
                         <th class="col"  />
                         <th class="col" />
                     </thead>

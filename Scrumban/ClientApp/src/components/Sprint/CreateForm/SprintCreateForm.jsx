@@ -64,7 +64,7 @@ export class SprintCreateForm extends React.Component {
                         toast.error("Something wrong!")
                         break
                     case 200:
-                        toast.success("Sprint was created in database !");
+                        toast.success("Sprint was created!");
                         this.props.moveToComponent("sprints");
                         break
                 }

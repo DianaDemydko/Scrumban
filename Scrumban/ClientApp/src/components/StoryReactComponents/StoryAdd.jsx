@@ -18,15 +18,19 @@ export class StoryAdd extends React.Component {
             storyState: stateTable[0].name,
             sprint: "",
             storyPoints: 1,
-            rank: 1
+            rank: 1,
+            allFeatures: [],
+            feature: ''
         };
 
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
         this.onSprintChanged = this.onSprintChanged.bind(this);
+        this.onFeatureChanged = this.onFeatureChanged.bind(this);
         this.onStoryPointsChanged = this.onStoryPointsChanged.bind(this);
         this.onRankChanged = this.onRankChanged.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.getAllFeatures = this.getAllFeatures.bind(this);
     }
 
     onNameChanged(e) {
@@ -43,13 +47,18 @@ export class StoryAdd extends React.Component {
     }
 
     onSprintChanged(e) {
+        debugger
         check = true;
         this.setState({ sprint: e.target.value });
+    }
+    onFeatureChanged(e) {
+        this.setState({ feature: e.target.value });
     }
 
     onSubmit(e) {
         e.preventDefault();
         var storySprintId = 1;
+        debugger
         if (check === false) {
             storySprintId = this.state.allSprints[0].sprint_id;
         }
@@ -62,6 +71,7 @@ export class StoryAdd extends React.Component {
         var storyPoints = this.state.storyPoints;
         var storyRank = this.state.rank;
         var storyState = this.state.storyState;
+        var feature = this.state.feature;
 
         fetch('api/Story/CreateStory',
             {
@@ -75,7 +85,8 @@ export class StoryAdd extends React.Component {
                     sprint_id: storySprintId,
                     storyState: storyState,
                     storyPoints: storyPoints,
-                    rank: storyRank
+                    rank: storyRank,
+                    featureId: feature
                 })
             }).then(function (response) {
                 let responseStatus = response.status
@@ -84,7 +95,7 @@ export class StoryAdd extends React.Component {
                         toast.error("Something wrong  !");
                         break
                     case 201:
-                        toast.success("Story was created in database !");
+                        toast.success("Story was creaated!");
                         this.props.moveToComponent("stories");
                         break
                 }
@@ -98,6 +109,22 @@ export class StoryAdd extends React.Component {
                     allSprints: json
                 })
             });
+        this.getAllFeatures();
+    }
+    getAllFeatures() {
+        fetch('api/FeatureData/Get')
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data != null) {
+                    this.setState({ allFeatures: data })
+                }
+            }
+            );
+
     }
    
 
@@ -123,8 +150,17 @@ export class StoryAdd extends React.Component {
                         <input type="text" className="inputAdd" onChange={e=>this.onRankChanged(e)} id="rank" placeholder="story rank" autoComplete="false" />
                 </div>
                 <div className="addContent">
+                    <label class="col-2 mr-10" for="sprints">Feature: </label>
+                    <select class="btn btn-light dropdown-toggle m-0 w-25" name="feature" onChange={e => this.onFeatureChanged(e)}>
+                        <option>None</option>
+                        {this.state.allFeatures.map(feature => (
+                            <option value={feature.id} > {feature.name}</option>))}
+                    </select>
+                </div>
+                <div className="addContent">
                     <label class="col-2 mr-10" for="sprints">Sprint: </label>
                     <select class="btn btn-light dropdown-toggle m-0 w-25" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                        <option>None</option>
                         {this.state.allSprints.map(sprint => (
                             <option> {sprint.name}</option>))}
                     </select>

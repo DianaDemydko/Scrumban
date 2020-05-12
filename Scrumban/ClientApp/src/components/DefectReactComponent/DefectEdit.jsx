@@ -21,7 +21,9 @@ export class DefectEdit extends React.Component {
             priority: this.props.item.priority,
             severity: this.props.item.severity,
             storyId: this.props.item.storyId,
-            status: this.props.item.status
+            status: this.props.item.status,
+            storyName: '', 
+            storyOptions: []
         };
 
         this.onNameChange = this.onNameChange.bind(this);
@@ -33,6 +35,51 @@ export class DefectEdit extends React.Component {
         this.onStatusChange = this.onStatusChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.getStoryName = this.getStoryName.bind(this);
+        this.getAllStories = this.getAllStories.bind(this);
+    }
+
+    componentDidMount() {
+        this.getAllStories();
+        this.getStoryName();
+    }
+
+    getStoryName() {
+        fetch('api/Story/' + this.state.storyId, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                let responseStatus = response.status
+                switch (responseStatus) {
+                    case 200:
+                        return response.json()
+                        break
+                }
+            })
+            .then(data => { this.setState({ storyName: data.name }) });
+    }
+
+    getAllStories() {
+        fetch('api/Story/GetStories' , {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+            }
+        })
+            .then(function (response) {
+                let responseStatus = response.status
+                switch (responseStatus) {
+                    case 200:
+                        return response.json()
+                        break
+                }
+            })
+            .then(data => { this.setState({ storyOptions: data }) });
     }
 
     onNameChange(e) {
@@ -154,7 +201,7 @@ export class DefectEdit extends React.Component {
             <td>
                 <div>
                         <label for="state">State</label>
-                    <select onChange={this.onStateChange} class="btn btn-light dropdown-toggle m-0" id="state" defaultValue={this.props.item.state}>
+                    <select onChange={this.onStateChange} class="btn btn-light m-0" id="state" defaultValue={this.props.item.state}>
                             {stateOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
@@ -177,20 +224,17 @@ export class DefectEdit extends React.Component {
             </td>
             <td>
                 <div>
-                        <label for="storyId">StoryId</label>
-                        <input type="text"
-                        placeholder="StoryId"
-                        defaultValue={this.props.item.storyId}
-                        onChange={this.onStoryIdChange}
-                        class="form-control"
-                        id="storyId" />
+                    <label for="story">Story</label>
+                    <select onChange={this.onStoryIdChange} class="btn btn-light m-0" id="priority" defaultValue={this.state.storyName} >
+                        {this.state.storyOptions.map((item) => <option value={item.story_id} >{item.name}</option>)}
+                    </select>
                 </div>
             </td>
             <td>
                 <div>
                         <label for="status">Status</label>
                     <select onChange={this.onStatusChange} class="btn btn-light dropdown-toggle m-0" id="status" defaultValue={this.props.item.status}>
-                            {statusOption.map((item) => <option>{item.name}</option>)}
+                        {statusOption.map((item) => <option >{item.name}</option>)}
                     </select>
                 </div>
             </td>

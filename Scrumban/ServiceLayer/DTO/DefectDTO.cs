@@ -11,6 +11,7 @@ namespace Scrumban.ServiceLayer.DTO
         public string Priority { get; set; }
         public string Severity { get; set; }
         public int? StoryId { get; set; }
+   
         public string Status { get; set; }
     }
 }
