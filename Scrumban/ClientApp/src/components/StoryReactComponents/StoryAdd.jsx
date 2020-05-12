@@ -47,7 +47,6 @@ export class StoryAdd extends React.Component {
     }
 
     onSprintChanged(e) {
-        debugger
         check = true;
         this.setState({ sprint: e.target.value });
     }
@@ -58,7 +57,6 @@ export class StoryAdd extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         var storySprintId = 1;
-        debugger
         if (check === false) {
             storySprintId = this.state.allSprints[0].sprint_id;
         }
