@@ -8,7 +8,7 @@ export class AdminTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
+            users: []
         };
         this.onEditUser = this.onEditUser.bind(this);
     }
@@ -44,30 +44,35 @@ export class AdminTable extends Component {
                     alert("ERROR! Status code: " + response.status)
                 }
             })
-            .then(data =>
+            .then(data => {
                 this.setState({ users: data })
+             }
             );
     }
 
 
     render() {
         return <div>
-            <label style={{ 'fontSize': '40px' }}> Users </label>
-            <div className="tablePosition">
-                <table class="table table-striped" style={{ 'table-layout': 'fixed' }} >
+            <div className="grid-panel">
+                <div className="grid-name">Users</div>
+            </div>
+            <hr></hr>
+            <div className="tablePosition table-wrapper">
+                <table class="table" style={{ 'table-layout': 'fixed' }} >
                     <thead>
                         <tr>
                             <th className="col">First Name</th>
                             <th class="col">Surname</th>
                             <th class="col">Email</th>
                             <th class="col">Role</th>
+                            <th class="col">Team</th>
                             <th class="col"/>
                         </tr>
                     </thead>
                     <tbody>
 
                         {this.state.users.map(user => (
-                            <AdminRow key={user.id} user={user} editUser={this.onEditUser} />)
+                            <AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
                         )}
                     </tbody>
                 </table>

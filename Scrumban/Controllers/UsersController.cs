@@ -39,7 +39,7 @@ namespace Scrumban.Controllers
                     return Ok();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(404);
             }
@@ -55,7 +55,7 @@ namespace Scrumban.Controllers
             {
                 if (_userService.UpdateUser(user) == 1)
                 {
-                    return Ok(_userService.GetUserAccount(user.Email, user.Password));
+                    return Ok();
                 }
             }
             catch (Exception ex)
@@ -67,15 +67,15 @@ namespace Scrumban.Controllers
         }
 
         //Delete user
-        [HttpGet]
-        [Route("Delete/{id}")]
+        [HttpGet("{id}")]
+        [Route("Delete")]
         public IActionResult Delete(int id)
         {
             try
             {
                 if (_userService.DeleteUser(id) == 1)
                 {
-                    return StatusCode(401);
+                    return Ok();
                 }
             }
             catch (Exception ex)

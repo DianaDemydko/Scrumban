@@ -43,6 +43,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                     story.sprint_id = item.sprint_id;
                     story.Rank = item.Rank;
                     story.StartDate = item.StartDate;
+                    story.EndDate = item.EndDate;
                     story.FeatureId = item.FeatureId;
 
                     transaction.Commit();

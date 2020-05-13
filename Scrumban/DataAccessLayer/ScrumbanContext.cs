@@ -30,6 +30,12 @@ namespace Scrumban.DataAccessLayer
         public DbSet<TeamDAL> Teams { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TaskDAL>()
+                .HasOne<StoryDAL>(s => s.Story)
+                .WithMany(g => g.Tasks)
+                .HasForeignKey(s => s.StoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<DefectDAL>().HasData(
                 new DefectDAL[]
                 {

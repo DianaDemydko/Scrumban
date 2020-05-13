@@ -10,15 +10,17 @@ export class StoryPrint extends React.Component {
             listFeatureOpen: false,
             listSprintOpen: false,
             story: this.props.item,
-            featureName: ''
+            featureName: '',
+            sprintName: ''
         }
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);
         this.getFeatureName = this.getFeatureName.bind(this);
-        //this.getSprintName = this.getSprintName.bind(this);
+        this.getSprintName = this.getSprintName.bind(this);
     }
 
     componentDidMount() {
         this.getFeatureName();
+        this.getSprintName();
     }
 
     getFeatureName() {
@@ -38,15 +40,21 @@ export class StoryPrint extends React.Component {
             );
     }
 
+    getSprintName() {
+        fetch('api/Sprint/Index')
+            .then(res => res.json())
+            .then(json => {
+                var allSprints = json;
+                var sprintName = allSprints.filter(item => item.sprint_id === this.state.story.sprint_id)[0].name;
+                this.setState({ sprintName: sprintName });
+            });
+    }
+
     getFirstDescriptionWord() {
         var descriptionString = this.state.story.description;
         var index = descriptionString.indexOf(" ");
         return descriptionString.slice(0, index);
     }
-    //getSprintName() {
-    //    var currentSprint = this.state.allSprints;
-    //    return currentSprint;
-    //}
 
     render() {
         var v = this.getFirstDescriptionWord();
@@ -66,10 +74,9 @@ export class StoryPrint extends React.Component {
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyPoints}</label></td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.rank}</label></td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.featureName}</label></td>
+                <td className="col"><label style={{ 'margin': '15px' }}>{this.state.sprintName}</label></td>
                 <td className="col">
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" type="button" onClick={this.props.edit}>Edit</button>
-                </td>
-                <td className="col">
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit" onClick={this.props.delete}>Delete</button>
                 </td>
             </tr>

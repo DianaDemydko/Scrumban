@@ -16,5 +16,8 @@ namespace Scrumban.ServiceLayer.DTO
 
         public int? PictureId { get; set; }
         public PictureDTO Picture { get; set; }
+
+        public int? TeamId { get; set; }
+        public TeamDTO Team { get; set; }
     }
 }

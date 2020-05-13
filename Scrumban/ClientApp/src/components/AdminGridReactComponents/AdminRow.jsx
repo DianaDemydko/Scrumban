@@ -24,7 +24,7 @@ export class AdminRow extends Component {
     }
 
     render() {
-        return (this.state.edit ? <EditAdmin usertoEdit={this.props.user} onStateUpdating={this.onStateChanged} onEditUser={this.props.editUser}/> :
-            <AdminPrint onStateUpdating={this.onStateChanged} user={this.props.user} DeleteStatusChanged={this.onDeleteStatusChanged} />);
+        return (this.state.edit ? <EditAdmin usertoEdit={this.props.user} onStateUpdating={this.onStateChanged} onEditUser={this.props.editUser} /> :
+            <AdminPrint onStateUpdating={this.onStateChanged} user={this.props.user} DeleteStatusChanged={this.onDeleteStatusChanged} loadData={this.props.loadData} />);
     }
 }

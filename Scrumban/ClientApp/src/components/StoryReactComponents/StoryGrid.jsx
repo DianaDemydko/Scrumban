@@ -205,6 +205,15 @@ export class StoryGrid extends React.Component {
                     this.setState({ sortByState: icon_down });
                 }
                 break
+            case 'sprint':
+                query += 'sprint_id' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByState: icon_up });
+                }
+                else {
+                    this.setState({ sortByState: icon_down });
+                }
+                break
         }
 
         this.loadData(query);
@@ -268,8 +277,8 @@ export class StoryGrid extends React.Component {
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('story_points')}>Story points{this.renderCaret('story_points')}</th>
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('rank')}>Rank{this.renderCaret('rank')}</th>
                         <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('feature')}>Feature{this.renderCaret('feature')}</th>
+                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('sprint')}>Sprint{this.renderCaret('sprint')}</th>
                         <th class="col"  />
-                        <th class="col" />
                     </thead>
                     {(this.state.pageOfItems.length > 0)//pageOfItems
                         ? this.state.pageOfItems.map((story) => {

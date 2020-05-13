@@ -90,7 +90,8 @@ namespace Scrumban.BusinessLogicLayer
                     Name = teamDTO.Name,
                     Project = teamDTO.Project
                 };
-                _unitOfWork.Save();
+            _unitOfWork.TeamRepository.Update(team);
+            _unitOfWork.Save();
             
         }
     }

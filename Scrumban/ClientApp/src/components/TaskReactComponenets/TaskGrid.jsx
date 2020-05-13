@@ -605,8 +605,6 @@ export class TaskGrid extends React.Component {
 
                         <th className="col-1">{/* For button Edit   */}</th>
 
-                        <th className="col-1">{/* For button Delete */}</th>
-
                     </thead>
                     {(this.state.pageOfItems.length > 0)//pageOfItems
                         ? this.state.pageOfItems.map((task) => {

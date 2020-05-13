@@ -122,7 +122,7 @@ export class StoryEdit extends React.Component {
 		}
     }
     componentDidMount() {
-        fetch('api/Story/GetNotCompletedSprints')
+        fetch('api/Sprint/Index')
             .then(res => res.json())
             .then(json => {
                 this.setState({
@@ -198,6 +198,7 @@ export class StoryEdit extends React.Component {
                 <div>
                     <label for="sprints">Feature</label>
                     <select class="btn btn-light dropdown-toggle w-100 m-0" name="fetures" onChange={(e) => this.onFeatureChanged(e)} defaultValue={this.state.featureName} >
+                        <option>None</option>
                         {this.state.allFeatures.map(feature => (
                             <option value={feature.id}> {feature.name}</option>))}
                     </select>
@@ -207,7 +208,8 @@ export class StoryEdit extends React.Component {
             <td>
 					<div>
                     <label for="sprints">Sprint</label>
-                    <select class="btn btn-light dropdown-toggle w-100 m-0" name="sprints" onChange={e => this.onSprintChanged(e)}  >
+                    <select class="btn btn-light dropdown-toggle w-100 m-0" name="sprints" onChange={e => this.onSprintChanged(e)} defaultValue={this.getCurrentSprint()} >
+                        <option>None</option>
                             {this.state.allSprints.map(sprint => (
                                 <option> {sprint.name}</option>))}
                         </select>

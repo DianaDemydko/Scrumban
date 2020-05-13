@@ -28,7 +28,7 @@ export class DefectPrint extends React.Component {
                         break
                 }
             })
-            .then(data => { this.setState({ storyName: data.name }) });
+            .then(data => { if (data != null) { this.setState({ storyName: data.name }) } else { this.setState({ storyName: 'None' }) } });
     }
 
     render() {

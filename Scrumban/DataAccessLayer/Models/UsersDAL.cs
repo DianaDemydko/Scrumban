@@ -19,6 +19,9 @@ namespace Scrumban.DataAccessLayer.Models
 
         public int RoleId { get; set; } = 1;
         public RoleDAL Role { get; set; }
+
+        public int? TeamId { get; set; }
+        public TeamDAL Team { get; set; }
         
         public PictureDAL Picture { get; set; }
     }

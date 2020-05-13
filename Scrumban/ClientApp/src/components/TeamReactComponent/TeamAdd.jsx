@@ -53,27 +53,25 @@ export class TeamAdd extends React.Component {
     render() {
         return (
             <div>
-                <h3>Add team</h3>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="teamName">Name</label>
-                            <input type="text" class="form-control" onChange={this.onTeamNameChanged} id="teamName" placeholder="team name" autoComplete="true" />
-                        </div>
+                <div className="addComponentBackground" >
+                 <label style={{ 'fontSize': '40px' }} className="create-title" >New Team</label>
+                    <div />
+                    <div className="addContent" style={{ 'display': 'flex' }}>
+                        <label className="col-2 mr-10" for="teamName">Name: </label>
+                        <input type="text" style={{ 'width': '80%' }} className="form-control" onChange={this.onTeamNameChanged} id="teamName" placeholder="Team name..." autoComplete="true" />
                     </div>
-                    <div className="form-group">
-                        <div className="">
-                            <label for="projectName">Project</label>
-                            <textarea rows="3" class="form-control" onChange={this.onTeamProjectChanged} id="teamProject" placeholder="project" />
+                    <div className="addContent" style={{ 'display': 'flex' }}>
+                            <label className="col-2 mr-10" for="projectName">Project: </label>
+                        <textarea rows="3" class="form-control" style={{ 'width': '80%' }} onChange={this.onTeamProjectChanged} id="teamProject" placeholder="Project..." />
                         </div>
-                    </div>
-                    <button type="submit" className="btn btn-dark button-fixed">Submit</button>
+                        <div className="addContent">
+                            <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }} onClick={(e) => this.onSubmit(e)}>Save</button>
 
-
-                    <Link to={cancelUrl}>
-                        <button type="submit" className="btn btn-dark  button-fixed">Cancel</button>
-                    </Link>
-                </form>
+                           
+                            <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }} onClick={() => this.props.moveToComponent("teams")}>Cancel</button>
+                           
+                        </div>
+                </div>
             </div>
         );
     }

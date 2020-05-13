@@ -16,7 +16,7 @@ export class SideBar extends React.Component {
                     <i className="fa fa-caret-down"></i>
                     </a>
                     <div className="menu-dropdown-content">
-                        <a className="menu-item" onClick={() => this.props.moveToComponent("admin")}>Admin</a>
+                        <a className="menu-item" onClick={() => this.props.moveToComponent("admin")}>Users</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("teams")}>Teams</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("sprints")}>Sprints</a>
                         <a className="menu-item" onClick={() => this.props.moveToComponent("feature")}>Features</a>
@@ -34,8 +34,6 @@ export class SideBar extends React.Component {
                         <a className="menu-item" onClick={() => this.props.moveToComponent("cycle_time")}>Cycle Time chart</a>
                     </div>
                 </a>
-                
-                <a className="menu-item" onClick={() => this.props.moveToComponent("chat")}>Chat</a>
                 <a className="menu-item" onClick={() => this.props.moveToComponent("jira")}>JiraSync</a>
                 
 

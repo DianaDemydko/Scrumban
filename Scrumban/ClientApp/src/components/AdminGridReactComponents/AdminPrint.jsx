@@ -2,6 +2,7 @@
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
 import '../../GridStyles/StyleForGrid.css';
+import { toast } from 'react-toastify';
 
 export class AdminPrint extends Component {
     constructor(props) {
@@ -15,23 +16,21 @@ export class AdminPrint extends Component {
         this.onEditButtonClick = this.onEditButtonClick.bind(this);
     }
     onEditButtonClick() {
-        this.setState({ editState: !this.state.editState });
-        this.props.onStateUpdating(this.state.editState);
+        this.props.onStateUpdating(true);
     }
     onDeleteClick() {
-        fetch('api/users/', {
-            method: 'delete',
-            headers: { "Content-Type": "application/json" },
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: this.state.user.id})
+        fetch('api/users/' + this.state.user.id, {
+            method: 'get',
+            headers: { "Content-Type": "application/json" }
         }).then(function (response) {
             let responseStatus = response.status
             switch (responseStatus) {
                 case 200:
+                    toast.success('User was deleted');
                     break
             }
-        }.bind(this))
-
+            }.bind(this))
+        this.props.loadData();
     }
     componentWillReceiveProps(newProps) {
         this.setState({ user: newProps.user });
@@ -43,6 +42,7 @@ export class AdminPrint extends Component {
                 <td class="col">{this.state.user.surname}</td>
                 <td class="col">{this.state.user.email}</td>
                 <td class="col">{this.state.user.role.name}</td>
+                <td class="col">{this.state.user.team != null ? this.state.user.team.name : "None"}</td>
                 <td>
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit

@@ -60,7 +60,7 @@ export class DefectEdit extends React.Component {
                         break
                 }
             })
-            .then(data => { this.setState({ storyName: data.name }) });
+            .then(data => { if (data != null) { this.setState({ storyName: data.name }) } else { this.setState({ storyName: 'None' }) } });
     }
 
     getAllStories() {
@@ -226,6 +226,7 @@ export class DefectEdit extends React.Component {
                 <div>
                     <label for="story">Story</label>
                     <select onChange={this.onStoryIdChange} class="btn btn-light m-0" id="priority" defaultValue={this.state.storyName} >
+                        <option>None</option>
                         {this.state.storyOptions.map((item) => <option value={item.story_id} >{item.name}</option>)}
                     </select>
                 </div>

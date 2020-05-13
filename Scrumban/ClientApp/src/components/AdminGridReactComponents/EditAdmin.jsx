@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { toast } from 'react-toastify';
 
 export class EditAdmin extends Component {
     constructor(props) {
@@ -10,7 +11,9 @@ export class EditAdmin extends Component {
             lastname: this.props.usertoEdit.surname,
             emil: this.props.usertoEdit.email,
             roleID: this.props.usertoEdit.roleid, 
-            roles:[]
+            roles: [],
+            teams: [],
+            teamId: ''
         };
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onLastNameChanged = this.onLastNameChanged.bind(this);
@@ -18,6 +21,7 @@ export class EditAdmin extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onRoleChange = this.onRoleChange.bind(this);
         this.onCancel = this.onCancel.bind(this);
+        this.onTeamChange = this.onTeamChange.bind(this);
     }
     componentDidMount() {
         fetch('api/users/getRoles')
@@ -25,8 +29,15 @@ export class EditAdmin extends Component {
             .then(json => {
                 this.setState({ roles: json })
             });
+        fetch('api/team/getTeams')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ teams: json })
+            });
     }
-
+    onTeamChange(e) {
+        this.setState({ teamId: e.target.value });
+    }
     onNameChanged(e) {
         this.setState({ firstname: e.target.value });
     }
@@ -37,29 +48,36 @@ export class EditAdmin extends Component {
         this.setState({ emil: e.target.value });
     }
     onRoleChange(e) {
-        var i = this.state.roles.find(x => x.name === e.target.value).id;
-        this.setState({ roleID: i });
+        this.setState({ roleID: e.target.value });
     }
 
-    onSubmit() {
-        fetch('/api/users/Edit', {
+  async onSubmit() {
+        await fetch('/api/users/Edit', {
             method: "post",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id: this.props.usertoEdit.id, firstName: this.state.firstname,
-                surname: this.state.surname,
-                email: this.state.email,
+                id: this.props.usertoEdit.id,
+                firstName: this.state.firstname,
+                surname: this.state.lastname,
+                email: this.state.emil,
                 roleid: this.state.roleID,
+                teamId: this.state.teamId
             })
+        }).then(function (response) {
+            let responseStatus = response.status
+            switch (responseStatus) {
+                case 200:
+                    toast.success("Updated successfuly");
+            }
         });
-        this.props.onEditUser();
+      this.props.onEditUser();
+      this.props.onStateUpdating(false);
     }
     onCancel() {
         this.props.onStateUpdating(false);
     }
 
     render() {
-
         return <tr>
             <td>
                 <div>
@@ -76,16 +94,29 @@ export class EditAdmin extends Component {
             <td>
                 <div>
                     <label for="state">Email</label>
-                    <input type="text" class="form-control" onChange={e => this.onEmailChanged(e)} defaultValue={this.state.lastname} />
+                    <input type="text" class="form-control" onChange={e => this.onEmailChanged(e)} defaultValue={this.state.emil} />
                 </div>
             </td>
             <td>
                 <div>
                     <label for="priority">Role</label>
                     <div />
-                    <select class="btn btn-light dropdown-toggle m-0" name="role" onChange={e => this.onRoleChange(e)}>
+                    <select class="btn btn-light dropdown-toggle m-0" name="role" onChange={e => this.onRoleChange(e)} defaultValue={this.props.usertoEdit.role.name}>
                         {this.state.roles.map(role => (
-                            <option> {role.name}</option>))}
+                            <option value={role.id}> {role.name}</option>))}
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <label for="priority">Team</label>
+                    <div />
+                    <select class="btn btn-light dropdown-toggle m-0" name="role" onChange={e => this.onTeamChange(e)} defaultValue={this.props.usertoEdit.team != null ? this.props.usertoEdit.team.name : "None"}>
+                        <option>None</option>
+                        {this.state.teams.map(team => {
+                           return( <option value={team.teamID} > {team.name}</option>)
+                        })
+                        }
                     </select>
                 </div>
             </td>

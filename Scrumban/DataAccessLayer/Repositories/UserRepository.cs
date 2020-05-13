@@ -17,7 +17,7 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
             try
             {
-                return _dbContext.Users.Include(x => x.Role).AsQueryable();
+                return _dbContext.Users.Include(x => x.Role).Include(c => c.Team).AsQueryable();
             }
             catch
             {
@@ -51,6 +51,10 @@ namespace Scrumban.DataAccessLayer.Repositories
         public override void Update(UsersDAL user)
         {
             UsersDAL oldUser = _dbContext.Users.Find(user.Id);
+            if(user.Password == null)
+            {
+                user.Password = oldUser.Password;
+            }
             if (user.Password != oldUser.Password)
             {
                 user.Password = generatePasswordHash(user.Password);

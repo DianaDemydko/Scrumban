@@ -153,3 +153,7 @@
 tr:hover {
     background-color: #F2F2F2;
 }
+td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

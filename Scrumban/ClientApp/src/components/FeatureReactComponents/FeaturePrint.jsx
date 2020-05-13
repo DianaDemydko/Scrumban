@@ -95,7 +95,7 @@ export class FeaturePrint extends Component {
                         </ul>}
                     </div>
                     </td>
-                <td class="col" style={{ 'margin': '15px' }}>
+                <td class="col" style={{ 'margin': '15px','vertical-align': 'middle' }}>
                     <Moment class="col" style={{ 'margin': '15px' }} parse="YYYY/MM/DD" format="YYYY/MM/DD" > {this.state.feature.time} </Moment>
                 </td>
                 
