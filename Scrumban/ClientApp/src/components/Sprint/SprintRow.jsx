@@ -89,12 +89,21 @@ fetchTeams() {
                             this.state.sprint.team
                             : "None"
                         }</td>
-                <td>
-                        <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>
-                </td>
-                <td>
+                        <td>
+                        {this.props.currentUser.roleId != 1 ?
+                            (
+                               
+                                    <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>
+                      
+                             ) : null}
+                        </td>
+                        <td>
+                            {this.props.currentUser.roleId != 1 ?
+                                (
                         <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
-                </td>
+
+                                ) : null}
+                        </td>
                     </tr>
                  }
             </React.Fragment>

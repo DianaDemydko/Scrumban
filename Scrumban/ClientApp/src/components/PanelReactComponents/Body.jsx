@@ -60,46 +60,43 @@ export class Body extends React.Component {
                 renderedComponent = <About moveToComponent={this.props.moveToComponent} />
                 break
             case 'tasks':
-                renderedComponent = <TaskGrid moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <TaskGrid moveToComponent={this.props.moveToComponent} currentUser={this.props.user}/>
                 break
             case 'taskAdd':
                 renderedComponent = <TaskAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'feature':
-                renderedComponent = <FeatureTable moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <FeatureTable moveToComponent={this.props.moveToComponent} currentUser={this.props.user} />
                 break
             case 'featureAdd':
                 renderedComponent = <AddFeature moveToComponent={this.props.moveToComponent} />
                 break;
             case 'stories':
-                renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <StoryGrid moveToComponent={this.props.moveToComponent} currentUser={this.props.user} />
                 break
             case 'storyAdd':
                 renderedComponent = <StoryAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'sprints':
-                renderedComponent = <SprintMain moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <SprintMain moveToComponent={this.props.moveToComponent} user={this.props.user} />
                 break 
             case 'sprintAdd':
                 renderedComponent = <SprintCreateForm moveToComponent={this.props.moveToComponent} />
                 break 
             case 'defects':
-                renderedComponent = <DefectGrid moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <DefectGrid moveToComponent={this.props.moveToComponent} currentUser={this.props.user} />
                 break
             case 'defectAdd':
                 renderedComponent = <DefectAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'teams':
-                renderedComponent = <TeamGrid moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <TeamGrid moveToComponent={this.props.moveToComponent} currentUser={this.props.user} />
                 break
             case 'teamAdd':
                 renderedComponent = <TeamAdd moveToComponent={this.props.moveToComponent} />
                 break
             case 'jira':
                 renderedComponent = <JiraPage moveToComponent={this.props.moveToComponent} />
-                break
-            case 'chat':
-                renderedComponent = <Chat moveToComponent={this.props.moveToComponent} />
                 break
             case 'kanbanBoard':
                 renderedComponent = <Kanban/>
@@ -111,7 +108,7 @@ export class Body extends React.Component {
                 renderedComponent = <CycleTimeChart />
                 break
             default:
-                renderedComponent = <Kanban />
+                renderedComponent = <About />
         }
         
 
@@ -119,7 +116,7 @@ export class Body extends React.Component {
             <ToastContainer autoClose={3000} position="bottom-right" />
             <div> 
                 {this.props.panelLoginStatus == true ?
-                    (<SideBar moveToComponent={this.props.moveToComponent} />) :
+                    (<SideBar moveToComponent={this.props.moveToComponent} user={this.props.user}/>) :
                     ""
             }
             </div>

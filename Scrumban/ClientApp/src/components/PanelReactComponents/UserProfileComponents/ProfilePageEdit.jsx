@@ -4,6 +4,8 @@ import "../../../index.css"
 const apiUrlEditUser = "/api/users/Edit";
 const apiUrlCheckUser = "/api/users/Check";
 
+const emptyAvatar = require('../../PanelReactComponents/user.png');
+
 export class ProfilePageEdit extends Component {
     constructor(props) {
         super(props);
@@ -266,7 +268,7 @@ export class ProfilePageEdit extends Component {
         return <div>
             <br />
             <div className="row justify-content-center">
-                <h2>Profile Page</h2>
+                <h2>My Profile</h2>
                 {this.state.user}
             </div>
             <br />
@@ -274,7 +276,7 @@ export class ProfilePageEdit extends Component {
             <div className="row justify-content-around">
                 <div className="col-4">
                     <div className="row">
-                        <img src={this.state.pictureUrl} alt="Image" className="profile-image" />
+                        <img src={this.state.pictureUrl != null ? this.state.pictureUrl : emptyAvatar} alt="Image" className="profile-image" />
                     </div>
                     <div className="row justify-content-center">
                         <small>.png, .jpg, .jpeg, .img</small>

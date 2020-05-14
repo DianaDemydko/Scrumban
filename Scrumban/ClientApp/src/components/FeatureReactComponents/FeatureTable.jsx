@@ -233,7 +233,7 @@ export class FeatureTable extends Component {
             <div className="grid-panel">
                 <div className="grid-name">Features</div>
                 <div className="grid-buttons" style={{ marginLeft: '65%' }}>
-                    <button onClick={() => this.props.moveToComponent("featureAdd")} className="btn add-new btn-panel-table">Create New</button>
+                    {this.props.currentUser.roleId != 1 ? <button onClick={() => this.props.moveToComponent("featureAdd")} className="btn add-new btn-panel-table">Create New</button> : null }
                     <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
                 </div>
             </div>
@@ -269,7 +269,7 @@ export class FeatureTable extends Component {
                     <tbody>
                     {(this.state.pageOfItems.length > 0)//pageOfItems
                             ? this.state.pageOfItems.map((feature) => {
-                                return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} users={this.state.users} />
+                                return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} users={this.state.users} currentUser={this.props.currentUser} />
                             }
                             ) :
                             (<tbody>

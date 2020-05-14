@@ -21,8 +21,10 @@ class DeleteButton extends Component {
             headers: { "Content-Type": "application/json" }
         }).then(response => {
             if (response.status == 200) {
-                toast.success("Team was deleted");
+                toast.success("Team was deleted!");
 
+            } else {
+                toast.warn("That team have assigned Users and Sprints. To delete it unassigne that items!");
             }
             });
         this.props.loadData();
@@ -51,8 +53,8 @@ class TeamRow extends Component {
         this.setState({ edit: editState });
     }
     render() {
-        return (this.state.edit ? <TeamEdit teamEdit={this.props.team} onStateUpdating={this.onStateChanged} loadData={this.props.loadData} onStateUpdating={this.onStateChanged}/> :
-            <TeamPrint onStateUpdating={this.onStateChanged} team={this.props.team} loadData={this.props.loadData}/>
+        return (this.state.edit ? <TeamEdit teamEdit={this.props.team} onStateUpdating={this.onStateChanged} loadData={this.props.loadData} onStateUpdating={this.onStateChanged} /> :
+            <TeamPrint onStateUpdating={this.onStateChanged} team={this.props.team} loadData={this.props.loadData} currentUser={this.props.currentUser} />
 
         );
     }
@@ -81,13 +83,19 @@ class TeamPrint extends Component {
                 <td  > {this.state.team.name} </td>
                 <td > {this.state.team.project} </td>
                 <td >
-                    <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
-                        Edit
-                                </button>
+                {this.props.currentUser.roleId != 1 ?
+                    (
+                        <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
+                            Edit
+                                </button> )
+                    
+                         : null}
                 </td>
                 <td >
-                    <DeleteButton
-                        teamIDtoDelete={this.state.team.teamID} loadData={this.props.loadData} />
+                    {this.props.currentUser.roleId != 1 ?
+                        <DeleteButton
+                            teamIDtoDelete={this.state.team.teamID} loadData={this.props.loadData} />
+                        : null }
                 </td>
             </tr>
 );
@@ -232,7 +240,7 @@ export class TeamGrid extends Component {
             <div className="grid-panel">
                 <div className="grid-name">Teams</div>
                 <div className="grid-buttons" style={{ 'margin-left': '78%' }}>
-                    <button onClick={() => this.props.moveToComponent("teamAdd")} className="btn add-new btn-panel-table">Create New</button>
+                    {this.props.currentUser.roleId != 1 ? <button onClick={() => this.props.moveToComponent("teamAdd")} className="btn add-new btn-panel-table">Create New</button> : null }
                 </div>
             </div>
             <hr></hr>
@@ -251,7 +259,7 @@ export class TeamGrid extends Component {
                 </tr>
                 <tbody>
                         {this.state.teams.map(team => (
-                            <TeamRow key={team.id} team={team} loadData={this.loadData} />
+                            <TeamRow key={team.id} team={team} loadData={this.loadData} currentUser={this.props.currentUser} />
                 )
                         )}
                     </tbody>

@@ -23,7 +23,7 @@ export class SprintMain extends React.Component {
   render() {
       return (
           <div>
-              <SprintTable moveToComponent={this.props.moveToComponent} teams={this.state.teams} />
+              <SprintTable moveToComponent={this.props.moveToComponent} teams={this.state.teams} currentUser={this.props.user}/>
          </div>
     );
   }

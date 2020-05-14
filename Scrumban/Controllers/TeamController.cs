@@ -46,10 +46,10 @@ namespace Scrumban.Controllers
 
         [HttpDelete("{id}")]
         [Route("/api/[controller]/delete")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
            
-            _teamServise.DeleteTeam(id.Value);
+            _teamServise.DeleteTeam(id);
             return Ok();
         }
     }

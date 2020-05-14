@@ -39,22 +39,7 @@ namespace Scrumban.DataAccessLayer.Repositories
             return _dbContext.Teams.Include(x => x.Name).Include(x=>x.Project);
         }
 
-        public override void Delete(int id)
-        {
-            using (var transaction = _dbContext.Database.BeginTransaction())
-            {
-                try
-                {
-                    TeamDAL _team = _dbContext.Teams.FirstOrDefault(x => x.TeamID == id);
-                    _dbContext.Teams.Remove(_team);
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                }
-            }
-        }
+       
         public override void Update(TeamDAL item)
         {
             using (var transaction = _dbContext.Database.BeginTransaction())

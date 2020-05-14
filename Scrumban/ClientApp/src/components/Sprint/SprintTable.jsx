@@ -104,7 +104,6 @@ export class SprintTable extends React.Component
     }
 
     onUpdatingSprintElement(sprintToUpdate) {
-        debugger
         let index = this.state.sprints.findIndex(sprint => sprint.sprint_id == sprintToUpdate.sprint_id)
         var tempArray = this.state.sprints
         tempArray[index] = sprintToUpdate
@@ -488,7 +487,7 @@ export class SprintTable extends React.Component
                     
                  {(this.state.pageOfItems.length > 0)//pageOfItems
                                 ? this.state.pageOfItems.map((sprint) => {//pageOfItems
-                                    return <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} teams={this.props.teams} />
+                                    return <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} teams={this.props.teams} currentUser={this.props.currentUser} />
                                 }
                         )
                        : (<tbody>
@@ -521,7 +520,7 @@ export class SprintTable extends React.Component
                 <div className="grid-panel">
                     <div className="grid-name">Sprints</div>
                     <div className="grid-buttons">
-                        <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn add-new btn-panel-table">Create New</button>
+                        {this.props.currentUser.roleId != 1 ? <button onClick={() => this.props.moveToComponent("sprintAdd")} className="btn add-new btn-panel-table">Create New</button> : null }
                         <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
                     </div>
                 </div>

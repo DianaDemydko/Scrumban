@@ -100,12 +100,14 @@ export class FeaturePrint extends Component {
                 <td class="col" style={{ 'margin': '15px','vertical-align': 'middle' }}>
                     <Moment class="col" style={{ 'margin': '15px' }} parse="YYYY/MM/DD" format="YYYY/MM/DD" > {this.state.feature.time} </Moment>
                 </td>
+               
+                {this.props.currentUser.roleId != 1 ?
+                    (<td class="col">
+                        <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
+                            Edit
+                         </button>
+                        <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={e => this.onDeleteClick(e)}>Delete</button> </td> ) : null}
                 
-                <td class="col">
-                    <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
-                        Edit
-                                </button>
-                    <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={e=>this.onDeleteClick(e)}>Delete</button>                </td>
             </tr>);
     }
 }

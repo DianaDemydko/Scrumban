@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 
+const emptyAvatar = require('../../PanelReactComponents/user.png');
+
 export class ProfilePagePrint extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +25,7 @@ export class ProfilePagePrint extends Component {
         return <div>
             <br />
             <div className="row justify-content-center">
-                <h2>Profile Page</h2>
+                <h2>My Profile</h2>
             </div>
             <br />
 
@@ -31,7 +33,7 @@ export class ProfilePagePrint extends Component {
 
                 <div className="col-4">
                     <div className="row">
-                        <img src={this.props.pictureUrl} alt="Image" className="profile-image" />
+                        <img src={this.props.pictureUrl != null ? this.props.pictureUrl : emptyAvatar} alt="Image" className="profile-image" />
                     </div>
                 </div>
                 

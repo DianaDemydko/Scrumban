@@ -22,8 +22,8 @@ export class FeatureRow extends Component {
         }
     }
     render() {
-        return (this.state.edit ? <EditFeature featuretoEdit={this.props.feature} onStateUpdating={this.onStateChanged} moveToComponent={this.props.moveToComponent} onEditFeature={this.props.editItem} users={this.props.users}/> :
-            <FeaturePrint onStateUpdating={this.onStateChanged} feature={this.props.feature} DeleteStatusChanged={this.onDeleteStatusChanged} users={this.props.users}/>
+        return (this.state.edit ? <EditFeature featuretoEdit={this.props.feature} onStateUpdating={this.onStateChanged} moveToComponent={this.props.moveToComponent} onEditFeature={this.props.editItem} users={this.props.users} /> :
+            <FeaturePrint onStateUpdating={this.onStateChanged} feature={this.props.feature} DeleteStatusChanged={this.onDeleteStatusChanged} users={this.props.users} currentUser={this.props.currentUser} />
 
         );
     }
