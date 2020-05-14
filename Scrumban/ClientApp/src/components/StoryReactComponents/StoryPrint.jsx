@@ -73,7 +73,7 @@ export class StoryPrint extends React.Component {
                       </div>
                   </div>
                 </td>
-                <td class="col">{this.state.story.userId != null ? <img src={this.state.story.user.picture != null && this.state.story.user.picture.image != null ? this.state.story.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px' }} className="picture" title={this.state.story.user != null ? `${this.state.story.user.firstName}  ${this.state.story.user.surname}` : null} /> : "None"}</td>
+                <td class="col">{this.state.story.userId != null ? <img src={this.state.story.user.picture != null && this.state.story.user.picture.image != null ? this.state.story.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px', 'border-radius': '50%' }} className="picture" title={this.state.story.user != null ? `${this.state.story.user.firstName}  ${this.state.story.user.surname}` : null} /> : "None"}</td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.storyPoints}</label></td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.rank}</label></td>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.featureName}</label></td>

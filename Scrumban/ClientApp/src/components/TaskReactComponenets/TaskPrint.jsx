@@ -91,7 +91,7 @@ export class TaskPrint extends React.Component {
 
                 <td>{this.props.item.taskState.name} </td>
 
-                <td class="col">{this.props.item.userId != null ? <img src={this.props.item.user.picture != null && this.props.item.user.picture.image != null ? this.props.item.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px' }} className="picture" title={this.props.item.user != null ? `${this.props.item.user.firstName}  ${this.props.item.user.surname}` : null} /> : "None"}</td>
+                <td class="col">{this.props.item.userId != null ? <img src={this.props.item.user.picture != null && this.props.item.user.picture.image != null ? this.props.item.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px', 'border-radius': '50%' }} className="picture" title={this.props.item.user != null ? `${this.props.item.user.firstName}  ${this.props.item.user.surname}` : null} /> : "None"}</td>
 
                 <td>{(this.props.item.story == null) ? ("None") : (this.props.item.story.name)}</td>
 

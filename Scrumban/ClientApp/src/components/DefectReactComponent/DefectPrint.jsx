@@ -40,7 +40,7 @@ export class DefectPrint extends React.Component {
                 <td class="col">{this.props.item.name}</td>
                 <td class="col">{this.props.item.description}</td>
                 <td class="col">{this.props.item.state}</td>
-                <td class="col">{this.props.item.userId != null ? <img src={this.props.item.user.picture != null && this.props.item.user.picture.image != null ? this.props.item.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px' }} className="picture" title={this.props.item.user != null ? `${this.props.item.user.firstName}  ${this.props.item.user.surname}` : null} /> : "None"}</td>
+                <td class="col">{this.props.item.userId != null ? <img src={this.props.item.user.picture != null && this.props.item.user.picture.image != null ? this.props.item.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px', 'border-radius': '50%' }} className="picture" title={this.props.item.user != null ? `${this.props.item.user.firstName}  ${this.props.item.user.surname}` : null} /> : "None"}</td>
                 <td class="col">{this.props.item.priority}</td>
                 <td class="col">{this.props.item.severity}</td>
                 <td class="col">{this.state.storyName}</td>
