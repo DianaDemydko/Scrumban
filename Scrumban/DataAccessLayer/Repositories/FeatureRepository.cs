@@ -21,7 +21,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<FeatureDAL> GetAll()
         {
-            var response = _dbContext.Features.Include(x => x.Priority).Include(x => x.State).AsQueryable();
+            var response = _dbContext.Features.Include(x => x.Priority).Include(x => x.State).Include(j => j.User).ThenInclude(h => h.Picture).AsQueryable();
             return response;
         }
         public IQueryable<PriorityDAL> GetPriorities()
@@ -41,7 +41,8 @@ namespace Scrumban.DataAccessLayer.Repositories
                         StateID = feature.StateID,
                         OwnerID = feature.OwnerID,
                         PriorityID = feature.PriorityID,
-                        Time = feature.Time
+                        Time = feature.Time,
+                        UserId = feature.UserId
                     };
                     _dbContext.Add(added);
                     transaction.Commit();
@@ -70,6 +71,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                     feature.OwnerID = item.OwnerID;
                     feature.PriorityID = item.PriorityID;
                     feature.Time = item.Time;
+                    feature.UserId = item.UserId;
 
                     transaction.Commit();
                 }

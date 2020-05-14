@@ -9,18 +9,31 @@ export class SprintRow extends React.Component {
 
         this.state = {
             sprint: { ...props.sprint },
-            isEditMode: false
+            isEditMode: false,
+            teams: this.props.teams
         }
 
         this.onUpdatingSprintElement = this.onUpdatingSprintElement.bind(this)
         this.onDeletingSprintElement = this.onDeletingSprintElement.bind(this)
         this.onCancelEditMode = this.onCancelEditMode.bind(this)
         this.onEnableEditMode = this.onEnableEditMode.bind(this)
+        this.fetchTeams = this.fetchTeams.bind(this);
     }
+
+fetchTeams() {
+    fetch('api/team/getTeams')
+        .then(res => res.json())
+        .then(json => {
+            this.setState({ teams: json })
+        });
+}
 
     onCancelEditMode()
     {
         this.setState({ isEditMode: false })
+    }
+    componentDidMount() {
+        this.fetchTeams();
     }
 
     onEnableEditMode()
@@ -65,13 +78,17 @@ export class SprintRow extends React.Component {
     {
         return (
             <React.Fragment>
-                {this.state.isEditMode ? <SprintEditForm sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} /> : 
+                {this.state.isEditMode ? <SprintEditForm sprint={this.state.sprint} statuses={this.props.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onCancelEditMode={this.onCancelEditMode} teams={this.props.teams}/> : 
             <tr key={this.state.sprint.sprint_id}>
                 <td>{this.state.sprint.name}</td>
-                    <td>{this.state.sprint.description}</td>
+                        <td>{this.state.sprint.description}</td>
                     <td>{moment(this.state.sprint.startDate).format("MM-DD-YYYY")}</td>
                     <td>{moment(this.state.sprint.endDate).format("MM-DD-YYYY")}</td>
-                <td>{this.state.sprint.sprintStatus}</td>
+                        <td>{this.state.sprint.sprintStatus}</td>
+                        <td>{this.state.sprint.teamId != null ?
+                            this.state.sprint.team
+                            : "None"
+                        }</td>
                 <td>
                         <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onEnableEditMode} >Edit</button>
                 </td>

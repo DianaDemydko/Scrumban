@@ -591,8 +591,6 @@ export class TaskGrid extends React.Component {
 
                             <span>Owner</span>
 
-                            <ion-icon src={this.state.sortByState} onClick={() => this.sort("user", "firstName")} />
-
                         </th>
 
                         <th className="col-1">

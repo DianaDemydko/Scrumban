@@ -15,7 +15,9 @@ export class AddFeature extends React.Component {
             stateID: 1,
             start: new Date(),
             priorities: [],
-            states: []
+            states: [],
+            users: [],
+            userId: ""
         };
         this.handleClick = this.handleClick.bind(this);
         this.onNameChanged = this.onNameChanged.bind(this);
@@ -23,7 +25,52 @@ export class AddFeature extends React.Component {
         this.onPriorityChanged = this.onPriorityChanged.bind(this);
         this.onStartDateChanged = this.onStartDateChanged.bind(this);
         this.onStateChanged = this.onStateChanged.bind(this);
-    }
+        this.fetchUsers = this.fetchUsers.bind(this);
+        this.onOwnerChange = this.onOwnerChange.bind(this);
+}
+fetchUsers() {
+
+    fetch('/api/users/getUsers', {
+
+        meethod: "get",
+
+        headers: {
+
+            'Content-Type': 'application/json',
+
+            'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+
+        }
+
+    })
+
+        .then(function (response) {
+
+            if (response.status == 200) {
+
+                return response.json()
+
+            }
+
+            else if (response.status == 401) {
+
+                alert("Not Authorized")
+
+                window.location.replace("/login");
+
+            }
+
+            else {
+
+                alert("ERROR ! " + response.status)
+
+            }
+
+        })
+
+        .then(data => this.setState({ users: data }))
+
+}
     componentDidMount() {
         fetch('api/FeatureData/GetPriorities')
             .then(res => res.json())
@@ -35,6 +82,15 @@ export class AddFeature extends React.Component {
             .then(json => {
                 this.setState({ states: json })
             });
+        this.fetchUsers();
+    }
+
+    onOwnerChange(e) {
+        if (e.target.value === 'None') {
+            this.setState({ userId: null });
+        } else {
+            this.setState({ userId: e.target.value });
+        }
     }
 
     handleClick(e) {
@@ -48,11 +104,12 @@ export class AddFeature extends React.Component {
             body: JSON.stringify({
                 name: this.state.name, description: this.state.description,
                 priorityid: this.state.priorityID, time: this.state.start,
-                stateid: this.state.stateID
+                stateid: this.state.stateID,
+                userId: this.state.userId
             })
         }).then(function (response) {
             if (response.status == 200) {
-                toast.success("Feature was created in database !");
+                toast.success("Feature was created!");
                 this.props.moveToComponent("feature");
             }
             else if (response.status == 401) {
@@ -100,13 +157,13 @@ export class AddFeature extends React.Component {
                 <label style={{ 'fontSize': '40px' }} className="create-title" >New Feature</label>
                 <div />
                 <div className = "addContent">
-                    <label class= "col-2  mr-10"> Name: </label>
-                    <input className="inputAdd" type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
+                    <label class="col-2  mr-10"> Name: </label>
+                    <input className="inputAdd" placeholder="Name..." type="text" name="name" onChange={e => this.onNameChanged(e)} vale={this.state.name} />
                     <div/>
                 </div>
                 <div className="addContent">
                     <label class="col-2  mr-10"> Description: </label>
-                    <textarea className="inputAdd" type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
+                    <textarea className="inputAdd" placeholder="Description..." type="text" name="description" onChange={e => this.onDescriptionChanged(e)} />
                     <div />
                 </div>
                 <div className="addContent">
@@ -118,7 +175,13 @@ export class AddFeature extends React.Component {
                     </select>
                     </div>
                 {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name ="owners">Ownres</button>*/}
-                <div />
+                <div className="addContent">
+                    <label class="col-2 mr-10">Owner: </label>
+                    <select onChange={this.onOwnerChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="Owner...">
+                        <option>None</option>
+                        {this.state.users.map((item) => <option value={item.id}>{`${item.firstName}  ${item.surname}`}</option>)}
+                    </select>
+                </div>
                 <div className="addContent">
                     <label class="col-2  mr-10"> Priority: </label>
                     <select class="btn btn-light dropdown-toggle m-0 w-25" name="prioriry" onChange={e => this.onPriorityChanged(e)} >

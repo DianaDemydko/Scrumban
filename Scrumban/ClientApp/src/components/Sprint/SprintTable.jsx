@@ -29,7 +29,8 @@ export class SprintTable extends React.Component
                 columnName: '',
                 sortingOrder: ''
             },
-            pageOfItems: []
+            pageOfItems: [],
+            teams: []
         }
 
         this.showFilters = this.showFilters.bind(this);
@@ -55,6 +56,15 @@ export class SprintTable extends React.Component
         this.renderCaret = this.renderCaret.bind(this)
         this.clearFilters = this.clearFilters.bind(this)
         this.onChangePage = this.onChangePage.bind(this);
+        this.fetchTeams = this.fetchTeams.bind(this);
+    }
+
+    async fetchTeams() {
+       await fetch('api/team/getTeams')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ teams: json })
+            });
     }
 
     onChangePage(pageOfItems) {
@@ -67,8 +77,8 @@ export class SprintTable extends React.Component
 
     componentDidMount()
     {
-        this.fetchSprintStatuses()
-        this.fetchSprintData("")
+        this.fetchSprintStatuses();
+        this.fetchSprintData("");
     }
 
     showFilters(param) {
@@ -94,6 +104,7 @@ export class SprintTable extends React.Component
     }
 
     onUpdatingSprintElement(sprintToUpdate) {
+        debugger
         let index = this.state.sprints.findIndex(sprint => sprint.sprint_id == sprintToUpdate.sprint_id)
         var tempArray = this.state.sprints
         tempArray[index] = sprintToUpdate
@@ -463,7 +474,10 @@ export class SprintTable extends React.Component
                             </th>
                             <th style={{ cursor: 'pointer' }} onClick={() => this.sortData('sprintStatus')}>
                                 Status {this.renderCaret('sprintStatus')}
-                            </th>
+                             </th>
+                             <th>
+                                    Team
+                             </th>
                             <th colspan="2">
                             </th>
                         </tr>
@@ -474,7 +488,7 @@ export class SprintTable extends React.Component
                     
                  {(this.state.pageOfItems.length > 0)//pageOfItems
                                 ? this.state.pageOfItems.map((sprint) => {//pageOfItems
-                                    return <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} />
+                                    return <SprintRow key={sprint.sprint_id} sprint={sprint} statuses={this.state.statuses} onUpdatingSprintElement={this.onUpdatingSprintElement} onDeletingSprintElement={this.onDeletingSprintElement} teams={this.props.teams} />
                                 }
                         )
                        : (<tbody>

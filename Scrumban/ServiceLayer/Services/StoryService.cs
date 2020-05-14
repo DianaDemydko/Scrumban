@@ -54,7 +54,8 @@ namespace Scrumban.ServiceLayer.Services
                 Rank = storyDTO.Rank,
                 sprint_id = storyDTO.sprint_id,
                 StoryPoints = storyDTO.StoryPoints,
-                FeatureId = storyDTO.FeatureId
+                FeatureId = storyDTO.FeatureId,
+                UserId = storyDTO.UserId
             };
            storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == storyDTO.StoryState).StoryState_id;
 

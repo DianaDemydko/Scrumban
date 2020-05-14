@@ -20,7 +20,9 @@ export class StoryAdd extends React.Component {
             storyPoints: 1,
             rank: 1,
             allFeatures: [],
-            feature: ''
+            feature: '',
+            users: [],
+            userId: ""
         };
 
         this.onNameChanged = this.onNameChanged.bind(this);
@@ -31,6 +33,59 @@ export class StoryAdd extends React.Component {
         this.onRankChanged = this.onRankChanged.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.getAllFeatures = this.getAllFeatures.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
+        this.onOwnerChange = this.onOwnerChange.bind(this);
+    }
+
+    fetchUsers() {
+
+    fetch('/api/users/getUsers', {
+
+        meethod: "get",
+
+        headers: {
+
+            'Content-Type': 'application/json',
+
+            'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+
+        }
+
+    })
+
+        .then(function (response) {
+
+            if (response.status == 200) {
+
+                return response.json()
+
+            }
+
+            else if (response.status == 401) {
+
+                alert("Not Authorized")
+
+                window.location.replace("/login");
+
+            }
+
+            else {
+
+                alert("ERROR ! " + response.status)
+
+            }
+
+        })
+
+        .then(data => this.setState({ users: data }))
+
+    }
+    onOwnerChange(e) {
+        if (e.target.value === 'None') {
+            this.setState({ userId: null });
+        } else {
+            this.setState({ userId: e.target.value });
+        }
     }
 
     onNameChanged(e) {
@@ -70,6 +125,7 @@ export class StoryAdd extends React.Component {
         var storyRank = this.state.rank;
         var storyState = this.state.storyState;
         var feature = this.state.feature;
+        var userId = this.state.userId;
 
         fetch('api/Story/CreateStory',
             {
@@ -84,7 +140,8 @@ export class StoryAdd extends React.Component {
                     storyState: storyState,
                     storyPoints: storyPoints,
                     rank: storyRank,
-                    featureId: feature
+                    featureId: feature,
+                    userId: userId
                 })
             }).then(function (response) {
                 let responseStatus = response.status
@@ -108,6 +165,7 @@ export class StoryAdd extends React.Component {
                 })
             });
         this.getAllFeatures();
+        this.fetchUsers();
     }
     getAllFeatures() {
         fetch('api/FeatureData/Get')
@@ -133,19 +191,27 @@ export class StoryAdd extends React.Component {
                 <div />
                     <div className="addContent">
                     <label class="col-2 mr-10">Name: </label>
-                    <input type="text" className="inputAdd" onChange={e => this.onNameChanged(e)} id="name" placeholder="story name" autoComplete="false" />
+                    <input type="text" className="inputAdd" onChange={e => this.onNameChanged(e)} id="name" placeholder="Name..." autoComplete="false" />
                         </div>
                 <div className="addContent">
                     <label class="col-2 mr-10" for="description">Description: </label>
-                    <textarea rows="3" className="inputAdd" onChange={e=>this.onDescriptionChanged(e)} id="description" placeholder="story description" />
-                        </div>
+                    <textarea rows="3" className="inputAdd" onChange={e=>this.onDescriptionChanged(e)} id="description" placeholder="Description..." />
+                </div>
+                <div className="addContent">
+                    <label class="col-2 mr-10">Owner: </label>
+                    <select onChange={this.onOwnerChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="Owner...">
+                        <option>None</option>
+                        {this.state.users.map((item) => <option value={item.id}>{`${item.firstName}  ${item.surname}`}</option>)}
+                    </select>
+                </div>
                     <div className="addContent">
+
                     <label class="col-2 mr-10">Story Points: </label>
-                        <input type="text" className="inputAdd" onChange={e=>this.onStoryPointsChanged(e)} id="storyPoints" placeholder="story points" autoComplete="false" />
+                        <input type="number" className="inputAdd" onChange={e=>this.onStoryPointsChanged(e)} id="storyPoints" placeholder="Story Points..." autoComplete="false" />
                     </div>
                     <div className="addContent">
                     <label class="col-2 mr-10">Rank: </label>
-                        <input type="text" className="inputAdd" onChange={e=>this.onRankChanged(e)} id="rank" placeholder="story rank" autoComplete="false" />
+                        <input type="number" className="inputAdd" onChange={e=>this.onRankChanged(e)} id="rank" placeholder="Story Rank..." autoComplete="false" />
                 </div>
                 <div className="addContent">
                     <label class="col-2 mr-10" for="sprints">Feature: </label>

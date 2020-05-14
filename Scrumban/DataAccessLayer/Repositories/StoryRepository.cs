@@ -16,12 +16,12 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<StoryDAL> GetAll()
         {
-            return _dbContext.Stories.Include("StoryState").AsQueryable();
+            return _dbContext.Stories.Include("StoryState").Include(x => x.User).ThenInclude(y => y.Picture).AsQueryable();
         }
 
         public override StoryDAL GetByID(int id)
         {
-            var storyToGet = _dbContext.Stories.Where(story => story.Story_id == id).Include("StoryState").First();
+            var storyToGet = _dbContext.Stories.Where(story => story.Story_id == id).Include("StoryState").Include(x => x.User).ThenInclude(y => y.Picture).First();
             return storyToGet;
         }
 
@@ -45,6 +45,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                     story.StartDate = item.StartDate;
                     story.EndDate = item.EndDate;
                     story.FeatureId = item.FeatureId;
+                    story.UserId = item.UserId;
 
                     transaction.Commit();
                 }

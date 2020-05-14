@@ -88,7 +88,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<TaskDAL> GetAll()
         {
-            var n = _dbContext.Tasks.Include(x => x.TaskState).Include(x => x.Priority).Include(x => x.taskChangeHistories).ThenInclude(y => y.User).Include(x => x.User).Include(x => x.Story).AsQueryable();
+            var n = _dbContext.Tasks.Include(x => x.TaskState).Include(x => x.Priority).Include(x => x.taskChangeHistories).ThenInclude(y => y.User).Include(x => x.User).ThenInclude(g => g.Picture).Include(x => x.Story).AsQueryable();
             return n;
         }
 

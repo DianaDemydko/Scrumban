@@ -14,7 +14,9 @@ export class SprintCreateForm extends React.Component {
             description: "",
             startDate: new Date(),
             endDate: new Date(),
-            sprintStatus: 'Not Started'
+            sprintStatus: 'Not Started',
+            teams: [],
+            teamId: ""
             }
         this.state.endDate.setMonth(this.state.startDate.getMonth() + 1)
 
@@ -26,10 +28,20 @@ export class SprintCreateForm extends React.Component {
         this.onEndDateChanged = this.onEndDateChanged.bind(this)
         this.onStatusChanged = this.onStatusChanged.bind(this)
         this.fetchSprintStatuses = this.fetchSprintStatuses.bind(this)
+        this.fetchTeams = this.fetchTeams.bind(this)
+        this.onTeamChanged = this.onTeamChanged.bind(this)
+    }
+    fetchTeams() {
+        fetch('api/team/getTeams')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ teams: json })
+            });
     }
 
     componentDidMount() {
-        this.fetchSprintStatuses()
+        this.fetchSprintStatuses();
+        this.fetchTeams();
     }
 
     fetchSprintStatuses() {
@@ -53,7 +65,8 @@ export class SprintCreateForm extends React.Component {
                         description: this.state.description,
                         startDate: this.state.startDate,
                         endDate: this.state.endDate,
-                        sprintStatus: this.state.sprintStatus
+                        sprintStatus: this.state.sprintStatus,
+                        teamId: this.state.teamId
                       })
                     
             })
@@ -76,6 +89,14 @@ export class SprintCreateForm extends React.Component {
     onStartDateChanged(startDate)
     {
         this.setState({ startDate: startDate })
+    }
+
+    onTeamChanged(e) {
+        var teamId = e.target.value;
+        if (e.target.value === "None") {
+            teamId = null;
+        }
+        this.setState({ teamId: teamId })
     }
 
     onEndDateChanged(endDate)
@@ -107,7 +128,7 @@ export class SprintCreateForm extends React.Component {
                     <label class="col-2 mr-10">Name: </label>
                         <input type="text"
                             class="inputAdd"
-                            placeholder="Name"
+                            placeholder="Name..."
                             id="name"
                             required
                             onChange={this.onNameChanged}
@@ -118,7 +139,7 @@ export class SprintCreateForm extends React.Component {
                         <textarea type="text"
                         rows="5"
                         className="inputAdd"
-                            placeholder="Description"
+                            placeholder="Description..."
                             id="description"
                             required
                             onChange={this.onDescriptionChanged}
@@ -152,10 +173,17 @@ export class SprintCreateForm extends React.Component {
 
                 <div className="addContent">
                     <label class="col-2 mr-10">Status: </label>
-                    <select class="btn btn-light dropdown-toggle" onChange={this.onStatusChanged}>
+                    <select style={{ 'margin-top': '0px', 'width': '40%' }} class="btn btn-light dropdown-toggle" onChange={this.onStatusChanged}>
                             {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                         </select>
-                    </div>
+                </div>
+                <div className="addContent">
+                    <label class="col-2 mr-10">Team: </label>
+                    <select style={{ 'margin-top': '0px', 'width': '40%' }} class="btn btn-light dropdown-toggle" onChange={this.onTeamChanged}>
+                        <option>None</option>
+                        {this.state.teams.map(team => <option value={team.teamID}>{team.name}</option>)}
+                    </select>
+                </div>
                     
                 <div className="addContent">
                     <button type="submit" className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }} onClick={this.addNewSprint.bind(this)}>Save</button>

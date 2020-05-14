@@ -14,7 +14,7 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<SprintDAL> GetAll()
         {
-            return _dbContext.Sprints.Include("Status").AsQueryable();
+            return _dbContext.Sprints.Include(c => c.Status).Include(x => x.Team).AsQueryable();
         }
 
         public override SprintDAL GetByID(int id)

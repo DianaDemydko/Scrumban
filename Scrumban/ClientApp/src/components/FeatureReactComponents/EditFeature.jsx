@@ -17,7 +17,9 @@ export class EditFeature extends Component {
             priorities: [], 
             allStates: [], 
             allStories: [], 
-            allStoriesStated:[]
+            allStoriesStated: [],
+            userId: this.props.featuretoEdit.userId,
+            user: []
         };
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
@@ -27,6 +29,7 @@ export class EditFeature extends Component {
         this.onStateChanged = this.onStateChanged.bind(this);
         this.onStoriesChanged = this.onStoriesChanged.bind(this);
         this.onCancel = this.onCancel.bind(this);
+        this.onOwnerChange = this.onOwnerChange.bind(this);
     }
 
     getStatedStories() {
@@ -44,6 +47,15 @@ export class EditFeature extends Component {
             }
         });
         return array;
+    }
+
+    onOwnerChange(e) {
+        if (e.target.value === 'None') {
+            this.setState({ userId: null, user: [] });
+        } else {
+            var user = this.props.users.filter(item => item.id === parseInt(e.target.value))[0];
+            this.setState({ userId: e.target.value, user: user });
+        }
     }
 
     getFeatureStories() {
@@ -112,12 +124,15 @@ export class EditFeature extends Component {
          fetch('api/FeatureData/Put', {
             method: 'post',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                id: this.props.featuretoEdit.id, name: this.state.name,
+             body: JSON.stringify({
+                id: this.props.featuretoEdit.id,
+                name: this.state.name,
                 description: this.state.description,
                 priorityID: this.state.priorityID,
                 time: this.state.date,
-                stateID: this.state.stateID, stories: this.state.stories
+                stateID: this.state.stateID,
+                stories: this.state.stories,
+                userId: this.state.userId
             })
         }).then(function (response) {
             let responseStatus = response.status
@@ -159,6 +174,22 @@ export class EditFeature extends Component {
                         {this.state.allStates.map(state => (
                             <option>{state.name}
                             </option>))}
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <label for="state">Owner</label>
+                    <select onChange={this.onOwnerChange} class="btn btn-light m-0" id="state">
+                        <option>None</option>
+                        {this.props.users.map((item) => {
+                            if (item.id === this.props.featuretoEdit.userId) {
+                                return (<option value={item.id} selected>{`${item.firstName}  ${item.surname}`}</option>)
+                            } else {
+                                return (<option value={item.id}>{`${item.firstName}  ${item.surname}`}</option>)
+                            }
+                        }
+                        )}
                     </select>
                 </div>
             </td>

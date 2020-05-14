@@ -30,7 +30,8 @@ export class FeatureTable extends Component {
             },
             showFilters: false,
 
-            pageOfItems: []
+            pageOfItems: [],
+            users: []
         };
 
         this.showFilters = this.showFilters.bind(this);
@@ -41,6 +42,51 @@ export class FeatureTable extends Component {
         this.loadData = this.loadData.bind(this);
         this.onEditItem = this.onEditItem.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
+    }
+
+    fetchUsers() {
+
+        fetch('/api/users/getUsers', {
+
+            meethod: "get",
+
+            headers: {
+
+                'Content-Type': 'application/json',
+
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+
+            }
+
+        })
+
+            .then(function (response) {
+
+                if (response.status == 200) {
+
+                    return response.json()
+
+                }
+
+                else if (response.status == 401) {
+
+                    alert("Not Authorized")
+
+                    window.location.replace("/login");
+
+                }
+
+                else {
+
+                    alert("ERROR ! " + response.status)
+
+                }
+
+            })
+
+            .then(data => this.setState({ users: data }))
+
     }
 
     onChangePage(pageOfItems) {
@@ -156,6 +202,7 @@ export class FeatureTable extends Component {
 
     componentDidMount() {
         this.loadData("");
+        this.fetchUsers();
     }
     loadData(query) {
         fetch('api/FeatureData/Get' + query)
@@ -205,6 +252,9 @@ export class FeatureTable extends Component {
                             <th class="col" onClick={() => this.sortData('state')}>
                                 State {this.renderCaret('state')}
                             </th>
+                            <th class="col">
+                                Owner
+                            </th>
                             <th class="col" onClick={() => this.sortData('priority')}>
                                 Priority {this.renderCaret('priority')}
                             </th>
@@ -219,7 +269,7 @@ export class FeatureTable extends Component {
                     <tbody>
                     {(this.state.pageOfItems.length > 0)//pageOfItems
                             ? this.state.pageOfItems.map((feature) => {
-                                return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} />
+                                return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} users={this.state.users} />
                             }
                             ) :
                             (<tbody>

@@ -20,7 +20,9 @@ export class StoryEdit extends React.Component {
             sprint: " ",
             featureId: this.props.item.featureId,
             featureName: '',
-            allFeatures: []
+            allFeatures: [],
+            user: [],
+            userId: ""
         };
 
 		this.onNameChanged = this.onNameChanged.bind(this);
@@ -33,8 +35,17 @@ export class StoryEdit extends React.Component {
         this.getFeatureName = this.getFeatureName.bind(this);
         this.getAllFeatures = this.getAllFeatures.bind(this);
         this.onFeatureChanged = this.onFeatureChanged.bind(this);
+        this.onOwnerChange = this.onOwnerChange.bind(this);
     }
 
+    onOwnerChange(e) {
+        if (e.target.value === 'None') {
+            this.setState({ userId: null, user: [] });
+        } else {
+            var user = this.props.users.filter(item => item.id === parseInt(e.target.value))[0];
+            this.setState({ userId: e.target.value, user: user });
+        }
+    }
 
     onFeatureChanged(e) {
         this.setState({ featureId: e.target.value });
@@ -110,7 +121,8 @@ export class StoryEdit extends React.Component {
                     storyState: story.storyState,
                     rank: story.rank,
                     sprint_id: story.sprint_id,
-                    featureId: story.featureId
+                    featureId: story.featureId,
+                    userId: story.userId
                 })
             }).then(function (response) {
                 let responseStatus = response.status
@@ -143,6 +155,7 @@ export class StoryEdit extends React.Component {
         var rank = this.state.rank;
         var sprintId = 1;
         var featureId = this.state.featureId;
+        var userId = this.state.userId;
         if (check === false) {
             sprintId = this.state.allSprints[0].sprint_id;
         }
@@ -150,11 +163,11 @@ export class StoryEdit extends React.Component {
             check = false;
             sprintId = this.state.allSprints.find(x => x.name === this.state.sprint).sprint_id;
         }
-        let story = { id: this.props.item.story_id, name: storyName, description: storyDescription, storyPoints: storyPoints, storyState: storyState, rank: rank, sprint_id: sprintId, featureId: featureId };
+        let story = { id: this.props.item.story_id, name: storyName, description: storyDescription, storyPoints: storyPoints, storyState: storyState, rank: rank, sprint_id: sprintId, featureId: featureId, userId: userId };
         this.onUpdate(story);
-        this.setState({ name: "", description: "", storyPoints: "", storyState: "", rank: " ", sprintId: " ", sprint: " ", featureId: " " });
+        this.setState({ name: "", description: "", storyPoints: "", storyState: "", rank: " ", sprintId: " ", sprint: " ", featureId: " ", userId: "" });
         this.props.edit();
-        var callBackstory = { id: this.props.item.story_id, name: this.state.name, description: this.state.description, storyPoints: this.state.storyPoints, storyState: this.state.storyState, rank: this.state.rank, sprint_id: this.state.sprintId, featureId: this.state.featureId };
+        var callBackstory = { id: this.props.item.story_id, name: this.state.name, description: this.state.description, storyPoints: this.state.storyPoints, storyState: this.state.storyState, rank: this.state.rank, sprint_id: this.state.sprintId, featureId: this.state.featureId, userId: userId, user: this.state.user };
 		this.props.changed(callBackstory);
 
 	}
@@ -180,6 +193,22 @@ export class StoryEdit extends React.Component {
 					<div >
 							<label for="description">Description</label>
                             <input type="text" class="form-control" onChange={this.onDescriptionChanged} id="description" placeholder="story description" defaultValue={this.props.item.description} />
+                </div>
+            </td>
+            <td>
+                <div>
+                    <label for="state">Owner</label>
+                    <select onChange={this.onOwnerChange} class="btn btn-light m-0" id="state">
+                        <option>None</option>
+                        {this.props.users.map((item) => {
+                            if (item.id === this.props.item.userId) {
+                                return (<option value={item.id} selected>{`${item.firstName}  ${item.surname}`}</option>)
+                            } else {
+                                return (<option value={item.id}>{`${item.firstName}  ${item.surname}`}</option>)
+                            }
+                        }
+                        )}
+                    </select>
                 </div>
             </td>
             <td>

@@ -440,7 +440,7 @@ export class TaskAdd extends React.Component {
 
                     <label for="name" className="col-2 mr-10">Name: </label>
 
-                    <input type="text" className="inputAdd" onChange={this.onNameChanged} id="name" placeholder="task name" autoComplete="false" />
+                    <input type="text" className="inputAdd" onChange={this.onNameChanged} id="name" placeholder="Name..." autoComplete="false" />
 
                 </div>
 
@@ -450,7 +450,7 @@ export class TaskAdd extends React.Component {
 
                     <label for="description" className="col-2 mr-10">Description: </label>
 
-                    <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="task description" />
+                    <textarea rows="3" className="inputAdd" onChange={this.onDescriptionChanged} id="description" placeholder="Description..." />
 
                 </div>
 
@@ -507,6 +507,7 @@ export class TaskAdd extends React.Component {
                         id="finishDate"
 
                         className="datePickerStyle btn btn-sm btn-outline-secondary"
+                        className="datePickerStyle btn btn-sm btn-outline-secondary"
 
                     />
 
@@ -518,7 +519,7 @@ export class TaskAdd extends React.Component {
 
                     <label for="priorityName" className="col-2 mr-10">Priority: </label>
 
-                    <select class="btn btn-light dropdown-toggle w-25" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
+                    <select style={{ 'margin-top': '0px' }} className="btn btn-light dropdown-toggle w-25" id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority">
 
                         {priorityTable.map((item) => <option>{item.name}</option>)}
 
@@ -530,7 +531,7 @@ export class TaskAdd extends React.Component {
 
                     <label for="taskStateName" className="col-2 mr-10">State: </label>
 
-                    <select class="btn btn-light dropdown-toggle w-25" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
+                    <select style={{ 'margin-top': '0px' }} class="btn btn-light dropdown-toggle w-25" id="taskStateName" onChange={this.onStateChanged} placeholder="task state">
 
                         {stateTable.map((item) => <option>{item.name}</option>)}
 
@@ -540,11 +541,11 @@ export class TaskAdd extends React.Component {
 
                 <div className="addContent">
 
-                    <label for="userAssign" className="col-2 mr-10">Assign to: </label>
+                    <label for="userAssign" className="col-2 mr-10">Owner: </label>
 
-                    <select class="btn btn-light dropdown-toggle w-25" id="userAssign" onChange={this.onUserChanged} placeholder="">
+                    <select style={{ 'margin-top': '0px' }} class="btn btn-light dropdown-toggle w-25" id="userAssign" onChange={this.onUserChanged} placeholder="">
 
-                        <option>Nobody</option>
+                        <option>None</option>
 
                         {this.state.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
 
@@ -556,9 +557,9 @@ export class TaskAdd extends React.Component {
 
                     <label for="story" className="col-2 mr-10">Story: </label>
 
-                    <select class="btn btn-light dropdown-toggle w-25" id="story" onChange={this.onStoryChanged} placeholder="">
+                    <select style={{ 'margin-top': '0px' }} class="btn btn-light dropdown-toggle w-25" id="story" onChange={this.onStoryChanged} placeholder="">
 
-                        <option>Independent</option>
+                        <option>None</option>
 
                         {this.state.stories.map((item) => <option>{item.name}</option>)}
 

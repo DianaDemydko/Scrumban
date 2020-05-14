@@ -52,7 +52,8 @@ namespace Scrumban.ServiceLayer.Services
                 OwnerID = feature.OwnerID,
                 Owner = feature.Owner,
                 PriorityID = feature.PriorityID,
-                Time = feature.Time
+                Time = feature.Time,
+                UserId = feature.UserId
 
             });
             _unitOfWork.Save();
@@ -70,7 +71,8 @@ namespace Scrumban.ServiceLayer.Services
                 OwnerID = feature.OwnerID,
                 Owner = feature.Owner,
                 PriorityID = feature.PriorityID,
-                Time = feature.Time
+                Time = feature.Time,
+                UserId = feature.UserId
             });
             _unitOfWork.Save();
         }

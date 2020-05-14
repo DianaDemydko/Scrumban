@@ -18,7 +18,21 @@ export class SprintEditForm extends React.Component {
         this.onStatusChanged = this.onStatusChanged.bind(this)
 
 
-        this.onUpdatingSprint = this.onUpdatingSprint.bind(this)
+        this.onUpdatingSprint = this.onUpdatingSprint.bind(this);
+        this.onTeamChanged = this.onTeamChanged.bind(this);
+    }
+
+    onTeamChanged(e) {
+        debugger
+        let sprint = { ...this.state.sprint }
+        var teamId = e.target.value;
+        var teamName = e.target.selectedOptions[0].text;
+        if (e.target.value === "None") {
+            teamId = null;
+        }
+        sprint.teamId = teamId;
+        sprint.team = teamName;
+        this.setState({ sprint: sprint })
     }
 
     onStartDateChanged(startDate) {
@@ -136,6 +150,22 @@ export class SprintEditForm extends React.Component {
                         <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onStatusChanged} defaultValue={this.state.sprint.sprintStatus}>
                                 {this.state.statuses.map(status => <option value={status.sprintStatus}>{status.sprintStatus}</option>)}
                             </select>
+                    </div>
+                </td> 
+                <td>
+                    <div >
+                        <label>Team</label>
+                        <select class="btn btn-light dropdown-toggle w-100 m-0" onChange={this.onTeamChanged}>
+                            <option>None</option>
+                            {this.props.teams.map(team => {
+                                if (team.teamID === this.state.sprint.teamId) {
+                                    return <option value={team.teamID} selected>{team.name}</option>
+                                } else {
+                                    return <option value={team.teamID}>{team.name}</option>
+                                }
+                            }
+                                )}
+                        </select>
                     </div>
                 </td> 
                 <td>

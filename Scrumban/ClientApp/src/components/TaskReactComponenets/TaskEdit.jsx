@@ -153,9 +153,9 @@ export class TaskEdit extends React.Component {
 
     onUserChanged(e) {
 
-        if (e.target.value === "--Nobody--") {
+        if (e.target.value === "None") {
 
-
+            this.setState({ userId: null});
 
         }
 
@@ -175,9 +175,9 @@ export class TaskEdit extends React.Component {
 
     onStoryChanged(e) {
 
-        if (e.target.value === "--Independent--") {
+        if (e.target.value === "None") {
 
-
+            this.setState({ storyId: null });
 
         }
 
@@ -497,11 +497,11 @@ export class TaskEdit extends React.Component {
 
                     <div>
 
-                        <label for="userAssign">Assign to</label>
+                        <label for="userAssign">Owner</label>
 
                     <select class="form-control form-control-sm m-0"  id="userAssign" onChange={this.onUserChanged} placeholder="" defaultValue={user_name} >
 
-                            <option>--Nobody--</option>
+                            <option>None</option>
 
                             {this.props.users.map((item) => <option>{item.firstName} {item.surname}</option>)}
 
@@ -519,7 +519,7 @@ export class TaskEdit extends React.Component {
 
                         <select class="form-control form-control-sm m-0" id="userAssign" onChange={this.onStoryChanged} placeholder="" defaultValue={story_name}>
 
-                            <option>--Independent--</option>
+                            <option>None</option>
 
                             {this.props.stories.map((item) => <option>{item.name}</option>)}
 

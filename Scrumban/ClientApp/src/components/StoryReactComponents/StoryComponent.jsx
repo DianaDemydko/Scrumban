@@ -39,8 +39,8 @@ export class StoryComponent extends React.Component {
     render() {
         const isEdit = this.state.states;
         return (isEdit ?
-            (<StoryPrint item={this.state.data}  edit={this.onEditStory} delete={this.onRemoveStory} moveToComponent={this.props.moveToComponent} />)
-            : (<StoryEdit item={this.state.data} edit={this.onEditStory} delete={this.onRemoveStory} changed={this.onChangedEditStory} moveToComponent={this.props.moveToComponent}/>)
+            (<StoryPrint item={this.state.data} edit={this.onEditStory} delete={this.onRemoveStory} moveToComponent={this.props.moveToComponent} users={this.props.users}/>)
+            : (<StoryEdit item={this.state.data} edit={this.onEditStory} delete={this.onRemoveStory} changed={this.onChangedEditStory} users={this.props.users} moveToComponent={this.props.moveToComponent}/>)
                 
         )
     }
