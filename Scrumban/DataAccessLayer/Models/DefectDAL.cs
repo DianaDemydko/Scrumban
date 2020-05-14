@@ -21,5 +21,8 @@ namespace Scrumban.DataAccessLayer.Models
         public int? StoryId { get; set; }
 
         public string Status { get; set; }
+
+        public int? UserId { get; set; }
+        public UsersDAL User { get; set; }
     }
 }

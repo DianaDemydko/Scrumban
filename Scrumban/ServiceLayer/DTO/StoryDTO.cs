@@ -14,5 +14,8 @@ namespace Scrumban.ServiceLayer.DTO
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? FeatureId { get; set; }
+
+        public int? UserId { get; set; }
+        public UserDTO User { get; set; }
     }
 }

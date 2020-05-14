@@ -2,6 +2,7 @@
 using Scrumban.DataAccessLayer.Models;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Scrumban.DataAccessLayer.Repositories
 {
@@ -10,6 +11,10 @@ namespace Scrumban.DataAccessLayer.Repositories
        
         public DefectRepository(ScrumbanContext context) : base(context)
         {
+        }
+        public override IQueryable<DefectDAL> GetAll()
+        {
+            return _dbContext.Defects.Include(x => x.User).ThenInclude(c => c.Picture).AsQueryable();
         }
         public override void Create(DefectDAL defect)
         {
@@ -67,6 +72,7 @@ namespace Scrumban.DataAccessLayer.Repositories
                     defect.Priority = item.Priority;
                     defect.Status = item.Status;
                     defect.StoryId = item.StoryId;
+                    defect.UserId = item.UserId;
                     transaction.Commit();
                 }
                 catch (Exception ex)

@@ -21,5 +21,8 @@ namespace Scrumban.ServiceLayer.DTO
 
         public List<StoryDTO> Stories { set; get; }
         public DateTime Time { set; get; }
+
+        public int? UserId { get; set; }
+        public UserDTO User { get; set; }
     }
 }

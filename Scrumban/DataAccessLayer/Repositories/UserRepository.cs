@@ -17,7 +17,7 @@ namespace Scrumban.DataAccessLayer.Repositories
         {
             try
             {
-                return _dbContext.Users.Include(x => x.Role).Include(c => c.Team).AsQueryable();
+                return _dbContext.Users.Include(x => x.Role).Include(c => c.Team).Include(f => f.Picture).AsQueryable();
             }
             catch
             {

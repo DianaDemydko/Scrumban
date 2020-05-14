@@ -24,6 +24,9 @@ namespace Scrumban.DataAccessLayer.Models
         public List<StoryDAL> Stories { set; get; }
         public DateTime Time { set; get; }
 
+        public int? UserId { get; set; }
+        public UsersDAL User { get; set; }
+
     }
 
 }

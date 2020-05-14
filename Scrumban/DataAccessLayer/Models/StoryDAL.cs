@@ -34,5 +34,8 @@ namespace Scrumban.DataAccessLayer.Models
 
         public int? FeatureId { get; set; }
         public FeatureDAL Feature { get; set; }
+
+        public int? UserId { get; set; }
+        public UsersDAL User { get; set; }
     }
 }

@@ -13,5 +13,8 @@ namespace Scrumban.ServiceLayer.DTO
         public int? StoryId { get; set; }
    
         public string Status { get; set; }
+
+        public int? UserId { get; set; }
+        public UserDTO User { get; set; }
     }
 }

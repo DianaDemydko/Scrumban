@@ -24,7 +24,8 @@ export class DefectGrid extends React.Component {
                 sortingOrder: ''
             },
 
-            showFilters: false
+            showFilters: false,
+            users: []
         };
         this.showFilters = this.showFilters.bind(this);
         this.loadData = this.loadData.bind(this);
@@ -36,6 +37,7 @@ export class DefectGrid extends React.Component {
 
         //pagination
         this.onChangePage = this.onChangePage.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
     }
 
     showFilters(param) {
@@ -44,6 +46,7 @@ export class DefectGrid extends React.Component {
 
     onChangePage(pageOfItems) {
         // update state with new page of items
+
         this.setState({
             pageOfItems: pageOfItems
         });
@@ -120,6 +123,51 @@ export class DefectGrid extends React.Component {
 
     componentDidMount() {
         this.loadData("");
+        this.fetchUsers();
+    }
+
+    fetchUsers() {
+
+        fetch('/api/users/getUsers', {
+
+            meethod: "get",
+
+            headers: {
+
+                'Content-Type': 'application/json',
+
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+
+            }
+
+        })
+
+            .then(function (response) {
+
+                if (response.status == 200) {
+
+                    return response.json()
+
+                }
+
+                else if (response.status == 401) {
+
+                    alert("Not Authorized")
+
+                    window.location.replace("/login");
+
+                }
+
+                else {
+
+                    alert("ERROR ! " + response.status)
+
+                }
+
+            })
+
+            .then(data => this.setState({ users: data }))
+
     }
 
     loadData(query) {
@@ -211,6 +259,7 @@ export class DefectGrid extends React.Component {
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description {this.renderCaret('description')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }}> Owner</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
                             <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> Story {this.renderCaret('storyId')}</th>
@@ -224,8 +273,8 @@ export class DefectGrid extends React.Component {
 
                 {(this.state.pageOfItems.length > 0)//pageOfItems
                     ? this.state.pageOfItems.map((defect) => {//pageOfItems
-                       
-                            return <DefectRow key={defect.defectId} defect={defect} onRemove={remove} onChanged={changed} loadData={this.loadData} />
+
+                            return <DefectRow key={defect.defectId} defect={defect} onRemove={this.onRemoveDefect} onChanged={changed} loadData={this.loadData} users={this.state.users} />
                         })
                     : (<tbody>
                             <td>

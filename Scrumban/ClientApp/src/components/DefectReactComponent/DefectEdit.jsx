@@ -23,7 +23,9 @@ export class DefectEdit extends React.Component {
             storyId: this.props.item.storyId,
             status: this.props.item.status,
             storyName: '', 
-            storyOptions: []
+            storyOptions: [],
+            userId: this.props.item.userId,
+            user: []
         };
 
         this.onNameChange = this.onNameChange.bind(this);
@@ -37,11 +39,21 @@ export class DefectEdit extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.getStoryName = this.getStoryName.bind(this);
         this.getAllStories = this.getAllStories.bind(this);
+        this.onOwnerChange = this.onOwnerChange.bind(this);
     }
 
     componentDidMount() {
         this.getAllStories();
         this.getStoryName();
+    }
+
+    onOwnerChange(e) {
+        if (e.target.value === 'None') {
+            this.setState({ userId: null, user: [] });
+        } else {
+            var user = this.props.users.filter(item => item.id === parseInt(e.target.value))[0];
+            this.setState({ userId: e.target.value, user: user });
+        }
     }
 
     getStoryName() {
@@ -114,7 +126,8 @@ export class DefectEdit extends React.Component {
             "priority": defect.priority,
             "severity": defect.severity,
             "storyId": defect.storyId,
-            "status": defect.status
+            "status": defect.status,
+            "userId": defect.userId
         });
         var loadDataVar = this.props.loadData;
 
@@ -159,14 +172,15 @@ export class DefectEdit extends React.Component {
         var defectPriority = priorityOption.find(x => x.name === this.state.priority).name;
         var defectSeverity = severityOption.find(x => x.name === this.state.severity).name;
         var defectStoryId = this.state.storyId;
-        let defect = { defectId: this.props.item.defectId, name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
+        var userId = this.state.userId;
+        let defect = { defectId: this.props.item.defectId, name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus, userId: userId };
         this.onUpdate(defect);
 
-        this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
+        this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "", userId: "" });
         this.props.editDefect();
 
-       
-        var callBackDefect = { defectId: this.props.item.defectId, name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
+
+        var callBackDefect = { defectId: this.props.item.defectId, name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus, userId: userId, user: this.state.user };
         this.props.changed(callBackDefect);
     }
 
@@ -206,6 +220,22 @@ export class DefectEdit extends React.Component {
                     </select>
                 </div>
             </td>
+            <td>
+            <div>
+                <label for="state">Owner</label>
+                <select onChange={this.onOwnerChange} class="btn btn-light m-0" id="state">
+                    <option>None</option>
+                    {this.props.users.map((item) => {
+                        if (item.id === this.props.item.userId) {
+                           return( <option value={item.id} selected>{`${item.firstName}  ${item.surname}`}</option>)
+                        } else {
+                           return ( <option value={item.id}>{`${item.firstName}  ${item.surname}`}</option> )
+                        }
+                        }
+                    )}
+                </select>
+                </div>
+            </td>
             <td> 
                 <div>
                         <label for="priority">Priority</label>
@@ -225,9 +255,16 @@ export class DefectEdit extends React.Component {
             <td>
                 <div>
                     <label for="story">Story</label>
-                    <select onChange={this.onStoryIdChange} class="btn btn-light m-0" id="priority" defaultValue={this.state.storyName} >
+                    <select onChange={this.onStoryIdChange} class="btn btn-light m-0" id="priority">
                         <option>None</option>
-                        {this.state.storyOptions.map((item) => <option value={item.story_id} >{item.name}</option>)}
+                        {this.state.storyOptions.map((item) => {
+                            if (item.name === this.state.storyName) {
+                               return( <option value={item.story_id} selected>{item.name}</option> )
+                            } else {
+                               return ( <option value={item.story_id} >{item.name}</option> )
+                            }
+                        })
+                        }
                     </select>
                 </div>
             </td>

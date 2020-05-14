@@ -22,5 +22,8 @@ namespace Scrumban.DataAccessLayer.Models
         public int SprintStatus_id { get; set; }
         
         public virtual SprintStatusDAL Status { get; set; }
+
+        public int? TeamId { get; set; }
+        public TeamDAL Team { get; set; }
     }
 }

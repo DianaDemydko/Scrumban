@@ -22,7 +22,10 @@ export class DefectAdd extends React.Component {
             severity: severityOption[0].name,
             storyId: "",
             status: statusOption[0].name,
-            storyOptions: []
+            storyOptions: [],
+            users: [],
+            userId: "",
+            user: []
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -34,9 +37,55 @@ export class DefectAdd extends React.Component {
         this.onStoryIdChange = this.onStoryIdChange.bind(this);
         this.onStatusChange = this.onStatusChange.bind(this);
         this.getAllStories = this.getAllStories.bind(this);
+        this.fetchUsers = this.fetchUsers.bind(this);
+        this.onOwnerChange = this.onOwnerChange.bind(this);
+    }
+    fetchUsers() {
+
+        fetch('/api/users/getUsers', {
+
+            meethod: "get",
+
+            headers: {
+
+                'Content-Type': 'application/json',
+
+                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+
+            }
+
+        })
+
+            .then(function (response) {
+
+                if (response.status == 200) {
+
+                    return response.json()
+
+                }
+
+                else if (response.status == 401) {
+
+                    alert("Not Authorized")
+
+                    window.location.replace("/login");
+
+                }
+
+                else {
+
+                    alert("ERROR ! " + response.status)
+
+                }
+
+            })
+
+            .then(data => this.setState({ users: data }))
+
     }
     componentDidMount() {
         this.getAllStories();
+        this.fetchUsers();
     }
     getAllStories() {
         fetch('api/Story/GetStories', {
@@ -55,6 +104,13 @@ export class DefectAdd extends React.Component {
                 }
             })
             .then(data => { this.setState({ storyOptions: data }) });
+    }
+    onOwnerChange(e) {
+        if (e.target.value === 'None') {
+            this.setState({ userId: null});
+        } else {
+            this.setState({ userId: e.target.value });
+        }
     }
     onNameChange(e) {
         this.setState({ name: e.target.value });
@@ -88,7 +144,8 @@ export class DefectAdd extends React.Component {
                 "priority": defect.priority,
                 "severity": defect.severity,
                 "storyId": defect.storyId,
-                "status": defect.status
+                "status": defect.status,
+                "userId": defect.userId
             });
 
             var moveToComponentVar = this.props.moveToComponent;
@@ -136,9 +193,10 @@ export class DefectAdd extends React.Component {
         var defectPriority = this.state.priority.trim();
         var defectSeverity = this.state.severity.trim();
         var defectStoryId = this.state.storyId.trim();
-        let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus };
+        var userId = this.state.userId;
+        let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus, userId: userId };
         this.onAddDefect(defect);
-        this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "" });
+        this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "", userId: "" });
 
     }
 
@@ -151,7 +209,7 @@ export class DefectAdd extends React.Component {
                     <label class="col-2 mr-10">Name: </label>
                     <input type="text"
                         className="inputAdd"
-                        placeholder="defect name"
+                        placeholder="Name..."
                         onChange={this.onNameChange}
                         id="name"
                         autoComplete="false" />
@@ -160,39 +218,46 @@ export class DefectAdd extends React.Component {
                     <label class="col-2 mr-10">Description: </label>
                     <textarea rows="3"
                         type="text"
-                        placeholder="defect description"
+                        placeholder="Description..."
                         onChange={this.onDescriptionChange}
                         className="inputAdd"
                         id="description" />
                 </div>
                 <div className="addContent">
                     <label class="col-2 mr-10">State: </label>
-                    <select onChange={this.onStateChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="state" defaultValue={stateOption[0].name}>
+                    <select onChange={this.onStateChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="State..." defaultValue={stateOption[0].name}>
                         {stateOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
+                    <label class="col-2 mr-10">Owner: </label>
+                    <select onChange={this.onOwnerChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="Owner...">
+                        <option>None</option>
+                        {this.state.users.map((item) => <option value={item.id}>{`${item.firstName}  ${item.surname}`}</option>)}
+                    </select>
+                </div>
+                <div className="addContent">
                     <label class="col-2 mr-10">Priority:</label>
-                    <select onChange={this.onPriorityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="priority" placeholder="priority" defaultValue={priorityOption[0].name}>
+                    <select onChange={this.onPriorityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="priority" placeholder="Priority..." defaultValue={priorityOption[0].name}>
                         {priorityOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
                     <label class="col-2 mr-10">Severity:</label>
-                    <select onChange={this.onSeverityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="severity" placeholder="severity" defaultValue={severityOption[0].name}>
+                    <select onChange={this.onSeverityChange} class="btn btn-light dropdown-toggle m-0 w-25" id="severity" placeholder="Severity..." defaultValue={severityOption[0].name}>
                         {severityOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
                     <label class="col-2 mr-10">Story: </label>
-                    <select onChange={this.onStoryIdChange} class="btn btn-light dropdown-toggle m-0 w-25" id="severity" placeholder="story">
+                    <select onChange={this.onStoryIdChange} class="btn btn-light dropdown-toggle m-0 w-25" id="severity" placeholder="Story...">
                         <option>None</option>
                         {this.state.storyOptions.map((item) => <option value={item.story_id}>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="addContent">
                     <label class="col-2 mr-10">Status: </label>
-                    <select onChange={this.onStatusChange} class="btn btn-light dropdown-toggle m-0 w-25" id="status" placeholder="status" defaultValue={statusOption[0].name}>
+                    <select onChange={this.onStatusChange} class="btn btn-light dropdown-toggle m-0 w-25" id="status" placeholder="Status..." defaultValue={statusOption[0].name}>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
