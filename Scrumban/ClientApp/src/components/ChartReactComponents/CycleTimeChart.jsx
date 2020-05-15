@@ -130,6 +130,8 @@ export class CycleTimeChart extends React.Component {
             ]
         }
         const optionsCycleTime = {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -165,8 +167,10 @@ export class CycleTimeChart extends React.Component {
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                 </select>
-                <h3 className='header'>Cycle Time</h3>
-                <Bar data={dataCycleTime} options={optionsCycleTime} />
+                    <h3 className='header'>Cycle Time</h3>
+                    <div>
+                        <Bar data={dataCycleTime} options={optionsCycleTime} />
+                    </div>
                 </div>
             </div>
             );

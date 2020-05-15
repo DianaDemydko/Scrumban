@@ -2,11 +2,23 @@
 .centered {
 margin-left: 5%;
 }
-select {
-    width: 100%;
-    margin-top: 30px;
-}
+    
 h3.header{
     text-align: center;
     padding:0;
+}
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    margin-left: 100px;
+    margin-top: 60px;
+}
+.chart {
+    display: flex;
+    flex-direction: column;
+}
+
+#burn-up canvas {
+    width: 600px !important;
+    height: 300px !important;
 }

@@ -77,6 +77,20 @@ export class JiraPage extends React.Component {
                 </div>
                 <br />
                 <FormGroup controlId="username" bsSize="large">
+                    <ControlLabel>URL to Enviroment</ControlLabel>
+                    <FormControl
+                        autoFocus
+                        type="text"
+                    />
+                </FormGroup>
+                <FormGroup controlId="username" bsSize="large">
+                    <ControlLabel>Project Name</ControlLabel>
+                    <FormControl
+                        autoFocus
+                        type="text"
+                    />
+                </FormGroup>
+                <FormGroup controlId="username" bsSize="large">
                     <ControlLabel>Email in Jira</ControlLabel>
                     <FormControl
                         autoFocus

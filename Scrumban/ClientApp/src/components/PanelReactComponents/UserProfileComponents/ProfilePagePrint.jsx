@@ -59,7 +59,7 @@ export class ProfilePagePrint extends Component {
 
             <div className="row justify-content-center">
                 <p>
-                    <button onClick={this.onClick} className="btn btn-outline-info">Edit</button>
+                    <button onClick={this.onClick} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
                 </p>
             </div>
         </div>

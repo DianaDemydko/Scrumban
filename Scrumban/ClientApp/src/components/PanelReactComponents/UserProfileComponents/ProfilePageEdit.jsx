@@ -282,7 +282,7 @@ export class ProfilePageEdit extends Component {
                         <small>.png, .jpg, .jpeg, .img</small>
                     </div>
                     <div className="row justify-content-center">
-                        <label for="file-upload" className="btn btn-outline-info"> Upload Picture </label>
+                        <label for="file-upload" className="btn btn-sm btn-outline-dark w-100 m-1"> Upload Picture </label>
                         <input id="file-upload" type="file" onChange={this.onFileChanged} hidden accept=".png, .jpg, .jpeg, .img"/>
                     </div>
                 </div>
@@ -388,8 +388,8 @@ export class ProfilePageEdit extends Component {
                     <br />
                     <br />
                     <div className="row">
-                            <button onClick={this.onClick} className="btn btn-outline-info button-fixed">Save</button>
-                            <button onClick={() => this.props.onPrintOrEdit("true")} className="btn btn-outline-info button-fixed">Cancel</button>
+                        <button onClick={this.onClick} className="btn btn-sm btn-outline-dark m-1">Save</button>
+                        <button onClick={() => this.props.onPrintOrEdit("true")} className="btn btn-sm btn-outline-dark m-1">Cancel</button>
                     </div>
                 </div>
             </div>
