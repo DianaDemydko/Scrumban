@@ -35,8 +35,9 @@ export class TeamEdit extends Component {
             }
 
             });
-        this.props.onStateUpdating(false);
         this.props.loadData();
+        this.props.onStateUpdating(false);
+
     }
 
     onCancel() {

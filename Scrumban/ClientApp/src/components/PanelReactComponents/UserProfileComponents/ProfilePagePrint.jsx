@@ -54,14 +54,13 @@ export class ProfilePagePrint extends Component {
                         <div className="col-4"> Credentials: </div>
                         <div className="col-6"> {this.props.role.name} </div>
                     </div>
+                    <div className="row justify-content-start">
+                        <button onClick={this.onClick} className="btn btn-sm btn-outline-dark" style={{'width': '40%', 'margin-left': '100px', 'margin-top': '20px'}}>Edit</button>
+                </div>
                 </div>
             </div>
 
-            <div className="row justify-content-center">
-                <p>
-                    <button onClick={this.onClick} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
-                </p>
-            </div>
+            
         </div>
     }
 }

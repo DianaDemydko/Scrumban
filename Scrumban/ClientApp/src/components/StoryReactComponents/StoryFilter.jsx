@@ -17,6 +17,8 @@ export class StoryFilter extends React.Component {
             storyState:"",
             sprint_id: '',
             allSprints: [],
+            allFeatures: [],
+            featureId: ''
         }
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onDescriptionChanged = this.onDescriptionChanged.bind(this);
@@ -26,6 +28,7 @@ export class StoryFilter extends React.Component {
         this.onCancelFilter = this.onCancelFilter.bind(this);
         this.onRankChanged = this.onRankChanged.bind(this);
         this.onSprintChanged = this.onSprintChanged.bind(this);
+        this.onFeatureChanged = this.onFeatureChanged.bind(this);
     }
 
     onNameChanged(e) {
@@ -53,6 +56,14 @@ export class StoryFilter extends React.Component {
             this.setState({ sprint_id: i });
         }
     }
+    onFeatureChanged(e) {
+        if (e.target.value == "0") {
+            this.setState({ featureId: '' });
+        }
+        else {
+            this.setState({ featureId: e.target.value });
+        }
+    }
 
     onStateChanged(e) {
         this.setState({ storyState: e.target.value == "All" ? "" : e.target.value });
@@ -66,17 +77,14 @@ export class StoryFilter extends React.Component {
         if (this.state.description != "") {
             filter.push({ "tolower(Description)": { contains: this.state.description.toLowerCase() } })
         }
-        if (this.state.storyPoints != '') {
-            filter.push({ storyPoints: parseInt(this.state.storyPoints)})
-        }
-        if (this.state.rank != '') {
-            filter.push({ rank: parseInt(this.state.rank) })
-        }
         if (this.state.sprint_id != '') {
             filter.push({ sprint_id: parseInt(this.state.sprint_id) })
         }
         if (this.state.storyState != "") {
-            filter.push({ "storyState": this.state.storyState})
+            filter.push({ "tolower(StoryState)": { contains: this.state.storyState.toLowerCase() } })
+        }
+        if (this.state.featureId != "") {
+            filter.push({ featureId: parseInt(this.state.featureId) })
         }
         var query = buildQuery({ filter });
         this.props.changeFilter(query);
@@ -104,11 +112,23 @@ export class StoryFilter extends React.Component {
                 this.setState({ allSprints: data })
 
             });
+        fetch('api/FeatureData/Get')
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data != null) {
+                    this.setState({ allFeatures: data })
+                }
+            }
+            );
     }
 
     // render row
     render() {
-        return <div className='filterContainer' style={{ "height": "120px", marginLeft: '20px', marginRight: '20px' }}>
+        return <div className='filterContainer' style={{ "height": "80px", marginLeft: '20px', marginRight: '20px' }}>
             <div class="row filter-row-5">
                 <div class="col-sm">
                     <label for="inputTitle">Name</label>
@@ -120,19 +140,17 @@ export class StoryFilter extends React.Component {
                     <label for="exampleInputDescription">Description</label>
                 </div>
                 <div class="col-sm">
-                    <label for="storyPoints">Story points</label>
-                </div>
-                <div class="col-sm">
-                    <label for="rank">Rank</label>
+                    <label for="rank">Feature</label>
                 </div>
                 <div class="col-sm">
                     <label for="sprint">Sprint</label>
                 </div>
                 <div class="col-sm">{/*   */}</div>
+                <div class="col-sm">{/*   */}</div>
             </div>
             <div class="row filter-row-10">
                 <div class="col-sm">
-                    <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search" value={this.state.name} autocomplete="off" />
+                    <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search..." value={this.state.name} autocomplete="off" />
                 </div>
                 <div class="col-sm">
                     <select class="btn btn-light dropdown-toggle w-100 m-0" name="storyState" onChange={this.onStateChanged} value={this.state.storyState}>
@@ -141,15 +159,15 @@ export class StoryFilter extends React.Component {
                     </select>
                 </div>
                 <div class="col-sm">
-                    <input type="text" className="input" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder=" Search" value={this.state.description} autocomplete="off" />
+                    <input type="text" className="input" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder=" Search..." value={this.state.description} autocomplete="off" />
                 </div>
 
                 <div class="col-sm">
-                    <input type="text" className="input" onChange={this.onStoryPointsChanged} id="storyPoints" placeholder=" Search" value={this.state.storyPoints} autocomplete="off" />
-                </div>
-
-                <div class="col-sm">
-                    <input type="text" className="input" onChange={this.onRankChanged} id="rank" placeholder=" Search" value={this.state.rank} autocomplete="off" />
+                    <select class="btn btn-light dropdown-toggle w-100 m-0" name="features" onChange={e => this.onFeatureChanged(e)}  >
+                        <option value="0">All</option>
+                        {this.state.allFeatures.map(feature => (
+                            <option value={feature.id}> {feature.name}</option>))}
+                    </select>
                 </div>
                
 
@@ -161,8 +179,10 @@ export class StoryFilter extends React.Component {
                     </select>
                 </div>
                 <div class="col-sm" >
-                    <button type="submit" onClick={this.onSetFilter} className="btn apply-filters w-100 m-1">Filter</button>
-                    <button type="submit" onClick={this.onCancelFilter} className="btn cancel-filter w-100 m-1">Clear</button>
+                    <button type="submit" onClick={this.onSetFilter} className="btn apply-filters w-100">Filter</button>
+                </div>
+                <div class="col-sm" >
+                    <button type="submit" onClick={this.onCancelFilter} className="btn cancel-filter w-100">Clear</button>
                 </div>
             </div>
 

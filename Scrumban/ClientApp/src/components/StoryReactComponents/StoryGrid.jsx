@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import '../../GridStyles/StyleForGrid.css';
 import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
+import Spinner from 'react-bootstrap/Spinner'
+
 // const
 const icon_up = require("../FeatureReactComponents/sort-arrow-up.svg")
 const icon_down = require("../FeatureReactComponents/sort-arrow-down.svg")
@@ -31,7 +33,8 @@ export class StoryGrid extends React.Component {
             },
             showFilters: false,
             pageOfItems: [],
-            users: []
+            users: [],
+            loading: true
         };
 
         this.showFilters = this.showFilters.bind(this);
@@ -270,6 +273,7 @@ export class StoryGrid extends React.Component {
         this.fetchUsers();
     }
     loadData(query) {
+        this.setState({ loading: true });
         fetch('api/Story/GetStories' + query, {
             method: "get",
             headers: {
@@ -291,8 +295,13 @@ export class StoryGrid extends React.Component {
             else {
                 alert("ERROR! Status code: " + response.status)
             }
-        }).then(data =>
-                this.setState({ stories: data })
+            }).then(data => {
+                if (data.length > 0) {
+                    this.setState({ stories: data, loading: false })
+                } else {
+                    this.setState({ stories: [], loading: false, pageOfItems: [] })
+                }
+            }
             );
     }
     startFiltration(filtrParam) {
@@ -315,35 +324,44 @@ export class StoryGrid extends React.Component {
             </div>
             <hr></hr>
             {this.state.showFilters ? <StoryFilter changeFilter={this.startFiltration} hideFilters={this.showFilters} /> : null}
-            <div className="tablePosition table-wrapper">
-                <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
-                    <thead>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}>Name{this.renderCaret('name')}</th>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}>State{this.renderCaret('state')}</th>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}>Description{this.renderCaret('description')}</th>
-                        <th className="col" style={{ cursor: 'pointer' }}> Owner</th>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('story_points')}>Story points{this.renderCaret('story_points')}</th>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('rank')}>Rank{this.renderCaret('rank')}</th>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('feature')}>Feature{this.renderCaret('feature')}</th>
-                        <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('sprint')}>Sprint{this.renderCaret('sprint')}</th>
-                        <th class="col"  />
-                    </thead>
-                    {(this.state.pageOfItems.length > 0)//pageOfItems
-                        ? this.state.pageOfItems.map((story) => {
-                            return <StoryComponent key={story.story_id} story={story} onRemove={remove} onChanged={changed} users={this.state.users} />
-                        }) : 
-                        (<tbody>
-                            <td>
-                                No results
+            {this.state.loading ? (
+                <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                    <Spinner animation="border" variant="warning" />
+                </div>
+            )
+                :
+                <div>
+                <div className="tablePosition table-wrapper">
+                    <table class="table table-striped" style={{ 'table-layout': 'fixed' }}>
+                        <thead>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}>Name{this.renderCaret('name')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}>State{this.renderCaret('state')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}>Description{this.renderCaret('description')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }}> Owner</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('story_points')}>Story points{this.renderCaret('story_points')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('rank')}>Rank{this.renderCaret('rank')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('feature')}>Feature{this.renderCaret('feature')}</th>
+                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('sprint')}>Sprint{this.renderCaret('sprint')}</th>
+                            <th class="col" />
+                        </thead>
+                        {(this.state.pageOfItems.length > 0)//pageOfItems
+                            ? this.state.pageOfItems.map((story) => {
+                                return <StoryComponent key={story.story_id} story={story} onRemove={remove} onChanged={changed} users={this.state.users} />
+                            }) :
+                            (<tbody>
+                                <td>
+                                    No results
                             </td>
-                        </tbody>)
+                            </tbody>)
                         }
-                </table>
-            </div>
-            <div>
-                <Pagination items={this.state.stories} onChangePage={this.onChangePage} />
-            </div>
-        </div>
-        );
-    }
+                    </table>
+                </div>
+                <div>
+                    <Pagination items={this.state.stories} onChangePage={this.onChangePage} />
+                    </div>
+                </div>
+                }
+        </div>  
+            );
+        }
 }

@@ -3,6 +3,7 @@
 import { Link } from 'react-router-dom'
 
 import DatePicker from 'react-datepicker'
+import { toast } from 'react-toastify';
 
 import { checkToken } from '../Helpers'
 
@@ -343,7 +344,7 @@ export class TaskAdd extends React.Component {
                 .then(function (response) {
 
                     if (response.status == 200) {
-
+                        toast.success("Task was creaated!");
 
                         moveToComponentVar("tasks")
 

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import "../../../index.css"
+import { toast } from 'react-toastify';
 
 const apiUrlEditUser = "/api/users/Edit";
 const apiUrlCheckUser = "/api/users/Check";
@@ -213,6 +214,7 @@ export class ProfilePageEdit extends Component {
             .then(data => {
                 this.props.updateUser(data)
                 this.props.onPrintOrEdit("true")
+                toast.success("Your profile was updated!")
             })
     }
 
@@ -240,7 +242,7 @@ export class ProfilePageEdit extends Component {
         })
             .then(function (response) {
                 if (response.status == 200) {
-                    return response.json();
+                    return response;
                 }
                 else if (response.status == 401) {
                     alert("You are not authenticated !  " + response.status)
@@ -253,10 +255,14 @@ export class ProfilePageEdit extends Component {
                 }
             })
             .then(data => {
-                if (data == true)
-                    { this.onUpdate() }
+                if (data.status == 200)
+                {
+
+                    this.onUpdate();
+
+                }
                 else
-                    { alert("Current password is not correct") }
+                { toast.error("Current password is not correct") }
             })
     }
 
@@ -388,8 +394,8 @@ export class ProfilePageEdit extends Component {
                     <br />
                     <br />
                     <div className="row">
-                        <button onClick={this.onClick} className="btn btn-sm btn-outline-dark m-1">Save</button>
-                        <button onClick={() => this.props.onPrintOrEdit("true")} className="btn btn-sm btn-outline-dark m-1">Cancel</button>
+                        <button onClick={this.onClick} className="btn btn-sm btn-outline-dark m-1" style={{ 'width': '170px' }}>Save</button>
+                        <button onClick={() => this.props.onPrintOrEdit("true")} style={{ 'width': '170px' }} className="btn btn-sm btn-outline-dark m-1">Cancel</button>
                     </div>
                 </div>
             </div>

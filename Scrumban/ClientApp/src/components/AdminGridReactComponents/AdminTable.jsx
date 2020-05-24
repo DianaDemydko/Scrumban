@@ -11,6 +11,7 @@ export class AdminTable extends Component {
             users: []
         };
         this.onEditUser = this.onEditUser.bind(this);
+        this.loadData = this.loadData.bind(this);
     }
     componentDidMount() {
         this.loadData();
@@ -43,11 +44,9 @@ export class AdminTable extends Component {
                 else {
                     alert("ERROR! Status code: " + response.status)
                 }
+            }).then(data => {
+                this.setState({ users: data });
             })
-            .then(data => {
-                this.setState({ users: data })
-             }
-            );
     }
 
 

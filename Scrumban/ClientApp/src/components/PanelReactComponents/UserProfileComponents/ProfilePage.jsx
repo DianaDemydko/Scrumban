@@ -19,6 +19,7 @@ export class ProfilePage extends Component {
         };
         
         this.onPrintOrEdit = this.onPrintOrEdit.bind(this);
+        this.updateUser = this.updateUser.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +29,9 @@ export class ProfilePage extends Component {
     onPrintOrEdit(param) {
         this.setState({printOrEdit : param})
     }
-
+    updateUser(data) {
+        this.setState({ user: data });
+    }
     render() {
 
         return <div style={{ "background-color": "#fff" }}>
@@ -48,7 +51,7 @@ export class ProfilePage extends Component {
                     picture={this.state.picture}
                     pictureUrl={this.state.pictureUrl}
                     onPrintOrEdit={this.onPrintOrEdit}
-                    updateUser={this.props.updateUser}
+                    updateUser={this.updateUser}
                 />)
             }
         </div>

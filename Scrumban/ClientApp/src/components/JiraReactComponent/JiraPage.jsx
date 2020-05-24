@@ -13,7 +13,7 @@ export class JiraPage extends React.Component {
         username: "",
         password: "",
         project: "",
-
+        url: "",
         errors: []
     };
     constructor(props) {
@@ -22,10 +22,7 @@ export class JiraPage extends React.Component {
         this.usernameChanged = this.usernameChanged.bind(this);
         this.passwordChanged = this.passwordChanged.bind(this);
         this.projectChanged = this.projectChanged.bind(this);
-    }
-
-    componentDidMount() {
-        //this.onFileChanged()
+        this.urlChanged = this.urlChanged.bind(this);
     }
 
     usernameChanged(e) {
@@ -37,7 +34,9 @@ export class JiraPage extends React.Component {
     projectChanged(e) {
         this.setState({ project: e.target.value })
     }
-    
+    urlChanged(e) {
+        this.setState({ url: e.target.value })
+    }
 
     handleSubmit(e) {
         toast.warn("Wait please!")
@@ -48,7 +47,8 @@ export class JiraPage extends React.Component {
             body: JSON.stringify({
                 username: this.state.username,
                 password: this.state.password,
-                project: this.state.project
+                project: this.state.project,
+                url: this.state.url
             })
 
         }).then(function (response) {
@@ -72,7 +72,7 @@ export class JiraPage extends React.Component {
         return (
             <div className="Login">
                 <br />
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" style={{ 'margin-left': '73px' }}>
                     <h2>Sync to Jira server</h2>
                 </div>
                 <br />
@@ -81,6 +81,7 @@ export class JiraPage extends React.Component {
                     <FormControl
                         autoFocus
                         type="text"
+                        onChange={e => this.urlChanged(e)}
                     />
                 </FormGroup>
                 <FormGroup controlId="username" bsSize="large">
@@ -88,6 +89,7 @@ export class JiraPage extends React.Component {
                     <FormControl
                         autoFocus
                         type="text"
+                        onChange={e => this.projectChanged(e)}
                     />
                 </FormGroup>
                 <FormGroup controlId="username" bsSize="large">

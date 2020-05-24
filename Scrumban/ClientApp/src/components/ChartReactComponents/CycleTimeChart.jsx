@@ -162,17 +162,17 @@ export class CycleTimeChart extends React.Component {
         return (
             <div className='container'>
                 <div className='centered'>
-                    <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)}>
+                    <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)} style={{ 'margin-left': '150px' }}>
                         <option>{NOT_SELECTED}</option>
-                    {this.state.allSprints.map(sprint => (
-                        <option> {sprint.name}</option>))}
-                </select>
+                        {this.state.allSprints.map(sprint => (
+                            <option> {sprint.name}</option>))}
+                    </select>
                     <h3 className='header'>Cycle Time</h3>
                     <div>
                         <Bar data={dataCycleTime} options={optionsCycleTime} />
                     </div>
                 </div>
             </div>
-            );
+        );
     }
 }

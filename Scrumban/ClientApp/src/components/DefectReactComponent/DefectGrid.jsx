@@ -6,6 +6,8 @@ import { checkToken } from '../Helpers';
 import { toast } from 'react-toastify';
 import '../../GridStyles/StyleForGrid.css';
 
+import Spinner from 'react-bootstrap/Spinner'
+
 const apiGetUrl = "/api/Defect/getDefects";
 const apiDeleteUrl = "/api/Defect/deleteDefect";
 
@@ -25,7 +27,8 @@ export class DefectGrid extends React.Component {
             },
 
             showFilters: false,
-            users: []
+            users: [],
+            loading: true
         };
         this.showFilters = this.showFilters.bind(this);
         this.loadData = this.loadData.bind(this);
@@ -171,6 +174,7 @@ export class DefectGrid extends React.Component {
     }
 
     loadData(query) {
+        this.setState({ loading: true });
         checkToken()
         fetch(apiGetUrl + query, {
             method: "get",
@@ -197,7 +201,13 @@ export class DefectGrid extends React.Component {
                         break
                 }
             })
-            .then(data => { this.setState({ defects: data }) });
+            .then(data => {
+                if (data.length > 0) {
+                    this.setState({ defects: data, loading: false })
+                } else {
+                    this.setState({ defects: [], loading: false, pageOfItems: [] })
+                }
+            });
        
     }
 
@@ -249,44 +259,49 @@ export class DefectGrid extends React.Component {
                 </div>
             </div>
             <hr></hr>
-            {this.state.showFilters ? <DefectFilter loadData={this.loadData} hideFilters={this.showFilters}/> : null }
-
-            {/* Table*/}
-            <div className="tablePosition table-wrapper">
-                <table class="table table-hover" style={{ 'table-layout': 'fixed' }} >
-                    <thead>
-                    <tr>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description {this.renderCaret('description')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }}> Owner</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> Story {this.renderCaret('storyId')}</th>
-                            <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status {this.renderCaret('status')}</th>
-                            <th class="col" />
-                    </tr>
-
-                </thead>
-
-
-
-                {(this.state.pageOfItems.length > 0)//pageOfItems
-                    ? this.state.pageOfItems.map((defect) => {//pageOfItems
-
-                            return <DefectRow key={defect.defectId} defect={defect} onRemove={this.onRemoveDefect} onChanged={changed} loadData={this.loadData} users={this.state.users} />
-                        })
-                    : (<tbody>
-                            <td>
-                                No results
-                            </td>
-                       </tbody>)
-                }
-                </table>
+            {this.state.showFilters ? <DefectFilter loadData={this.loadData} hideFilters={this.showFilters} /> : null}
+            {this.state.loading ? (
+                <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                    <Spinner animation="border" variant="warning" />
                 </div>
-            <div>
-                <Pagination items={this.state.defects}  onChangePage={this.onChangePage} />
-            </div>
+            ) : <div>
+                    {/* Table*/}
+                    <div className="tablePosition table-wrapper">
+                        <table class="table table-hover" style={{ 'table-layout': 'fixed' }} >
+                            <thead>
+                                <tr>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('name')}> Name {this.renderCaret('name')}</th>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('description')}> Description {this.renderCaret('description')}</th>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('state')}> State {this.renderCaret('state')}</th>
+                                    <th className="col" style={{ cursor: 'pointer' }}> Owner</th>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('priority')}> Priority {this.renderCaret('priority')}</th>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('severity')}> Severity {this.renderCaret('severity')}</th>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('storyId')}> Story {this.renderCaret('storyId')}</th>
+                                    <th className="col" style={{ cursor: 'pointer' }} onClick={() => this.sortData('status')}> Status {this.renderCaret('status')}</th>
+                                    <th class="col" />
+                                </tr>
+
+                            </thead>
+
+
+
+                            {(this.state.pageOfItems.length > 0)//pageOfItems
+                                ? this.state.pageOfItems.map((defect) => {//pageOfItems
+
+                                    return <DefectRow key={defect.defectId} defect={defect} onRemove={this.onRemoveDefect} onChanged={changed} loadData={this.loadData} users={this.state.users} />
+                                })
+                                : (<tbody>
+                                    <td>
+                                        No results
+                            </td>
+                                </tbody>)
+                            }
+                        </table>
+                    </div>
+                    <div>
+                        <Pagination items={this.state.defects} onChangePage={this.onChangePage} />
+                    </div>
+                </div>}
         </div>
         )
     }

@@ -55,7 +55,7 @@ namespace Scrumban.Controllers
             {
                 if (_userService.UpdateUser(user) == 1)
                 {
-                    return Ok();
+                    return Ok(user);
                 }
             }
             catch (Exception ex)
@@ -88,16 +88,16 @@ namespace Scrumban.Controllers
         //Check availability 
         [HttpPost]
         [Route("Check")]
-        public bool CheckAvailability([FromBody]UserDTO user)
+        public IActionResult CheckAvailability([FromBody]UserDTO user)
         {
             try
             {
                 bool isAuth = _userService.CheckAvailability(user.Email, user.Password);
-                return isAuth;
+                return Ok(isAuth); ;
             }
             catch
             {
-                return false;
+                return StatusCode(404);
             }
         }
 

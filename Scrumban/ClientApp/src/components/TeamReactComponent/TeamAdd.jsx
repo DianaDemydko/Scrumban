@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const addTeamUrl = "/api/team/teamAdd";
 const cancelUrl = "/teams";
@@ -30,10 +31,20 @@ export class TeamAdd extends React.Component {
             method: 'post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                
+
                 "name": team.teamName,
                 "project": team.teamProject,
             })
+        }).then(function (response) {
+            let responseStatus = response.status
+            switch (responseStatus) {
+                case 400:
+                    toast.error("Something wrong  !");
+                    break
+                case 200:
+                    toast.success("Team was creaated!");
+                    break
+            }
         });
       
 

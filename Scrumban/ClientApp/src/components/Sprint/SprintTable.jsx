@@ -4,6 +4,8 @@ import buildQuery from 'odata-query'
 import DatePicker from "react-datepicker";
 import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
+import Spinner from 'react-bootstrap/Spinner'
+
 import '../../GridStyles/StyleForGrid.css';
 
 export class SprintTable extends React.Component
@@ -90,7 +92,11 @@ export class SprintTable extends React.Component
         fetch('api/Sprint/Index' + query)
             .then(response => response.json())
             .then(data => {
-                this.setState({ sprints: data, loading: false });
+                if (data.length > 0) {
+                    this.setState({ sprints: data, loading: false });
+                } else {
+                    this.setState({ sprints: [], loading: false, pageOfItems: [] });
+                }
             })
     }
 
@@ -418,13 +424,13 @@ export class SprintTable extends React.Component
                         </div>
                         <div className="col-sm">
                         <DatePicker
-                            className="form-control"
                             todayButton={"Today"}
                             selected={this.state.startDateSearch}
                             onChange={this.onStartDateSearchChanged}
                             onKeyDown={this.onKeyDown}
                             isClearable={true}
                             placeholderText="Search..."
+                            className="form-control"
                             />
                         </div>
                         <div className="col-sm">
@@ -445,10 +451,10 @@ export class SprintTable extends React.Component
                             </select>
                         </div>
                         <div class="col-sm">
-                            <button type="button" className="btn apply-filters w-100 m-1" onClick={this.onFiltersApply}>Filter</button>
+                            <button type="button" className="btn apply-filters w-100" onClick={this.onFiltersApply}>Filter</button>
                         </div>
                         <div class="col-sm">
-                            <button type="button" className="btn cancel-filter w-100 m-1" onClick={this.clearFilters}>Clear</button>
+                            <button type="button" className="btn cancel-filter w-100" onClick={this.clearFilters}>Clear</button>
                          </div>
                       </div>
                         </div>) : null}
@@ -509,8 +515,8 @@ export class SprintTable extends React.Component
 
     render() {
         let content = this.state.loading ? (
-            <div>
-                <h2>Loading...</h2>
+            <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                <Spinner animation="border" variant="warning" />
             </div>
             )
             : this.renderSprintsTable(this.state.sprints);

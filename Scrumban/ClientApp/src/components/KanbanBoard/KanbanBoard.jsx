@@ -4,6 +4,8 @@ import buildQuery from 'odata-query';
 
 import "./css/KanbanBoard.css";
 
+import Spinner from 'react-bootstrap/Spinner'
+
 const apiUrlGetStories = "api/Story/GetStories";
 const apiUrlUpdateStory = "api/Story/UpdateStory";
 
@@ -175,7 +177,11 @@ export default class KanbanBoard extends React.Component {
 
     render() {
         if (this.state.isLoading) {
-            return (<h3>Loading...</h3>);
+            return (
+                <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                    <Spinner animation="border" variant="warning" />
+                </div>
+            );
         }
 
         return (

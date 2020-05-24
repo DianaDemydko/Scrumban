@@ -17,7 +17,6 @@ export class DefectRow extends Component {
     }
 
     onRemoveDefect() {
-        debugger
         this.props.onRemove(this.state.data.defectId);
 
     }

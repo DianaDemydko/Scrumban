@@ -16,12 +16,12 @@ namespace Scrumban.DataAccessLayer.Repositories
 
         public override IQueryable<StoryDAL> GetAll()
         {
-            return _dbContext.Stories.Include("StoryState").Include(x => x.User).ThenInclude(y => y.Picture).AsQueryable();
+            return _dbContext.Stories.Include(v => v.StoryState).Include(x => x.User).ThenInclude(y => y.Picture).AsQueryable();
         }
 
         public override StoryDAL GetByID(int id)
         {
-            var storyToGet = _dbContext.Stories.Where(story => story.Story_id == id).Include("StoryState").Include(x => x.User).ThenInclude(y => y.Picture).First();
+            var storyToGet = _dbContext.Stories.Where(story => story.Story_id == id).Include(v => v.StoryState).Include(x => x.User).ThenInclude(y => y.Picture).First();
             return storyToGet;
         }
 

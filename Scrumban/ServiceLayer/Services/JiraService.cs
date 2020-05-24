@@ -27,7 +27,7 @@ namespace Scrumban.ServiceLayer.Services
                 .ForMember(bs => bs.StartDate, opt => opt.MapFrom(c => c.Fields.Created));
             }).CreateMapper();
         }
-        public async Task<GetIssuesResponse> GetIssueResponse(string path, string username, string password)
+        public async Task<GetIssuesResponse> GetIssueResponse(string path, string username, string password, string project)
         {
             var api = RestClient.For<IJiraClient>(path);
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
@@ -38,7 +38,14 @@ namespace Scrumban.ServiceLayer.Services
             for (var i = 0; i < issues.Issues.Length; i++) { 
                 var issue = await api.GetIssue(issues.Issues[i].Id);
                 var storyDAL = _mapper.Map<GetIssue, StoryDAL>(issue);
-                storyDAL.StoryState_id= _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == issue.Fields.Status.Name).StoryState_id;
+                if (issue.Fields.Status.Name == "To Do")
+                {
+                    storyDAL.StoryState_id = 1;
+                }
+                else
+                {
+                    storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == issue.Fields.Status.Name).StoryState_id;
+                }
 
                 _unitOfWork.StoryRepository.Create(storyDAL);
             }

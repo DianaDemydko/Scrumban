@@ -120,34 +120,34 @@ export class DefectFilter extends React.Component {
                 <div className="col-sm"  />
             </div>
             <div className="row filter-row-10">
-                <div className="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></div>
-                <div className="col-sm"><input type="text" className="input" placeholder="Search" onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></div>
-                <div className="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
+                <div className="col-sm"><input type="text" className="input" placeholder="Search..." onChange={this.onNameSearchChanged} value={this.state.nameSearch} /></div>
+                <div className="col-sm"><input type="text" className="input" placeholder="Search..." onChange={this.onDescriptionSearchChanged} value={this.state.descriptionSearch} /></div>
+                <div className="col-sm"><select class="btn btn-light dropdown-toggle w-100 m-0" placeholder="Search..." onChange={this.onStateSearchChanged} value={this.state.stateSearch}>
                     <option value="All">All</option>
                     {stateOption.map((item) => <option>{item.name}</option>)}
                 </select></div>
-                <div className="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
+                <div className="col-sm"><select class="btn btn-light dropdown-toggle w-100 m-0" placeholder="Search..." onChange={this.onPrioritySearchChanged} value={this.state.prioritySearch}>
                     <option value="All">All</option>
                     {priorityOption.map((item) => <option>{item.name}</option>)}
                 </select></div>
-                <div className="col-sm"><select class="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
+                <div className="col-sm"><select class="btn btn-light dropdown-toggle w-100 m-0" placeholder="Search..." onChange={this.onSeveritySearchChanged} value={this.state.severitySearch}>
                     <option value="All">All</option>
                     {severityOption.map((item) => <option>{item.name}</option>)}
                 </select></div>
 
                 <div className="col-sm">
-                    <select className="btn btn-light dropdown-toggle m-0" placeholder="Search" onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
+                    <select className="btn btn-light dropdown-toggle w-100 m-0" placeholder="Search..." onChange={this.onStatusSearchChanged} value={this.state.statusSearch}>
                         <option value="All">All</option>
                         {statusOption.map((item) => <option>{item.name}</option>)}
                     </select>
                 </div>
                 <div className="col-sm" >
                     <td />
-                    <button className="btn apply-filters w-100 m-1" type="button" onClick={this.onFiltersApply}>Filter</button>
+                    <button className="btn apply-filters w-100" type="button" onClick={this.onFiltersApply}>Filter</button>
                 </div>
                 <div className="col-sm" >
                     <td />
-                    <button className="btn cancel-filter w-100 m-1" type="button" onClick={this.onFiltersClear}>Clear</button>
+                    <button className="btn cancel-filter w-100" type="button" onClick={this.onFiltersClear}>Clear</button>
                 </div>
             </div>
         </div>)

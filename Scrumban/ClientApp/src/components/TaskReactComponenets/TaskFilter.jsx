@@ -130,35 +130,33 @@ export class TaskFilter extends React.Component {
                 
                     
                 <div className="col-sm">
-                    <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search" value={this.state.name} autocomplete="off" />
+                    <input type="text" className="input" onChange={this.onNameChanged} id="inputTitle" placeholder=" Search..." value={this.state.name} autocomplete="off" />
                         </div>
                     
                 <div className="col-sm">
-                    <input type="text" className="input" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder=" Search" value={this.state.description} autocomplete="off" />
+                    <input type="text" className="input" onChange={this.onDescriptionChanged} id="exampleInputDescription" placeholder=" Search..." value={this.state.description} autocomplete="off" />
                         </div>
                     
                 <div className="col-sm" >
                             <DatePicker
-                                className="input"
+                                placeholderText="Search..."
+                                className="form-control"
                                 selected={this.state.startDate}
                                 onChange={this.onStartDateChange}
                                 dateFormat="MMMM d"
                                 timeCaption="time"
-                                className="datePickerStyle btn btn-sm btn-outline-secondary"
                             />
                         </div>
                    
                 <div className="col-sm">
-                            <div >
                                 <DatePicker
-                                    className="input"
+                                    placeholderText="Search..."
+                                    className="form-control"
                                     selected={this.state.finishDate}
                                     onChange={this.onFinishDateChange}
                                     dateFormat="MMMM d"
                                     timeCaption="time"
-                                    className="datePickerStyle btn btn-sm btn-outline-secondary"
                                 />
-                            </div>
                         </div>
                     
                 <div className="col-sm">
@@ -175,10 +173,10 @@ export class TaskFilter extends React.Component {
                             </select>
                         </div>
                 <div className="col-sm" >  
-                    <button type="submit" onClick={this.onSetFilter} className="btn apply-filters w-100 m-1"> Filter </button>
+                    <button type="submit" onClick={this.onSetFilter} className="btn apply-filters w-100"> Filter </button>
                 </div>  
                 <div className="col-sm">
-                    <button type="submit" onClick={this.onCancelFilter} className="btn cancel-filter w-100 m-1"> Cancel </button>
+                    <button type="submit" onClick={this.onCancelFilter} className="btn cancel-filter w-100"> Clear </button>
                 </div>
                
             </div>

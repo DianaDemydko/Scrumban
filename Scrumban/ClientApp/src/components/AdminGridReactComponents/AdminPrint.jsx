@@ -18,15 +18,15 @@ export class AdminPrint extends Component {
     onEditButtonClick() {
         this.props.onStateUpdating(true);
     }
-    onDeleteClick() {
-        fetch('api/users/' + this.state.user.id, {
+   async onDeleteClick() {
+        await fetch('api/users/' + this.state.user.id, {
             method: 'get',
             headers: { "Content-Type": "application/json" }
         }).then(function (response) {
             let responseStatus = response.status
             switch (responseStatus) {
                 case 200:
-                    toast.success('User was deleted');
+                    toast.success('User was deleted!');
                     break
             }
             }.bind(this))

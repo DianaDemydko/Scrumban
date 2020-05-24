@@ -3,6 +3,7 @@
 import { TaskRow } from './TaskRow';
 import { toast } from 'react-toastify';
 import { TaskFilter } from './TaskFilter';
+import Spinner from 'react-bootstrap/Spinner'
 
 import { checkToken } from '../Helpers'
 import { Pagination } from '../DefectReactComponent/Pagination.jsx'
@@ -73,7 +74,9 @@ export class TaskGrid extends React.Component {
 
 
             filter: "",
-            pageOfItems: []
+            pageOfItems: [],
+            loading: true
+
 
         };
 
@@ -122,7 +125,7 @@ export class TaskGrid extends React.Component {
 
         checkToken()
 
-
+        this.setState({ loading: true });
 
         fetch(apiUrlGet + filter, {
 
@@ -158,13 +161,28 @@ export class TaskGrid extends React.Component {
 
             //}
 
-        }).then(data => this.setState({
+            }).then(data => {
+                if (data.length > 0) {
+                    this.setState({
 
-            tasks: data,
+                        tasks: data,
 
-            filter: filter
+                        filter: filter,
+                        loading: false
 
-        })
+                    })
+                } else {
+                    this.setState({
+
+                        tasks: [],
+
+                        filter: filter,
+                        loading: false,
+                        pageOfItems: []
+
+                    })
+                }
+            }
 
         )
 
@@ -534,109 +552,116 @@ export class TaskGrid extends React.Component {
             </div>
             <hr></hr>
             {this.state.showFilters ? <TaskFilter changeFilter={this.startFiltration} states={this.state.states} priorities={this.state.priorities} hideFilters={this.showFilters} /> : null}
+            {this.state.loading ? (
+                <div style={{'margin-left':'50%', 'margin-top': '15%'}}>
+                    <Spinner animation="border" variant="warning" />
+                </div>
+            ) :
+                <div>
             <div className="tablePosition table-wrapper">
                 <table className="table" style={{ 'table-layout': 'fixed' }}>
 
                     <thead>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>Name</span>
+                    <span>Name</span>
 
-                            <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
+                    <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1" min-width="100px">
+                <th className="col-1" min-width="100px">
 
-                            <span>Description</span>
+                    <span>Description</span>
 
-                            <ion-icon src={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
+                    <ion-icon src={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>Start Date</span>
+                    <span>Start Date</span>
 
-                            <ion-icon src={this.state.sortByStartDate} onClick={() => this.sort("startDate", null)} />
+                    <ion-icon src={this.state.sortByStartDate} onClick={() => this.sort("startDate", null)} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>Finish Date</span>
+                    <span>Finish Date</span>
 
-                            <ion-icon src={this.state.sortByFinishDate} onClick={() => this.sort("finishDate", null)} />
+                    <ion-icon src={this.state.sortByFinishDate} onClick={() => this.sort("finishDate", null)} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>Priority</span>
+                    <span>Priority</span>
 
-                            <ion-icon src={this.state.sortByPriority} onClick={() => this.sort("priority", "id")} />
+                    <ion-icon src={this.state.sortByPriority} onClick={() => this.sort("priority", "id")} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>State</span>
+                    <span>State</span>
 
-                            <ion-icon src={this.state.sortByState} onClick={() => this.sort("taskState", "id")} />
+                    <ion-icon src={this.state.sortByState} onClick={() => this.sort("taskState", "id")} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>Owner</span>
+                    <span>Owner</span>
 
-                        </th>
+                </th>
 
-                        <th className="col-1">
+                <th className="col-1">
 
-                            <span>Story</span>
+                    <span>Story</span>
 
-                            <ion-icon src={this.state.sortByState} onClick={() => this.sort("story", "name")} />
+                    <ion-icon src={this.state.sortByState} onClick={() => this.sort("story", "name")} />
 
-                        </th>
+                </th>
 
-                        <th className="col-1">{/* For button Edit   */}</th>
+                <th className="col-1">{/* For button Edit   */}</th>
 
-                    </thead>
-                    {(this.state.pageOfItems.length > 0)//pageOfItems
-                        ? this.state.pageOfItems.map((task) => {
+            </thead>
+            {(this.state.pageOfItems.length > 0)//pageOfItems
+                ? this.state.pageOfItems.map((task) => {
 
-                        return <TaskRow key={task.id}
+                    return <TaskRow key={task.id}
 
-                            task={task} onRemove={remove}
+                        task={task} onRemove={remove}
 
-                            onChanged={changed}
+                        onChanged={changed}
 
-                            moveToComponent={moveToComponentVar}
+                        moveToComponent={moveToComponentVar}
 
-                            states={states}
+                        states={states}
 
-                            priorities={priorities}
+                        priorities={priorities}
 
-                            users={users}
+                        users={users}
 
-                            stories={stories}
+                        stories={stories}
 
-                        />
+                    />
 
-                        }) : (<tbody>
-                            <td>
-                                No results
+                }) : (<tbody>
+                    <td>
+                        No results
                             </td>
-                        </tbody>) }
+                </tbody>)}
 
                 </table>
-            </div>
+            </div >
             <div>
                 <Pagination items={this.state.tasks} onChangePage={this.onChangePage} />
             </div>
-
+        </div >
+            }
         </div>;
 
     }

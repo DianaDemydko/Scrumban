@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 import buildQuery from 'odata-query'
 import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
+import Spinner from 'react-bootstrap/Spinner'
+
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
 
@@ -31,7 +33,8 @@ export class FeatureTable extends Component {
             showFilters: false,
 
             pageOfItems: [],
-            users: []
+            users: [],
+            loading: true
         };
 
         this.showFilters = this.showFilters.bind(this);
@@ -205,6 +208,7 @@ export class FeatureTable extends Component {
         this.fetchUsers();
     }
     loadData(query) {
+        this.setState({ loading: true });
         fetch('api/FeatureData/Get' + query)
             .then(function (response) {
                 if (response.status == 200) {
@@ -222,8 +226,13 @@ export class FeatureTable extends Component {
                    // alert("ERROR! Status code: " + response.status)
                 }
             })
-            .then(data =>
-                this.setState({ features: data })
+            .then(data => {
+                if (data.length > 0) {
+                    this.setState({ features: data, loading: false })
+                } else {
+                    this.setState({ features: [], loading: false, pageOfItems: [] })
+                }
+            }
         );
     }
 
@@ -238,52 +247,58 @@ export class FeatureTable extends Component {
                 </div>
             </div>
             <hr></hr>
-            {this.state.showFilters ? <FeatureFilter changeFindData={this.findData} hideFilters={this.showFilters} /> : null }
-            <div className="tablePosition  table-wrapper">
-                <table class="table" style={{ 'table-layout': 'fixed' }} >
-                    <thead>
-                        <tr>
-                            <th className="col" onClick={() => this.sortData('name')}>
-                                Name {this.renderCaret('name')}
+            {this.state.showFilters ? <FeatureFilter changeFindData={this.findData} hideFilters={this.showFilters} /> : null}
+            {this.state.loading ? (
+                <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                    <Spinner animation="border" variant="warning" />
+                </div>
+            ) : <div>
+                    <div className="tablePosition  table-wrapper">
+                        <table class="table" style={{ 'table-layout': 'fixed' }} >
+                            <thead>
+                                <tr>
+                                    <th className="col" onClick={() => this.sortData('name')}>
+                                        Name {this.renderCaret('name')}
+                                    </th>
+                                    <th class="col" min-width="100px" onClick={() => this.sortData('description')}>
+                                        Description {this.renderCaret('description')}
+                                    </th>
+                                    <th class="col" onClick={() => this.sortData('state')}>
+                                        State {this.renderCaret('state')}
+                                    </th>
+                                    <th class="col">
+                                        Owner
                             </th>
-                            <th class="col" min-width="100px" onClick={() => this.sortData('description')}>
-                                Description {this.renderCaret('description')}
-                            </th>
-                            <th class="col" onClick={() => this.sortData('state')}>
-                                State {this.renderCaret('state')}
-                            </th>
-                            <th class="col">
-                                Owner
-                            </th>
-                            <th class="col" onClick={() => this.sortData('priority')}>
-                                Priority {this.renderCaret('priority')}
-                            </th>
-                            <th class="col" > Stories </th>
-                            <th class="col" onClick={() => this.sortData('time')} >
-                                Start Date {this.renderCaret('time')}
-                            </th>
+                                    <th class="col" onClick={() => this.sortData('priority')}>
+                                        Priority {this.renderCaret('priority')}
+                                    </th>
+                                    <th class="col" > Stories </th>
+                                    <th class="col" onClick={() => this.sortData('time')} >
+                                        Start Date {this.renderCaret('time')}
+                                    </th>
 
-                            <th class="col" />
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {(this.state.pageOfItems.length > 0)//pageOfItems
-                            ? this.state.pageOfItems.map((feature) => {
-                                return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} users={this.state.users} currentUser={this.props.currentUser} />
-                            }
-                            ) :
-                            (<tbody>
-                                <td>
-                                    No results
+                                    <th class="col" />
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(this.state.pageOfItems.length > 0)//pageOfItems
+                                    ? this.state.pageOfItems.map((feature) => {
+                                        return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} users={this.state.users} currentUser={this.props.currentUser} />
+                                    }
+                                    ) :
+                                    (<tbody>
+                                        <td>
+                                            No results
                             </td>
-                            </tbody>)
-                            }
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <Pagination items={this.state.features} onChangePage={this.onChangePage} />
-            </div>
+                                    </tbody>)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <Pagination items={this.state.features} onChangePage={this.onChangePage} />
+                    </div>
+                </div>}
         </div>;
 
     }

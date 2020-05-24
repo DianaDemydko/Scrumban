@@ -22,13 +22,13 @@ namespace Scrumban.Controllers
         public async Task<IActionResult> Index([FromBody]JiraLoginDTO login)
         {
             
-            var url = "https://scrumban11.atlassian.net";
+            var url = login.Url;
             var username = login.Username;
             var password = login.Password;
-
+            var project = login.Project;
             try
             {
-                var response = await _jiraService.GetIssueResponse(url, username, password);
+                var response = await _jiraService.GetIssueResponse(url, username, password, project);
                 
             return  Ok();
             }
