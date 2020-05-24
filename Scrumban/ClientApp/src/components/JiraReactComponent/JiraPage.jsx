@@ -72,8 +72,8 @@ export class JiraPage extends React.Component {
         return (
             <div className="Login">
                 <br />
-                <div className="row justify-content-center" style={{ 'margin-left': '73px' }}>
-                    <h2>Sync to Jira server</h2>
+                <div className="row justify-content-center" style={{ 'margin-left': '68px' }}>
+                    <h2>Sync to Jira Server</h2>
                 </div>
                 <br />
                 <FormGroup controlId="username" bsSize="large">

@@ -97,20 +97,6 @@ namespace Scrumban.ServiceLayer.Sevices
             {
                 UsersDAL userDAL = _unitOfWork.UserRepository.GetByID(id);
                 UserDTO userDTO = _mapper.Map<UserDTO>(userDAL);
-                //UserDTO userDTO = new UserDTO
-                //{
-                //    Id = user.Id,
-                //    FirstName = user.FirstName,
-                //    Surname = user.Surname,
-                //    Email = user.Email,
-                //    Password = user.Password,
-                //    Role = new RoleDTO
-                //    {
-                //        Id = user.Role.Id,
-                //        Name = user.Role.Name
-                //    },
-                //    RoleId = user.RoleId,
-                //};
                 return userDTO;
             }
             catch
@@ -151,26 +137,6 @@ namespace Scrumban.ServiceLayer.Sevices
             {
                 UsersDAL userDAL = _unitOfWork.UserRepository.GetUserAccount(email, password);
                 UserDTO userDTO = _mapper.Map<UserDTO>(userDAL);
-                //UserDTO userDTO = new UserDTO
-                //{
-                //    Id = user.Id,
-                //    FirstName = user.FirstName,
-                //    Surname = user.Surname,
-                //    Email = user.Email,
-                //    Password = user.Password,
-                //    RoleId = user.RoleId,
-                //    Role = new RoleDTO
-                //    {
-                //        Id = user.Role.Id,
-                //        Name = user.Role.Name
-                //    },
-                //    Picture = new PictureDTO
-                //    {
-                //        Id = user.Picture.Id,
-                //        Image = user.Picture.Image
-                //    }
-                //};
-
                 return userDTO;
             }
             catch

@@ -5,15 +5,6 @@ import moment from 'moment';
 
 import "react-datepicker/dist/react-datepicker.css";
 
-//import Collapse from "../../../node_modules/react-bootstrap/lib/Collapse"
-
-//import Button from "../../../node_modules/react-bootstrap/lib/Button"
-
-//import Overlay from "../../../node_modules/react-bootstrap/lib/Overlay"
-
-//import Tooltip from "../../../node_modules/react-bootstrap/lib/Tooltip"
-
-//const $ = window.$;
 
 const emptyAvatar = require('../PanelReactComponents/user.png');
 

@@ -172,7 +172,7 @@ export class Register extends React.Component {
             message = "Input email (login) !"
         }
         else if (regex.test(email) === false) {
-            message = "incorrect email !"
+            message = "Incorrect email !"
         }
         else {
             isValid = true
@@ -194,10 +194,10 @@ export class Register extends React.Component {
             message = ""
         }
         else if (password.length < 5) {
-            message = "be at least 5 characters !"
+            message = "Be at least 5 characters !"
         }
         else if (regex.test(password) === false) {
-            message = "be at least one small letter, one capital letter and one number!"
+            message = "Be at least one small letter, one capital letter and one number!"
         }
         else {
             isValid = true
@@ -210,13 +210,13 @@ export class Register extends React.Component {
         var message = ""
         var isValid = false
         if (passwordConfirm == "" && this.state.password !== "") {
-            message = "confirm password !"
+            message = "Confirm password !"
         }
         else if (this.state.password == "") {
             isValid = true
         }
         else if (passwordConfirm !== this.state.password) {
-            message = "password is not confirmed"
+            message = "Password is not confirmed"
         }
         else if (this.state.newPasswordValid === false) {
             isValid = false
@@ -267,9 +267,12 @@ export class Register extends React.Component {
                     case 200:
                         toast.success("Registration was successful:-)");
                         break
+                    case 500:
+                        toast.error("User with that email already exist!");
+                        break
                 }
             }.bind(this))
-                .catch(() => toast.error("Something wrong!!!"))
+                .catch(() => toast.error("Something wrong!"))
             this.props.moveToComponent("login")
             //window.location.replace("./login");
         } else
@@ -359,21 +362,9 @@ export class Register extends React.Component {
                     <small className="valid-error">{this.state.confirmpasswordValidMessage}</small>
                 </FormGroup>
 
-                {/*}
-                <div className="row">
-                    <img src={this.state.pictureUrl} alt="Image" className="profile-image"/>
-                </div>
-                <div className="row">
-                    <label for="file-upload" className="btn btn-outline-info" > Upload Picture </label>
-                    <input type="file" id="file-upload" onChange={this.onFileChanged} hidden/>
-                </div>
-                */}
-
                 <Button
                     block
                     bsSize="large"
-                    //disabled={!this.validateForm()}
-                    //type="submit"
                     isLoading={this.state.isLoading}
                     onClick={this.handleSubmit}
                     loadingText="Signing up…"

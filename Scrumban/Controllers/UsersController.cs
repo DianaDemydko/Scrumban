@@ -11,6 +11,7 @@ using Scrumban.ServiceLayer.Sevices;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Scrumban.Controllers
@@ -34,9 +35,18 @@ namespace Scrumban.Controllers
         {
             try
             {
-                if (_userService.AddUser(user) == 1)
+                List<UserDTO> list = _userService.GetAllUsers().ToList();
+                if (list.Exists(x => x.Email == user.Email))
                 {
-                    return Ok();
+                    return StatusCode(403);
+                }
+                else
+                {
+                    
+                   if(_userService.AddUser(user)==1)
+                    {
+                            return Ok();
+                    }
                 }
             }
             catch (Exception ex)

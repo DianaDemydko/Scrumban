@@ -4,9 +4,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const data = require('../../GlobalData.json'); // json file with const tables (priority, state)
-// consts of stable tables
-//const priorityTable = data.priority;
-//const stateTable = data.taskState;
+
 
 export class TaskFilter extends React.Component {
     constructor(props) {

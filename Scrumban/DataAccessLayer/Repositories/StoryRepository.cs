@@ -42,8 +42,14 @@ namespace Scrumban.DataAccessLayer.Repositories
                     story.StoryState_id = item.StoryState_id;
                     story.sprint_id = item.sprint_id;
                     story.Rank = item.Rank;
-                    story.StartDate = item.StartDate;
-                    story.EndDate = item.EndDate;
+                    if(item.StartDate != null )
+                    {
+                        story.StartDate = item.StartDate;
+                    }
+                    if (item.EndDate != null)
+                    {
+                        story.EndDate = item.EndDate;
+                    }
                     story.FeatureId = item.FeatureId;
                     story.UserId = item.UserId;
 

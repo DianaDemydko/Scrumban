@@ -147,20 +147,6 @@ export class TaskGrid extends React.Component {
 
             }
 
-            //else if (response.status == 401) {
-
-            //    alert("Not Authorized")
-
-            //    window.location.replace("/login");
-
-            //}
-
-            //else {
-
-            //    alert(response.status + "Get tasks error")
-
-            //}
-
             }).then(data => {
                 if (data.length > 0) {
                     this.setState({
@@ -334,34 +320,6 @@ export class TaskGrid extends React.Component {
 
         this.loadData(this.state.filter)
 
-        //const list = this.state.tasks.map((task) => {
-
-        //    if (task.id === newTask.id) {
-
-        //        task.name = newTask.name;
-
-        //        task.description = newTask.description;
-
-        //        task.startDate = newTask.startDate;
-
-        //        task.finishDate = newTask.finishDate;
-
-        //        task.priority = newTask.priority;
-
-        //        task.priorityId = newTask.priorityId;
-
-        //        task.taskState = newTask.taskState;
-
-        //        task.taskStateId = newTask.taskStateId;
-
-        //    }
-
-        //    return task
-
-        //})
-
-        //this.setState({ tasks: list});
-
     }
 
 
@@ -453,11 +411,7 @@ export class TaskGrid extends React.Component {
 
 
     onRemoveTask(id) {
-
-       // checkToken()
-
-
-
+        
         var url = apiUrlDelete + "/" + id
 
         fetch(url, {
