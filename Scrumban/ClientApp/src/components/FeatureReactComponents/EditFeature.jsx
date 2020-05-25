@@ -163,7 +163,7 @@ export class EditFeature extends Component {
             <td>
                     <div>
                         <label for="description">Description</label>
-                    <input type="text" class="form-control" onChange={e => this.onDescriptionChanged(e)} defaultValue={this.state.description} />
+                    <textarea rows="3" type="text" class="form-control" onChange={e => this.onDescriptionChanged(e)} defaultValue={this.state.description} />
                     </div>
             </td>
             <td>
@@ -215,7 +215,7 @@ export class EditFeature extends Component {
             <td>
                     <div>
                         <label for='date'> Start Date</label>
-                        <DatePicker todayButton={"Today"} selected={this.state.date} onChange={this.onDateChange} dateFormat="yyyy/MM/dd" />
+                    <DatePicker todayButton={"Today"} selected={this.state.date} onChange={this.onDateChange} dateFormat="yyyy/MM/dd" className="form-control" />
 
             </div>
 

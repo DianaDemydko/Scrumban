@@ -7,7 +7,8 @@ export class TeamEdit extends Component {
         this.state = {
             name: this.props.teamEdit.name,
             project: this.props.teamEdit.project,
-            clicked: 'false'
+            clicked: 'false',
+            team: this.props.teamEdit
         };
         this.onNameChanged = this.onNameChanged.bind(this);
         this.onProjectChanged = this.onProjectChanged.bind(this);
@@ -36,13 +37,18 @@ export class TeamEdit extends Component {
 
             });
         this.props.loadData();
-        this.props.onStateUpdating(false);
+        var team = {
+            teamID: this.props.teamEdit.teamID,
+            name: this.state.name,
+            project: this.state.project
+        };
+        this.props.onStateUpdating(false, team);
 
     }
 
     onCancel() {
 
-        this.props.onStateUpdating(false);
+        this.props.onStateUpdating(false, this.state.team);
     }
 
 

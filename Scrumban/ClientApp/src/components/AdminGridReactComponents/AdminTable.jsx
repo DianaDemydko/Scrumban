@@ -70,8 +70,11 @@ export class AdminTable extends Component {
                     </thead>
                     <tbody>
 
-                        {this.state.users.map(user => (
-                            <AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
+                        {this.state.users.map(user => {
+                            if (this.props.currentUser.id != user.id) {
+                                return ( < AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
+                            }
+                        }
                         )}
                     </tbody>
                 </table>

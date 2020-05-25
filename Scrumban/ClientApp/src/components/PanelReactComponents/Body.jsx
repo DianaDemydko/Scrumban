@@ -45,7 +45,7 @@ export class Body extends React.Component {
 
         switch (this.props.renderedComponentName) {
             case 'admin':
-                renderedComponent = <AdminTable moveToComponent={this.props.moveToComponent} />
+                renderedComponent = <AdminTable moveToComponent={this.props.moveToComponent} currentUser={this.props.user}/>
                 break
             case 'login':
                 renderedComponent = <Login moveToComponent={this.props.parentOnLoginStatusCallBack} />

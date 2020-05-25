@@ -38,11 +38,11 @@ export class AdminPrint extends Component {
     render() {
         return (
             <tr id='AdminOutputForm'>
-                <td class="col">{this.state.user.firstName}</td>
-                <td class="col">{this.state.user.surname}</td>
-                <td class="col">{this.state.user.email}</td>
+                <td class="col" style={{ 'text-overflow': 'elipsis', 'overflow': 'hiden' }}>{this.state.user.firstName}</td>
+                <td class="col" style={{ 'text-overflow': 'elipsis', 'overflow': 'hiden' }}>{this.state.user.surname}</td>
+                <td class="col" title={this.state.user.email}><span style={{ 'text-overflow': 'elipsis', 'overflow': 'hiden' }}>{this.state.user.email}</span></td>
                 <td class="col">{this.state.user.role.name}</td>
-                <td class="col">{this.state.user.team != null ? this.state.user.team.name : "None"}</td>
+                <td class="col" style={{ 'text-overflow': 'elipsis', 'overflow': 'hiden' }}>{this.state.user.team != null ? this.state.user.team.name : "None"}</td>
                 <td>
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit

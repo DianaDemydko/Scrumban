@@ -121,7 +121,7 @@ export class DefectGrid extends React.Component {
         var arr = this.state.defects;
         var index = arr.indexOf(x => x.defectId === item.defectId);
         arr[index] = item;
-        this.setState({ defects: arr });
+        this.setState({ defects: arr, pageOfItems: arr });
     }
 
     componentDidMount() {

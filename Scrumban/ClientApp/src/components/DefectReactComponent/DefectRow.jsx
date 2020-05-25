@@ -36,8 +36,8 @@ export class DefectRow extends Component {
             <tbody>
             {
                     isEdit ?
-                        (<DefectPrint key={this.props.key} item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} users={this.props.users} />)
-                        : (<DefectEdit item={this.state.data} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} changed={this.onChangedDefect} loadData={this.props.loadData} users={this.props.users} />)
+                        (<DefectPrint key={this.props.key} item={this.props.defect} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} users={this.props.users} />)
+                        : (<DefectEdit item={this.props.defect} editDefect={this.onEditDefect} deleteDefect={this.onRemoveDefect} changed={this.onChangedDefect} loadData={this.props.loadData} users={this.props.users} />)
             }
             
         </tbody>

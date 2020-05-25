@@ -45,16 +45,16 @@ class TeamRow extends Component {
         super(props);
         this.state = {
             edit: false,
-            
+            team: this.props.team
         }
         this.onStateChanged = this.onStateChanged.bind(this);
     }
-    onStateChanged(editState) {
-        this.setState({ edit: editState });
+    onStateChanged(editState, team) {
+        this.setState({ edit: editState, team: team });
     }
     render() {
-        return (this.state.edit ? <TeamEdit teamEdit={this.props.team} onStateUpdating={this.onStateChanged} loadData={this.props.loadData} onStateUpdating={this.onStateChanged} /> :
-            <TeamPrint onStateUpdating={this.onStateChanged} team={this.props.team} loadData={this.props.loadData} currentUser={this.props.currentUser} />
+        return (this.state.edit ? <TeamEdit teamEdit={this.props.team} onStateUpdating={this.onStateChanged} loadData={this.props.loadData} /> :
+            <TeamPrint onStateUpdating={this.onStateChanged} team={this.state.team} loadData={this.props.loadData} currentUser={this.props.currentUser} />
 
         );
     }

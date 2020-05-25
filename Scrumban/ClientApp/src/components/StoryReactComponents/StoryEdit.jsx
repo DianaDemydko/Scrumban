@@ -192,7 +192,7 @@ export class StoryEdit extends React.Component {
             <td>
 					<div >
 							<label for="description">Description</label>
-                            <input type="text" class="form-control" onChange={this.onDescriptionChanged} id="description" placeholder="story description" defaultValue={this.props.item.description} />
+                            <textarea rows="3" type="text" class="form-control" onChange={this.onDescriptionChanged} id="description" placeholder="story description" defaultValue={this.props.item.description} />
                 </div>
             </td>
             <td>
