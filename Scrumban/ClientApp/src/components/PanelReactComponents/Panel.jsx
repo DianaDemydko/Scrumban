@@ -44,9 +44,7 @@ export class Panel extends React.Component {
                         : (<li className="panelLi"><button className="panelBtn" onClick={() => this.props.moveToComponent("signup")}> Sign Up </button></li>)
                     }
                     <li className="panelLi">
-                        {this.state.loginStatus != "true" ?
                             <button className="panelBtn" onClick={() => this.props.moveToComponent("about")}>About</button>
-                            : null }
                     </li>
                 </ul>
             </div>

@@ -1,34 +1,303 @@
-﻿.header {
-    width: auto;
-    height: auto;
-    margin: auto;
-
+﻿.main-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding-left: 60px;
+    padding-top: 27px;
+    padding-right: 60px;
+    padding-bottom: 70px;
+    overflow:hidden;
 }
-    .header img {
-
-        width: 100%;
-        margin-top: 15px;
-    }
-.info {
-    width: 700px;
-    height: 165px;
-    margin: auto;
- 
+.scrum-kanban-wrapper {
+    display:flex;
+    flex-direction: column;
 }
-p {
-    font-size: 1.4rem;
-    color: black;
-    font-family: Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    text-indent: 1.5em;
-    text-align:justify;
+.func-wrapper {
+    display: flex;
+    flex-direction: column;
 }
-.container em  {
-    font-size: 1.5rem;
-    text-transform: capitalize;
-    text-shadow: -1px -1px 1px #aaa, 0px 2px 1px rgba(0,0,0,0.5), 2px 2px 2px rgba(0,0,0,0.7), 0px 0px 3px rgba(0,0,0,0.4);
-    text-align: center;
+.scrum {
+    position: absolute;
+    width: 623px;
+    height: 250px;
+    left: 50px;
+    background: rgba(240, 221, 52, 0.86);
+    box-sizing: border-box;
+    cursor: pointer;
 }
-hr{
-    color:saddlebrown;
+.what {
+    position: absolute;
+    width: 182px;
+    height: 75px;
+    left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #5C12A6 !important;
+}
+.is {
+    position: absolute;
+    width: 67px;
+    height: 84px;
+    left: 20px;
+    top: 70px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 84px;
+    color: #5C12A6 !important;
+}
+.is-scrum {
+    position: absolute;
+    width: 288px;
+    height: 84px;
+    left: 20px;
+    top: 150px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 84px;
+    color: #5C12A6 !important;
+}
+.what-k {
+    position: absolute;
+    width: 205px;
+    height: 84px;
+    left: 380px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 84px;
+    color: #000000!important;
+}
+.is-k {
+    position: absolute;
+    width: 67px;
+    height: 84px;
+    left: 520px;
+    top: 70px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 84px;
+    color: #000000!important;
+}
+.is-kanban {
+    position: absolute;
+    width: 329px;
+    height: 84px;
+    left: 250px;
+    top: 140px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 84px;
+    color: #000000!important;
+}
+.kanban {
+    position: absolute;
+    width: 623px;
+    height: 250px;
+    left: 700px;
+    background: rgba(103, 37, 171, 0.86);
+    cursor: pointer;
+}
+.grids {
+    position: absolute;
+    width: 408px;
+    height: 280px;
+    left: 50px;
+    top: 380px;
+    background: rgba(255, 87, 51, 0.77);
+    cursor: pointer;
+}
+.charts {
+    position: absolute;
+    width: 408px;
+    height: 280px;
+    left: 480px;
+    top: 380px;
+    background: #F96D80;
+    cursor: pointer;
+}
+.sync {
+    position: absolute;
+    width: 408px;
+    height: 280px;
+    left: 920px;
+    top: 380px;
+    background: #BB596B;
+    cursor: pointer;
+}
+.how-grids {
+    position: absolute;
+    width: 106px;
+    height: 28px;
+    left: 20px;
+    top: 20px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 28px;
+    color: #000000;
+}
+.manage {
+    position: absolute;
+    width: 269px;
+    height: 75px;
+    left: 20px;
+    top: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.your {
+    position: absolute;
+    width: 168px;
+    height: 75px;
+    left: 20px;
+    top: 100px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.entities {
+    position: absolute;
+    width: 275px;
+    height: 75px;
+    left: 20px;
+    top: 170px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.how-charts {
+    position: absolute;
+    width: 106px;
+    height: 28px;
+    left: 160px;
+    top: 20px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 28px;
+    color: #000000;
+}
+.build {
+    position: absolute;
+    width: 269px;
+    height: 75px;
+    left: 120px;
+    top: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.report {
+    position: absolute;
+    width: 168px;
+    height: 75px;
+    left: 100px;
+    top: 100px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.charts-is {
+    position: absolute;
+    width: 275px;
+    height: 75px;
+    left: 90px;
+    top: 170px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.how-sync {
+    position: absolute;
+    width: 106px;
+    height: 28px;
+    left: 300px;
+    top: 20px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 28px;
+    color: #000000;
+}
+.be {
+    position: absolute;
+    width: 269px;
+    height: 75px;
+    left: 300px;
+    top: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.synced {
+    position: absolute;
+    width: 168px;
+    height: 75px;
+    left: 160px;
+    top: 100px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
+}
+.with-jira {
+    position: absolute;
+    width: 275px;
+    height: 75px;
+    left: 100px;
+    top: 170px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 46px;
+    line-height: 75px;
+    /* identical to box height */
+    color: #000000;
 }
