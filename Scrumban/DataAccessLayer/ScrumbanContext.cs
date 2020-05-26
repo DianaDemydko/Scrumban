@@ -305,7 +305,7 @@ namespace Scrumban.DataAccessLayer
             modelBuilder.Entity<TeamDAL>().HasData(
                 new TeamDAL[]
                 {
-                    new TeamDAL{TeamID = 1, Name = "Lv-396.1 .Net", Project = "Scrumban"},
+                    new TeamDAL{TeamID = 1, Name = "X-Men", Project = "Scrumban"},
                     new TeamDAL{TeamID = 2, Name = "New Team", Project = "New Project"}
                 }
             );
