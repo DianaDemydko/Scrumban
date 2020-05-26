@@ -83,19 +83,28 @@ export class About extends React.Component {
             >
                         <Modal.Header closeButton>
                             <Modal.Title id="contained-modal-title-vcenter">
-                                Modal heading
+                                Manage your Entities on Grid and Kanban Views
                         </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <h4>Centered Modal</h4>
+                            <h4>How work with Grids? What Can I see on them?</h4>
                             <p>
-                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                                consectetur ac, vestibulum at eros.
-                </p>
+                            In our application you can manage such entities like <strong>Teams</strong>,  <strong>Sprints</strong>, <strong>Features</strong>, <strong>Stories</strong>, <strong>Tasks</strong> and <strong>Defects</strong>.
+                            Information about that entities you can see on the grid views. To open grid for some entity you need go to the main menu and select <strong>Gids</strong> section and then select there one which you need.
+                            Each item in grid can be edited or deleted, for that you need to click on <strong>Edit</strong> or <strong>Delete</strong> buttons.
+                            Grid can be sorted by some column in A-Z or Z-A order, for that you need to click on header name.
+                            Also you can apply some filters to grid's data, for that click on <strong>Apply Filters</strong> button and select some filters.
+                            To create a new entity click on tne <strong>Create new</strong> button.
+                            </p>
+                        <h4>How work with Kanban Board? What Can I see on it?</h4>
+                        <p>
+                            On the Kanban Board you can see your <strong>Stories</strong> separated by different columns regarding to their statuses.
+                            You can move cards between them. On the card you can see <strong>Rank</strong>, <strong>Points</strong> and <strong>Description</strong> for some story.
+                            Good to remember that if you move card to 'In Progress' state you set Start Date for your story and if you move it to 'Done' you set the End Date.
+                        </p>
                         </Modal.Body>
                     <Modal.Footer>
-                        <button onClick={() => { this.setEntities(false) }} >Close</button>
+                        <button onClick={() => { this.setEntities(false) }} className="btn btn-sm btn-outline-dark" >Close</button>
                         </Modal.Footer>
                 </Modal>
                 <Modal
@@ -106,19 +115,18 @@ export class About extends React.Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Modal heading
+                            Build your report charts and see the progress
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>Centered Modal</h4>
+                        <h4>Which charts are available? How can I build them?</h4>
                         <p>
-                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                            consectetur ac, vestibulum at eros.
+                            In our application you can build thee types of charts. <strong><a href="http://www.clariostechnology.com/productivity/blog/whatisaburnupchart">Burn Up</a></strong>, <strong><a href="https://www.visual-paradigm.com/scrum/scrum-burndown-chart/">Burn Down</a></strong>, <strong><a href="https://kanbanize.com/blog/kanban-analytics-part-ii-cycle-time/">Cycle Time</a></strong>.
+                            To build chart you need to select <strong>Charts</strong> section in main menu and open page with proper chart. Yhen select a <strong>Sprint</strong> and chart will be generated automaticly.
                 </p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button onClick={() => { this.setCharts(false) }} >Close</button>
+                        <button onClick={() => { this.setCharts(false) }} className="btn btn-sm btn-outline-dark" >Close</button>
                     </Modal.Footer>
                 </Modal>
                 <Modal
@@ -129,19 +137,18 @@ export class About extends React.Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Modal heading
+                            Sync your stories with Jira Software
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>Centered Modal</h4>
+                        <h4>How can sync my stories from Jira?</h4>
                         <p>
-                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                            consectetur ac, vestibulum at eros.
-                </p>
+                            If you have an account and some project data  on <strong><a href="https://start.atlassian.com/">Jira Software</a></strong> you can sync your stories to our application!
+                            To do it go to the <strong>Jira Synchronization</strong> section in main menu and enter your enviroment url, project name on Jira, your email and API Token and be synced!
+                        </p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button onClick={() => { this.setSync(false) }} >Close</button>
+                        <button onClick={() => { this.setSync(false) }} className="btn btn-sm btn-outline-dark" >Close</button>
                     </Modal.Footer>
                 </Modal>
             </div>
