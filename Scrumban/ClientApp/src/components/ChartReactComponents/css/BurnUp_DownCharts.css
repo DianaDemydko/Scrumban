@@ -10,12 +10,12 @@ h3.header{
 .chart-container {
     display: flex;
     flex-direction: row;
-    margin-left: 100px;
-    margin-top: 60px;
 }
 .chart {
     display: flex;
     flex-direction: column;
+    margin-left: 5%;
+    margin-top: 5%;
 }
 
 #burn-up canvas {

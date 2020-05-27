@@ -460,7 +460,7 @@ export class BurnUp_DownCharts extends React.Component {
         return (
             <div id="burn-up">
                 <div>
-                    <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)} style={{ 'margin-left': '220px'}}>
+                    <select className="btn btn-light dropdown-toggle" name="sprints" onChange={e => this.onSprintChanged(e)} style={{ 'margin-left': '20%'}}>
                         <option>{NOT_SELECTED}</option>
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}

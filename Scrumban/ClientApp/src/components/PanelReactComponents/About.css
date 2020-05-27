@@ -10,6 +10,8 @@
 .scrum-kanban-wrapper {
     display:flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 .func-wrapper {
     display: flex;
@@ -17,12 +19,13 @@
 }
 .scrum {
     position: absolute;
-    width: 623px;
-    height: 250px;
-    left: 50px;
+    width: 45%;
+    height: 40%;
+    left: 2%;
     background: rgba(240, 221, 52, 0.86);
     box-sizing: border-box;
     cursor: pointer;
+    top: 10%;
 }
 .what {
     position: absolute;
@@ -42,7 +45,7 @@
     width: 67px;
     height: 84px;
     left: 20px;
-    top: 70px;
+    top: 30%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -55,7 +58,7 @@
     width: 288px;
     height: 84px;
     left: 20px;
-    top: 150px;
+    top: 60%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -65,9 +68,8 @@
 }
 .what-k {
     position: absolute;
-    width: 205px;
     height: 84px;
-    left: 380px;
+    right: 4%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -77,62 +79,61 @@
 }
 .is-k {
     position: absolute;
-    width: 67px;
     height: 84px;
-    left: 520px;
-    top: 70px;
+    right: 4%;
+    top: 30%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
     font-size: 72px;
     line-height: 84px;
-    color: #000000!important;
+    color: #000000 !important;
 }
 .is-kanban {
     position: absolute;
-    width: 329px;
     height: 84px;
-    left: 250px;
-    top: 140px;
+    right: 4%;
+    top: 60%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
     font-size: 72px;
     line-height: 84px;
-    color: #000000!important;
+    color: #000000 !important;
 }
 .kanban {
     position: absolute;
-    width: 623px;
-    height: 250px;
-    left: 700px;
+    width: 45%;
+    height: 40%;
+    right: 2%;
     background: rgba(103, 37, 171, 0.86);
     cursor: pointer;
+    top: 10%;
 }
 .grids {
     position: absolute;
-    width: 408px;
-    height: 280px;
-    left: 50px;
-    top: 380px;
+    width: 30%;
+    height: 40%;
+    left: 2%;
+    top: 55%;
     background: rgba(255, 87, 51, 0.77);
     cursor: pointer;
 }
 .charts {
     position: absolute;
-    width: 408px;
-    height: 280px;
-    left: 480px;
-    top: 380px;
+    width: 30%;
+    height: 40%;
+    left: 35%;
+    top: 55%;
     background: #F96D80;
     cursor: pointer;
 }
 .sync {
     position: absolute;
-    width: 408px;
-    height: 280px;
-    left: 920px;
-    top: 380px;
+    width: 30%;
+    height: 40%;
+    left: 68%;
+    top: 55%;
     background: #BB596B;
     cursor: pointer;
 }
@@ -141,7 +142,7 @@
     width: 106px;
     height: 28px;
     left: 20px;
-    top: 20px;
+    top: 1%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -154,7 +155,7 @@
     width: 269px;
     height: 75px;
     left: 20px;
-    top: 30px;
+    top: 10%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -168,7 +169,7 @@
     width: 168px;
     height: 75px;
     left: 20px;
-    top: 100px;
+    top: 35%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -182,7 +183,7 @@
     width: 275px;
     height: 75px;
     left: 20px;
-    top: 170px;
+    top: 60%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -195,8 +196,8 @@
     position: absolute;
     width: 106px;
     height: 28px;
-    left: 160px;
-    top: 20px;
+    left: 45%;
+    top: 1%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -208,8 +209,8 @@
     position: absolute;
     width: 269px;
     height: 75px;
-    left: 120px;
-    top: 30px;
+    left: 35%;
+    top: 10%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -222,8 +223,8 @@
     position: absolute;
     width: 168px;
     height: 75px;
-    left: 100px;
-    top: 100px;
+    left: 30%;
+    top: 35%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -236,8 +237,8 @@
     position: absolute;
     width: 275px;
     height: 75px;
-    left: 90px;
-    top: 170px;
+    left: 28%;
+    top: 60%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -248,10 +249,9 @@
 }
 .how-sync {
     position: absolute;
-    width: 106px;
     height: 28px;
-    left: 300px;
-    top: 20px;
+    right: 5%;
+    top: 1%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -261,10 +261,9 @@
 }
 .be {
     position: absolute;
-    width: 269px;
     height: 75px;
-    left: 300px;
-    top: 30px;
+    right: 4%;
+    top: 10%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -275,10 +274,9 @@
 }
 .synced {
     position: absolute;
-    width: 168px;
     height: 75px;
-    left: 160px;
-    top: 100px;
+    right: 4%;
+    top: 35%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;
@@ -289,10 +287,9 @@
 }
 .with-jira {
     position: absolute;
-    width: 275px;
     height: 75px;
-    left: 100px;
-    top: 170px;
+    right: 4%;
+    top: 60%;
     font-family: Roboto;
     font-style: normal;
     font-weight: 900;

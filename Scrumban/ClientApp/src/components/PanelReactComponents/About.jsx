@@ -80,6 +80,7 @@ export class About extends React.Component {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
+                onHide={() => { this.setEntities(false) }}
             >
                         <Modal.Header closeButton>
                             <Modal.Title id="contained-modal-title-vcenter">
@@ -112,6 +113,7 @@ export class About extends React.Component {
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
+                    onHide={() => { this.setCharts(false) }}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
@@ -134,6 +136,7 @@ export class About extends React.Component {
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
+                    onHide={() => { this.setSync(false) }}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">

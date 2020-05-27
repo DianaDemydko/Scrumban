@@ -241,7 +241,7 @@ export class FeatureTable extends Component {
         return <div>
             <div className="grid-panel">
                 <div className="grid-name">Features</div>
-                <div className="grid-buttons" style={{ marginLeft: '65%' }}>
+                <div className="grid-buttons">
                     {this.props.currentUser.roleId != 1 ? <button onClick={() => this.props.moveToComponent("featureAdd")} className="btn add-new btn-panel-table">Create New</button> : null }
                     <button onClick={() => { this.showFilters(true) }} className="btn btn-panel-table add-filters">Apply Filters</button>
                 </div>

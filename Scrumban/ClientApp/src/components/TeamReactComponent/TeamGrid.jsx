@@ -242,7 +242,7 @@ export class TeamGrid extends Component {
         return  < div >
             <div className="grid-panel">
                 <div className="grid-name">Teams</div>
-                <div className="grid-buttons" style={{ 'margin-left': '78%' }}>
+                <div className="grid-buttons">
                     {this.props.currentUser.roleId != 1 ? <button onClick={() => this.props.moveToComponent("teamAdd")} className="btn add-new btn-panel-table">Create New</button> : null }
                 </div>
             </div>
