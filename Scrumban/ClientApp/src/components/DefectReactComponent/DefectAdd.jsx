@@ -149,40 +149,39 @@ export class DefectAdd extends React.Component {
             });
 
             var moveToComponentVar = this.props.moveToComponent;
-
-            fetch(apiAddUrl, {
-                method: "post",
-                headers: {
-                    "Content-type": "application/json",
-                    "Authorization": "Bearer " + sessionStorage.getItem("tokenKey")
-                },
-                body: data
-            })
-                .then(function (response) {
-                    let responseStatus = response.status
-                    switch (responseStatus) {
-                        case 200:
-                            toast.success("Defect was created!");
-                            moveToComponentVar("defects");
-                            break
-                        case 400:
-                            toast.error("Incorrect data !");
-                            break
-                        case 401:
-                            toast.warn("You are not authorized. Please login!");
-                            moveToComponentVar("login");
-                            break
-                        case 403:
-                            toast.error("You have not permission !");
-                            break
-                        default:
-                            toast.error("Something wrong!!");
-                            this.loadData("");
-                            break
-                    }
+                fetch(apiAddUrl, {
+                    method: "post",
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": "Bearer " + sessionStorage.getItem("tokenKey")
+                    },
+                    body: data
                 })
+                    .then(function (response) {
+                        let responseStatus = response.status
+                        switch (responseStatus) {
+                            case 200:
+                                toast.success("Defect was created!");
+                                moveToComponentVar("defects");
+                                break
+                            case 400:
+                                toast.error("Incorrect data !");
+                                break
+                            case 401:
+                                toast.warn("You are not authorized. Please login!");
+                                moveToComponentVar("login");
+                                break
+                            case 403:
+                                toast.error("You have not permission !");
+                                break
+                            default:
+                                toast.error("Something wrong!!");
+                                this.loadData("");
+                                break
+                        }
+                    })
+            }
         }
-    }
    
     onSubmit(e) {
         e.preventDefault();
@@ -194,9 +193,13 @@ export class DefectAdd extends React.Component {
         var defectSeverity = this.state.severity.trim();
         var defectStoryId = this.state.storyId.trim();
         var userId = this.state.userId;
-        let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus, userId: userId };
-        this.onAddDefect(defect);
-        this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "", userId: "" });
+        if (defectName != '' && defectDescription != '') {
+            let defect = { name: defectName, description: defectDescription, state: defectState, priority: defectPriority, severity: defectSeverity, storyId: defectStoryId, status: defectStatus, userId: userId };
+            this.onAddDefect(defect);
+            this.setState({ name: "", description: "", state: "", priority: "", severity: "", storyId: "", status: "", userId: "" });
+        } else {
+            toast.warn("Name and Description cannot be empty!");
+        }
 
     }
 
@@ -262,8 +265,8 @@ export class DefectAdd extends React.Component {
                     </select>
                 </div>
                 <div className="addContent">
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }}>Save</button>
-                    <button type="submit" onClick={() => this.props.moveToComponent("defects")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }}>Cancel</button>
+                    <button type="button" onClick={this.onSubmit} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '50%' }}>Save</button>
+                    <button type="button" onClick={() => this.props.moveToComponent("defects")} className="btn btn-sm btn-outline-dark" style={{ 'margin-right': '20px', 'width': '40%' }}>Cancel</button>
                 </div>
 
 

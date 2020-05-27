@@ -53,35 +53,38 @@ export class SprintCreateForm extends React.Component {
     }
 
     addNewSprint() {
-
-        fetch('api/Sprint/Create',
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                method: 'POST',
-                body: JSON.stringify({
+        if (this.state.name != '' && this.state.description != '') {
+            fetch('api/Sprint/Create',
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
                         name: this.state.name,
                         description: this.state.description,
                         startDate: this.state.startDate,
                         endDate: this.state.endDate,
                         sprintStatus: this.state.sprintStatus,
                         teamId: this.state.teamId
-                      })
-                    
-            })
-            .then(function (response) {
-                let responseStatus = response.status
-                switch (responseStatus) {
-                    case 400:
-                        toast.error("Something wrong!")
-                        break
-                    case 200:
-                        toast.success("Sprint was created!");
-                        this.props.moveToComponent("sprints");
-                        break
-                }
-            }.bind(this))
+                    })
+
+                })
+                .then(function (response) {
+                    let responseStatus = response.status
+                    switch (responseStatus) {
+                        case 400:
+                            toast.error("Something wrong!")
+                            break
+                        case 200:
+                            toast.success("Sprint was created!");
+                            this.props.moveToComponent("sprints");
+                            break
+                    }
+                }.bind(this))
+        } else {
+            toast.warn("Name and Description cannot be empty!");
+        }
         
        
     }

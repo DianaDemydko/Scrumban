@@ -2,6 +2,7 @@
 import { Line } from "react-chartjs-2";
 import { toast } from "react-toastify"; 
 import './css/BurnUp_DownCharts.css'
+import Spinner from 'react-bootstrap/Spinner'
 
 //constant values
 const NOT_SELECTED = "Select sprint here...";
@@ -276,7 +277,8 @@ export class BurnUp_DownCharts extends React.Component {
             actualTaskRemeaningArray: [],
             totalArray: [],
             completedArray: [],
-            idealArray: []
+            idealArray: [],
+            loading: false
         };
 
         this.onSprintChanged = this.onSprintChanged.bind(this);
@@ -292,6 +294,7 @@ export class BurnUp_DownCharts extends React.Component {
 
     }
     onSprintChanged = async (e) => {
+        this.setState({ loading: true });
         try {
             if (e.target.value != NOT_SELECTED) {
                 var selectedSprint = this.state.allSprints.find(x => x.name === e.target.value);
@@ -321,7 +324,8 @@ export class BurnUp_DownCharts extends React.Component {
                     actualTaskRemeaningArray: actualForBurnDown,
                     completedArray: completedForBurnUp,
                     idealArray: idealForBurnUp,
-                    totalArray: totalForBurnUp
+                    totalArray: totalForBurnUp,
+                    loading: false
                 });
             }
         }
@@ -461,16 +465,23 @@ export class BurnUp_DownCharts extends React.Component {
                     {this.state.allSprints.map(sprint => (
                         <option> {sprint.name}</option>))}
                     </select>
-                    <div className="chart-container">
-                        <div className="chart">
-                            <h3 className='header'>Burn Down</h3>
-                            <Line data={dataBurnDown} options={optionsBurnDown} />
+                    {this.state.loading ? (
+                        <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                            <Spinner animation="border" variant="warning" />
                         </div>
-                        <div className="chart">
-                            <h3 className='header'>Burn Up</h3>
-                            <Line data={dataBurnUp} options={optionsBurnUp} />
+                    )
+                        :
+                        <div className="chart-container">
+                            <div className="chart">
+                                <h3 className='header'>Burn Down</h3>
+                                <Line data={dataBurnDown} options={optionsBurnDown} />
+                            </div>
+                            <div className="chart">
+                                <h3 className='header'>Burn Up</h3>
+                                <Line data={dataBurnUp} options={optionsBurnUp} />
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         );

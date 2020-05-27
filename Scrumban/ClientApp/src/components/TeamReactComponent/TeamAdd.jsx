@@ -57,9 +57,13 @@ export class TeamAdd extends React.Component {
             teamName: this.state.teamName,
             teamProject: this.state.teamProject,
         };
-        this.onAdd(team);
-        this.setState({ teamName: "", teamProject: "" });
-        this.props.moveToComponent("teams");
+        if (team.teamName != '' && team.teamProject != '') {
+            this.onAdd(team);
+            this.setState({ teamName: "", teamProject: "" });
+            this.props.moveToComponent("teams");
+        } else {
+            toast.warn("Name and Project cannot be empty!");
+        }
     }
     render() {
         return (

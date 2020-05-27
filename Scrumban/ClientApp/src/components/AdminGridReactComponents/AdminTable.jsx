@@ -3,12 +3,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import '../../GridStyles/StyleForGrid.css';
 import { AdminRow } from './AdminRow.jsx';
 import { checkToken } from '../Helpers'
+import Spinner from 'react-bootstrap/Spinner'
 
 export class AdminTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            loading: true
         };
         this.onEditUser = this.onEditUser.bind(this);
         this.loadData = this.loadData.bind(this);
@@ -20,6 +22,7 @@ export class AdminTable extends Component {
         this.loadData();
     }
     loadData() {
+        this.setState({ loading: true });
         checkToken()
         fetch('api/users/getUsers', {
             method: "get",
@@ -45,7 +48,7 @@ export class AdminTable extends Component {
                     alert("ERROR! Status code: " + response.status)
                 }
             }).then(data => {
-                this.setState({ users: data });
+                this.setState({ users: data, loading: false  });
             })
     }
 
@@ -56,30 +59,38 @@ export class AdminTable extends Component {
                 <div className="grid-name">Users</div>
             </div>
             <hr></hr>
-            <div className="tablePosition table-wrapper">
-                <table class="table" style={{ 'table-layout': 'fixed' }} >
-                    <thead>
-                        <tr>
-                            <th className="col">First Name</th>
-                            <th class="col">Surname</th>
-                            <th class="col">Email</th>
-                            <th class="col">Role</th>
-                            <th class="col">Team</th>
-                            <th class="col"/>
-                        </tr>
-                    </thead>
-                    <tbody>
+            {this.state.loading ? (
+                <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                    <Spinner animation="border" variant="warning" />
+                </div>
+            )
+                :
+                <div className="tablePosition table-wrapper">
+                    <table class="table" style={{ 'table-layout': 'fixed' }} >
+                        <thead>
+                            <tr>
+                                <th className="col">First Name</th>
+                                <th class="col">Surname</th>
+                                <th class="col">Email</th>
+                                <th class="col">Role</th>
+                                <th class="col">Team</th>
+                                <th class="col" />
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        {this.state.users.map(user => {
-                            if (this.props.currentUser.id != user.id) {
-                                return ( < AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
+                            {this.state.users.map(user => {
+                                if (this.props.currentUser.id != user.id) {
+                                    return (< AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
+                                }
                             }
-                        }
-                        )}
-                    </tbody>
-                </table>
-            </div>
-            <div />
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            }
+                <div />
+
         </div>;
 
     }

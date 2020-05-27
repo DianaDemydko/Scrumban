@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import { Bar } from "react-chartjs-2";
-import  './css/CycleTimeChart.css'
+import './css/CycleTimeChart.css'
+import Spinner from 'react-bootstrap/Spinner'
 
 //constant values
 const NOT_SELECTED = "Select sprint here...";
@@ -84,7 +85,8 @@ export class CycleTimeChart extends React.Component {
             storiesOfSelectedSprint: [],
             storyNames: [],
             cycleTimeDays: [],
-            maxCycleTime: 30
+            maxCycleTime: 30,
+            loading: false
         };
         this.onSprintChanged = this.onSprintChanged.bind(this);
     }
@@ -97,6 +99,7 @@ export class CycleTimeChart extends React.Component {
             });
     }
     onSprintChanged = async (e) => {
+        this.setState({ loading: true });
         if (e.target.value != NOT_SELECTED) {
             var selectedSprint = this.state.allSprints.find(x => x.name === e.target.value);
             var sprint_id = selectedSprint.sprint_id;
@@ -111,7 +114,8 @@ export class CycleTimeChart extends React.Component {
                 storiesOfSelectedSprint: stories,
                 storyNames: storiesNames,
                 cycleTimeDays: cycleTimeDays,
-                maxCycleTime: maxValue
+                maxCycleTime: maxValue,
+                loading: false
             });
         }
 
@@ -167,10 +171,17 @@ export class CycleTimeChart extends React.Component {
                         {this.state.allSprints.map(sprint => (
                             <option> {sprint.name}</option>))}
                     </select>
-                    <h3 className='header'>Cycle Time</h3>
-                    <div>
-                        <Bar data={dataCycleTime} options={optionsCycleTime} />
-                    </div>
+                    <h3 className='header' style={{ 'margin-top': '10px' }}>Cycle Time</h3>
+                    {this.state.loading ? (
+                        <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                            <Spinner animation="border" variant="warning" />
+                        </div>
+                    )
+                        :
+                        <div>
+                            <Bar data={dataCycleTime} options={optionsCycleTime} />
+                        </div>
+                      }
                 </div>
             </div>
         );

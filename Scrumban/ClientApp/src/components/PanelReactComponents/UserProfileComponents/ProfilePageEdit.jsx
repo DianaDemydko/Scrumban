@@ -214,7 +214,7 @@ export class ProfilePageEdit extends Component {
             .then(data => {
                 this.props.updateUser(data)
                 this.props.onPrintOrEdit("true")
-                toast.success("Your profile was updated!")
+                toast.success("Your profile was updated! To see changed avatar Log Out and Log In again")
             })
     }
 

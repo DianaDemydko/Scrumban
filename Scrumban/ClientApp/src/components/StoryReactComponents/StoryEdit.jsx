@@ -214,13 +214,13 @@ export class StoryEdit extends React.Component {
             <td>
                 <div>
                         <label for="description">StoryPoints</label>
-                    <input type="text" class="form-control" onChange={this.onStoryPointsChanged} id="storyPoints" placeholder="story points" defaultValue={this.props.item.storyPoints} />
+                    <input type="number" class="form-control" onChange={this.onStoryPointsChanged} id="storyPoints" placeholder="story points" defaultValue={this.props.item.storyPoints} />
                 </div>
             </td>
             <td>
                 <div>
                         <label for="description">Rank</label>
-                        <input type="text" class="form-control" onChange={this.onRankChanged} id="rank" placeholder="story rank" defaultValue={this.props.item.rank} />
+                    <input type="number" class="form-control" onChange={this.onRankChanged} id="rank" placeholder="story rank" defaultValue={this.props.item.rank} />
                 </div>
             </td>
             <td>

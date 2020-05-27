@@ -126,35 +126,38 @@ export class StoryAdd extends React.Component {
         var storyState = this.state.storyState;
         var feature = this.state.feature;
         var userId = this.state.userId;
-
-        fetch('api/Story/CreateStory',
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    name: storyName,
-                    description: storyDescription,
-                    sprint_id: storySprintId,
-                    storyState: storyState,
-                    storyPoints: storyPoints,
-                    rank: storyRank,
-                    featureId: feature,
-                    userId: userId
-                })
-            }).then(function (response) {
-                let responseStatus = response.status
-                switch (responseStatus) {
-                    case 400:
-                        toast.error("Something wrong  !");
-                        break
-                    case 201:
-                        toast.success("Story was creaated!");
-                        this.props.moveToComponent("stories");
-                        break
-                }
-            }.bind(this))
+        if (storyName != '' && storyDescription != '') {
+            fetch('api/Story/CreateStory',
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        name: storyName,
+                        description: storyDescription,
+                        sprint_id: storySprintId,
+                        storyState: storyState,
+                        storyPoints: storyPoints,
+                        rank: storyRank,
+                        featureId: feature,
+                        userId: userId
+                    })
+                }).then(function (response) {
+                    let responseStatus = response.status
+                    switch (responseStatus) {
+                        case 400:
+                            toast.error("Something wrong  !");
+                            break
+                        case 201:
+                            toast.success("Story was creaated!");
+                            this.props.moveToComponent("stories");
+                            break
+                    }
+                }.bind(this))
+        } else {
+            toast.warn("Name and Description cannot be empty!");
+        }
     }
     componentDidMount() {
         fetch('api/Story/GetNotCompletedSprints')

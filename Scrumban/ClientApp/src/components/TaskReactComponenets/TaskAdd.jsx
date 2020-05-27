@@ -414,13 +414,11 @@ export class TaskAdd extends React.Component {
 
         };
 
-        // send on server
-
-        this.onAdd(task);
-
-        // back to tasks
-        
-
+        if (task.name != '' && task.description != '' && task.startDate != null && task.finishDate != null) {
+            this.onAdd(task);
+        } else {
+            toast.warn("Name, Description and Dates cannot be empty!");
+        }
     }
 
 

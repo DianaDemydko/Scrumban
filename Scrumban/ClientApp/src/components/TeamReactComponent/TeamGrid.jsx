@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { TeamEdit } from './TeamEdit';
 import '../../GridStyles/StyleForGrid.css';
 import { toast } from 'react-toastify';
+import Spinner from 'react-bootstrap/Spinner'
 
 
 class DeleteButton extends Component {
@@ -123,7 +124,8 @@ export class TeamGrid extends Component {
                 sortingOrder: ''
             },
             findName: '',
-            findProject: ''
+            findProject: '',
+            loading: true
             
         };
         this.sortData = this.sortData.bind(this)
@@ -216,20 +218,21 @@ export class TeamGrid extends Component {
 
 
     componentDidMount() {
-
+        this.setState({ loading: true });
         fetch('api/team/getTeams')
             .then(res => res.json())
             .then(json => {
-                this.setState({ teams: json })
+                this.setState({ teams: json, loading: false  })
             });
 
     }
 
     loadData() {
+        this.setState({ loading: true });
         fetch('api/team/getTeams')
             .then(res => res.json())
             .then(json => {
-                this.setState({ teams: json })
+                this.setState({ teams: json, loading: false })
             });
     }
 
@@ -244,28 +247,35 @@ export class TeamGrid extends Component {
                 </div>
             </div>
             <hr></hr>
-            <div className="tablePosition table-wrapper">
-                <table className=" table" style={{ 'table-layout': 'fixed' }}>
-                    <tr>
-                        <th onClick={() => this.sortData('name')} style={{ 'width': '40%' }}> Name
+            {this.state.loading ? (
+                <div style={{ 'margin-left': '50%', 'margin-top': '15%' }}>
+                    <Spinner animation="border" variant="warning" />
+                </div>
+            )
+                :
+                <div className="tablePosition table-wrapper">
+                    <table className=" table" style={{ 'table-layout': 'fixed' }}>
+                        <tr>
+                            <th onClick={() => this.sortData('name')} style={{ 'width': '40%' }}> Name
                         <div />
-                    </th>
-                        <th onClick={() => this.sortData('project')} style={{ 'width': '30%' }}> Project
-                     
+                            </th>
+                            <th onClick={() => this.sortData('project')} style={{ 'width': '30%' }}> Project
+                        
                      </th>
-                     <th></th>
-                     <th></th>
+                            <th></th>
+                            <th></th>
 
-                </tr>
-                <tbody>
-                        {this.state.teams.map(team => (
-                            <TeamRow key={team.id} team={team} loadData={this.loadData} currentUser={this.props.currentUser} />
-                )
-                        )}
-                    </tbody>
-            </table>
-            </div>
+                        </tr>
+                        <tbody>
+                            {this.state.teams.map(team => (
+                                <TeamRow key={team.id} team={team} loadData={this.loadData} currentUser={this.props.currentUser} />
+                            )
+                            )}
+                        </tbody>
 
+                    </table>
+                </div>
+            }
         </div>;
 
     }

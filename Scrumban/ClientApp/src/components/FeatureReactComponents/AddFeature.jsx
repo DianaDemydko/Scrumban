@@ -9,8 +9,8 @@ export class AddFeature extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: 'Default Name',
-            description: 'Default Description',
+            name: '',
+            description: '',
             priorityID: 1,
             stateID: 1,
             start: new Date(),
@@ -94,41 +94,39 @@ fetchUsers() {
     }
 
     handleClick(e) {
-        checkToken()
-        fetch('api/FeatureData/', {
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
-            },
-            body: JSON.stringify({
-                name: this.state.name, description: this.state.description,
-                priorityid: this.state.priorityID, time: this.state.start,
-                stateid: this.state.stateID,
-                userId: this.state.userId
-            })
-        }).then(function (response) {
-            if (response.status == 200) {
-                toast.success("Feature was created!");
-                this.props.moveToComponent("feature");
-            }
-            else if (response.status == 401) {
-                //var answer = window.confirm("You are not authorized. Move to Login page ?");
-               // if (answer == true) {
+        if (this.state.name != '' && this.state.description != '') {
+            checkToken()
+            fetch('api/FeatureData/', {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + sessionStorage.getItem("tokenKey")
+                },
+                body: JSON.stringify({
+                    name: this.state.name, description: this.state.description,
+                    priorityid: this.state.priorityID, time: this.state.start,
+                    stateid: this.state.stateID,
+                    userId: this.state.userId
+                })
+            }).then(function (response) {
+                if (response.status == 200) {
+                    toast.success("Feature was created!");
+                    this.props.moveToComponent("feature");
+                }
+                else if (response.status == 401) {
                     toast.warn("You are not authorized. Login please !");
                     this.props.moveToComponent("login");
-                    //window.location.replace("/login");
-                //}
-            }
-            else if (response.status == 403) {
-                toast.error("You have not permission  !");
-                //alert("ERROR! You have not permission !")
-            }
-            else {
-                toast.error("Something wrong  !");
-                //alert("ERROR! Status code: " + response.status)
-            }
-        }.bind(this))
+                }
+                else if (response.status == 403) {
+                    toast.error("You have not permission  !");
+                }
+                else {
+                    toast.error("Something wrong  !");
+                }
+            }.bind(this))
+        } else {
+            toast.warn("Name and Description cannot be empty!");
+        }
     }
     
     onNameChanged(e) {
@@ -174,7 +172,6 @@ fetchUsers() {
 
                     </select>
                     </div>
-                {/* <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" name ="owners">Ownres</button>*/}
                 <div className="addContent">
                     <label class="col-2 mr-10">Owner: </label>
                     <select onChange={this.onOwnerChange} class="btn btn-light dropdown-toggle m-0 w-25" id="state" placeholder="Owner...">
