@@ -33,7 +33,7 @@ export class ProfilePageEdit extends Component {
             emailValidMessage: "",
 
             oldPasswordValid: false,
-            oldPasswordValidMessage: "input password !",
+            oldPasswordValidMessage: "Input your password to apply any changes!",
 
             newPasswordValid: true,
             newPasswordValidMessage: "",
@@ -62,7 +62,7 @@ export class ProfilePageEdit extends Component {
         var isValid = false
 
         if (firstName == "") {
-            message = "Input first name !"
+            message = "Input First Name!"
         }
         else {
             isValid = true
@@ -78,7 +78,7 @@ export class ProfilePageEdit extends Component {
         var isValid = false
 
         if (surname == "") {
-            message = "Input surname !"
+            message = "Input Surname!"
         }
         else {
             isValid = true
@@ -95,10 +95,10 @@ export class ProfilePageEdit extends Component {
             /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
 
         if (email == "") {
-            message = "Input email (login) !"
+            message = "Input Email (Login) !"
         }
         else if (regex.test(email) === false) {
-            message = "incorrect email !"
+            message = "Incorrect Email !"
         }
         else {
             isValid = true
@@ -112,7 +112,7 @@ export class ProfilePageEdit extends Component {
         var message = ""
         var isValid = false
         if (pass == "") {
-            message = "input password !"
+            message = "Input your password to apply any changes!!"
         }
         else {
             isValid = true
@@ -134,10 +134,10 @@ export class ProfilePageEdit extends Component {
             message = ""
         }
         else if (password.length < 5) {
-            message = "be at least 5 characters !"
+            message = "Be at least 5 characters !"
         }
         else if (regex.test(password) === false) {
-            message = "be at least one small letter, one capital letter and one number!"
+            message = "Be at least one small letter, one capital letter and one number!"
         }
         else {
             isValid = true
@@ -151,13 +151,13 @@ export class ProfilePageEdit extends Component {
         var message = ""
         var isValid = false
         if (passwordConfirm == "" && this.state.password !== "") {
-            message = "confirm password !"
+            message = "Confirm your password !"
         }
         else if (this.state.password == "") {
             isValid = true
         }
         else if (passwordConfirm !== this.state.password) {
-            message = "password is not confirmed"
+            message = "Password is not confirmed!"
         }
         else if (this.state.newPasswordValid === false) {
             isValid = false
@@ -225,8 +225,8 @@ export class ProfilePageEdit extends Component {
             this.state.oldPasswordValid === false ||
             this.state.newPasswordValid === false ||
             this.state.confirmNewPasswordValid === false
-            ) {
-            alert("Invalid data")
+        ) {
+            toast.warn("Please enter your password to apply any changes!")
             return;
         }
 
