@@ -47,30 +47,9 @@ namespace Scrumban
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-
+            string connection = Configuration.GetConnectionString("AzureConnection");
             services.AddDbContext<ScrumbanContext>(options => options.UseSqlServer(connection));
             services.AddOptions();
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //{
-            //        options.RequireHttpsMetadata = false;
-            //        options.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidIssuer = Configuration.GetSection("JwtAuthentication:Issuer").Value,
-
-            //            ValidateAudience = true,
-            //            ValidAudience = Configuration.GetSection("JwtAuthentication:Audience").Value,
-
-            //            ValidateLifetime = true,
-            //            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-
-            //            ValidateIssuerSigningKey = true
-            //        };
-            //    }
-            //);
             services.Configure<JWTAuthentication>(Configuration.GetSection("JwtAuthentication"));
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -111,18 +90,15 @@ namespace Scrumban
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddOData();
+            services.AddAntiforgery(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
         }
 
        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-
-            //}
-            //else
-            //{
             app.UseHttpException();
 
             app.UseExceptionHandler("/error");
@@ -131,7 +107,6 @@ namespace Scrumban
             
             
             app.UseHsts();
-            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -35,33 +35,6 @@ namespace Scrumban.DataAccessLayer
                 .WithMany(g => g.Tasks)
                 .HasForeignKey(s => s.StoryId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<DefectDAL>().HasData(
-                new DefectDAL[]
-                {
-                   new DefectDAL(){DefectId=1, Name="Defect_1",Description="Descriprion_1",State="To Do",Priority="Medium",Severity="Medium",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=2, Name="Some Defect",Description="Descriprion_2",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=3, Name="Menu",Description="Descriprion_3",State="Done",Priority="High",Severity="Medium",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=4, Name="Autorization",Description="Descriprion_3",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=5, Name="Pagination",Description="Descriprion_5",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=6, Name="KanbanBoard",Description="Descriprion_7",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=7, Name="BusinessLogic",Description="Descriprion_9",State="In progress",Priority="High",Severity="Medium",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=8, Name="ConnectToDatabase",Description="Descriprion_1",State="Done",Priority="High",Severity="Critical",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=9, Name="Style",Description="Descriprion_2",State="To Do",Priority="High",Severity="Critical",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=10, Name="Defect_5",Description="Descriprion_3",State="Done",Priority="Medium",Severity="Medium",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=11, Name="Defect_3",Description="Descriprion_5",State="In progress",Priority="Medium",Severity="Medium",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=12, Name="Defect_9",Description="Descriprion_2",State="Done",Priority="Low",Severity="Medium",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=13, Name="Defect_10",Description="Descriprion_1",State="To Do",Priority="Medium",Severity="Low",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=14, Name="Defect_12",Description="Descriprion_8",State="Done",Priority="High",Severity="Low",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=15, Name="Defect_18",Description="Descriprion_2",State="In progress",Priority="Low",Severity="Medium",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=16, Name="Defect_20",Description="Descriprion_1",State="Done",Priority="Medium",Severity="Low",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=17, Name="Defect_11",Description="Descriprion_8",State="In progress",Priority="Low",Severity="Medium",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=18, Name="Defect_14",Description="Descriprion_2",State="Done",Priority="Medium",Severity="Low",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=19, Name="Defect_17",Description="Descriprion_5",State="To Do",Priority="Low",Severity="Medium",StoryId=1,Status="Open" },
-                   new DefectDAL(){DefectId=20, Name="Defect_30",Description="Descriprion_2",State="Done",Priority="Low",Severity="Low",StoryId=1,Status="Close" },
-                   new DefectDAL(){DefectId=21, Name="Defect_12",Description="Descriprion_1",State="In progress",Priority="Medium",Severity="Medium",StoryId=1,Status="Open" }
-                }
-                );
             // User Identity
             modelBuilder.Entity<RoleDAL>().HasData(
                 new RoleDAL[]

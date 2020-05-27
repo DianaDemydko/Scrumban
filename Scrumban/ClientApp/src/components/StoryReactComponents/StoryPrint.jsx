@@ -47,8 +47,10 @@ export class StoryPrint extends React.Component {
             .then(res => res.json())
             .then(json => {
                 var allSprints = json;
-                var sprintName = allSprints.filter(item => item.sprint_id === this.state.story.sprint_id)[0].name;
-                this.setState({ sprintName: sprintName });
+                if (this.state.story.sprint_id != 0) {
+                    var sprintName = allSprints.filter(item => item.sprint_id === this.state.story.sprint_id)[0].name;
+                    this.setState({ sprintName: sprintName });
+                }
             });
     }
 

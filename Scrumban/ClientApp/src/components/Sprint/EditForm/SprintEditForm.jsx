@@ -23,7 +23,6 @@ export class SprintEditForm extends React.Component {
     }
 
     onTeamChanged(e) {
-        debugger
         let sprint = { ...this.state.sprint }
         var teamId = e.target.value;
         var teamName = e.target.selectedOptions[0].text;

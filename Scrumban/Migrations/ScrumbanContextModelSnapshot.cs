@@ -47,29 +47,6 @@ namespace Scrumban.Migrations
 
                     b.ToTable("Defects");
 
-                    b.HasData(
-                        new { DefectId = 1, Description = "Descriprion_1", Name = "Defect_1", Priority = "Medium", Severity = "Medium", State = "To Do", Status = "Open", StoryId = 1 },
-                        new { DefectId = 2, Description = "Descriprion_2", Name = "Some Defect", Priority = "High", Severity = "Critical", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 3, Description = "Descriprion_3", Name = "Menu", Priority = "High", Severity = "Medium", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 4, Description = "Descriprion_3", Name = "Autorization", Priority = "High", Severity = "Critical", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 5, Description = "Descriprion_5", Name = "Pagination", Priority = "High", Severity = "Critical", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 6, Description = "Descriprion_7", Name = "KanbanBoard", Priority = "High", Severity = "Critical", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 7, Description = "Descriprion_9", Name = "BusinessLogic", Priority = "High", Severity = "Medium", State = "In progress", Status = "Open", StoryId = 1 },
-                        new { DefectId = 8, Description = "Descriprion_1", Name = "ConnectToDatabase", Priority = "High", Severity = "Critical", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 9, Description = "Descriprion_2", Name = "Style", Priority = "High", Severity = "Critical", State = "To Do", Status = "Open", StoryId = 1 },
-                        new { DefectId = 10, Description = "Descriprion_3", Name = "Defect_5", Priority = "Medium", Severity = "Medium", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 11, Description = "Descriprion_5", Name = "Defect_3", Priority = "Medium", Severity = "Medium", State = "In progress", Status = "Open", StoryId = 1 },
-                        new { DefectId = 12, Description = "Descriprion_2", Name = "Defect_9", Priority = "Low", Severity = "Medium", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 13, Description = "Descriprion_1", Name = "Defect_10", Priority = "Medium", Severity = "Low", State = "To Do", Status = "Open", StoryId = 1 },
-                        new { DefectId = 14, Description = "Descriprion_8", Name = "Defect_12", Priority = "High", Severity = "Low", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 15, Description = "Descriprion_2", Name = "Defect_18", Priority = "Low", Severity = "Medium", State = "In progress", Status = "Open", StoryId = 1 },
-                        new { DefectId = 16, Description = "Descriprion_1", Name = "Defect_20", Priority = "Medium", Severity = "Low", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 17, Description = "Descriprion_8", Name = "Defect_11", Priority = "Low", Severity = "Medium", State = "In progress", Status = "Open", StoryId = 1 },
-                        new { DefectId = 18, Description = "Descriprion_2", Name = "Defect_14", Priority = "Medium", Severity = "Low", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 19, Description = "Descriprion_5", Name = "Defect_17", Priority = "Low", Severity = "Medium", State = "To Do", Status = "Open", StoryId = 1 },
-                        new { DefectId = 20, Description = "Descriprion_2", Name = "Defect_30", Priority = "Low", Severity = "Low", State = "Done", Status = "Close", StoryId = 1 },
-                        new { DefectId = 21, Description = "Descriprion_1", Name = "Defect_12", Priority = "Medium", Severity = "Medium", State = "In progress", Status = "Open", StoryId = 1 }
-                    );
                 });
 
             modelBuilder.Entity("Scrumban.DataAccessLayer.Models.FeatureDAL", b =>
