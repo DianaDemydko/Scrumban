@@ -5,6 +5,8 @@ import { TeamEdit } from './TeamEdit';
 import '../../GridStyles/StyleForGrid.css';
 import { toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
 class DeleteButton extends Component {
@@ -13,6 +15,28 @@ class DeleteButton extends Component {
         super(props);
 
         this.onClick = this.onClick.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this team?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.onClick();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
     }
     async onClick(e) {
       
@@ -34,7 +58,7 @@ class DeleteButton extends Component {
     }
     render() {
         return (
-            <button onClick={e => this.onClick(e)} className="btn btn-sm btn-outline-dark w-100 m-1">
+            <button onClick={this.onDelete} className="btn btn-sm btn-outline-dark w-100 m-1">
                 Delete
             </button>
         );

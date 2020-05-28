@@ -3,6 +3,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
 import '../../GridStyles/StyleForGrid.css';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 const emptyAvatar = require('../PanelReactComponents/user.png');
 
 export class StoryPrint extends React.Component {
@@ -18,13 +21,34 @@ export class StoryPrint extends React.Component {
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);
         this.getFeatureName = this.getFeatureName.bind(this);
         this.getSprintName = this.getSprintName.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     componentDidMount() {
         this.getFeatureName();
         this.getSprintName();
     }
-
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this story?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.props.delete();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
+    }
     getFeatureName() {
         fetch('api/FeatureData/' + this.state.story.featureId)
             .then(function (response) {
@@ -82,7 +106,7 @@ export class StoryPrint extends React.Component {
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.sprintName}</label></td>
                 <td className="col">
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" type="button" onClick={this.props.edit}>Edit</button>
-                    <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit" onClick={this.props.delete}>Delete</button>
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" type="submit" onClick={this.onDelete}>Delete</button>
                 </td>
             </tr>
         );

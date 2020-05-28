@@ -17,6 +17,7 @@
     "moment": "^2.24.0",
     "react-bootstrap": "^1.0.1",
     "react-chartjs-2": "^2.7.6",
+    "react-confirm-alert": "^2.6.1",
     "react-toastify": "^5.1.0"
   }
 }

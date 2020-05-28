@@ -4,6 +4,9 @@ import Moment from 'react-moment';
 import '../../GridStyles/StyleForGrid.css';
 import { toast } from 'react-toastify';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 const icon_up = require("./sort-arrow-up.svg")
 const icon_down = require("./sort-arrow-down.svg")
 const emptyAvatar = require('../PanelReactComponents/user.png');
@@ -22,6 +25,28 @@ export class FeaturePrint extends Component {
         this.onEditButtonClick = this.onEditButtonClick.bind(this);
         this.getFirstDescriptionWord = this.getFirstDescriptionWord.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this feature?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.onDeleteClick();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
     }
     onDeleteClick() {
         fetch('api/FeatureData/', {
@@ -106,7 +131,7 @@ export class FeaturePrint extends Component {
                         <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                             Edit
                          </button>
-                        <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={e => this.onDeleteClick(e)}>Delete</button> </td> ) : null}
+                        <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.onDelete}>Delete</button> </td> ) : null}
                 
             </tr>);
     }

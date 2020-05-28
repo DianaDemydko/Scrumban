@@ -3,6 +3,9 @@ import { SprintEditForm } from './EditForm/SprintEditForm';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 export class SprintRow extends React.Component {
     constructor(props) {
         super(props)
@@ -18,6 +21,28 @@ export class SprintRow extends React.Component {
         this.onCancelEditMode = this.onCancelEditMode.bind(this)
         this.onEnableEditMode = this.onEnableEditMode.bind(this)
         this.fetchTeams = this.fetchTeams.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this sprint?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.onDeletingSprintElement();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
     }
 
 fetchTeams() {
@@ -47,9 +72,9 @@ fetchTeams() {
         this.setState({ sprint: sprint, isEditMode: false })
     }
 
-    onDeletingSprintElement(event)
+    onDeletingSprintElement()
     {
-        let sprint_id = event.target.id
+        let sprint_id = this.props.sprint.sprint_id;
 
         fetch('api/Sprint/Delete',
             {
@@ -100,7 +125,7 @@ fetchTeams() {
                         <td>
                             {this.props.currentUser.roleId != 1 ?
                                 (
-                        <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onDeletingSprintElement} >Delete</button>
+                        <button type="button" class="btn btn-sm btn-outline-dark w-100 m-1" id={this.state.sprint.sprint_id} onClick={this.onDelete} >Delete</button>
 
                                 ) : null}
                         </td>

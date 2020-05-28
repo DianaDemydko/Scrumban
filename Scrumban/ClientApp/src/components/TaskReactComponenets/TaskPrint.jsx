@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
-
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-
 import "react-datepicker/dist/react-datepicker.css";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
 const emptyAvatar = require('../PanelReactComponents/user.png');
@@ -25,10 +25,31 @@ export class TaskPrint extends React.Component {
 
 
 
-        this.taskHistory = this.taskHistory.bind(this)
+        this.taskHistory = this.taskHistory.bind(this);
+        this.onDelete = this.onDelete.bind(this);
 
     }
-
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this task?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.props.delete();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
+    }
 
 
     taskHistory() {
@@ -90,7 +111,7 @@ export class TaskPrint extends React.Component {
 
                     <button type="button" onClick={this.props.edit} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
 
-                    <button type="submit" onClick={this.props.delete} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
+                    <button type="submit" onClick={this.onDelete} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
 
                 </td>
 

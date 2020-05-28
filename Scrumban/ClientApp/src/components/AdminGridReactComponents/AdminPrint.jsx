@@ -3,6 +3,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
 import '../../GridStyles/StyleForGrid.css';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 export class AdminPrint extends Component {
     constructor(props) {
@@ -14,9 +17,31 @@ export class AdminPrint extends Component {
         }
         this.onDeleteClick = this.onDeleteClick.bind(this);
         this.onEditButtonClick = this.onEditButtonClick.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
     onEditButtonClick() {
         this.props.onStateUpdating(true);
+    }
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this user?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.onDeleteClick();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
     }
    async onDeleteClick() {
         await fetch('api/users/' + this.state.user.id, {
@@ -47,7 +72,7 @@ export class AdminPrint extends Component {
                     <button className="btn btn-sm btn-outline-dark w-100 m-1" id='editButton' onClick={e => this.onEditButtonClick(e)} >
                         Edit
                                 </button>
-                    <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={e => this.onDeleteClick(e)}>Delete</button>
+                    <button className="btn btn-sm btn-outline-dark w-100 m-1" onClick={this.onDelete}>Delete</button>
                 </td>
             </tr>);
     }

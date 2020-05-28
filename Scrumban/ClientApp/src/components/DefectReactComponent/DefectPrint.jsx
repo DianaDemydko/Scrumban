@@ -1,5 +1,7 @@
 ﻿import React from 'react';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const emptyAvatar = require('../PanelReactComponents/user.png');
 
@@ -10,6 +12,28 @@ export class DefectPrint extends React.Component {
             storyName: ''
         }
         this.getAllStories = this.getAllStories.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+    onDelete() {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='custom-alert-ui'>
+                        <h1>Are you sure?</h1>
+                        <p>You want to delete this defect?</p>
+                        <button onClick={onClose}>No</button>
+                        <button
+                            onClick={() => {
+                                this.props.deleteDefect();
+                                onClose();
+                            }}
+                        >
+                            Yes, Delete it!
+                    </button>
+                    </div>
+                );
+            }
+        });
     }
     componentDidMount() {
         this.getAllStories();
@@ -48,7 +72,7 @@ export class DefectPrint extends React.Component {
                 <td class="col">
                     
                     <button type="button" onClick={this.props.editDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Edit</button>
-                    <button type="submit" onClick={this.props.deleteDefect} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
+                    <button type="submit" onClick={this.onDelete} className="btn btn-sm btn-outline-dark w-100 m-1">Delete</button>
                 </td>
             </tr>
         );
