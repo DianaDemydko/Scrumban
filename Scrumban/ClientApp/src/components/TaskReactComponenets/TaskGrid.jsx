@@ -105,6 +105,7 @@ export class TaskGrid extends React.Component {
 
         this.startFiltration = this.startFiltration.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
+        this.load = this.load.bind(this);
 
     }
 
@@ -298,19 +299,20 @@ export class TaskGrid extends React.Component {
 
     }
 
+    async load() {
+        await this.fetchStates();
 
+        await this.fetchPriorities();
+
+        await this.fetchStories();
+
+        await this.fetchUsers();
+        await this.loadData(this.state.filter);
+    }
 
     componentDidMount() {
 
-        this.loadData(this.state.filter);
-
-        this.fetchStates();
-
-        this.fetchPriorities();
-
-        this.fetchStories();
-
-        this.fetchUsers();
+        this.load();
 
     }
 

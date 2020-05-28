@@ -41,6 +41,7 @@ export class DefectGrid extends React.Component {
         //pagination
         this.onChangePage = this.onChangePage.bind(this);
         this.fetchUsers = this.fetchUsers.bind(this);
+        this.load = this.load.bind(this);
     }
 
     showFilters(param) {
@@ -124,9 +125,14 @@ export class DefectGrid extends React.Component {
         this.setState({ defects: arr, pageOfItems: arr });
     }
 
+    async load() {
+
+        await this.fetchUsers();
+        await this.loadData("");
+    }
+
     componentDidMount() {
-        this.loadData("");
-        this.fetchUsers();
+        this.load();
     }
 
     async fetchUsers() {

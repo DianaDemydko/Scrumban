@@ -46,6 +46,7 @@ export class FeatureTable extends Component {
         this.onEditItem = this.onEditItem.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
         this.fetchUsers = this.fetchUsers.bind(this);
+        this.load = this.load.bind(this);
     }
 
     async fetchUsers() {
@@ -203,10 +204,17 @@ export class FeatureTable extends Component {
         this.loadData(query);
     }
 
-    componentDidMount() {
-        this.loadData("");
-        this.fetchUsers();
+
+    async load() {
+
+        await this.fetchUsers();
+        await this.loadData("");
     }
+
+    componentDidMount() {
+        this.load();
+    }
+
     loadData(query) {
         this.setState({ loading: true });
         fetch('api/FeatureData/Get' + query)

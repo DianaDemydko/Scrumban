@@ -48,7 +48,7 @@ export class StoryGrid extends React.Component {
         this.startFiltration = this.startFiltration.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
         this.fetchUsers = this.fetchUsers.bind(this);
-        //this.sortByName = this.sortByName.bind(this);
+        this.load = this.load.bind(this);
     }
 
     async fetchUsers() {
@@ -268,10 +268,16 @@ export class StoryGrid extends React.Component {
         this.loadData(query);
     }
 
-    componentDidMount() {
-        this.loadData("");
-        this.fetchUsers();
+    async load() {
+
+        await this.fetchUsers();
+        await this.loadData("");
     }
+
+    componentDidMount() {
+        this.load();
+    }
+
     loadData(query) {
         this.setState({ loading: true });
         fetch('api/Story/GetStories' + query, {
