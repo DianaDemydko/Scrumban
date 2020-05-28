@@ -67,7 +67,7 @@ export class EditAdmin extends Component {
             let responseStatus = response.status
             switch (responseStatus) {
                 case 200:
-                    toast.success("Updated successfuly");
+                    toast.success("Updated successfuly!");
             }
         });
       this.props.onEditUser();

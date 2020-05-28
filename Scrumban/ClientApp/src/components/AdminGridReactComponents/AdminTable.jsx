@@ -4,16 +4,26 @@ import '../../GridStyles/StyleForGrid.css';
 import { AdminRow } from './AdminRow.jsx';
 import { checkToken } from '../Helpers'
 import Spinner from 'react-bootstrap/Spinner'
+import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
 export class AdminTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
             users: [],
-            loading: true
+            loading: true,
+            pageOfItems: []
         };
         this.onEditUser = this.onEditUser.bind(this);
         this.loadData = this.loadData.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({
+            pageOfItems: pageOfItems
+        });
+
     }
     componentDidMount() {
         this.loadData();
@@ -65,6 +75,7 @@ export class AdminTable extends Component {
                 </div>
             )
                 :
+                <div>
                 <div className="tablePosition table-wrapper">
                     <table class="table" style={{ 'table-layout': 'fixed' }} >
                         <thead>
@@ -78,18 +89,29 @@ export class AdminTable extends Component {
                             </tr>
                         </thead>
                         <tbody>
-
-                            {this.state.users.map(user => {
-                                if (this.props.currentUser.id != user.id) {
-                                    return (< AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
+                            {(this.state.pageOfItems.length > 0)//pageOfItems
+                                ? this.state.pageOfItems.map((user) => {
+                                    if (this.props.currentUser.id != user.id) {
+                                        return (< AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)
+                                    }
                                 }
+                                ) :
+                                (<tbody>
+                                    <td>
+                                        No results
+                            </td>
+                                </tbody>)
                             }
-                            )}
                         </tbody>
                     </table>
                 </div>
-            }
+
                 <div />
+                <div>
+                    <Pagination items={this.state.users} onChangePage={this.onChangePage} />
+                    </div>
+                </div>
+                }
 
         </div>;
 
