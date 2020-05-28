@@ -28,9 +28,9 @@ export class AddFeature extends React.Component {
         this.fetchUsers = this.fetchUsers.bind(this);
         this.onOwnerChange = this.onOwnerChange.bind(this);
 }
-fetchUsers() {
+async fetchUsers() {
 
-    fetch('/api/users/getUsers', {
+   await fetch('/api/users/getUsers', {
 
         meethod: "get",
 

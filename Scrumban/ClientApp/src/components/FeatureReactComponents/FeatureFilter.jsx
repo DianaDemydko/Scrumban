@@ -42,7 +42,6 @@ export class FeatureFilter extends Component {
             });
     }
     findData() {
-
         var filter = []
         if (this.state.findName != '') {
             filter.push({ 'tolower(Name)': { contains: this.state.findName.toLowerCase() } })
@@ -57,7 +56,7 @@ export class FeatureFilter extends Component {
         if (this.state.findPriorityID != 0) {
             filter.push({ priorityid: parseInt(this.state.findPriorityID) })
         }
-        if (this.state.findstateID != 0) {
+        if (this.state.findStateID != 0) {
             filter.push({ stateid: parseInt(this.state.findstateID) })
         }
         var query = buildQuery({ filter })
@@ -81,8 +80,7 @@ export class FeatureFilter extends Component {
     onFindPriorityChange(e) {
 
         if (e.target.value != "All") {
-            var i = this.state.priorities.find(x => x.name === e.target.value).id;
-            this.setState({ findPriorityID: i });
+            this.setState({ findPriorityID: e.target.value });
         }
     }
     onFindDateChange(dateToFind) {
@@ -90,8 +88,7 @@ export class FeatureFilter extends Component {
     }
     onFindStateChange(e) {
         if (e.target.value != "All") {
-            var i = this.state.states.find(x => x.name === e.target.value).id;
-            this.setState({ findstateID: i });
+            this.setState({ findstateID: e.target.value });
         }
     }
 
@@ -135,17 +132,17 @@ export class FeatureFilter extends Component {
                 </div>
                 <div class="col-sm">
                     <select class="btn btn-light dropdown-toggle w-100 m-0" name="state" onChange={e => this.onFindStateChange(e)} >
-                        <option>All</option>
+                        <option value="All">All</option>
                         {this.state.states.map(state => (
-                            <option>{state.name}
+                            <option value={state.id}>{state.name}
                             </option>))}
                     </select>
                 </div>
                 <div class="col-sm">
                     <select class="btn btn-light dropdown-toggle w-100 m-0" name="prioriry" onChange={e => this.onFindPriorityChange(e)}>
-                        <option>All</option>
+                        <option value="All">All</option>
                         {this.state.priorities.map(priority => (
-                            <option> {priority.name}</option>))}
+                            <option value={priority.id}> {priority.name}</option>))}
                     </select>
                 </div>
                 <div class="col-sm">

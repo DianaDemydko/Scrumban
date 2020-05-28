@@ -37,9 +37,9 @@ export class StoryAdd extends React.Component {
         this.onOwnerChange = this.onOwnerChange.bind(this);
     }
 
-    fetchUsers() {
+    async fetchUsers() {
 
-    fetch('/api/users/getUsers', {
+    await fetch('/api/users/getUsers', {
 
         meethod: "get",
 

@@ -81,7 +81,7 @@ export class StoryFilter extends React.Component {
             filter.push({ sprint_id: parseInt(this.state.sprint_id) })
         }
         if (this.state.storyState != "") {
-            filter.push({ "tolower(StoryState)": { contains: this.state.storyState.toLowerCase() } })
+            filter.push({ storyState:  this.state.storyState })
         }
         if (this.state.featureId != "") {
             filter.push({ featureId: parseInt(this.state.featureId) })

@@ -48,9 +48,9 @@ export class FeatureTable extends Component {
         this.fetchUsers = this.fetchUsers.bind(this);
     }
 
-    fetchUsers() {
+    async fetchUsers() {
 
-        fetch('/api/users/getUsers', {
+        await fetch('/api/users/getUsers', {
 
             meethod: "get",
 
@@ -109,10 +109,10 @@ export class FeatureTable extends Component {
     renderCaret(columnName) {
         if (this.state.currentSort.columnName == columnName) {
             if (this.state.currentSort.sortingOrder == 'asc') {
-                return (<span class="fa fa-caret-up" id="active-caret"/>)
+                return (<span class="fa fa-caret-up" id="active-caret" style={{ color: '#2adc29' }}/>)
             }
             else {
-                return (<span class="fa fa-caret-down" id="active-caret"/>)
+                return (<span class="fa fa-caret-down" id="active-caret" style={{ color: '#2adc29' }}/>)
             }
         }
         else {

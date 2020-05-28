@@ -7,6 +7,8 @@ import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 import Spinner from 'react-bootstrap/Spinner'
 
 import '../../GridStyles/StyleForGrid.css';
+const icon_up = require("./sort-arrow-up.svg")
+const icon_down = require("./sort-arrow-down.svg")
 
 export class SprintTable extends React.Component
 {
@@ -50,11 +52,6 @@ export class SprintTable extends React.Component
 
         this.onFiltersApply = this.onFiltersApply.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
-
-        this.sortData = this.sortData.bind(this)
-        this.sortByName = this.sortByName.bind(this)
-        this.sortByDescription = this.sortByDescription.bind(this)
-        this.sortByDate = this.sortByDate.bind(this)
         this.renderCaret = this.renderCaret.bind(this)
         this.clearFilters = this.clearFilters.bind(this)
         this.onChangePage = this.onChangePage.bind(this);
@@ -198,167 +195,82 @@ export class SprintTable extends React.Component
     
     }
 
-    sortByName(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b)
-        {
-            let aName = a[columnName].toLowerCase()
-            let bName = b[columnName].toLowerCase()
-            if (aName < bName) {
-                return -1;
-            }
-            if (aName > bName) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder)
-        {
-            case 'ascending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction).reverse()
-                })
-                break
-        }        
-    }
-
-    sortByDescription(sortingOrder, columnName)
-    {
-        let compareFunction = function (a, b)
-        {
-            let aDescriptionLength = a[columnName].length
-            let bDescriptionLength = b[columnName].length
-            if (aDescriptionLength < bDescriptionLength) {
-                return -1;
-            }
-            if (aDescriptionLength > bDescriptionLength) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-
-    sortByDate(sortingOrder, columnName)
-    {
-
-        let compareFunction = function (a, b)
-        {
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-
-    sortByStatus(sortingOrder, columnName) {
-
-        let compareFunction = function (a, b) {
-
-            if (a[columnName] < b[columnName]) {
-                return -1;
-            }
-            if (a[columnName] > b[columnName]) {
-                return 1;
-            }
-            return 0;
-        }
-
-        switch (sortingOrder) {
-            case 'ascending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction)
-                })
-                break
-            case 'descending':
-                this.setState({
-                    sprints: this.state.sprints.sort(compareFunction).reverse()
-                })
-                break
-        }
-    }
-
     sortData(columnName)
     {
         let currentSort = this.state.currentSort
+        var query = '?$orderby='
 
-        if (currentSort.columnName == columnName)
-        {
-            if (currentSort.sortingOrder == 'ascending')
-            {
-                currentSort.sortingOrder = 'descending'
+        if (currentSort.columnName == columnName) {
+            if (currentSort.sortingOrder == 'asc') {
+                currentSort.sortingOrder = 'desc'
             }
-            else
-            {
-                currentSort.sortingOrder = 'ascending'
+            else {
+                currentSort.sortingOrder = 'asc'
             }
         }
-        else
-        {
+        else {
             currentSort.columnName = columnName
-            currentSort.sortingOrder = 'ascending'
+            currentSort.sortingOrder = 'asc'
         }
 
         this.setState({ currentSort: currentSort })
 
-        switch (columnName)
-        {
+        switch (columnName) {
             case 'name':
-                this.sortByName(currentSort.sortingOrder, columnName)
+                query += 'name' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByName: icon_up });
+                }
+                else {
+                    this.setState({ sortByName: icon_down });
+                }
                 break
             case 'description':
-                this.sortByDescription(currentSort.sortingOrder, columnName)
+                query += 'description' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByDescription: icon_up });
+                }
+                else {
+                    this.setState({ sortByDescription: icon_down });
+                }
                 break
             case 'startDate':
-                this.sortByDate(currentSort.sortingOrder, columnName)
+                query += 'startDate' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortBySDate: icon_up });
+                }
+                else {
+                    this.setState({ sortBySDate: icon_down });
+                }
                 break
+
             case 'endDate':
-                this.sortByDate(currentSort.sortingOrder, columnName)
+                query += 'endDate' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByPriority: icon_up });
+                }
+                else {
+                    this.setState({ sortByPriority: icon_down });
+                }
                 break
             case 'sprintStatus':
-                this.sortByStatus(currentSort.sortingOrder, columnName)
+                query += 'sprintStatus' + ' ' + this.state.currentSort.sortingOrder;
+                if (this.state.currentSort.sortingOrder == 'asc') {
+                    this.setState({ sortByState: icon_up });
+                }
+                else {
+                    this.setState({ sortByState: icon_down });
+                }
                 break
         }
+
+        this.fetchSprintData(query);
     }
 
     renderCaret(columnName)
     {
         if (this.state.currentSort.columnName == columnName) {
-            if (this.state.currentSort.sortingOrder == 'ascending') {
+            if (this.state.currentSort.sortingOrder == 'asc') {
                 return (<span class="fa fa-caret-up" id="active-caret" style={{ color: '#2adc29' }}></span>)
             }
             else {

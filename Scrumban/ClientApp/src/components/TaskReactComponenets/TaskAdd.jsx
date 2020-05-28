@@ -149,9 +149,9 @@ export class TaskAdd extends React.Component {
 
 
 
-    fetchUsers() {
+    async fetchUsers() {
 
-        fetch(getUsersUrl, {
+        await fetch(getUsersUrl, {
 
             meethod: "get",
 

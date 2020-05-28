@@ -51,9 +51,9 @@ export class StoryGrid extends React.Component {
         //this.sortByName = this.sortByName.bind(this);
     }
 
-    fetchUsers() {
+    async fetchUsers() {
 
-        fetch('/api/users/getUsers', {
+       await fetch('/api/users/getUsers', {
 
             meethod: "get",
 

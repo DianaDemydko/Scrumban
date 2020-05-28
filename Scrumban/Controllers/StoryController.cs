@@ -31,12 +31,12 @@ namespace Scrumban.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [EnableQuery()]
-        public IQueryable<StoryDTO> GetStories()
+        public IEnumerable<StoryDTO> GetStories()
         {
             try { 
            
-                IQueryable<StoryDTO> stories = _storyService.GetStories();
-                return stories;
+                IEnumerable<StoryDTO> stories = _storyService.GetStories();
+                return stories.ToList();
             }
             catch
             {

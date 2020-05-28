@@ -10,9 +10,9 @@ import { Pagination } from '../DefectReactComponent/Pagination.jsx'
 
 // consts of stable tables
 
-const icon_up = require("./sort-arrow-up.svg")
+const icon_up = "fa fa-caret-up";
 
-const icon_down = require("./sort-arrow-down.svg")
+const icon_down = "fa fa-caret-down";
 
 // const
 
@@ -176,9 +176,9 @@ export class TaskGrid extends React.Component {
 
 
 
-    fetchStates() {
+    async fetchStates() {
 
-        fetch(apiUrlGetStates)
+        await fetch(apiUrlGetStates)
 
             .then(response => response.json())
 
@@ -192,9 +192,9 @@ export class TaskGrid extends React.Component {
 
 
 
-    fetchPriorities() {
+    async fetchPriorities() {
 
-        fetch(apiUrlGetPriorities)
+        await fetch(apiUrlGetPriorities)
 
             .then(response => response.json())
 
@@ -208,9 +208,9 @@ export class TaskGrid extends React.Component {
 
 
 
-    fetchStories() {
+    async fetchStories() {
 
-        fetch(getStoriesUrl, {
+        await fetch(getStoriesUrl, {
 
             meethod: "get",
 
@@ -254,9 +254,9 @@ export class TaskGrid extends React.Component {
 
 
 
-    fetchUsers() {
+    async fetchUsers() {
 
-        fetch(getUsersUrl, {
+        await fetch(getUsersUrl, {
 
             meethod: "get",
 
@@ -521,7 +521,7 @@ export class TaskGrid extends React.Component {
 
                     <span>Name</span>
 
-                    <ion-icon src={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
+                                    <span className={this.state.sortByTitle} onClick={() => this.sort("name", null)} />
 
                 </th>
 
@@ -529,7 +529,7 @@ export class TaskGrid extends React.Component {
 
                     <span>Description</span>
 
-                    <ion-icon src={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
+                                    <span className={this.state.sortByDescription} onClick={() => this.sort("description", null)} />
 
                 </th>
 
@@ -537,7 +537,7 @@ export class TaskGrid extends React.Component {
 
                     <span>Start Date</span>
 
-                    <ion-icon src={this.state.sortByStartDate} onClick={() => this.sort("startDate", null)} />
+                                    <span className={this.state.sortByStartDate} onClick={() => this.sort("startDate", null)} />
 
                 </th>
 
@@ -545,7 +545,7 @@ export class TaskGrid extends React.Component {
 
                     <span>Finish Date</span>
 
-                    <ion-icon src={this.state.sortByFinishDate} onClick={() => this.sort("finishDate", null)} />
+                                    <span className={this.state.sortByFinishDate} onClick={() => this.sort("finishDate", null)} />
 
                 </th>
 
@@ -553,7 +553,7 @@ export class TaskGrid extends React.Component {
 
                     <span>Priority</span>
 
-                    <ion-icon src={this.state.sortByPriority} onClick={() => this.sort("priority", "id")} />
+                                    <span className={this.state.sortByPriority} onClick={() => this.sort("priority", "id")} />
 
                 </th>
 
@@ -561,7 +561,7 @@ export class TaskGrid extends React.Component {
 
                     <span>State</span>
 
-                    <ion-icon src={this.state.sortByState} onClick={() => this.sort("taskState", "id")} />
+                                    <span sclassNamerc={this.state.sortByState} onClick={() => this.sort("taskState", "id")} />
 
                 </th>
 
@@ -575,7 +575,7 @@ export class TaskGrid extends React.Component {
 
                     <span>Story</span>
 
-                    <ion-icon src={this.state.sortByState} onClick={() => this.sort("story", "name")} />
+                                    <span className={this.state.sortByStory} onClick={() => this.sort("story", "name")} />
 
                 </th>
 

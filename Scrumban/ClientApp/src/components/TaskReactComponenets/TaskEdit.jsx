@@ -377,7 +377,7 @@ export class TaskEdit extends React.Component {
 
         }
 
-        if (this.props.item.user != null) {
+        if (this.props.item.user != null && this.props.item.user != undefined) {
 
             var user = this.props.users.find(x => x.id === this.props.item.user.id)
 
@@ -467,7 +467,7 @@ export class TaskEdit extends React.Component {
 
                         <label for="priorityName">Priority</label>
 
-                    <select class="form-control form-control-sm m-0"  id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
+                    <select class="btn btn-light dropdown-toggle m-0"  id="priorityName" onChange={this.onPriorityChanged} placeholder="task priority" defaultValue={this.props.item.priority.name}>
 
                             {this.props.priorities.map((item) => <option>{item.name}</option>)}
 
@@ -483,7 +483,7 @@ export class TaskEdit extends React.Component {
 
                         <label for="taskStateName">State</label>
 
-                    <select class="form-control form-control-sm m-0"  id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
+                    <select class="btn btn-light  m-0"  id="taskStateName" onChange={this.onStateChanged} placeholder="task state" defaultValue={this.props.item.taskState.name}>
 
                             {this.props.states.map((item) => <option>{item.name}</option>)}
 
@@ -499,7 +499,7 @@ export class TaskEdit extends React.Component {
 
                         <label for="userAssign">Owner</label>
 
-                    <select class="form-control form-control-sm m-0"  id="userAssign" onChange={this.onUserChanged} placeholder="" defaultValue={user_name} >
+                    <select class="btn btn-light dropdown-toggle m-0"  id="userAssign" onChange={this.onUserChanged} placeholder="" defaultValue={user_name} >
 
                             <option>None</option>
 
@@ -517,7 +517,7 @@ export class TaskEdit extends React.Component {
 
                         <label for="userAssign">Story</label>
 
-                        <select class="form-control form-control-sm m-0" id="userAssign" onChange={this.onStoryChanged} placeholder="" defaultValue={story_name}>
+                    <select class="btn btn-light e m-0" id="userAssign" onChange={this.onStoryChanged} placeholder="" defaultValue={story_name}>
 
                             <option>None</option>
 

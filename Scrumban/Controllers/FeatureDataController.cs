@@ -31,13 +31,12 @@ namespace Scrumban.Controllers
         [Route("Get")]
         public IEnumerable<FeatureDTO> Get()
         {
-            var result = _featureService.Get().ToList();
+            IEnumerable<FeatureDTO> result = _featureService.Get().ToList();
 
-            for(int i=0;i<result.Count;i++)
-            {
-                result[i].Stories = _storyService.GetStories().Where(story => story.FeatureId == result[i].ID).ToList();
+            foreach(FeatureDTO res in result) { 
+                res.Stories = _storyService.GetStories().Where(story => story.FeatureId == res.ID).ToList();
             }
-            return result;
+            return result.ToArray();
 
         }
 
