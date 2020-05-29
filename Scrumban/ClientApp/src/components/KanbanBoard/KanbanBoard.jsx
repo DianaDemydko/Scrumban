@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import KanbanColumn from './KanbanColumn';
 import buildQuery from 'odata-query';
+import { toast } from 'react-toastify';
 
 import "./css/KanbanBoard.css";
 
@@ -119,7 +120,7 @@ export default class KanbanBoard extends React.Component {
                         let responseStatus = response.status
                         switch (responseStatus) {
                             case 404:
-                                alert("Updaiting element went wrong!")
+                                toast.error("Updaiting element went wrong!");
                                 break
                             case 200:
                                 let updatedStories = this.state.stories.slice();
@@ -130,10 +131,10 @@ export default class KanbanBoard extends React.Component {
                                 break
                         }
                     }.bind(this))
-                    .catch((e) => alert(e + "Unexpected error occured."))
+                    .catch((e) => toast.error(e + "Unexpected error occured."));
             }
             else {
-                alert("Drop not allowed")
+                toast.warn("Drop not allowed");
             }
         }
     }
