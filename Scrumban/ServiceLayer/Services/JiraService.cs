@@ -46,6 +46,10 @@ namespace Scrumban.ServiceLayer.Services
                 {
                     storyDAL.StoryState_id = _unitOfWork.StoryStateRepository.GetByCondition(story => story.Name == issue.Fields.Status.Name).StoryState_id;
                 }
+                if( storyDAL.Description == null || storyDAL.Description == "")
+                {
+                    storyDAL.Description = "Default description";
+                }
 
                 _unitOfWork.StoryRepository.Create(storyDAL);
             }

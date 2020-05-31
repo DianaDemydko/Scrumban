@@ -231,7 +231,6 @@ export class FeatureTable extends Component {
                 }
                 else {
                     toast.error("Something wrong  !");
-                   // alert("ERROR! Status code: " + response.status)
                 }
             })
             .then(data => {
@@ -289,7 +288,7 @@ export class FeatureTable extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {(this.state.pageOfItems.length > 0)//pageOfItems
+                                {(this.state.pageOfItems.length > 0)
                                     ? this.state.pageOfItems.map((feature) => {
                                         return <FeatureRow key={feature.id} feature={feature} moveToComponent={this.props.moveToComponent} deleteItem={this.onDeleteItem} editItem={this.onEditItem} users={this.state.users} currentUser={this.props.currentUser} />
                                     }

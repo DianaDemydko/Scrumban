@@ -6,8 +6,6 @@ export class StoryComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        // state : true - print
-        // state : false - edit 
         this.state = {
             data: this.props.story,
             states: true

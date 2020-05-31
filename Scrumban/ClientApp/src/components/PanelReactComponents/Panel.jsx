@@ -18,7 +18,6 @@ export class Panel extends React.Component {
     }
 
     onLogOut() {
-        //localStorage.clear();
         this.props.onLogOut(false, null, "login");
     }
 

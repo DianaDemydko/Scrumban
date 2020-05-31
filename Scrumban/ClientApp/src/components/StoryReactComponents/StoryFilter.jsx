@@ -2,7 +2,7 @@
 import buildQuery from 'odata-query';
 import "react-datepicker/dist/react-datepicker.css";
 
-const data = require('../../GlobalData.json'); // json file with const tables (priority, state)
+const data = require('../../GlobalData.json');
 const stateTable = data.storyState;
 
 export class StoryFilter extends React.Component {

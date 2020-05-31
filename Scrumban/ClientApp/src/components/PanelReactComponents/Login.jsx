@@ -23,12 +23,9 @@ export class Login extends React.Component {
         this.passwordChanged = this.passwordChanged.bind(this);
     }
     handleValidation() {
-        //let fields = this.state.fields;
         let errors = [];
         let formIsValid = true;
         var i = 0;
-
-        //Email
         if (this.state.email == "") {
             formIsValid = false;
             errors[i] = " Field 'Email' cannot be empty! ";
@@ -60,7 +57,6 @@ export class Login extends React.Component {
         this.setState({ password: e.target.value });
     }
     handleSubmit(e) {
-        //e.preventDefault();
         if (this.handleValidation()) {
             fetch('api/users/token', {
                 method: 'post',
@@ -83,7 +79,6 @@ export class Login extends React.Component {
                 }
                 }).then((data) => {
                     if (data == "error") {
-                        //this.props.moveToComponent(true, data.user, "tasks");
                     }
                     else {
                         sessionStorage.setItem("tokenKey", data.access_token)

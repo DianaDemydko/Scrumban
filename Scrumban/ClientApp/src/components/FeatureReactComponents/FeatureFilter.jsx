@@ -170,9 +170,5 @@ export class FeatureFilter extends Component {
             </div>
 
         </div>
-
-
-
-
     }
 }

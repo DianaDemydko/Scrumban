@@ -102,7 +102,6 @@ export class FeaturePrint extends Component {
                 </td>
                 <td class="col" > <label style={{ 'margin': '15px' }}>{this.state.feature.state.name}</label> </td>
                 <td class="col">{this.state.feature.userId != null ? <img src={this.state.feature.user.picture != null && this.state.feature.user.picture.image != null ? this.state.feature.user.picture.image : emptyAvatar} style={{ 'width': '40px', 'height': '40px', 'border-radius': '50%' }} className="picture" title={this.state.feature.user != null ? `${this.state.feature.user.firstName}  ${this.state.feature.user.surname}` : null} /> : "None"}</td>
-                {/*<td class="col" > {this.state.feature.owner.name } </td>*/}
                 <td class="col"> <label style={{ 'margin': '15px' }}>{this.state.feature.priority.name}</label> </td>
 
                 <td class="col"> 

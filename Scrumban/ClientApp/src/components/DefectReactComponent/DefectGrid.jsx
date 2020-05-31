@@ -18,8 +18,6 @@ export class DefectGrid extends React.Component {
         this.state = {
             defects: [],
             pageOfItems: [],
-
-            //sorting
             currentSort:
             {
                 columnName: '',
@@ -34,30 +32,20 @@ export class DefectGrid extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.onChanged = this.onChanged.bind(this);
         this.onRemoveDefect = this.onRemoveDefect.bind(this);
-
-        //sorting
         this.sortData = this.sortData.bind(this)  
-
-        //pagination
         this.onChangePage = this.onChangePage.bind(this);
         this.fetchUsers = this.fetchUsers.bind(this);
         this.load = this.load.bind(this);
     }
-
     showFilters(param) {
         this.setState({ showFilters: param });
     }
-
     onChangePage(pageOfItems) {
-        // update state with new page of items
-
         this.setState({
             pageOfItems: pageOfItems
         });
        
     }
-
-    //sorting
     sortData(columnName) {
         let currentSort = this.state.currentSort
 
@@ -291,8 +279,8 @@ export class DefectGrid extends React.Component {
 
 
 
-                            {(this.state.pageOfItems.length > 0)//pageOfItems
-                                ? this.state.pageOfItems.map((defect) => {//pageOfItems
+                            {(this.state.pageOfItems.length > 0)
+                                ? this.state.pageOfItems.map((defect) => {
 
                                     return <DefectRow key={defect.defectId} defect={defect} onRemove={this.onRemoveDefect} onChanged={changed} loadData={this.loadData} users={this.state.users} />
                                 })

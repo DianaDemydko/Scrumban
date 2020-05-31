@@ -110,7 +110,6 @@ export class EditFeature extends Component {
             return j.story.name == e.target.value;
         });
         if (item.state == true) {
-            //alert("Sory, if You want to remove any story from Feature you can do it only from Story Grid");
             toast.warn("Sory, if You want to remove any story from Feature you can do it only from Story Grid");
         }
         else {

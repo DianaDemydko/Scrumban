@@ -19,7 +19,6 @@ export class AdminTable extends Component {
         this.onChangePage = this.onChangePage.bind(this);
     }
     onChangePage(pageOfItems) {
-        // update state with new page of items
         this.setState({
             pageOfItems: pageOfItems
         });
@@ -89,7 +88,7 @@ export class AdminTable extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {(this.state.pageOfItems.length > 0)//pageOfItems
+                            {(this.state.pageOfItems.length > 0)
                                 ? this.state.pageOfItems.map((user) => {
                                     if (this.props.currentUser.id != user.id) {
                                         return (< AdminRow key={user.id} user={user} editUser={this.onEditUser} loadData={this.loadData} />)

@@ -86,7 +86,6 @@ export class StoryPrint extends React.Component {
 
     render() {
         var v = this.getFirstDescriptionWord();
-        //var sprint = this.getSprintName();
         return (
             <tr>
                 <td className="col"><label style={{ 'margin': '15px' }}>{this.state.story.name}</label></td>
