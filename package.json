@@ -14,7 +14,7 @@
     "bootstrap": "^4.5.0",
     "chart.js": "^2.8.0",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react-bootstrap": "^1.0.1",
     "react-chartjs-2": "^2.7.6",
     "react-confirm-alert": "^2.6.1",
